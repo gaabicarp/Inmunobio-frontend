@@ -1,27 +1,78 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">INMUNOBIO</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" routerLink="dashboard">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="proyectos">Proyectos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="blogs">Blogs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="almacenamiento">Almacenamiento</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="finanzas">Finanzas</a>
-          </li>
-        </ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">INMUNOBIO</a>
+    <div >
+      <div ngbDropdown display="dynamic" class="d-inline m-3">
+        <button class="btn btn-outline-light btn-sm" id="dropdownBasic1" ngbDropdownToggle>
+          <i class="bi bi-envelope m-4"></i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem>
+            <div class="d-flex flex-row align-items-center">
+              <i class="bi bi-envelope mr-4"></i>
+              <div>
+                <p class="mb-0"><strong>Gabriel Jotallan</strong></p>
+                <p class="mb-0">Hola, esto es un texto de prueba que tie...</p>
+              </div>
+            </div>
+          </button>
+          <hr class="m-2">
+          <button ngbDropdownItem>
+            <div class="d-flex flex-row align-items-center">
+              <i class="bi bi-envelope mr-4"></i>
+              <div>
+                <p class="mb-0"><strong>Gabriel Jotallan</strong></p>
+                <p class="mb-0">Hola, esto es un texto de prueba que tie...</p>
+              </div>
+            </div>
+          </button>
+          <hr class="m-2">
+          <button ngbDropdownItem>
+            <div class="d-flex flex-row align-items-center">
+              <i class="bi bi-envelope mr-4"></i>
+              <div>
+                <p class="mb-0"><strong>Gabriel Jotallan</strong></p>
+                <p class="mb-0">Hola, esto es un texto de prueba que tie...</p>
+              </div>
+            </div>
+          </button>
+          <hr class="m-2">
+          <button ngbDropdownItem>
+            Ver mas...
+          </button>
+        </div>
+      </div>
+      <div ngbDropdown display="dynamic" class="d-inline m-3">
+        <button class="btn btn-outline-light btn-sm" id="dropdownBasic1" ngbDropdownToggle>
+          <i class="bi bi-bell m-4"></i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem>
+            <div class="d-flex flex-row align-items-center justify-content-center">
+              <i class="bi bi-exclamation-circle-fill mr-3"></i>
+              <p class="mb-0">Esto es una notificacion de prueba</p>
+            </div>
+          </button>
+          <hr class="m-2">
+          <button ngbDropdownItem>
+            <div class="d-flex flex-row align-items-center justify-content-center">
+              <i class="bi bi-exclamation-circle-fill mr-3"></i>
+              <p class="mb-0">Esto es una notificacion de prueba</p>
+            </div>
+          </button>
+          <hr class="m-2">
+          <button ngbDropdownItem>
+            <div class="d-flex flex-row align-items-center justify-content-center">
+              <i class="bi bi-exclamation-circle-fill mr-3"></i>
+              <p class="mb-0">Esto es una notificacion de prueba</p>
+            </div>
+          </button>
+          <hr class="m-2">
+          <button ngbDropdownItem>
+            Ver mas...
+          </button>
+        </div>
       </div>
     </div>
+  </div>
 </nav>

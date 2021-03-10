@@ -1,0 +1,12 @@
+.navbar{
+    min-height: 4em;
+}
+
+@media screen and (max-width: 1024px){
+    .container-fluid{
+        justify-content: flex-end;
+    }
+    .navbar-brand{
+        display: none;
+    }
+}

@@ -1,1 +1,115 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+body{
+    height: 100vh;
+    font-size: 16px;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+hr{
+    background-color: white;
+    width: 80%;
+    margin: auto;
+}
+
+.main-navigation{
+    width: 17rem;
+    color:#FFF;
+    min-height: 100%;
+}
+
+.mobile-menu-toggle{
+    display: none;
+}
+
+.navigation-item{
+    min-height: 3.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: all 0.15s ease;
+}
+
+.visually-hidden{
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.mobile-menu-toggle{
+    display: none;
+}
+
+.mobile-menu-toggle-label{
+    display: none;
+}
+
+.item{
+    position: relative;
+    padding-left: 2rem;
+}
+
+.nav-cion{
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+    width: 1rem;
+    transform: translateY(-50%);
+}
+
+@media screen and (max-width: 1024px){
+    .visually-hideen{
+        display: block;
+    }
+
+    .mobile-menu-toggle-label{
+        display: block;
+    }
+    
+    .mobile-menu-toggle{
+        display: block;
+        cursor: pointer;
+    }
+
+    .navigation-container {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        bottom: 0;
+        width: 75%;
+        overflow: hidden;
+        overflow-y: auto;
+        transition: all 0.35s ease;
+        background-color: #343a40;
+    }
+
+    .mobile-menu-toggle:checked ~ .navigation-container{
+        left: 0;
+    }
+
+    .main-navigation{
+        position: absolute;
+        top: 0.8em;
+        left: 2rem;
+        z-index: 1000;
+        background-color: transparent;
+        min-height: 1rem;
+        width: 2rem;
+    }
+
+}
+

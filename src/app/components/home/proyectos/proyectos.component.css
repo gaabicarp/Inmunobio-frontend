@@ -1,0 +1,14 @@
+h3{
+    margin: 1.5em;
+}
+.search-container{
+    width: 80%;
+    padding: 0.7em;
+    margin: auto;
+}
+
+.card{
+    width: 95%;
+    margin: auto;
+    padding: 0.5em;
+}

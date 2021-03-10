@@ -1,0 +1,103 @@
+<nav class="main-navigation bg-dark" (focusout)="cerrarNavigate()">
+    <input type="checkbox" class="visually-hidden mobile-menu-toggle" id="mobile-menu-toggle">
+    <label class="mobile-menu-toggle-label" for="mobile-menu-toggle">
+        <i class="bi bi-list" style="font-size: 1.5em;" (click)="clickMobile(false)"></i>
+    </label>
+    <div class="navigation-container">
+        <ul>
+            <li class="navigation-item"
+                (click)="navegar()"
+                style="cursor: pointer;"
+            >
+                <div class="item">
+                    <span class="nav-cion">
+                        <i class="bi bi-house-door"></i>
+                    </span>
+                    <span style="margin-left: 1em;">
+                        Home
+                    </span>
+                </div>
+            </li>
+            <hr>
+            <li class="navigation-item"
+                routerLink="proyectos"
+                style="cursor: pointer;"
+            >
+                <div class="item">
+                    <span class="nav-cion">
+                        <i class="bi bi-file-earmark-bar-graph"></i>
+                    </span>
+                    <span style="margin-left: 1em;">
+                        Proyectos
+                    </span>
+                </div>
+            </li>
+            <li class="navigation-item"
+                (click)="navegar()"
+                style="cursor: pointer;"
+            >
+                <div class="item">
+                    <span class="nav-cion">
+                        <i class="bi bi-archive"></i>
+                    </span>
+                    <span style="margin-left: 1em;">
+                        Bioterio
+                    </span>
+                </div>
+            </li>
+            <li class="navigation-item"
+                (click)="navegar()"
+                style="cursor: pointer;"
+            >
+                <div class="item">
+                    <span class="nav-cion">
+                        <i class="bi bi-ui-radios"></i>
+                    </span>
+                    <span style="margin-left: 1em;">
+                        Stock
+                    </span>
+                </div>
+            </li>
+            <hr>
+            <li class="navigation-item"
+                (click)="navegar()"
+                style="cursor: pointer;"
+            >
+                <div class="item">
+                    <span class="nav-cion">
+                        <i class="bi bi-person-fill"></i>
+                    </span>
+                    <span style="margin-left: 1em;">
+                        Perfil
+                    </span>
+                </div>
+            </li>
+            <li class="navigation-item"
+                (click)="navegar()"
+                style="cursor: pointer;"
+            >
+                <div class="item">
+                    <span class="nav-cion">
+                        <i class="bi bi-info-circle-fill"></i>
+                    </span>
+                    <span style="margin-left: 1em;">
+                        Ayuda
+                    </span>
+                </div>
+            </li>
+            <li class="navigation-item"
+                (click)="navegar()"
+                style="cursor: pointer;"
+            >
+                <div class="item">
+                    <span class="nav-cion">
+                        <i class="bi bi-box-arrow-left"></i>
+                    </span>
+                    <span style="margin-left: 1em;">
+                        Salir
+                    </span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
