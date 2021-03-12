@@ -11,6 +11,7 @@ import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationComponent } from './components/shared/navigation/navigation.component';
 import { ProyectosComponent } from './components/home/proyectos/proyectos.component';
+import { DetalleProyectoComponent } from './components/home/proyectos/detalle-proyecto/detalle-proyecto.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProyectosComponent } from './components/home/proyectos/proyectos.compon
     NavbarComponent,
     HomeComponent,
     NavigationComponent,
-    ProyectosComponent
+    ProyectosComponent,
+    DetalleProyectoComponent
   ],
   imports: [
     BrowserModule,

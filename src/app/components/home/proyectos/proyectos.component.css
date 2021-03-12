@@ -2,9 +2,19 @@ h3{
     margin: 1.5em;
 }
 .search-container{
-    width: 80%;
+    width: 100%;
     padding: 0.7em;
     margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.search-container .form-control{
+    width: 32%;
+}
+
+.input-group{
+    width: 32%;
 }
 
 .card{
