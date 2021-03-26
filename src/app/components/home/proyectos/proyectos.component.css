@@ -22,3 +22,13 @@ h3{
     margin: auto;
     padding: 0.5em;
 }
+
+@media screen and (max-width: 1024px){
+    .search-container .form-control{
+        width: 40%;
+    }
+    
+    .input-group{
+        width: 40%;
+    }   
+}

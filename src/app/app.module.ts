@@ -12,6 +12,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationComponent } from './components/shared/navigation/navigation.component';
 import { ProyectosComponent } from './components/home/proyectos/proyectos.component';
 import { DetalleProyectoComponent } from './components/home/proyectos/detalle-proyecto/detalle-proyecto.component';
+import { DetalleExperimentosComponent } from './components/home/proyectos/detalle-experimentos/detalle-experimentos.component';
+import { NuevoProyectoComponent } from './components/home/proyectos/nuevo-proyecto/nuevo-proyecto.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { DetalleProyectoComponent } from './components/home/proyectos/detalle-pr
     HomeComponent,
     NavigationComponent,
     ProyectosComponent,
-    DetalleProyectoComponent
+    DetalleProyectoComponent,
+    DetalleExperimentosComponent,
+    NuevoProyectoComponent
   ],
   imports: [
     BrowserModule,

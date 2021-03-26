@@ -1,11 +1,14 @@
-<div class="m-4">
-    <h4><span><i class="bi bi-arrow-left"></i></span>VOLVER</h4>
+<div class="portada">
 </div>
-<div class="mx-4">
-    <div class="text-center mt-4">
-        <h2>Proyecto 1</h2>
-    </div>
+<div class="text-white ml-3 mt-3" routerLink="../" role="button" style="position: relative;">
+    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+</div>
+<div class="card rounded shadow portada-content">
+    <h2 class="text-staatliches title">Proyecto inmunobio</h2>
+</div>
 
+
+<div class="mx-4">
     <ul ngbNav #nav="ngbNav" class="nav-tabs">
         <li [ngbNavItem]="1">
           <a ngbNavLink>Detalles</a>
@@ -14,109 +17,229 @@
                 <div class="card rounded shadow p-4">
                     <h5><i>Descripcion</i></h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto, provident cum laboriosam earum laborum repellendus ducimus hic eius, consectetur reprehenderit deserunt saepe praesentium qui non tempore exercitationem, nihil molestiae eum. Quas exercitationem autem cum nisi iste pariatur consequatur dignissimos facere totam modi quidem, accusantium eius impedit dolorem veniam deserunt. Quidem, amet? Numquam expedita quibusdam dolore quaerat esse rem quos aliquam placeat iste accusamus doloremque aliquid non ipsa, modi quas quia dolores, tempora corrupti fugit magni voluptatem cupiditate tenetur. Sed eligendi iste animi perspiciatis tenetur! Recusandae, minus nam nihil molestiae cupiditate id dignissimos numquam exercitationem impedit aliquam dolore possimus accusantium. Deleniti modi, voluptatem aperiam voluptatum, veritatis soluta minima reiciendis sunt accusantium doloribus eos? Nam nisi, cumque sunt aliquid reiciendis consectetur magnam maxime aut excepturi quae ex aliquam, sint vero quo dolorum quibusdam non eveniet explicabo! Sed perferendis deserunt recusandae sunt, amet adipisci laboriosam exercitationem nam tenetur illo. Aliquam cum nobis, nesciunt esse veniam facilis necessitatibus incidunt quidem tempore commodi numquam aut. Ab possimus similique inventore alias, consequuntur neque voluptates rem. Cupiditate sequi consectetur nulla aliquam, ut, minima, rerum nobis magni quos in iure repellendus. Quo iure accusamus a. Eaque molestiae ipsum aperiam expedita animi adipisci maiores unde inventore officia dolorem? Iure, nisi aliquid sequi consequuntur ea mollitia laborum! Ratione in voluptatum deserunt similique, eaque mollitia, impedit eos amet quas corporis suscipit debitis. Quidem consectetur sequi fuga modi, amet eaque minus officiis placeat recusandae explicabo, repellendus ipsa ab in ratione vero neque quos? Soluta, quae ipsa! Voluptatum dicta sint error deserunt porro.</p>
-                </div>
-                <div class="d-flex flex-row justify-content-around my-5">
-                    <div class="card rounded shadow w-25 px-4 py-3">
-                        <div class="d-flex flex-row justify-content-around">
-                            <div>
-                                <h5><i>Fecha Inicio</i></h5>
-                                <p>20/06/2020</p>
-                            </div>
-                            <div>
-                                <h5><i>Fecha Fin</i></h5>
-                                <p>-</p>
-                            </div>
+                    <div class="d-flex flex-row justify-content-around mt-5">
+                        <div>
+                            <h5><i>Fecha Inicio</i></h5>
+                            <p>20/06/2020</p>
                         </div>
-                        <button class="btn btn-primary">Cerrar Proyecto</button>
-                    </div>
-                    <div class="card rounded shadow w-25 px-4 py-3">
-                        <div class="d-flex flex-row justify-content-around">
-                            <div>
-                                <h5><i>Monto Inicial</i></h5>
-                                <p>$500.000</p>
-                            </div>
-                            <div>
-                                <h5><i>Balance</i></h5>
-                                <p>$125.000</p>
-                            </div>
+                        <div>
+                            <h5><i>Fecha Fin</i></h5>
+                            <p>23/4/2021</p>
                         </div>
-                        <button class="btn btn-primary">Ver Gastos</button>
+                        <div>
+                          <h5><i>Fuente Financiacion</i></h5>
+                          <p>Gobierno Nacion</p>
+                        </div>
+                        <div>
+                            <h5><i>Monto Inicial</i></h5>
+                            <p>$500.000</p>
+                        </div>
                     </div>
+                    <div class="my-3">
+                      <h5>Usuarios asignados</h5>
+                      <table class="table table-hover">
+                          <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Ultimo acceso</th>
+                                <th scope="col">Rol</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>Gabriel Jotallan</td>
+                                <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
+                                <td>Investigador</td>
+                              </tr>
+                              <tr>
+                                  <th scope="row">1</th>
+                                  <td>Gabriel Jotallan</td>
+                                  <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
+                                  <td>Lider de Proyecto</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>Gabriel Jotallan</td>
+                                  <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
+                                  <td>Encargado Bioterio</td>
+                                </tr>
+                                <tr>
+                                  <th scope="row">1</th>
+                                  <td>Gabriel Jotallan</td>
+                                  <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
+                                  <td>Investigador</td>
+                                </tr>
+                            </tbody>
+                      </table>
+                  </div>
+                    <div class="text-center">
+                      <button class="btn btn-secondary mx-2 btn-lg" routerLink='../create'>
+                          Editar Proyecto
+                      </button>
+                      <button class="btn btn-primary mx-2 btn-lg">
+                          Finalizar Proyecto
+                      </button>
+                    </div>
+                    
                 </div>
-            </div>
-            <div class="m-4">
-                <h5>Usuarios en proyecto</h5>
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Nombre</th>
-                          <th scope="col">Ultimo acceso</th>
-                          <th scope="col">Ultimas entradas</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Gabriel Jotallan</td>
-                          <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                          <td>VER</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Gabriel Jotallan</td>
-                            <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                            <td>VER</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Gabriel Jotallan</td>
-                            <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                            <td>VER</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Gabriel Jotallan</td>
-                            <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                            <td>VER</td>
-                          </tr>
-                      </tbody>
-                </table>
             </div>
           </ng-template>
         </li>
         <li [ngbNavItem]="2">
+          <a ngbNavLink>Blog</a>
+          <ng-template ngbNavContent>
+            <h5 class="mt-4">Timeline de proyecto</h5>
+            <div class="card shadow rounded p-4 m-3">
+              <form action="">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="" class="form-label">Fecha Inicio</label>
+                      <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                          <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                  <i class="bi bi-calendar"></i>
+                              </button>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-group">
+                      <label for="" class="form-label">Fecha Inicio</label>
+                      <div class="input-group">
+                          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                          <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                                  <i class="bi bi-calendar"></i>
+                              </button>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="exampleInputEmail1" class="form-label">Tipo de entrada</label>
+                    <select class="form-control"  aria-label="Default select example">
+                        <option selected>-Tipo-</option>
+                        <option value="1">Blog</option>
+                        <option value="2">Bioterio</option>
+                        <option value="3">Acciones</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div>
+              <div class="row">
+                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
+                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
+                    <i class="bi bi-journal"></i>
+                  </div>
+                  <p class="text-center mb-0">20/03/19</p>
+                  <p>20:24hs</p>
+                </div>
+                <div class="col-11">
+                  <ngb-alert [dismissible]="false">
+                    <strong>Experimento AAA-123 - Entrada en Blog</strong> 
+                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
+                  </ngb-alert>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-11">
+                  <ngb-alert [dismissible]="false">
+                    <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
+                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
+                    <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
+                  </ngb-alert>
+                </div>
+                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
+                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
+                    <i class="bi bi-arrow-left-right"></i>
+                  </div>
+                  <p class="text-center mb-0">20/03/19</p>
+                  <p>20:24hs</p>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
+                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
+                    <i class="bi bi-journal"></i>
+                  </div>
+                  <p class="text-center mb-0">20/03/19</p>
+                  <p>20:24hs</p>
+                </div>
+                <div class="col-11">
+                  <ngb-alert [dismissible]="false">
+                    <strong>Experimento AAA-123 - Entrada en Blog</strong> 
+                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
+                  </ngb-alert>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-11">
+                  <ngb-alert [dismissible]="false">
+                    <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
+                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
+                    <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
+                  </ngb-alert>
+                </div>
+                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
+                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
+                    <i class="bi bi-arrow-left-right"></i>
+                  </div>
+                  <p class="text-center mb-0">20/03/19</p>
+                  <p>20:24hs</p>
+                </div>
+              </div>
+            </div>
+            
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
           <a ngbNavLink>Experimentos</a>
           <ng-template ngbNavContent>
-            <p>You can do filter table data, in this case with observables and our <code>NgbHighlight</code> component used in Typeahead</p>
 
-<form>
-  <div class="form-group form-inline">
-      Full text search: <input class="form-control ml-2" type="text" [formControl]="filter"/>
-  </div>
-</form>
+            <form>
+              <div class="form-group form-inline m-4 justify-content-around">
+                <div>
+                  Buscar experimento: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+                </div>
+                  <button class="btn btn-primary">Nuevo Experimento</button>
+              </div>
+            </form>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">Country</th>
-    <th scope="col">Area</th>
-    <th scope="col">Population</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let country of countries$ | async; index as i">
-    <th scope="row">{{ i + 1 }}</th>
-    <td>
-      <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
-      <ngb-highlight [result]="country.name" [term]="filter.value"></ngb-highlight>
-    </td>
-    <td><ngb-highlight [result]="country.area | number" [term]="filter.value"></ngb-highlight></td>
-    <td><ngb-highlight [result]="country.population | number" [term]="filter.value"></ngb-highlight></td>
-  </tr>
-  </tbody>
-</table>
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Fecha Inicio</th>
+                <th scope="col">Fuente Experimental</th>
+                <th scope="col">Fecha Fin</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let experimento of experimentos | async; index as i" routerLink="experimento/{{experimento.id}}" style="cursor: pointer;">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                  <ngb-highlight [result]="experimento.nombre" [term]="filter.value" class="link-primary"></ngb-highlight>
+                </td>
+                <td><ngb-highlight [result]="experimento.fechaInicio" [term]="filter.value"></ngb-highlight></td>
+                <td><ngb-highlight [result]="experimento.fuenteExperimental" [term]="filter.value"></ngb-highlight></td>
+                <td><ngb-highlight [result]="experimento.fechaFin" [term]="filter.value"></ngb-highlight></td>
+              </tr>
+              </tbody>
+            </table>
           </ng-template>
         </li>
       </ul>

@@ -1,41 +1,48 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, PipeTransform } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-const COUNTRIES: any[] = [
+const EXPERIMENTOS: any[] = [
   {
-    name: 'Russia',
-    flag: 'f/f3/Flag_of_Russia.svg',
-    area: 17075200,
-    population: 146989754
+    id: 1,
+    nombre: 'Experimento 1',
+    fechaInicio: '20/12/90',
+    fuenteExperimental: 'Fuente 1',
+    fechaFin: '20/12/90',
   },
   {
-    name: 'Canada',
-    flag: 'c/cf/Flag_of_Canada.svg',
-    area: 9976140,
-    population: 36624199
+    id: 2,
+    nombre: 'Experimento 2',
+    fechaInicio: '20/12/90',
+    fuenteExperimental: 'Fuente 2',
+    fechaFin: '20/12/90',
   },
   {
-    name: 'United States',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-    area: 9629091,
-    population: 324459463
+    id: 3,
+    nombre: 'Experimento 3',
+    fechaInicio: '20/12/90',
+    fuenteExperimental: 'Fuente 3',
+    fechaFin: '20/12/90',
   },
   {
-    name: 'China',
-    flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-    area: 9596960,
-    population: 1409517397
-  }
+    id: 4,
+    nombre: 'Experimento 3',
+    fechaInicio: '20/12/90',
+    fuenteExperimental: 'Fuente 3',
+    fechaFin: '20/12/90',
+  },
 ];
 
 function search(text: string, pipe: PipeTransform): any[] {
-  return COUNTRIES.filter(country => {
+  return EXPERIMENTOS.filter(experimento => {
     const term = text.toLowerCase();
-    return country.name.toLowerCase().includes(term)
-        || pipe.transform(country.area).includes(term)
-        || pipe.transform(country.population).includes(term);
+    return experimento.nombre.toLowerCase().includes(term)
+        || pipe.transform(experimento.fechaInicio).includes(term)
+        || pipe.transform(experimento.fuenteExperimental).includes(term)
+        || pipe.transform(experimento.fechaFin).includes(term);
   });
 }
 
@@ -47,17 +54,22 @@ function search(text: string, pipe: PipeTransform): any[] {
 })
 export class DetalleProyectoComponent implements OnInit {
 
-  countries$: Observable<any[]>;
+  experimentos: Observable<any[]>;
   filter = new FormControl('');
+  model:NgbDateStruct;
 
-  constructor(pipe: DecimalPipe) {
-    this.countries$ = this.filter.valueChanges.pipe(
+  constructor(pipe: DecimalPipe, private router: Router) {
+    this.experimentos = this.filter.valueChanges.pipe(
       startWith(''),
       map(text => search(text, pipe))
     );
   }
 
   ngOnInit(): void {
+  }
+
+  irA(id: number): void {
+    this.router.navigateByUrl(`experimento/${id}`);
   }
 
 }
