@@ -14,6 +14,7 @@ import { ProyectosComponent } from './components/home/proyectos/proyectos.compon
 import { DetalleProyectoComponent } from './components/home/proyectos/detalle-proyecto/detalle-proyecto.component';
 import { StockComponent } from './components/home/stock/stock.component';
 import { StockDetalleComponent } from './components/home/stock/stock-detalle/stock-detalle.component';
+import { NuevoProductoComponent } from './components/home/stock/nuevo-producto/nuevo-producto.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { StockDetalleComponent } from './components/home/stock/stock-detalle/sto
     ProyectosComponent,
     DetalleProyectoComponent,
     StockComponent,
-    StockDetalleComponent
+    StockDetalleComponent,
+    NuevoProductoComponent
   ],
   imports: [
     BrowserModule,
