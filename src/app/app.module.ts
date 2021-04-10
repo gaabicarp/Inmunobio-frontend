@@ -14,7 +14,12 @@ import { ProyectosComponent } from './components/home/proyectos/proyectos.compon
 import { DetalleProyectoComponent } from './components/home/proyectos/detalle-proyecto/detalle-proyecto.component';
 import { StockComponent } from './components/home/stock/stock.component';
 import { StockDetalleComponent } from './components/home/stock/stock-detalle/stock-detalle.component';
-import { NuevoProductoComponent } from './components/home/stock/nuevo-producto/nuevo-producto.component';
+import { NuevoProductoComponent } from './components/home/stock/productos/nuevo-producto/nuevo-producto.component';
+import { ProductosComponent } from './components/home/stock/productos/productos.component';
+import { EspaciosfisicosComponent } from './components/home/stock/espaciosfisicos/espaciosfisicos.component';
+import { AgregarStockComponent } from './components/home/stock/stock-detalle/agregar-stock/agregar-stock.component';
+import { NuevoContenedorComponent } from './components/home/stock/stock-detalle/nuevo-contenedor/nuevo-contenedor.component';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +33,12 @@ import { NuevoProductoComponent } from './components/home/stock/nuevo-producto/n
     DetalleProyectoComponent,
     StockComponent,
     StockDetalleComponent,
-    NuevoProductoComponent
+    NuevoProductoComponent,
+    ProductosComponent,
+    EspaciosfisicosComponent,
+    AgregarStockComponent,
+    NuevoContenedorComponent,
+
   ],
   imports: [
     BrowserModule,
