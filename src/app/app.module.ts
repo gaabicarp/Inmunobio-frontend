@@ -14,6 +14,16 @@ import { ProyectosComponent } from './components/home/proyectos/proyectos.compon
 import { DetalleProyectoComponent } from './components/home/proyectos/detalle-proyecto/detalle-proyecto.component';
 import { DetalleExperimentosComponent } from './components/home/proyectos/detalle-experimentos/detalle-experimentos.component';
 import { NuevoProyectoComponent } from './components/home/proyectos/nuevo-proyecto/nuevo-proyecto.component';
+import { StockComponent } from './components/home/stock/stock.component';
+import { StockDetalleComponent } from './components/home/stock/stock-detalle/stock-detalle.component';
+import { NuevoProductoComponent } from './components/home/stock/productos/nuevo-producto/nuevo-producto.component';
+import { ProductosComponent } from './components/home/stock/productos/productos.component';
+import { EspaciosfisicosComponent } from './components/home/stock/espaciosfisicos/espaciosfisicos.component';
+import { AgregarStockComponent } from './components/home/stock/stock-detalle/agregar-stock/agregar-stock.component';
+import { NuevoContenedorComponent } from './components/home/stock/stock-detalle/nuevo-contenedor/nuevo-contenedor.component';
+import { NuevaDistribuidoraComponent } from './components/home/stock/productos/nueva-distribuidora/nueva-distribuidora.component';
+import { BioterioComponent } from './components/home/bioterio/bioterio.component';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +36,17 @@ import { NuevoProyectoComponent } from './components/home/proyectos/nuevo-proyec
     ProyectosComponent,
     DetalleProyectoComponent,
     DetalleExperimentosComponent,
-    NuevoProyectoComponent
+    NuevoProyectoComponent,
+    StockComponent,
+    StockDetalleComponent,
+    NuevoProductoComponent,
+    ProductosComponent,
+    EspaciosfisicosComponent,
+    AgregarStockComponent,
+    NuevoContenedorComponent,
+    NuevaDistribuidoraComponent,
+    BioterioComponent,
+
   ],
   imports: [
     BrowserModule,
