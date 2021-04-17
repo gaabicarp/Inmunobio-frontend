@@ -12,6 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 import { EspaciosfisicosComponent } from './components/home/stock/espaciosfisicos/espaciosfisicos.component';
 import { AgregarStockComponent } from './components/home/stock/stock-detalle/agregar-stock/agregar-stock.component';
 import { NuevoContenedorComponent } from './components/home/stock/stock-detalle/nuevo-contenedor/nuevo-contenedor.component';
+import { NuevaDistribuidoraComponent } from './components/home/stock/productos/nueva-distribuidora/nueva-distribuidora.component';
+import { BioterioComponent } from './components/home/bioterio/bioterio.component';
 const routes: Routes = [
   { path: 'home',
     component: HomeComponent,
@@ -25,7 +27,9 @@ const routes: Routes = [
       {path: 'stock/espaciosfisicos/:id/agregar-stock', component: AgregarStockComponent},
       {path: 'stock/productos', component: ProductosComponent },
       {path: 'stock/productos/nuevo-producto', component: NuevoProductoComponent},
-      {path: 'stock/espaciosfisicos/:id/agregar-stock/nuevo-contenedor', component: NuevoContenedorComponent}
+      {path: 'stock/productos/nuevo-producto/nueva-distribuidora', component: NuevaDistribuidoraComponent},
+      {path: 'stock/espaciosfisicos/:id/agregar-stock/nuevo-contenedor', component: NuevoContenedorComponent},
+      {path: 'bioterio', component: BioterioComponent}
       
       
     ]},

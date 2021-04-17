@@ -19,6 +19,8 @@ import { ProductosComponent } from './components/home/stock/productos/productos.
 import { EspaciosfisicosComponent } from './components/home/stock/espaciosfisicos/espaciosfisicos.component';
 import { AgregarStockComponent } from './components/home/stock/stock-detalle/agregar-stock/agregar-stock.component';
 import { NuevoContenedorComponent } from './components/home/stock/stock-detalle/nuevo-contenedor/nuevo-contenedor.component';
+import { NuevaDistribuidoraComponent } from './components/home/stock/productos/nueva-distribuidora/nueva-distribuidora.component';
+import { BioterioComponent } from './components/home/bioterio/bioterio.component';
 
 
 @NgModule({
@@ -38,6 +40,8 @@ import { NuevoContenedorComponent } from './components/home/stock/stock-detalle/
     EspaciosfisicosComponent,
     AgregarStockComponent,
     NuevoContenedorComponent,
+    NuevaDistribuidoraComponent,
+    BioterioComponent,
 
   ],
   imports: [
