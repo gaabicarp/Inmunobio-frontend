@@ -1,8 +1,4 @@
-<div class="portada">
-</div>
-<div class="text-white ml-3 mt-3" routerLink="../" role="button" style="position: relative;">
-    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-</div>
+
 <div class="mb-5">
     <h2 class="text-center ">Bioterio</h2>
 </div>
@@ -29,11 +25,25 @@
         <li [ngbNavItem]="2">
           <a ngbNavLink>Jaulas</a>
           <ng-template ngbNavContent>
+            <div class="search-container flex-wrap">
+              <div class="input-group mb-3">
+                  <span class="input-group-text">
+                      <i class="bi bi-search"></i>
+                  </span>
+                  <input type="text" class="form-control" id="usuario" placeholder="Filtrar según salon">
+              </div>
+              <div>
+                  <button type="button" class="btn btn-primary btn-lg" routerLink="editar-jaula" >Nueva Jaula</button>
+              </div>
+            </div>
+            <div class="m-4">
             <table class="table table-hover text-center">
                 <thead>
                   <tr>
                     <th scope="col">Número</th>
                     <th scope="col">Sala</th>
+                    <th scope="col">Rack</th>
+                    <th scope="col">Estante</th>
                     <th scope="col">Proyecto Asociado</th>
                     <th></th>
                   </tr>
@@ -42,31 +52,39 @@
                   <tr>
                     <th scope="row">1</th>
                     <td>Laboratorio 1</td>
+                    <td>12</td>
+                    <td>3</td>
                     <td>Coronavirus</td>
                     <td><a href="" routerLink='1' >Ver</a></td>
                   </tr>
                   <tr>
                     <th scope="row" >2</th>
                     <td>Laboratorio 5</td>
+                    <td>4</td>
+                    <td>9</td>
                     <td>Inmunobio</td>
                     <td><a href="" routerLink='2' >Ver</a></td>
                   </tr>
                   <tr>
                     <th scope="row" >3</th>
                     <td>Laboratorio 2</td>
+                    <td>6</td>
+                    <td>3</td>
                     <td>Coronavirus</td>
                     <td><a href="" routerLink='3'>Ver</a></td>
                   </tr>
                   <tr>
                     <th scope="row" >4</th>
                     <td>Laboratorio 1</td>
+                    <td>2</td>
+                    <td>7</td>
                     <td>Coronavirus</td>
                     <td><a href="" routerLink='4' >Ver</a></td>
                   </tr>
                   
                 </tbody>
               </table>
-            
+            </div>
           </ng-template>
         </li>
         

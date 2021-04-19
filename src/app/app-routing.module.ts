@@ -14,6 +14,11 @@ import { AgregarStockComponent } from './components/home/stock/stock-detalle/agr
 import { NuevoContenedorComponent } from './components/home/stock/stock-detalle/nuevo-contenedor/nuevo-contenedor.component';
 import { NuevaDistribuidoraComponent } from './components/home/stock/productos/nueva-distribuidora/nueva-distribuidora.component';
 import { BioterioComponent } from './components/home/bioterio/bioterio.component';
+import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
+import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/editar-jaula/editar-jaula.component';
+import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
+import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
+
 const routes: Routes = [
   { path: 'home',
     component: HomeComponent,
@@ -25,11 +30,17 @@ const routes: Routes = [
       {path: 'stock/espaciosfisicos', component: EspaciosfisicosComponent},
       {path: 'stock/espaciosfisicos/:id', component: StockDetalleComponent},
       {path: 'stock/espaciosfisicos/:id/agregar-stock', component: AgregarStockComponent},
+      {path: 'stock/espaciosfisicos/:id/consumir-stock', component: ConsumirStockComponent},
       {path: 'stock/productos', component: ProductosComponent },
       {path: 'stock/productos/nuevo-producto', component: NuevoProductoComponent},
       {path: 'stock/productos/nuevo-producto/nueva-distribuidora', component: NuevaDistribuidoraComponent},
       {path: 'stock/espaciosfisicos/:id/agregar-stock/nuevo-contenedor', component: NuevoContenedorComponent},
-      {path: 'bioterio', component: BioterioComponent}
+      {path: 'bioterio', component: BioterioComponent},
+      {path: 'bioterio/editar-jaula', component: EditarJaulaComponent},
+      {path: 'bioterio/:id', component: JaulaDetalleComponent},
+      {path: 'bioterio/:id/editar-jaula', component: EditarJaulaComponent},
+      {path: 'bioterio/:id/alta-animal', component: AltaAnimalComponent}
+      
       
       
     ]},
