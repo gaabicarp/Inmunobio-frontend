@@ -18,6 +18,7 @@ import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/
 import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/editar-jaula/editar-jaula.component';
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
+import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -36,6 +37,7 @@ const routes: Routes = [
       {path: 'stock/productos/nuevo-producto/nueva-distribuidora', component: NuevaDistribuidoraComponent},
       {path: 'stock/espaciosfisicos/:id/agregar-stock/nuevo-contenedor', component: NuevoContenedorComponent},
       {path: 'bioterio', component: BioterioComponent},
+      {path: 'bioterio/entrada-blog', component:EntradaBlogComponent},
       {path: 'bioterio/editar-jaula', component: EditarJaulaComponent},
       {path: 'bioterio/:id', component: JaulaDetalleComponent},
       {path: 'bioterio/:id/editar-jaula', component: EditarJaulaComponent},

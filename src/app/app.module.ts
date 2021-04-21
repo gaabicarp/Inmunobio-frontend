@@ -25,6 +25,7 @@ import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/
 import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/editar-jaula/editar-jaula.component';
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
+import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ConsumirStockComponent } from './components/home/stock/stock-detalle/co
     JaulaDetalleComponent,
     EditarJaulaComponent,
     AltaAnimalComponent,
-    ConsumirStockComponent
+    ConsumirStockComponent,
+    EntradaBlogComponent
 
   ],
   imports: [
