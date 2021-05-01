@@ -16,14 +16,16 @@ import { DetalleExperimentosComponent } from './components/home/proyectos/detall
 import { NuevoProyectoComponent } from './components/home/proyectos/nuevo-proyecto/nuevo-proyecto.component';
 import { StockComponent } from './components/home/stock/stock.component';
 import { StockDetalleComponent } from './components/home/stock/stock-detalle/stock-detalle.component';
-import { NuevoProductoComponent } from './components/home/stock/productos/nuevo-producto/nuevo-producto.component';
-import { ProductosComponent } from './components/home/stock/productos/productos.component';
+import { NuevoProductoComponent } from './components/home/configuracion/productos/nuevo-producto/nuevo-producto.component';
+import { ProductosComponent } from './components/home/configuracion/productos/productos.component';
 import { EspaciosfisicosComponent } from './components/home/stock/espaciosfisicos/espaciosfisicos.component';
 import { AgregarStockComponent } from './components/home/stock/stock-detalle/agregar-stock/agregar-stock.component';
 import { NuevoContenedorComponent } from './components/home/stock/stock-detalle/nuevo-contenedor/nuevo-contenedor.component';
-import { NuevaDistribuidoraComponent } from './components/home/stock/productos/nueva-distribuidora/nueva-distribuidora.component';
+import { NuevaDistribuidoraComponent } from './components/home/configuracion/productos/nueva-distribuidora/nueva-distribuidora.component';
 import { BioterioComponent } from './components/home/bioterio/bioterio.component';
-
+import { ConfiguracionComponent } from './components/home/configuracion/configuracion.component';
+import { UsuariosComponent } from './components/home/configuracion/usuarios/usuarios.component';
+import { NuevoUsuarioComponent } from './components/home/configuracion/usuarios/nuevo-usuario/nuevo-usuario.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { BioterioComponent } from './components/home/bioterio/bioterio.component
     NuevoContenedorComponent,
     NuevaDistribuidoraComponent,
     BioterioComponent,
-
+    ConfiguracionComponent,
+    UsuariosComponent,
+    NuevoUsuarioComponent,
   ],
   imports: [
     BrowserModule,
