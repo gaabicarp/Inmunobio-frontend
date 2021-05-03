@@ -1,0 +1,124 @@
+<div class="m-4" routerLink="../" role="button">
+    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+</div>
+<div class="mb-5">
+    <h2 class="text-center ">Jaula</h2>
+</div>
+
+
+<div class="mx-4">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>Información</a>
+          <ng-template ngbNavContent>
+            <div class="m-5">
+            <table class="table table-striped table-hover">
+                <tbody>
+                <tr>
+                    <td class="table-active">Nombre</td>
+                    <td>asdasda</td>
+                </tr>
+                <tr>
+                    <td class="table-active">Número</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td class="table-active">Rack</td>
+                    <td>33</td>
+                </tr>
+                <tr>
+                    <td class="table-active">Estante</td>
+                    <td>7</td>
+                </tr>
+                <tr>
+                    <td class="table-active">Tipo</td>
+                    <td>Transparente</td>
+                </tr>
+                <tr>
+                    <td class="table-active">Salón</td>
+                    <td>Laboratorio 1</td>
+                </tr>
+                <tr>
+                    <td class="table-active">Proyecto Asociado</td>
+                    <td>Coronavirus</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="text-center mb-5">
+                <button type="button" class="btn btn-outline-primary text-center" routerLink="editar-jaula">Editar Información</button>
+              </div>
+ 
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>Animales</a>
+          <ng-template ngbNavContent>
+
+            <div class="search-container flex-wrap">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" class="form-control" id="usuario" placeholder="Filtrar según código">
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary btn-lg" routerLink="alta-animal" >Alta de Animal</button>
+                </div>
+              </div>
+            <div class="m-4">
+            <table class="table table-striped table-hover text-center">
+                <thead>
+                  <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Especie</th>
+                    <th scope="col">Cepa</th>
+                    <th scope="col">Sexo</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="col">2234</th>
+                        <th scope="col">Rata</th>
+                        <th scope="col">445</th>
+                        <th scope="col">F</th>
+                        <th><button type="button" class="btn btn-outline-danger">Baja</button></th>
+                    </tr>
+                    <tr>
+                        <th scope="col">5665</th>
+                        <th scope="col">Rata</th>
+                        <th scope="col">123</th>
+                        <th scope="col">M</th>
+                        <th><button type="button" class="btn btn-outline-danger">Baja</button></th>
+                    </tr>
+                    <tr>
+                        <th scope="col">998</th>
+                        <th scope="col">Rata</th>
+                        <th scope="col">4995</th>
+                        <th scope="col">M</th>
+                        <th><button type="button" class="btn btn-outline-danger">Baja</button></th>
+                    </tr>
+                    <tr>
+                        <th scope="col">2234</th>
+                        <th scope="col">Rata</th>
+                        <th scope="col">445</th>
+                        <th scope="col">F</th>
+                        <th><button type="button" class="btn btn-outline-danger">Baja</button></th>
+                    </tr>
+                  
+                  
+                </tbody>
+              </table>
+            </div>
+            
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+
+
+
+    
+</div>

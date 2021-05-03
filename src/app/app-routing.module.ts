@@ -19,6 +19,11 @@ import { BioterioComponent } from './components/home/bioterio/bioterio.component
 import { ConfiguracionComponent } from './components/home/configuracion/configuracion.component';
 import { UsuariosComponent } from './components/home/configuracion/usuarios/usuarios.component';
 import { NuevoUsuarioComponent } from './components/home/configuracion/usuarios/nuevo-usuario/nuevo-usuario.component';
+import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
+import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/editar-jaula/editar-jaula.component';
+import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
+import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
+import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -31,10 +36,12 @@ const routes: Routes = [
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'stock', component: StockComponent},
-      {path: 'stock/espaciosfisicos', component: EspaciosfisicosComponent},
-      {path: 'stock/espaciosfisicos/:id', component: StockDetalleComponent},
-      {path: 'stock/espaciosfisicos/:id/agregar-stock', component: AgregarStockComponent},
-      {path: 'stock/espaciosfisicos/:id/agregar-stock/nuevo-contenedor', component: NuevoContenedorComponent},
+      {path: 'stock/', component: EspaciosfisicosComponent},
+      {path: 'stock/:id', component: StockDetalleComponent},
+      {path: 'stock/:id/agregar-stock', component: AgregarStockComponent},
+      {path: 'stock/:id/agregar-stock/nuevo-contenedor', component: NuevoContenedorComponent},
+      {path: 'stock/:id/consumir-stock', component: ConsumirStockComponent},
+      {path: 'stock/:id/agregar-stock/nuevo-contenedor', component: NuevoContenedorComponent},
       {path: 'bioterio', component: BioterioComponent},
       {path: 'configuracion', component: ConfiguracionComponent},
       {path: 'configuracion/usuarios', component: UsuariosComponent},
@@ -42,6 +49,12 @@ const routes: Routes = [
       {path: 'configuracion/productos', component: ProductosComponent },
       {path: 'configuracion/productos/nuevo-producto', component: NuevoProductoComponent},
       {path: 'configuracion/productos/nuevo-producto/nueva-distribuidora', component: NuevaDistribuidoraComponent},
+      {path: 'bioterio', component: BioterioComponent},
+      {path: 'bioterio/entrada-blog', component: EntradaBlogComponent},
+      {path: 'bioterio/editar-jaula', component: EditarJaulaComponent},
+      {path: 'bioterio/:id', component: JaulaDetalleComponent},
+      {path: 'bioterio/:id/editar-jaula', component: EditarJaulaComponent},
+      {path: 'bioterio/:id/alta-animal', component: AltaAnimalComponent}
     ]},
   { path: 'login', component: LoginComponent},
   { path: '', pathMatch: 'full', redirectTo: 'login'}

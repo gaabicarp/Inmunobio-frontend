@@ -13,38 +13,19 @@
                   <th scope="col">#</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Ultimo acceso</th>
+                  <th scope="col">Telefono</th>
+                  <th scope="col">Direccion</th>
                   <th scope="col">Nivel de acceso</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Gabriel Jotallan</td>
-                  <td>gaabicarp@gmail.com</td>
-                  <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                  <td>Nivel 1</td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Gabriel Jotallan</td>
-                    <td>gaabicarp@gmail.com</td>
-                    <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                    <td>Nivel 1</td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Gabriel Jotallan</td>
-                    <td>gaabicarp@gmail.com</td>
-                    <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                    <td>Nivel 1</td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Gabriel Jotallan</td>
-                    <td>gaabicarp@gmail.com</td>
-                    <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                    <td>Nivel 1</td>
+                <tr *ngFor='let usuario of usuarios; let i = index'>
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{usuario.nombre}}</td>
+                  <td>{{usuario.mail}}</td>
+                  <td>{{usuario.telefono}}</td>
+                  <td>{{usuario.direccion}}</td>
+                  <td>{{usuario.id_permisos[0].descripcion}}</td>
                 </tr>
               </tbody>
         </table>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AgregarStockComponent } from './agregar-stock.component';
+import { JaulaDetalleComponent } from './jaula-detalle.component';
 
-describe('AgregarStockComponent', () => {
-  let component: AgregarStockComponent;
-  let fixture: ComponentFixture<AgregarStockComponent>;
+describe('JaulaDetalleComponent', () => {
+  let component: JaulaDetalleComponent;
+  let fixture: ComponentFixture<JaulaDetalleComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AgregarStockComponent ]
+      declarations: [ JaulaDetalleComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AgregarStockComponent);
+    fixture = TestBed.createComponent(JaulaDetalleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

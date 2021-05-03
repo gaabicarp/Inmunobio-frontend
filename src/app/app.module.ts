@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +27,11 @@ import { BioterioComponent } from './components/home/bioterio/bioterio.component
 import { ConfiguracionComponent } from './components/home/configuracion/configuracion.component';
 import { UsuariosComponent } from './components/home/configuracion/usuarios/usuarios.component';
 import { NuevoUsuarioComponent } from './components/home/configuracion/usuarios/nuevo-usuario/nuevo-usuario.component';
+import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
+import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/editar-jaula/editar-jaula.component';
+import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
+import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
+import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
 
 @NgModule({
   declarations: [
@@ -51,12 +57,19 @@ import { NuevoUsuarioComponent } from './components/home/configuracion/usuarios/
     ConfiguracionComponent,
     UsuariosComponent,
     NuevoUsuarioComponent,
+    JaulaDetalleComponent,
+    EditarJaulaComponent,
+    AltaAnimalComponent,
+    ConsumirStockComponent,
+    EntradaBlogComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     NgbModule
   ],
   providers: [],
