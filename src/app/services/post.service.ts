@@ -14,4 +14,8 @@ export class PostService {
     const header = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
     return this.http.post<any>(this.API_URL + '/nuevoUsuario', nuevoUsuario, {headers: header});
   }
+  crearExperimento(nuevoExperimento : any): Observable<any>{
+    const header = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
+    return this.http.post<any>(this.API_URL + '/nuevoExperimento', nuevoExperimento, {headers: header});
+  }
 }

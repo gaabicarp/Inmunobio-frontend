@@ -24,6 +24,8 @@ import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/e
 import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
+import { NuevoExperimentoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-experimento/nuevo-experimento.component';
+
 
 const routes: Routes = [
   { path: 'home',
@@ -33,6 +35,7 @@ const routes: Routes = [
       {path: 'proyectos', component: ProyectosComponent},
       {path: 'proyectos/create', component: NuevoProyectoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
+      {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'stock', component: StockComponent},
