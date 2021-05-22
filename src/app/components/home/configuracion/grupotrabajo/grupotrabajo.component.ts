@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
-import { GetService } from '../../../../services/get.service';
 
 @Component({
-  selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.css']
+  selector: 'app-grupotrabajo',
+  templateUrl: './grupotrabajo.component.html',
+  styleUrls: ['./grupotrabajo.component.css']
 })
-export class UsuariosComponent implements OnInit {
+export class GrupotrabajoComponent implements OnInit {
 
-  usuarios = [];
-  permisos = [];
+  gruposTrabajo = [];
 
-  usuarioSeleccionado: any;
+  grupoSeleccionado: any;
   step: number;
   modo: string;
 
@@ -21,14 +20,14 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.step = 0;
-    this.getService.obtenerUsuarios().subscribe(res => {
+    this.getService.obtenerGrupos().subscribe(res => {
       console.log(res)
-      this.usuarios = res;
+      this.gruposTrabajo = res;
     });
   }
 
-  editar(usuario: any): void {
-    this.usuarioSeleccionado = usuario;
+  editar(grupo: any){
+    this.grupoSeleccionado = grupo;
     this.modo = 'EDITAR';
     this.step = 1;
   }
@@ -42,7 +41,7 @@ export class UsuariosComponent implements OnInit {
     this.postService.eliminarUsuario(usuario.id);
   }
 
-  volver(){
+  onVolver(){
     this.step = 0;
   }
 

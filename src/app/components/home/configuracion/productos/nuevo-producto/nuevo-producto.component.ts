@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GetService } from 'src/app/services/get.service';
 
 @Component({
   selector: 'app-nuevo-producto',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nuevo-producto.component.css']
 })
 export class NuevoProductoComponent implements OnInit {
-
-  constructor() { }
+  distribuidoras = [];
+  constructor(private getService: GetService) { }
 
   ngOnInit(): void {
+    this.getService.obtenerDistribuidoras().subscribe(res =>{
+      console.log(res)
+      this.distribuidoras = res;
+    });
   }
-
 }

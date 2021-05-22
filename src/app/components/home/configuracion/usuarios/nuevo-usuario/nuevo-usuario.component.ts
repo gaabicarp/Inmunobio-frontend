@@ -67,4 +67,8 @@ export class NuevoUsuarioComponent implements OnInit {
       });
     }
   }
+
+  onVolver(): void{
+    this.volver.emit();
+  }
 }

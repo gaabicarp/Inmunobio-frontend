@@ -17,4 +17,12 @@ export class GetService {
   obtenerPermisos(): Observable<any>{
     return this.http.get<any>(this.API_URL + '/permisos');
   }
+
+  obtenerGrupos(): Observable<any>{
+    return this.http .get<any>(this.API_URL + '/GruposDeTrabajo');
+  }
+
+  obtenerDistribuidoras(): Observable<any>{
+    return this.http.get<any>(this.API_URL + '/getDistribuidoras');
+  }
 }

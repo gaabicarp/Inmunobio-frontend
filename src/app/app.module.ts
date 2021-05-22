@@ -32,6 +32,8 @@ import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/e
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
 import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
+import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
+import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/en
     EditarJaulaComponent,
     AltaAnimalComponent,
     ConsumirStockComponent,
-    EntradaBlogComponent
+    EntradaBlogComponent,
+    GrupotrabajoComponent,
+    NuevoGrupoComponent
 
   ],
   imports: [
