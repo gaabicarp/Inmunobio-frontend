@@ -21,17 +21,17 @@
                   <tbody>
                     <tr *ngFor='let grupo of gruposTrabajo; let i = index'>
                       <th scope="row">{{i + 1}}</th>
-                      <td>{{grupo.nombre</td>
-                      <td>{{grupo.mail</td>
-                      <td>{{grupo.telefono</td>
+                      <td>{{grupo.nombre}}</td>
+                      <td>{{grupo.jefeDeGrupo}}</td>
+                      <td>{{grupo.integrantes.length}}</td>
                       <td class="d-flex">
                         <div class="mr-4">
-                          <a class="text-primary" role="button" (click)=editar(grupo)>
+                          <a class="text-primary" role="button" (click)=editarGrupo(grupo)>
                             <i class="bi bi-pencil"></i>
                           </a>
                         </div>
                         <div>
-                          <a class="text-danger" role="button" (click)=eliminar(grupo)>
+                          <a class="text-danger" role="button" (click)=eliminarGrupo(grupo)>
                             <i class="bi bi-trash"></i>
                           </a>
                         </div>
@@ -40,12 +40,16 @@
                   </tbody>
             </table>
         </div>
-        <button class="btn btn-primary" (click)=crear()>Crear Usuario</button>
+        <button class="btn btn-primary" (click)=crearGrupo()>Crear Usuario</button>
     </div>
   </div>
   
   <div *ngIf='step === 1'>
-    <app-nuevo-grupo>
-        
+    <app-nuevo-grupo
+    [element]='grupoSeleccionado'
+    [modo]='modo'
+    (volviendo)='onVolver($event)'
+    >
+
     </app-nuevo-grupo>
   </div>

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { GetService } from 'src/app/services/get.service';
 const EXPERIMENTOS: any[] = [
   {
     id: 1,
@@ -56,9 +57,12 @@ export class DetalleProyectoComponent implements OnInit {
 
   experimentos: Observable<any[]>;
   filter = new FormControl('');
-  model:NgbDateStruct;
+  model: NgbDateStruct;
+  proyecto: any;
+  jefeProyecto: any;
+  usuariosProyecto = [];
 
-  constructor(pipe: DecimalPipe, private router: Router) {
+  constructor(pipe: DecimalPipe, private router: Router, private getService: GetService) {
     this.experimentos = this.filter.valueChanges.pipe(
       startWith(''),
       map(text => search(text, pipe))
@@ -66,6 +70,28 @@ export class DetalleProyectoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getService.obtenerProyectosPorId(1).subscribe(res => {
+      this.proyecto = res;
+      this.traerDirector(res.idDirectorProyecto);
+      this.traerUsuarios(res.participantes);
+    });
+    this.getService.obtenerExperimentos(1).subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  traerDirector(id: number): void {
+    this.getService.obtenerUsuariosPorId(id).subscribe(res => {
+      this.jefeProyecto = res;
+    });
+  }
+
+  traerUsuarios(usuarios: Array<number>): void {
+    this.proyecto.participantes.map(id => {
+      this.getService.obtenerUsuariosPorId(id).subscribe(res => {
+        this.usuariosProyecto.push(res);
+      });
+    });
   }
 
   irA(id: number): void {

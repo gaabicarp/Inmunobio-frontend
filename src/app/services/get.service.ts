@@ -14,15 +14,31 @@ export class GetService {
     return this.http.get<any>(this.API_URL + '/usuarios');
   }
 
+  obtenerUsuariosPorId(id: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + `/usuario/${id}`);
+  }
+
   obtenerPermisos(): Observable<any>{
     return this.http.get<any>(this.API_URL + '/permisos');
   }
 
   obtenerGrupos(): Observable<any>{
-    return this.http .get<any>(this.API_URL + '/GruposDeTrabajo');
+    return this.http .get<any>(this.API_URL + '/gruposDeTrabajo');
   }
 
   obtenerDistribuidoras(): Observable<any>{
     return this.http.get<any>(this.API_URL + '/getDistribuidoras');
+  }
+
+  obtenerProyectos(): Observable<any>{
+    return this.http.get<any>(this.API_URL + '/proyectos');
+  }
+
+  obtenerProyectosPorId(id: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + `/proyecto/${id}`);
+  }
+
+  obtenerExperimentos(idProyecto: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + `/proyecto/${idProyecto}/experimentos`);
   }
 }

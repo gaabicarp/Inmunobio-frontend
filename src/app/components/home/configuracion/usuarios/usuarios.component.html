@@ -16,6 +16,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Telefono</th>
                     <th scope="col">Direccion</th>
+                    <th scope="col">Grupo de trabajo</th>
                     <th scope="col">Nivel de acceso</th>
                     <th scope="col"></th>
                   </tr>
@@ -24,10 +25,14 @@
                   <tr *ngFor='let usuario of usuarios; let i = index'>
                     <th scope="row">{{i + 1}}</th>
                     <td>{{usuario.nombre}}</td>
-                    <td>{{usuario.mail}}</td>
+                    <td>{{usuario.email}}</td>
                     <td>{{usuario.telefono}}</td>
                     <td>{{usuario.direccion}}</td>
-                    <td>{{usuario.id_permisos[0].descripcion}}</td>
+                    <td>{{usuario.id_grupoDeTrabajo ? usuario.id_grupoDeTrabajo : 'Sin Grupo'}}</td>
+                      
+                    <td>
+                      <span *ngFor='let permiso of usuario.permisos'>{{permiso.descripcion}} - </span>
+                    </td>
                     <td class="d-flex">
                       <div class="mr-4">
                         <a class="text-primary" role="button" (click)=editar(usuario)>
@@ -52,7 +57,7 @@
   <app-nuevo-usuario
   [element]='usuarioSeleccionado'
   [modo]='modo'
-  (onVolver)='volver()'
+  (volviendo)='onVolviendo($event)'
   >
 </app-nuevo-usuario>
 </div>

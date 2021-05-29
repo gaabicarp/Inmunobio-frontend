@@ -26,6 +26,7 @@ import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/al
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
 import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
+import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -36,6 +37,7 @@ const routes: Routes = [
       {path: 'proyectos/create', component: NuevoProyectoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
+      {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'stock', component: StockComponent},
       {path: 'stock/', component: EspaciosfisicosComponent},

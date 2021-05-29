@@ -42,8 +42,8 @@ export class UsuariosComponent implements OnInit {
     this.postService.eliminarUsuario(usuario.id);
   }
 
-  volver(){
-    this.step = 0;
+  onVolviendo(e: number): void{
+    this.step = e;
   }
 
 }

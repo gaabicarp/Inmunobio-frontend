@@ -21,28 +21,28 @@ export class GrupotrabajoComponent implements OnInit {
   ngOnInit(): void {
     this.step = 0;
     this.getService.obtenerGrupos().subscribe(res => {
-      console.log(res)
+      console.log(res);
       this.gruposTrabajo = res;
     });
   }
 
-  editar(grupo: any){
+  editarGrupo(grupo: any): void{
     this.grupoSeleccionado = grupo;
     this.modo = 'EDITAR';
     this.step = 1;
   }
 
-  crear(){
+  crearGrupo(): void{
     this.modo = 'CREAR';
     this.step = 1;
   }
 
-  eliminar(usuario: any){
-    this.postService.eliminarUsuario(usuario.id);
+  eliminarGrupo(grupo: any): void{
+    this.postService.eliminarGrupoTrabajo(grupo.id_grupoDeTrabajo);
   }
 
-  onVolver(){
-    this.step = 0;
+  onVolver(e: number): void{
+    this.step = e;
   }
 
 }
