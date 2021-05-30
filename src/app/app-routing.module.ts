@@ -24,8 +24,9 @@ import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/e
 import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
-import { NuevoExperimentoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-experimento/nuevo-experimento.component';
-
+//import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
+//import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
+import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -35,7 +36,7 @@ const routes: Routes = [
       {path: 'proyectos', component: ProyectosComponent},
       {path: 'proyectos/create', component: NuevoProyectoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
-      {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
+      //{path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'stock', component: StockComponent},
@@ -52,6 +53,7 @@ const routes: Routes = [
       {path: 'configuracion/productos', component: ProductosComponent },
       {path: 'configuracion/productos/nuevo-producto', component: NuevoProductoComponent},
       {path: 'configuracion/productos/nuevo-producto/nueva-distribuidora', component: NuevaDistribuidoraComponent},
+      {path: 'configuracion/distribuidoras', component: DistribuidorasComponent},
       {path: 'bioterio', component: BioterioComponent},
       {path: 'bioterio/entrada-blog', component: EntradaBlogComponent},
       {path: 'bioterio/editar-jaula', component: EditarJaulaComponent},

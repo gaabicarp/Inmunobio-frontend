@@ -1,3 +1,4 @@
+<div *ngIf='step === 0'>
 <div class="m-4" routerLink="../" role="button">
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
@@ -14,69 +15,62 @@
       <input type="text" class="form-control" id="usuario" placeholder="Buscar por Nombre de Producto">
   </div>
   <div>
-      <button type="button" class="btn btn-primary btn-lg" routerLink='nuevo-producto'>Nuevo Producto</button>
+      <button type="button" class="btn btn-primary btn-lg" (click)=crear() >Nuevo Producto</button>
   </div>
 </div>
 
 <table class="table table-hover text-center">
   <thead>
     <tr>
-      <th scope="col">id</th>
-      <th scope="col">Producto</th>
-      <th scope="col">Detalles Tecnicos</th>
-      <th scope="col">Protocolo Asociado</th>
-      <th scope="col">Unidad de agrupacion</th>
+      <th scope="col">#</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Marca</th>
       <th scope="col">Distribuidora</th>
-      <th scope="col">Fecha de vencimiento</th>
-      <th></th>
+      <th scope="col">Tipo</th>
+      <th scope="col">Aka</th>
+      <th scope="col">Url</th>
+      <th scope="col">Unidad de agrupacion</th>
+      <th scope="col">Detalles Técnicos</th>
+      <th scope="col">Protocolo</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>aaaa</td>
-      <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi minus laboriosam obcaecati cumque velit, quasi vero officiis</td>
-      <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi minus laboriosam obcaecati cumque velit, quasi vero officiis</td>
-      <td>12</td>
-      <td>Lorem ipsum dolor sit</td>
-      <td>12/5/2021</td>
-      <button type="button" class="btn btn-outline-secondary m-4" routerLink='nuevo-producto'>Modificar</button>
-      <button type="button" class="btn btn-outline-danger ">Eliminar</button>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>aaaa</td>
-      <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi minus laboriosam obcaecati cumque velit, quasi vero officiis</td>
-      <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi minus laboriosam obcaecati cumque velit, quasi vero officiis</td>
-      <td>12</td>
-      <td>Lorem ipsum dolor sit</td>
-      <td>12/5/2021</td>
-      <button type="button" class="btn btn-outline-secondary m-4" routerLink='nuevo-producto'>Modificar</button>
-      <button type="button" class="btn btn-outline-danger">Eliminar</button>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>aaaa</td>
-      <td>Lorem ipsum dolor sit, amet consectetur adipisicing   elit. Nisi minus laboriosam obcaecati cumque velit, quasi vero officiis</td>
-      <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi minus laboriosam obcaecati cumque velit, quasi vero officiis</td>
-      <td>12</td>
-      <td>Lorem ipsum dolor sit</td>
-      <td>12/5/2021</td>
-      <button type="button" class="btn btn-outline-secondary m-4" routerLink='nuevo-producto'>Modificar</button>
-      <button type="button" class="btn btn-outline-danger">Eliminar</button>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>aaaa</td>
-      <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi minus laboriosam obcaecati cumque velit, quasi vero officiis</td>
-      <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi minus laboriosam obcaecati cumque velit, quasi vero officiis</td>
-      <td>12</td>
-      <td>Lorem ipsum dolor sit</td>
-      <td>12/5/2021</td>
-      <button type="button" class="btn btn-outline-secondary m-4" routerLink='nuevo-producto'>Modificar</button>
-      <button type="button" class="btn btn-outline-danger">Eliminar</button>
-    </tr>
+    <tr *ngFor='let producto of productos; let i = index'>
+      <th scope="row">{{i +1}}</th>
+      <td>{{producto.nombre}}</td>
+      <td>{{producto.marca}}</td>
+      <td>{{distribuidoras[producto.id_distribuidora-1]?.nombre}}</td>
+      <td>{{producto.tipo}}</td>
+      <td>{{producto.aka}}</td>
+      <td>{{producto.url}}</td>
+      <td>{{producto.unidadAgrupacion}}</td>
+      <td>{{producto.detallesTecnicos}}</td>
+      <td>{{producto.protocolo}}</td>
+      <td class="d-flex">
+          <div class="mr-4">
+            <a class="text-primary" role="button" (click)=editar(producto)>
+              <i class="bi bi-pencil"></i>
+            </a>
+          </div>
+          <div>
+            <a class="text-danger" role="button" (click)=eliminar(producto)>
+              <i class="bi bi-trash"></i>
+            </a>
+          </div>
+        </td>
+      
+  </tr>
   </tbody>
 </table>
+</div>
+<div *ngIf='step === 1'>
+  <app-nuevo-producto
+  [element]='productoSeleccionado'
+  [modo]='modo'
+
+  >
+</app-nuevo-producto>
+</div>
 
 
