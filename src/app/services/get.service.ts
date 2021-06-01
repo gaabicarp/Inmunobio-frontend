@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Usuario } from '../models/usuarios.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,12 @@ export class GetService {
 
   constructor(private http: HttpClient ) { }
 
-  obtenerUsuarios(): Observable<any>{
-    return this.http.get<any>(this.API_URL + '/usuarios');
+  obtenerUsuarios(): Observable<Usuario[]>{
+    return this.http.get<Usuario[]>(this.API_URL + '/usuarios');
   }
 
-  obtenerUsuariosPorId(id: number): Observable<any>{
-    return this.http.get<any>(this.API_URL + `/usuario/${id}`);
+  obtenerUsuariosPorId(id: number): Observable<Usuario>{
+    return this.http.get<Usuario>(this.API_URL + `/usuario/${id}`);
   }
 
   obtenerPermisos(): Observable<any>{
@@ -40,5 +41,13 @@ export class GetService {
 
   obtenerExperimentos(idProyecto: number): Observable<any>{
     return this.http.get<any>(this.API_URL + `/proyecto/${idProyecto}/experimentos`);
+  }
+
+  obtenerExperimentoPorId(idExperimento: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + '/experimento/' + idExperimento);
+  }
+
+  obtenerUsuarioPorProyecto(idProyecto: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + '/obtenerUsuariosProyecto/' + idProyecto);
   }
 }

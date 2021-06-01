@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { postUsuario, Usuario } from '../models/usuarios.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,17 +11,17 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
-  crearUsuario(nuevoUsuario: any): Observable<any>{
+  crearUsuario(nuevoUsuario: postUsuario): Observable<any>{
     const header = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
     return this.http.post<any>(this.API_URL + 'usuario', nuevoUsuario, {headers: header});
   }
 
-  editarUsuario(usuario: any): Observable<any>{
+  editarUsuario(usuario: postUsuario): Observable<any>{
     return this.http.put<any>(this.API_URL + 'usuario', usuario);
   }
 
   eliminarUsuario(id: number): Observable<any>{
-    return this.http.delete<any>(this.API_URL + 'usuario');
+    return this.http.delete<any>(this.API_URL + 'usuario/' + id );
   }
 
   crearGrupoTrabajo(grupoTrabajo: any): Observable<any>{
@@ -41,5 +42,9 @@ export class PostService {
 
   crearProyecto(proyecto: any): Observable<any>{
     return this.http.post<any>(this.API_URL + 'nuevoProyecto', proyecto);
+  }
+
+  crearExperimento(experimento: any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'nuevoExperimento', experimento);
   }
 }

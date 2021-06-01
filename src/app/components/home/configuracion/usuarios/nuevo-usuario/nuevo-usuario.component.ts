@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { postUsuario, Usuario } from 'src/app/models/usuarios.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 
@@ -9,7 +10,7 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./nuevo-usuario.component.css']
 })
 export class NuevoUsuarioComponent implements OnInit {
-  @Input() element!: any;
+  @Input() element!: Usuario;
   @Input() modo!: string;
   @Output() volviendo = new EventEmitter<number>();
 
@@ -55,7 +56,7 @@ export class NuevoUsuarioComponent implements OnInit {
     const permisoSelected = this.permisos.filter(permiso => {
       return idpermisos.includes(JSON.stringify(permiso.id_permiso));
     });
-    const usuario: any = {
+    const usuario: postUsuario = {
       nombre: this.formUsuario.value.nombre,
       password: this.formUsuario.value.password,
       direccion: this.formUsuario.value.direccion,
@@ -65,7 +66,6 @@ export class NuevoUsuarioComponent implements OnInit {
     };
     if (this.modo === 'CREAR'){
       this.postService.crearUsuario(usuario).subscribe(res => {
-        console.log(res);
         if (res.Status === 'ok'){
           this.alert = true;
           this.estado = 'success';
@@ -81,6 +81,7 @@ export class NuevoUsuarioComponent implements OnInit {
       });
     } else {
       usuario.id_usuario = this.element.id_usuario;
+      console.log(usuario);
       this.postService.editarUsuario(usuario).subscribe(res => {
         if (res.Status === 'ok'){
           this.alert = true;

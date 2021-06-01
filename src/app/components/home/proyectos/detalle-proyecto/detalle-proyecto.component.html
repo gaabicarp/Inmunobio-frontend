@@ -212,14 +212,20 @@
               </tr>
               </thead>
               <tbody>
-              <tr *ngFor="let experimento of experimentos | async; index as i" routerLink="experimento/{{experimento.id}}" style="cursor: pointer;">
+              <tr *ngFor="let experimento of experimentoFiltro; index as i" routerLink="experimento/{{experimento.id_experimento}}" style="cursor: pointer;">
                 <th scope="row">{{ i + 1 }}</th>
                 <td>
-                  <ngb-highlight [result]="experimento.nombre" [term]="filter.value" class="link-primary"></ngb-highlight>
+                  {{experimento.conclusiones}}
                 </td>
-                <td><ngb-highlight [result]="experimento.fechaInicio" [term]="filter.value"></ngb-highlight></td>
-                <td><ngb-highlight [result]="experimento.fuenteExperimental" [term]="filter.value"></ngb-highlight></td>
-                <td><ngb-highlight [result]="experimento.fechaFin" [term]="filter.value"></ngb-highlight></td>
+                <td>
+                  {{experimento.fechaInicio}}
+                </td>
+                <td>
+                  {{experimento.metodologia}}
+                </td>
+                <td>
+                  {{experimento.objetivos}}
+                </td>
               </tr>
               </tbody>
             </table>

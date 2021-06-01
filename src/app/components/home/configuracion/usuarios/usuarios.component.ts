@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
 import { GetService } from '../../../../services/get.service';
+import { Usuario } from '../../../../models/usuarios.model';
 
 @Component({
   selector: 'app-usuarios',
@@ -9,10 +10,10 @@ import { GetService } from '../../../../services/get.service';
 })
 export class UsuariosComponent implements OnInit {
 
-  usuarios = [];
+  usuarios: Usuario[];
   permisos = [];
 
-  usuarioSeleccionado: any;
+  usuarioSeleccionado: Usuario;
   step: number;
   modo: string;
 
@@ -22,24 +23,25 @@ export class UsuariosComponent implements OnInit {
   ngOnInit(): void {
     this.step = 0;
     this.getService.obtenerUsuarios().subscribe(res => {
-      console.log(res)
       this.usuarios = res;
     });
   }
 
-  editar(usuario: any): void {
+  editar(usuario: Usuario): void {
     this.usuarioSeleccionado = usuario;
     this.modo = 'EDITAR';
     this.step = 1;
   }
 
-  crear(){
+  crear(): void{
     this.modo = 'CREAR';
     this.step = 1;
   }
 
-  eliminar(usuario: any){
-    this.postService.eliminarUsuario(usuario.id);
+  eliminar(usuario: Usuario): void{
+    this.postService.eliminarUsuario(usuario.id_usuario).subscribe(res => {
+      console.log(res);
+    });
   }
 
   onVolviendo(e: number): void{

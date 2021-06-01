@@ -1,44 +1,59 @@
-<h3>Proyectos Asignados</h3>
-<div class="search-container flex-wrap">
-    <div class="input-group mb-3">
-        <span class="input-group-text">
-            <i class="bi bi-search"></i>
-        </span>
-        <input type="text" class="form-control" id="usuario" placeholder="Buscar por titulo">
+<div *ngIf='step === 0'>
+    <h3>Proyectos Asignados</h3>
+    <div class="search-container flex-wrap">
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control" id="usuario" placeholder="Buscar por titulo">
+        </div>
+        <select class="form-control"  aria-label="Default select example">
+            <option selected>-Filtrar por estado-</option>
+            <option value="1">Todos</option>
+            <option value="2">Activo</option>
+            <option value="3">Inactivo</option>
+        </select>
+        <div>
+            <button type="button" class="btn btn-primary btn-lg" (click)='crearProyecto()'>NUEVO PROYECTO</button>
+        </div>
     </div>
-    <select class="form-control"  aria-label="Default select example">
-        <option selected>-Filtrar por estado-</option>
-        <option value="1">Todos</option>
-        <option value="2">Activo</option>
-        <option value="3">Inactivo</option>
-    </select>
-    <div>
-        <button type="button" class="btn btn-primary btn-lg" routerLink='create'>+NUEVO PROYECTO</button>
-    </div>
-</div>
-<hr>
-<div class="proyects-container">
-    <div *ngFor="let proyecto of proyectos" class="card my-3 p-4 shadow rounded list-group-item-action" style="cursor: pointer;" routerLink='{{proyecto.id_proyecto}}'>
-        <div class="row g-0">
-            <div class="col-md-4">
-                <img src="../../../../assets/img/default1.jpg" class="img-fluid" alt="">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">{{proyecto.nombre}} - {{proyecto.codigoProyecto}}</h5>
-                    <p class="card-text">{{proyecto.descripcion}}</p>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div>
-                            <h6><i>Fecha de Inicio</i></h6>
-                            <p class="mb-0">{{proyecto.fechaInicio | date}}</p>
+    <hr>
+    <div class="proyects-container">
+        <div *ngFor="let proyecto of proyectos" class="card my-3 p-4 shadow rounded list-group-item-action">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="../../../../assets/img/default1.jpg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{proyecto.nombre}} - {{proyecto.codigoProyecto}}</h5>
+                        <p class="card-text">{{proyecto.descripcion}}</p>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div>
+                                <h6><i>Fecha de Inicio</i></h6>
+                                <p class="mb-0">{{proyecto.fechaInicio | date}}</p>
+                            </div>
+                            <div>
+                                <h6><i>Estado</i></h6>
+                                <p class="mb-0">{{proyecto.finalizado ? 'Finalizado' : 'Activo'}}</p>
+                            </div>
                         </div>
-                        <div>
-                            <h6><i>Estado</i></h6>
-                            <p class="mb-0">{{proyecto.finalizado ? 'Finalizado' : 'Activo'}}</p>
-                        </div>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn btn-primary btn-lg" routerLink='{{proyecto.id_proyecto}}'>Ver</button>
+                        <button class="btn btn-primary btn-lg" (click)='editarProyecto(proyecto)'>Editar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div *ngIf='step === 1'>
+    <app-nuevo-proyecto
+    [element]='proyectoSeleccionado'
+    [modo]='modo'
+    (volviendo)='onVolviendo($event)'
+    >
+    </app-nuevo-proyecto>
+  </div>
