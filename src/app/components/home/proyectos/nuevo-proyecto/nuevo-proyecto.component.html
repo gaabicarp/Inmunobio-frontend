@@ -58,7 +58,7 @@
                                     <div class="d-flex flex-row justify-content-between">
                                         {{usuario.nombre}}
                                         <div class="text-primary">
-                                            <i class="bi bi-arrow-right-circle-fill" (click)='asignarUsuario(usuario)'></i>
+                                            <i class="bi bi-arrow-right-circle-fill" (click)='asignarUsuario(usuario.id_usuario)'></i>
                                         </div>
                                     </div>
                                 </li>
@@ -73,7 +73,7 @@
                                     <div class="d-flex flex-row justify-content-between">
                                         {{usuario.nombre}}
                                         <div class="text-danger">
-                                            <i class="bi bi-x-circle-fill" (click)='desasignarUsuario(usuario)'></i>
+                                            <i class="bi bi-x-circle-fill" (click)='desasignarUsuario(usuario.id_usuario)'></i>
                                         </div>
                                     </div>
                                 </li>

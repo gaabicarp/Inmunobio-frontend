@@ -35,6 +35,9 @@ import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/en
 import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
+//import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
+//import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
+import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,10 @@ import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-exp
     EntradaBlogComponent,
     GrupotrabajoComponent,
     NuevoGrupoComponent,
-    NuevoExperimentoComponent
+    NuevoExperimentoComponent,
+    //GrupotrabajoComponent,
+    //NuevoGrupoComponent,
+    DistribuidorasComponent
 
   ],
   imports: [

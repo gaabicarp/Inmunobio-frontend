@@ -1,0 +1,58 @@
+<div *ngIf='step === 0'>
+    <div class="m-4" routerLink="../" role="button">
+        <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+    </div>
+    <div class="mx-4">        
+        
+        <div class="text-center my-4">
+            <h2>Distribuidoras</h2>
+        </div>
+        <div class="card rounded shadow p-4 mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Contacto</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Cuit</th>
+                    <th scope="col">Representante</th>
+                    <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let distribuidora of distribuidoras; let i = index'>
+                        <th scope="row">{{i + 1}}</th>
+                        <td>{{distribuidora.nombre}}</td>
+                        <td>{{distribuidora.contacto}}</td>
+                        <td>{{distribuidora.direccion}}</td>
+                        <td>{{distribuidora.cuit}}</td>
+                        <td>{{distribuidora.representante}}</td>
+                        <td class="d-flex">
+                            <div class="mr-4">
+                              <a class="text-primary" role="button" (click)=editar(distribuidora)>
+                                <i class="bi bi-pencil"></i>
+                              </a>
+                            </div>
+                            <div>
+                              <a class="text-danger" role="button" (click)=eliminar(distribuidora)>
+                                <i class="bi bi-trash"></i>
+                              </a>
+                            </div>
+                          </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <button class="btn btn-primary" (click)=crear()>Nueva Distribuidora</button>
+    </div>
+</div>
+<div *ngIf='step === 1'>
+    <app-nueva-distribuidora
+    [element]='distribuidoraSeleccionada'
+    [modo]='modo'
+    (onVolver)='volver()'
+    >
+  </app-nueva-distribuidora>
+</div>

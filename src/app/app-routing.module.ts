@@ -27,6 +27,9 @@ import { ConsumirStockComponent } from './components/home/stock/stock-detalle/co
 import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
+//import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
+//import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
+import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -35,6 +38,7 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'proyectos', component: ProyectosComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
+      //{path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
       {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
@@ -54,6 +58,7 @@ const routes: Routes = [
       {path: 'configuracion/productos', component: ProductosComponent },
       {path: 'configuracion/productos/nuevo-producto', component: NuevoProductoComponent},
       {path: 'configuracion/productos/nuevo-producto/nueva-distribuidora', component: NuevaDistribuidoraComponent},
+      {path: 'configuracion/distribuidoras', component: DistribuidorasComponent},
       {path: 'bioterio', component: BioterioComponent},
       {path: 'bioterio/entrada-blog', component: EntradaBlogComponent},
       {path: 'bioterio/editar-jaula', component: EditarJaulaComponent},
