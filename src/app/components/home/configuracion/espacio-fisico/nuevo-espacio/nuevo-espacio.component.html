@@ -1,0 +1,50 @@
+<div class="m-4" (click)='volver()' role="button">
+    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+</div>
+<div class="mx-4">
+    <div class="text-center my-4">
+        <h2>{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Espacio Fisico</h2>
+    </div>
+
+    <div class="card rounded shadow p-4 mb-4">
+        <form [formGroup]="formEspacio" (ngSubmit)="crearEspacio()">
+            <div class="row">
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" formControlName="nombre">
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="Piso" class="form-label">Piso</label>
+                        <input type="text" class="form-control" id="Piso" formControlName="piso">
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="mb-3">
+                        <label for="Sala" class="form-label">Sala</label>
+                        <input type="text" class="form-control" id="Sala" formControlName="sala">
+                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <label for="Descripcion" class="form-label">Descripcion</label>
+                            <input type="text" class="form-control" id="Descripcion" formControlName="descripcion">
+                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-row justify-content-end">
+                <div class="mx-3">
+                    <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formEspacio.valid">{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Usuario</button>
+                </div>
+
+            </div>
+            <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+                {{mensajeAlert}}
+            </div>
+        </form>
+    </div>
+</div>

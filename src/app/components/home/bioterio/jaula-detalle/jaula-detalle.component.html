@@ -78,36 +78,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="col">2234</th>
-                        <th scope="col">Rata</th>
-                        <th scope="col">445</th>
-                        <th scope="col">F</th>
+                    <tr *ngFor='let animal of animales'>
+                        <th scope="col">{{animal.id_fuenteExperimental}}</th>
+                        <th scope="col">{{animal.especie}}</th>
+                        <th scope="col">{{animal.cepa}}</th>
+                        <th scope="col">{{animal.sexo}}</th>
                         <th><button type="button" class="btn btn-outline-danger">Baja</button></th>
-                    </tr>
-                    <tr>
-                        <th scope="col">5665</th>
-                        <th scope="col">Rata</th>
-                        <th scope="col">123</th>
-                        <th scope="col">M</th>
-                        <th><button type="button" class="btn btn-outline-danger">Baja</button></th>
-                    </tr>
-                    <tr>
-                        <th scope="col">998</th>
-                        <th scope="col">Rata</th>
-                        <th scope="col">4995</th>
-                        <th scope="col">M</th>
-                        <th><button type="button" class="btn btn-outline-danger">Baja</button></th>
-                    </tr>
-                    <tr>
-                        <th scope="col">2234</th>
-                        <th scope="col">Rata</th>
-                        <th scope="col">445</th>
-                        <th scope="col">F</th>
-                        <th><button type="button" class="btn btn-outline-danger">Baja</button></th>
-                    </tr>
-                  
-                  
+                    </tr>                  
                 </tbody>
               </table>
             </div>

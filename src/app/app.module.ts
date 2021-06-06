@@ -38,6 +38,8 @@ import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-exp
 //import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 //import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
+import { EspacioFisicoComponent } from './components/home/configuracion/espacio-fisico/espacio-fisico.component';
+import { NuevoEspacioComponent } from './components/home/configuracion/espacio-fisico/nuevo-espacio/nuevo-espacio.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { DistribuidorasComponent } from './components/home/configuracion/distrib
     NuevoExperimentoComponent,
     //GrupotrabajoComponent,
     //NuevoGrupoComponent,
-    DistribuidorasComponent
+    DistribuidorasComponent,
+    EspacioFisicoComponent,
+    NuevoEspacioComponent
 
   ],
   imports: [

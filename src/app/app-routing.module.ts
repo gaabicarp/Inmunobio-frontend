@@ -30,6 +30,8 @@ import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-exp
 //import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 //import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
+import { NuevoEspacioComponent } from './components/home/configuracion/espacio-fisico/nuevo-espacio/nuevo-espacio.component';
+import { EspacioFisicoComponent } from './components/home/configuracion/espacio-fisico/espacio-fisico.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -55,6 +57,8 @@ const routes: Routes = [
       {path: 'configuracion/usuarios/nuevo-usuario', component: NuevoUsuarioComponent},
       {path: 'configuracion/grupo-trabajo', component: GrupotrabajoComponent},
       {path: 'configuracion/grupo-trabajo/nuevo-grupo', component: NuevoGrupoComponent},
+      {path: 'configuracion/espacio-fisico', component: EspacioFisicoComponent },
+      {path: 'configuracion/espacio-fisico/nuevo-espacio', component: NuevoEspacioComponent },
       {path: 'configuracion/productos', component: ProductosComponent },
       {path: 'configuracion/productos/nuevo-producto', component: NuevoProductoComponent},
       {path: 'configuracion/productos/nuevo-producto/nueva-distribuidora', component: NuevaDistribuidoraComponent},

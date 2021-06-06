@@ -24,11 +24,11 @@ export class GetService {
   }
 
   obtenerDistribuidoras(): Observable<any>{
-    return this.http.get<any>(this.API_URL + 'getDistribuidoras')
+    return this.http.get<any>(this.API_URL + 'getDistribuidoras');
   }
 
   obtenerProductos(): Observable<any>{
-    return this.http.get<any>(this.API_URL + 'getProductos')
+    return this.http.get<any>(this.API_URL + 'getProductos');
   }
 
   // obtenerStock(id_grupo:number, id_espacio: number): Observable<any>{
@@ -70,5 +70,21 @@ export class GetService {
 
   obtenerUsuarioPorProyecto(idProyecto: number): Observable<any>{
     return this.http.get<any>(this.API_URL + 'obtenerUsuariosProyecto/' + idProyecto);
+  }
+
+  obtenerEspaciosFisicos(): Observable<any>{
+    return this.http.get<any>(this.API_URL + 'espaciosFisicos');
+  }
+
+  obtenerJaulas(): Observable<any> {
+    return this.http.get<any>(this.API_URL + 'jaulasDisponibles');
+  }
+
+  obtenerJaulasPorId(idJaula: number): Observable<any> {
+    return this.http.get<any>(this.API_URL + 'jaula/' + idJaula);
+  }
+
+  obtenerAnimalesPorJaula(idJaula: number): Observable<any> {
+    return this.http.get<any>(this.API_URL + `jaula/${idJaula}/animales`);
   }
 }
