@@ -5,6 +5,49 @@
 <div class="mx-4">
     <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
         <li [ngbNavItem]="1">
+          <a ngbNavLink>Jaulas</a>
+          <ng-template ngbNavContent>
+            <div class="search-container flex-wrap">
+              <div class="input-group mb-3">
+                  <span class="input-group-text">
+                      <i class="bi bi-search"></i>
+                  </span>
+                  <input type="text" class="form-control" id="usuario" placeholder="Filtrar según salón">
+              </div>
+              <div>
+                  <button type="button" class="btn btn-primary btn-lg" routerLink="editar-jaula" >Nueva Jaula</button>
+              </div>
+            </div>
+            <div class="m-4">
+            <table class="table table-hover text-center">
+                <thead>
+                  <tr>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Salón</th>
+                    <th scope="col">Rack</th>
+                    <th scope="col">Estante</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Proyecto Asociado</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor='let jaula of jaulas'>
+                    <th scope="row">{{jaula.codigo}}</th>
+                    <td>{{jaula.id_espacioFisico}}</td>
+                    <td>{{jaula.rack}}</td>
+                    <td>{{jaula.estante}}</td>
+                    <td>{{jaula.tipo}}</td>
+                    <td>{{jaula.nombre_proyecto ? jaula.nombre_proyecto : 'Sin asignar'}}</td>
+                    <td><a href="" routerLink='1' >Ver</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="2">
           <a ngbNavLink>Blogs</a>
           <ng-template ngbNavContent>
             
@@ -161,81 +204,7 @@
                         <p>20:24hs</p>
                       </div>
                     </div>
-                    
-      
-                  
                   </div>
-
-
-
-
-
-
-          </ng-template>
-        </li>
-        <li [ngbNavItem]="2">
-          <a ngbNavLink>Jaulas</a>
-          <ng-template ngbNavContent>
-            <div class="search-container flex-wrap">
-              <div class="input-group mb-3">
-                  <span class="input-group-text">
-                      <i class="bi bi-search"></i>
-                  </span>
-                  <input type="text" class="form-control" id="usuario" placeholder="Filtrar según salón">
-              </div>
-              <div>
-                  <button type="button" class="btn btn-primary btn-lg" routerLink="editar-jaula" >Nueva Jaula</button>
-              </div>
-            </div>
-            <div class="m-4">
-            <table class="table table-hover text-center">
-                <thead>
-                  <tr>
-                    <th scope="col">Número</th>
-                    <th scope="col">Salón</th>
-                    <th scope="col">Rack</th>
-                    <th scope="col">Estante</th>
-                    <th scope="col">Proyecto Asociado</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Laboratorio 1</td>
-                    <td>12</td>
-                    <td>3</td>
-                    <td>Coronavirus</td>
-                    <td><a href="" routerLink='1' >Ver</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row" >2</th>
-                    <td>Laboratorio 5</td>
-                    <td>4</td>
-                    <td>9</td>
-                    <td>Inmunobio</td>
-                    <td><a href="" routerLink='2' >Ver</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row" >3</th>
-                    <td>Laboratorio 2</td>
-                    <td>6</td>
-                    <td>3</td>
-                    <td>Coronavirus</td>
-                    <td><a href="" routerLink='3'>Ver</a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row" >4</th>
-                    <td>Laboratorio 1</td>
-                    <td>2</td>
-                    <td>7</td>
-                    <td>Coronavirus</td>
-                    <td><a href="" routerLink='4' >Ver</a></td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-            </div>
           </ng-template>
         </li>
         

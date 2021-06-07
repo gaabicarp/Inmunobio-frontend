@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Usuario } from '../models/usuarios.model';
 import { timestamp } from 'rxjs/operators';
 
 @Injectable({
@@ -11,31 +12,26 @@ export class GetService {
 
   constructor(private http: HttpClient ) { }
 
-<<<<<<< Updated upstream
-  obtenerUsuarios(): Observable<any>{
-    return this.http.get<any>(this.API_URL + 'usuarios');
-=======
   obtenerUsuarios(): Observable<Usuario[]>{
     return this.http.get<Usuario[]>(this.API_URL + 'usuarios');
   }
-
   obtenerUsuariosPorId(id: number): Observable<Usuario>{
-    return this.http.get<Usuario>(this.API_URL + `usuario/${id}`);
->>>>>>> Stashed changes
+    return this.http.get<Usuario>(this.API_URL + `/usuario/${id}`);
+
   }
   obtenerPermisos(): Observable<any>{
     return this.http.get<any>(this.API_URL + 'permisos');
   }
 
   obtenerDistribuidoras(): Observable<any>{
-    return this.http.get<any>(this.API_URL + 'getDistribuidoras')
+    return this.http.get<any>(this.API_URL + 'getDistribuidoras');
   }
   obtenerDistribuidorasPorId(id : number): Observable<any>{
     return this.http.get<any>(this.API_URL + 'distribuidora/' + id);
   }
 
   obtenerProductos(): Observable<any>{
-    return this.http.get<any>(this.API_URL + 'getProductos')
+    return this.http.get<any>(this.API_URL + 'getProductos');
   }
   obtenerProductosPorId(id : number): Observable<any>{
     return this.http.get<any>(this.API_URL + 'producto/' + id);
@@ -56,13 +52,13 @@ export class GetService {
   //   return this.http.get<any>(this.API_URL + 'productoEnStock');
   // }
 
-<<<<<<< Updated upstream
+
   obtenerGruposExperimentales(): Observable<any>{
-    return this.http.get<any>(this.API_URL + 'grupos')
+    return this.http.get<any>(this.API_URL + 'grupos');
   }
   obtenerMuestras(): Observable<any>{
-    return this.http.get<any>(this.API_URL + 'muestras')
-=======
+    return this.http.get<any>(this.API_URL + 'muestras');
+  }
   obtenerGrupos(): Observable<any>{
     return this.http .get<any>(this.API_URL + 'gruposDeTrabajo');
   }
@@ -85,7 +81,22 @@ export class GetService {
 
   obtenerUsuarioPorProyecto(idProyecto: number): Observable<any>{
     return this.http.get<any>(this.API_URL + 'obtenerUsuariosProyecto/' + idProyecto);
->>>>>>> Stashed changes
   }
-  
+
+  obtenerEspaciosFisicos(): Observable<any>{
+    return this.http.get<any>(this.API_URL + 'espaciosFisicos');
+  }
+
+  obtenerJaulas(): Observable<any> {
+    return this.http.get<any>(this.API_URL + 'jaulasDisponibles');
+  }
+
+  obtenerJaulasPorId(idJaula: number): Observable<any> {
+    return this.http.get<any>(this.API_URL + 'jaula/' + idJaula);
+  }
+
+  obtenerAnimalesPorJaula(idJaula: number): Observable<any> {
+    return this.http.get<any>(this.API_URL + `jaula/${idJaula}/animales`);
+
+  }
 }

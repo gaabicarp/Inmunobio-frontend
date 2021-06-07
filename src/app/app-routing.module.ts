@@ -24,15 +24,14 @@ import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/e
 import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
-//import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
-//import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
-=======
 import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
->>>>>>> Stashed changes
+
 import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
 import { ContenedoresComponent } from './components/home/configuracion/contenedores/contenedores.component';
+import { NuevoEspacioComponent } from './components/home/configuracion/espacio-fisico/nuevo-espacio/nuevo-espacio.component';
+import { EspacioFisicoComponent } from './components/home/configuracion/espacio-fisico/espacio-fisico.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -40,9 +39,9 @@ const routes: Routes = [
     children: [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'proyectos', component: ProyectosComponent},
-      {path: 'proyectos/create', component: NuevoProyectoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
+      {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'stock', component: StockComponent},
       {path: 'stock/', component: EspaciosfisicosComponent},
@@ -55,6 +54,10 @@ const routes: Routes = [
       {path: 'configuracion', component: ConfiguracionComponent},
       {path: 'configuracion/usuarios', component: UsuariosComponent},
       {path: 'configuracion/usuarios/nuevo-usuario', component: NuevoUsuarioComponent},
+      {path: 'configuracion/grupo-trabajo', component: GrupotrabajoComponent},
+      {path: 'configuracion/grupo-trabajo/nuevo-grupo', component: NuevoGrupoComponent},
+      {path: 'configuracion/espacio-fisico', component: EspacioFisicoComponent },
+      {path: 'configuracion/espacio-fisico/nuevo-espacio', component: NuevoEspacioComponent },
       {path: 'configuracion/productos', component: ProductosComponent },
       {path: 'configuracion/productos/nuevo-producto', component: NuevoProductoComponent},
       {path: 'configuracion/distribuidoras', component: DistribuidorasComponent},

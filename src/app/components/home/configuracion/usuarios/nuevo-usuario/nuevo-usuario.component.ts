@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { postUsuario, Usuario } from 'src/app/models/usuarios.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 
@@ -9,49 +10,98 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./nuevo-usuario.component.css']
 })
 export class NuevoUsuarioComponent implements OnInit {
+  @Input() element!: Usuario;
+  @Input() modo!: string;
+  @Output() volviendo = new EventEmitter<number>();
+
   formUsuario!: FormGroup;
   permisos = [];
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
+
   constructor(private getService: GetService, private postService: PostService) { }
 
   ngOnInit(): void {
+    this.alert = false;
     this.getService.obtenerPermisos().subscribe(res => {
       this.permisos = res;
-<<<<<<< Updated upstream
-    })
-=======
       console.log(res)
     });
->>>>>>> Stashed changes
+
     this.formUsuario = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      apellido: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       email: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       password: new FormControl('', [Validators.maxLength(50)]),
       direccion: new FormControl('', [Validators.maxLength(100)]),
       telefono: new FormControl('', [Validators.maxLength(15)]),
-      nivel: new FormControl('', [Validators.required]),
+      nivel: new FormControl('',  ),
     });
+    if (this.modo === 'EDITAR'){
+      const niveles = [];
+      this.element.permisos.map( perm => {
+        niveles.push(JSON.stringify(perm.id_permiso));
+      });
+      this.formUsuario.patchValue({
+        nombre: this.element.nombre,
+        email: this.element.email,
+        password: this.element.password,
+        direccion: this.element.direccion,
+        telefono: this.element.telefono,
+        nivel: niveles
+      });
+    }
   }
 
   crearUsuario(): void{
-    const permisoSelected = this.permisos.filter(permiso => permiso.id == this.formUsuario.value.nivel)[0];
-    const nuevoUsuario = {
-      nombre: this.formUsuario.value.nombre + ' ' + this.formUsuario.value.apellido,
-      password: this.formUsuario.value.password,
-      username: 'gaabicarp',
-      direccion: this.formUsuario.value.direccion,
-      mail: this.formUsuario.value.email,
-      telefono: JSON.stringify(this.formUsuario.value.telefono),
-      id_permisos: [{
-        descripcion: permisoSelected.descripcion,
-        id: permisoSelected.id
-      }]
-    };
-    console.log(nuevoUsuario);
-    this.postService.crearUsuario(nuevoUsuario).subscribe(res => {
-      console.log(res);
+    const idpermisos: string[] = this.formUsuario.value.nivel;
+    const permisoSelected = this.permisos.filter(permiso => {
+      return idpermisos.includes(JSON.stringify(permiso.id_permiso));
     });
-
+    const usuario: postUsuario = {
+      nombre: this.formUsuario.value.nombre,
+      password: this.formUsuario.value.password,
+      direccion: this.formUsuario.value.direccion,
+      email: this.formUsuario.value.email,
+      telefono: JSON.stringify(this.formUsuario.value.telefono),
+      permisos: permisoSelected
+    };
+    if (this.modo === 'CREAR'){
+      this.postService.crearUsuario(usuario).subscribe(res => {
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'El usuario fue creado correctamente';
+          setTimeout(() => {
+            this.volviendo.emit(0);
+          }, 2000);
+        }
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
+      });
+    } else {
+      usuario.id_usuario = this.element.id_usuario;
+      console.log(usuario);
+      this.postService.editarUsuario(usuario).subscribe(res => {
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'El usuario fue editado correctamente';
+          setTimeout(() => {
+            this.volviendo.emit(0);
+          }, 2000);
+        }
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
+      });
+    }
   }
 
+  volver(): void{
+    this.volviendo.emit(0);
+  }
 }

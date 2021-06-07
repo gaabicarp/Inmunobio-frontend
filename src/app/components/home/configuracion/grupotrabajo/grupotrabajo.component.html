@@ -1,0 +1,55 @@
+<div *ngIf='step === 0'>
+    <div class="m-4" routerLink="../" role="button">
+        <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+    </div>
+    <div class="mx-4">
+        <div class="text-center my-4">
+            <h2>Usuarios</h2>
+        </div>
+  
+        <div class="card rounded shadow p-4 mb-4">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Jefe de Grupo</th>
+                      <th scope="col">Nro Integrantes</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor='let grupo of gruposTrabajo; let i = index'>
+                      <th scope="row">{{i + 1}}</th>
+                      <td>{{grupo.nombre}}</td>
+                      <td>{{grupo.jefeDeGrupo}}</td>
+                      <td>{{grupo.integrantes.length}}</td>
+                      <td class="d-flex">
+                        <div class="mr-4">
+                          <a class="text-primary" role="button" (click)=editarGrupo(grupo)>
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                        </div>
+                        <div>
+                          <a class="text-danger" role="button" (click)=eliminarGrupo(grupo)>
+                            <i class="bi bi-trash"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+            </table>
+        </div>
+        <button class="btn btn-primary" (click)=crearGrupo()>Crear Usuario</button>
+    </div>
+  </div>
+  
+  <div *ngIf='step === 1'>
+    <app-nuevo-grupo
+    [element]='grupoSeleccionado'
+    [modo]='modo'
+    (volviendo)='onVolver($event)'
+    >
+
+    </app-nuevo-grupo>
+  </div>

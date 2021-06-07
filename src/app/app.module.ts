@@ -32,16 +32,14 @@ import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/e
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
 import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
-<<<<<<< Updated upstream
-//import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
-//import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
-=======
 import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
->>>>>>> Stashed changes
 import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
 import { ContenedoresComponent } from './components/home/configuracion/contenedores/contenedores.component';
+import { EspacioFisicoComponent } from './components/home/configuracion/espacio-fisico/espacio-fisico.component';
+import { NuevoEspacioComponent } from './components/home/configuracion/espacio-fisico/nuevo-espacio/nuevo-espacio.component';
+
 
 @NgModule({
   declarations: [
@@ -72,10 +70,13 @@ import { ContenedoresComponent } from './components/home/configuracion/contenedo
     AltaAnimalComponent,
     ConsumirStockComponent,
     EntradaBlogComponent,
-    //GrupotrabajoComponent,
-    //NuevoGrupoComponent,
+    GrupotrabajoComponent,
+    NuevoGrupoComponent,
+    NuevoExperimentoComponent,
     DistribuidorasComponent,
-    ContenedoresComponent
+    ContenedoresComponent,
+    EspacioFisicoComponent,
+    NuevoEspacioComponent
 
   ],
   imports: [

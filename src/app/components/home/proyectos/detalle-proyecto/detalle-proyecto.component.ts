@@ -5,46 +5,7 @@ import { Router } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-const EXPERIMENTOS: any[] = [
-  {
-    id: 1,
-    nombre: 'Experimento 1',
-    fechaInicio: '20/12/90',
-    fuenteExperimental: 'Fuente 1',
-    fechaFin: '20/12/90',
-  },
-  {
-    id: 2,
-    nombre: 'Experimento 2',
-    fechaInicio: '20/12/90',
-    fuenteExperimental: 'Fuente 2',
-    fechaFin: '20/12/90',
-  },
-  {
-    id: 3,
-    nombre: 'Experimento 3',
-    fechaInicio: '20/12/90',
-    fuenteExperimental: 'Fuente 3',
-    fechaFin: '20/12/90',
-  },
-  {
-    id: 4,
-    nombre: 'Experimento 3',
-    fechaInicio: '20/12/90',
-    fuenteExperimental: 'Fuente 3',
-    fechaFin: '20/12/90',
-  },
-];
-
-function search(text: string, pipe: PipeTransform): any[] {
-  return EXPERIMENTOS.filter(experimento => {
-    const term = text.toLowerCase();
-    return experimento.nombre.toLowerCase().includes(term)
-        || pipe.transform(experimento.fechaInicio).includes(term)
-        || pipe.transform(experimento.fuenteExperimental).includes(term)
-        || pipe.transform(experimento.fechaFin).includes(term);
-  });
-}
+import { GetService } from 'src/app/services/get.service';
 
 @Component({
   selector: 'app-detalle-proyecto',
@@ -54,22 +15,51 @@ function search(text: string, pipe: PipeTransform): any[] {
 })
 export class DetalleProyectoComponent implements OnInit {
 
-  experimentos: Observable<any[]>;
+  experimentos = [];
+  experimentoFiltro = [];
   filter = new FormControl('');
-  model:NgbDateStruct;
+  model: NgbDateStruct;
+  proyecto: any;
+  jefeProyecto: any;
+  usuariosProyecto = [];
 
-  constructor(pipe: DecimalPipe, private router: Router) {
-    this.experimentos = this.filter.valueChanges.pipe(
-      startWith(''),
-      map(text => search(text, pipe))
-    );
-  }
+  constructor(private router: Router, private getService: GetService) {}
 
   ngOnInit(): void {
+    this.getService.obtenerProyectosPorId(1).subscribe(res => {
+      this.proyecto = res;
+      this.traerDirector(res.idDirectorProyecto);
+      this.traerUsuarios(res.participantes);
+    });
+    this.getService.obtenerExperimentos(1).subscribe(res => {
+      console.log(res);
+      this.experimentos = res;
+      this.experimentoFiltro = res;
+    });
+  }
+
+  traerDirector(id: number): void {
+    this.getService.obtenerUsuariosPorId(id).subscribe(res => {
+      this.jefeProyecto = res;
+    });
+  }
+
+  traerUsuarios(usuarios: Array<number>): void {
+    this.proyecto.participantes.map(id => {
+      this.getService.obtenerUsuariosPorId(id).subscribe(res => {
+        this.usuariosProyecto.push(res);
+      });
+    });
   }
 
   irA(id: number): void {
     this.router.navigateByUrl(`experimento/${id}`);
+  }
+
+  onFilter(filter: string): void {
+    this.experimentoFiltro = this.experimentos.filter(res => {
+      return res.objetivos === filter;
+    });
   }
 
 }
