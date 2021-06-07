@@ -21,7 +21,7 @@ import { NuevoProductoComponent } from './components/home/configuracion/producto
 import { ProductosComponent } from './components/home/configuracion/productos/productos.component';
 import { EspaciosfisicosComponent } from './components/home/stock/espaciosfisicos/espaciosfisicos.component';
 import { AgregarStockComponent } from './components/home/stock/stock-detalle/agregar-stock/agregar-stock.component';
-import { NuevoContenedorComponent } from './components/home/stock/stock-detalle/nuevo-contenedor/nuevo-contenedor.component';
+import { NuevoContenedorComponent } from './components/home/configuracion/contenedores/nuevo-contenedor/nuevo-contenedor.component';
 import { NuevaDistribuidoraComponent } from './components/home/configuracion/productos/nueva-distribuidora/nueva-distribuidora.component';
 import { BioterioComponent } from './components/home/bioterio/bioterio.component';
 import { ConfiguracionComponent } from './components/home/configuracion/configuracion.component';
@@ -32,9 +32,16 @@ import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/e
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
 import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
+<<<<<<< Updated upstream
 //import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 //import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
+=======
+import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
+import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
+import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
+>>>>>>> Stashed changes
 import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
+import { ContenedoresComponent } from './components/home/configuracion/contenedores/contenedores.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +74,8 @@ import { DistribuidorasComponent } from './components/home/configuracion/distrib
     EntradaBlogComponent,
     //GrupotrabajoComponent,
     //NuevoGrupoComponent,
-    DistribuidorasComponent
+    DistribuidorasComponent,
+    ContenedoresComponent
 
   ],
   imports: [

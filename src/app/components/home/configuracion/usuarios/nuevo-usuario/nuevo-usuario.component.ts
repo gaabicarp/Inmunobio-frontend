@@ -16,7 +16,12 @@ export class NuevoUsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.getService.obtenerPermisos().subscribe(res => {
       this.permisos = res;
+<<<<<<< Updated upstream
     })
+=======
+      console.log(res)
+    });
+>>>>>>> Stashed changes
     this.formUsuario = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       apellido: new FormControl('', [Validators.required, Validators.maxLength(20)]),

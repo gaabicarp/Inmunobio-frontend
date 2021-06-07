@@ -13,7 +13,7 @@ import { StockComponent } from './components/home/stock/stock.component';
 import { LoginComponent } from './components/login/login.component';
 import { EspaciosfisicosComponent } from './components/home/stock/espaciosfisicos/espaciosfisicos.component';
 import { AgregarStockComponent } from './components/home/stock/stock-detalle/agregar-stock/agregar-stock.component';
-import { NuevoContenedorComponent } from './components/home/stock/stock-detalle/nuevo-contenedor/nuevo-contenedor.component';
+import { NuevoContenedorComponent } from './components/home/configuracion/contenedores/nuevo-contenedor/nuevo-contenedor.component';
 import { NuevaDistribuidoraComponent } from './components/home/configuracion/productos/nueva-distribuidora/nueva-distribuidora.component';
 import { BioterioComponent } from './components/home/bioterio/bioterio.component';
 import { ConfiguracionComponent } from './components/home/configuracion/configuracion.component';
@@ -26,7 +26,13 @@ import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/al
 import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
 //import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 //import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
+=======
+import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
+import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
+import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
+>>>>>>> Stashed changes
 import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
+import { ContenedoresComponent } from './components/home/configuracion/contenedores/contenedores.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -36,7 +42,6 @@ const routes: Routes = [
       {path: 'proyectos', component: ProyectosComponent},
       {path: 'proyectos/create', component: NuevoProyectoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
-      //{path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'stock', component: StockComponent},
@@ -52,8 +57,10 @@ const routes: Routes = [
       {path: 'configuracion/usuarios/nuevo-usuario', component: NuevoUsuarioComponent},
       {path: 'configuracion/productos', component: ProductosComponent },
       {path: 'configuracion/productos/nuevo-producto', component: NuevoProductoComponent},
-      {path: 'configuracion/productos/nuevo-producto/nueva-distribuidora', component: NuevaDistribuidoraComponent},
       {path: 'configuracion/distribuidoras', component: DistribuidorasComponent},
+      {path: 'configuracion/distribuidoras/nueva-distribuidora', component: NuevaDistribuidoraComponent},
+      {path: 'configuracion/contenedores', component: ContenedoresComponent},
+      {path: 'configuracion/contenedores/nuevo-contenedor', component: NuevoContenedorComponent},
       {path: 'bioterio', component: BioterioComponent},
       {path: 'bioterio/entrada-blog', component: EntradaBlogComponent},
       {path: 'bioterio/editar-jaula', component: EditarJaulaComponent},

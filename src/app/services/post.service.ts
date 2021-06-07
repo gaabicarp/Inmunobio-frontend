@@ -43,8 +43,21 @@ export class PostService {
     return this.http.post<any>(this.API_URL + 'producto/subirArchivo/'+ id, formData)
   }
 
-  // crearStock(nuevoStock : any): Observable<any>{
-  //   return this.http.post<any>(this.API_URL +'productoEnStock', nuevoStock)
-  // }
+  agregarStock(nuevoStock : any){
+    return this.http.post<any>(this.API_URL + 'productoEnStock', nuevoStock);
+  }
+  editarStock(stock : any):Observable<any>{
+    return this.http.put<any>(this.API_URL + 'productoEnStock', stock);
+  }
+  eliminarStock(id_productoEnStock: number, id_productos: number): Observable<any>{
+    return this.http.delete<any>(this.API_URL + 'stock/' + id_productoEnStock + '/' + id_productos);
+  }
+
+  crearContenedor(nuevoContenedor : any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'nuevoContenedor', nuevoContenedor);
+  }
+  editarContenedor(contenedor : any):Observable<any>{ // CREO QUE NO SE PUEDE MODIFICAR
+    return this.http.put<any>(this.API_URL + '', contenedor);
+  }
 
 }

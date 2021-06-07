@@ -1,66 +1,62 @@
-<div class="m-4" routerLink="../" role="button">
-  <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-</div>
-<div class="mx-4">
-  <div class="text-center mt-4">
-      <h2>Stock</h2>
+<div *ngIf='step === 0'>
+  <div class="m-4" routerLink="../" role="button">
+      <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
-
-<div class="search-container flex-wrap">
-    <div class="input-group mb-3">
-        <span class="input-group-text">
-            <i class="bi bi-search"></i>
-        </span>
-        <input type="text" class="form-control" id="usuario" placeholder="Buscar por Nombre de Producto">
-    </div>
-    <div>
-        <button type="button" class="btn btn-primary btn-lg" routerLink='agregar-stock'>Agregar Stock</button>
-    </div>
+  <div class="mx-4">        
+      
+      <div class="text-center my-4">
+          <h2>Stock</h2>
+      </div>
+      <div class="card rounded shadow p-4 mb-4">
+          <table class="table table-hover">
+              <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Lote</th>
+                    <th scope="col">Unidades</th>
+                    <th scope="col">Contenedor</th>
+                    <th scope="col">Detalle Ubicación</th>
+                    <th scope="col">Fecha de vencimiento</th>
+                    <th scope="col">Jefe de Grupo</th>
+                    <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor='let productoStock of productosStock; let i = index'>
+                      <th scope="row">{{i + 1}}</th>
+                      <td>{{productoStock.nombre}}</td>
+                      <td>{{productoStock.producto[i].lote}}</td>
+                      <td>{{productoStock.producto[i].unidad}}</td>
+                      <td>{{contenedores[(productoStock.producto[i].codigoContenedor)-1]?.nombre}}</td>
+                      <td>{{productoStock.producto[i].detalleUbicacion}}</td>
+                      <td>{{productoStock.producto[i].fechaVencimiento | date: 'shortDate'}}</td>
+                      <td>{{productoStock.producto[i].jefeDeGrupo}}</td>
+                      <td class="d-flex">
+                          <div class="mr-4">
+                            <a class="text-primary" role="button" (click)=editar(stock)>
+                              <i class="bi bi-pencil"></i>
+                            </a>
+                          </div>
+                          <div>
+                            <a class="text-danger" role="button" (click)=eliminar(stock,i)>
+                              <i class="bi bi-trash"></i>
+                            </a>
+                          </div>
+                        </td>
+                      
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  <button class="btn btn-primary" (click)=crear()>Agregar Stock</button>
+  </div>
 </div>
-  <table class="table table-hover">
-      <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Producto</th>
-            <th scope="col">Unidades</th>
-            <th scope="col">Contenedor</th>
-            <th scope="col">Fecha de vencimiento</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>aaaa</td>
-            <td>12</td>
-            <td>aaaa</td>
-            <td>12/5/2021</td>
-            <button type="button" class="btn btn-outline-secondary m-2" routerLink="consumir-stock">Consumir Stock</button>
-            
-          </tr>
-          <tr>
-              <th scope="row">2</th>
-              <td>bbbbb</td>
-              <td>12</td>
-              <td>aaaa</td>
-              <td>12/5/2021</td>
-              <button type="button" class="btn btn-outline-secondary m-2" routerLink="consumir-stock">Consumir Stock</button>
-          </tr>
-          <tr>
-              <th scope="row">3</th>
-              <td>cccc</td>
-              <td>12</td>
-              <td>aaaa</td>
-              <td>12/5/2021</td>
-              <button type="button" class="btn btn-outline-secondary m-2" routerLink="consumir-stock">Consumir Stock</button>
-          </tr>
-          <tr>
-              <th scope="row">4</th>
-              <td>dddd</td>
-              <td>12</td>
-              <td>aaaa</td>
-              <td>12/5/2021</td>
-              <button type="button" class="btn btn-outline-secondary m-2" routerLink="consumir-stock">Consumir Stock</button>
-          </tr>
-        </tbody>
-  </table>
+<div *ngIf='step === 1'>
+  <app-agregar-stock
+  [element]='productoSeleccionado'
+  [modo]='modo'
+  (onVolver)='volver()'
+  >
+</app-agregar-stock>
+</div>
