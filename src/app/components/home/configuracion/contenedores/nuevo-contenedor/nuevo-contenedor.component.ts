@@ -38,6 +38,7 @@ export class NuevoContenedorComponent implements OnInit {
         codigo: this.element.codigo,
         nombre: this.element.nombre,
         descripcion: this.element.descripcion,
+        temperatura: this.element.temperatura,
         proyecto: this.element.id_proyecto,
         capacidad: this.element.capacidad,
         fichaTecnica: this.element.fichaTecnica,
@@ -59,6 +60,7 @@ export class NuevoContenedorComponent implements OnInit {
       descripcion: this.formContenedor.value.descripcion,
       id_proyecto: this.formContenedor.value.proyecto,
       capacidad: this.formContenedor.value.capacidad,
+      temperatura: this.formContenedor.value.temperatura,
       fichaTecnica: this.formContenedor.value.fichaTecnica,
       disponible: estado
        // Hay que ver aca porq espera un booleano 
@@ -70,9 +72,9 @@ export class NuevoContenedorComponent implements OnInit {
       });
     } else {
       contenedor.id_contenedor = this.element.id_contenedor
-      this.postService.editarContenedor(contenedor.subscribe(res => {
+      this.postService.editarContenedor(contenedor).subscribe(res => {
         console.log(res);
-      }));
+      });
     }
   }
   

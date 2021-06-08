@@ -1,7 +1,7 @@
-<div *ngIf='step === 0'>
-  <div class="m-4" routerLink="../" role="button">
-      <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-  </div>
+<div *ngIf='step === 1'>
+  <div class="m-4" (click)='volver()' role="button">
+    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+</div>
   <div class="mx-4">        
       
       <div class="text-center my-4">
@@ -18,28 +18,27 @@
                     <th scope="col">Contenedor</th>
                     <th scope="col">Detalle Ubicación</th>
                     <th scope="col">Fecha de vencimiento</th>
-                    <th scope="col">Jefe de Grupo</th>
                     <th></th>
                   </tr>
               </thead>
               <tbody>
-                  <tr *ngFor='let productoStock of productosStock; let i = index'>
+                  <tr *ngFor='let stock of stocks; let i = index'>
                       <th scope="row">{{i + 1}}</th>
-                      <td>{{productoStock.nombre}}</td>
-                      <td>{{productoStock.producto[i].lote}}</td>
-                      <td>{{productoStock.producto[i].unidad}}</td>
-                      <td>{{contenedores[(productoStock.producto[i].codigoContenedor)-1]?.nombre}}</td>
-                      <td>{{productoStock.producto[i].detalleUbicacion}}</td>
-                      <td>{{productoStock.producto[i].fechaVencimiento | date: 'shortDate'}}</td>
-                      <td>{{productoStock.producto[i].jefeDeGrupo}}</td>
+                      <td>{{stock.nombre}}</td>
+                      <td>{{stock.producto[0].lote}}</td>
+                      <td>{{stock.producto[0].unidad}}</td>
+                      <td>{{contenedores[stock.producto[0].codigoContenedor-1]?.nombre}}</td>
+                      <td>{{stock.producto[0].detalleUbicacion}}</td>
+                      <td>{{stock.producto[0].fechaVencimiento | date: 'shortDate'}}</td>
                       <td class="d-flex">
                           <div class="mr-4">
-                            <a class="text-primary" role="button" (click)=editar(stock)>
+                            <a class="text-primary" role="button" >
+                              <!-- (click)=editar(stock) -->
                               <i class="bi bi-pencil"></i>
                             </a>
                           </div>
                           <div>
-                            <a class="text-danger" role="button" (click)=eliminar(stock,i)>
+                            <a class="text-danger" role="button" (click)=eliminar(stock.id_productoEnStock,stock)>
                               <i class="bi bi-trash"></i>
                             </a>
                           </div>
@@ -52,11 +51,12 @@
   <button class="btn btn-primary" (click)=crear()>Agregar Stock</button>
   </div>
 </div>
-<div *ngIf='step === 1'>
+<div *ngIf='step === 2'>
   <app-agregar-stock
   [element]='productoSeleccionado'
+  [espacio] = 'espacio'
   [modo]='modo'
-  (onVolver)='volver()'
+  (volviendo)='onVolviendo($event)'
   >
 </app-agregar-stock>
 </div>

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Producto } from 'src/app/models/producto.model';
+import { Distribuidora } from 'src/app/models/distribuidora.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 
@@ -11,21 +13,24 @@ import { PostService } from 'src/app/services/post.service';
 export class NuevoProductoComponent implements OnInit {
   @Input() element!: any;
   @Input() modo!: string;
-  @Output() volver = new EventEmitter();
+  @Output() volviendo = new EventEmitter<number>();
 
-  distribuidoras = [];
+  distribuidoras: Distribuidora;
   archivo: FileList;
 
-
   formProducto!: FormGroup;
-
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
   constructor(private getService: GetService, private postService: PostService) { }
 
   ngOnInit(): void {
+    this.alert = false;
     this.getService.obtenerDistribuidoras().subscribe(res => {
       console.log(res)
       this.distribuidoras = res;
     });
+
     this.formProducto = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       marca: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -52,7 +57,7 @@ export class NuevoProductoComponent implements OnInit {
 
   crearProducto(): void{
     console.log(this.element);
-    const producto : any = {
+    const producto : Producto = {
       nombre: this.formProducto.value.nombre,
       marca: this.formProducto.value.marca,
       id_distribuidora: this.formProducto.value.distribuidora,
@@ -69,11 +74,35 @@ export class NuevoProductoComponent implements OnInit {
         this.postService.subirArchivo(this.archivo, res.id_producto).subscribe( res2 => {
           console.log(res2);
         });
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'El producto fue creado correctamente';
+          setTimeout(() => {
+            this.volviendo.emit(0);
+          }, 2000);
+        }
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
       });
     } else {
       producto.id_producto = this.element.id_producto
       this.postService.editarProducto(producto).subscribe(res => {
         console.log(res);
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'La información fue editada correctamente';
+          setTimeout(() => {
+            this.volviendo.emit(0);
+          }, 2000);
+        }
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
       });
     }
   }
@@ -82,8 +111,7 @@ export class NuevoProductoComponent implements OnInit {
     console.log($event.target.files)
     this.archivo = $event.target.files
   }
-
-
-  
-
+  volver(): void{
+    this.volviendo.emit(0);
+  }
 }

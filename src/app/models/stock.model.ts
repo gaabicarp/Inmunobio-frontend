@@ -1,12 +1,16 @@
-import { DatePipe } from "@angular/common";
 
-export interface Producto {
+export interface ProductoStock {
     lote: string;
     unidad: number;
     codigoContenedor: number;
     detalleUbicacion: string;
     fechaVencimiento: any;
+    id_productos?: number;
 }
-export class DatePipeComponent {
-    today: number = Date.now();
-    }
+export class Stock{
+    id_grupoDeTrabajo: number;
+    id_espacioFisico: number;
+    id_producto : number;
+    id_productoEnStock?: number;
+    producto: ProductoStock
+}

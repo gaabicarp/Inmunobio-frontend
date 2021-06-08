@@ -1,6 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Distribuidora } from '../models/distribuidora.model';
+import { Producto } from '../models/producto.model';
+import { Stock } from '../models/stock.model';
 import { postUsuario, Usuario } from '../models/usuarios.model';
 
 @Injectable({
@@ -48,20 +51,20 @@ export class PostService {
     return this.http.post<any>(this.API_URL + 'nuevoExperimento', experimento);
   }
 
-  crearDistribuidora(nuevaDistribuidora: any): Observable<any>{
+  crearDistribuidora(nuevaDistribuidora: Distribuidora): Observable<any>{
     return this.http.post<any>(this.API_URL + 'distribuidora', nuevaDistribuidora);
   }
-  editarDistribuidora(distribuidora: any): Observable<any>{
+  editarDistribuidora(distribuidora: Distribuidora): Observable<any>{
     return this.http.put<any>(this.API_URL + 'distribuidora', distribuidora);
   }
   eliminarDistribuidora(id: number): Observable<any>{
     return this.http.delete<any>(this.API_URL + 'distribuidora/' + id);
   }
 
-  crearProducto(nuevoProducto: any): Observable<any>{
+  crearProducto(nuevoProducto: Producto): Observable<any>{
     return this.http.post<any>(this.API_URL + 'producto', nuevoProducto);
   }
-  editarProducto(producto: any): Observable<any>{
+  editarProducto(producto: Producto): Observable<any>{
     return this.http.put<any>(this.API_URL + 'producto', producto);
   }
   eliminarProducto(id: number): Observable<any>{
@@ -86,14 +89,14 @@ export class PostService {
     return this.http.post<any>(this.API_URL + 'nuevaJaula', jaula);
   }
 
-  agregarStock(nuevoStock : any){
+  agregarStock(nuevoStock : Stock){
     return this.http.post<any>(this.API_URL + 'productoEnStock', nuevoStock);
   }
   editarStock(stock : any):Observable<any>{
-    return this.http.put<any>(this.API_URL + 'productoEnStock', stock);
+    return this.http.put<any>(this.API_URL + 'productoEnStock', stock); //VER ESTO
   }
-  eliminarStock(id_productoEnStock: number, id_productos: number): Observable<any>{
-    return this.http.delete<any>(this.API_URL + 'stock/' + id_productoEnStock + '/' + id_productos);
+  eliminarStock(id_productoStock: number, id_productos: number): Observable<any>{ //VER --> Error: "No hay productos activos con id_productos 9"
+    return this.http.delete<any>(this.API_URL + 'stock/' + id_productoStock + '/' + id_productos);
   }
 
   crearContenedor(nuevoContenedor : any): Observable<any>{

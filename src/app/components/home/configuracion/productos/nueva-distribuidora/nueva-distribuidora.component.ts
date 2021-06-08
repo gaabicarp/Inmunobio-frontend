@@ -11,14 +11,18 @@ import { PostService } from 'src/app/services/post.service';
 export class NuevaDistribuidoraComponent implements OnInit {
   @Input() element!: any;
   @Input() modo!: string;
-  @Output() volver = new EventEmitter();
+  @Output() volviendo = new EventEmitter<number>();
 
 
   formDistribuidora!: FormGroup;
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
 
   constructor(private getService: GetService, private postService: PostService) { }
 
   ngOnInit(): void {
+    this.alert = false;
     this.formDistribuidora = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       contacto: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -48,18 +52,42 @@ export class NuevaDistribuidoraComponent implements OnInit {
     };
     if (this.modo === 'CREAR'){
       this.postService.crearDistribuidora(distribuidora).subscribe(res => {
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'La distribuidora fue creada correctamente';
+          setTimeout(() => {
+            this.volviendo.emit(0);
+          }, 2000);
+        }
         console.log(res);
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
       });
     } else {
       distribuidora.id_distribuidora = this.element.id_distribuidora
       this.postService.editarDistribuidora(distribuidora).subscribe(res => {
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'La información fue editada correctamente';
+          setTimeout(() => {
+            this.volviendo.emit(0);
+          }, 2000);
+        }
         console.log(res);
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
       });
     }
   }
   
-  onVolver(): void{
-    this.volver.emit();
+  volver(): void{
+    this.volviendo.emit(0);
   }
 
 }

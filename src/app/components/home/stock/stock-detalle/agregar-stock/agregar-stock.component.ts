@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
-import { Producto } from 'src/app/models/stock.model'
+import { Producto } from 'src/app/models/producto.model'
 import { DatePipe } from '@angular/common';
-
+import { ProductoStock, Stock } from 'src/app/models/stock.model';
 
 @Component({
   selector: 'app-agregar-stock',
@@ -13,31 +14,41 @@ import { DatePipe } from '@angular/common';
   providers: [DatePipe]
 })
 
-export class AgregarStockComponent implements OnInit {
+export class AgregarStockComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
+
   @Input() element!: any;
   @Input() modo!: string;
-  @Output() volver = new EventEmitter();
-  productos = [];
+  @Input() espacio!: number;
+  @Output() volviendo = new EventEmitter<number>();
+
+  productos: Producto;
   contenedores = [];
-  nuevoStock = [];
+  nuevoStocks = [];
   lista = [];
   
-
   formStock!: FormGroup;
+  step: number;
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
  
   constructor(private getService: GetService, private postService: PostService, public datepipe: DatePipe) { }
-  
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
   ngOnInit(): void {
-    
-    this.getService.obtenerProductos().subscribe(res => {
-      console.log(res)
-      this.productos = res;
-    });
-    this.getService.obtenerContenedores().subscribe(res => {
-      console.log(res)
-      this.contenedores = res;
-    });
-
+    this.step = 2;
+    this.alert = false;
+    console.log(this.espacio)
+    this.subscription.add( this.getService.obtenerProductos().subscribe(res => {
+                            console.log(res)
+                            this.productos = res; })
+    );
+    this.subscription.add( this.getService.obtenerContenedores().subscribe(res => {
+                            console.log(res)
+                            this.contenedores = res; })
+    );
     this.formStock = new FormGroup({
       producto: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       lote: new FormControl('', [Validators.maxLength(50)]),
@@ -47,58 +58,65 @@ export class AgregarStockComponent implements OnInit {
       fechaVencimiento: new FormControl('', [Validators.maxLength(11)]),
     });
     // if (this.modo === 'EDITAR'){
+    //   console.log(this.element)
     //   this.formStock.patchValue({
     //     producto: this.element.id_producto,
-    //     lote: this.element.lote,
-    //     unidad: this.element.unidad,
-    //     contenedor: this.element.codigoContenedor,
-    //     detalleUbicacion: this.element.detalleUbicacion,
-    //     fechaVencimiento: this.element.fechaVencimiento
+    //     lote: this.element.producto[0].lote,
+    //     unidad: this.element.producto[0].unidad,
+    //     contenedor: this.element.producto[0].codigoContenedor,
+    //     detalleUbicacion: this.element.producto[0].detalleUbicacion,
+    //     fechaVencimiento: this.element.producto[0].fechaVencimiento
     //   });
     // }
   }
 
-
-
   productoEnStock(): void{
     var fecha = this.formStock.value.fechaVencimiento;
-    const prod : Producto = {
+    const productoEnStock : ProductoStock = {
       lote: this.formStock.value.lote,
       unidad: this.formStock.value.unidad,
       codigoContenedor: this.formStock.value.contenedor,
       detalleUbicacion: this.formStock.value.detalleUbicacion,
       fechaVencimiento: this.datepipe.transform( fecha,'yyyy-MM-ddT23:01:10.288Z')
     }
-    this.nuevoStock.push(prod) // esto es para que me aparezca la lista abajo
-    this.lista = [prod]
+    this.lista = [productoEnStock]
     this.AgregarStock(this.lista)
   }
 
-  AgregarStock(prod): void{
-    console.log(this.element);
-    const stock : any = {
+  AgregarStock(productoEnStock): void{
+    const stock : Stock = {
       id_grupoDeTrabajo : 1 ,
-      id_espacioFisico : 1,
+      id_espacioFisico : this.espacio ,
       id_producto: this.formStock.value.producto,
-      //id_producto :this.formStock.value.producto,
-      producto: prod
+      producto: productoEnStock
     };
+    this.nuevoStocks.push(stock) // esto es para que me aparezca la lista abajo
     if (this.modo === 'CREAR'){
-      console.log(prod);
-      console.log(stock);
+      console.log(this.nuevoStocks)
       this.postService.agregarStock(stock).subscribe(res => {
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'Producto en stock agregado correctamente';
+          setTimeout(() => {
+            this.volviendo.emit(1);
+          }, 2000);
+        }
         console.log(res);
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
       });
     } 
     //   else {
-    //   // stock.id_grupoDeTrabajo = this.element.id_grupoDeTrabajo;
-    //   // stock.id_espacioFisico = this.element.id_espacioFisico;
-    //   stock.id_grupoDeTrabajo =1;
-    //   stock.id_espacioFisico = 1;
     //   this.postService.editarStock(stock).subscribe(res => {
     //     console.log(res);
     //   });
     // }
+  }
+  volver(): void{
+    this.volviendo.emit(1);
   }
 }
 

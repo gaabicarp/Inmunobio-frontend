@@ -11,7 +11,6 @@ import { NuevoProductoComponent } from './components/home/configuracion/producto
 import { StockDetalleComponent } from './components/home/stock/stock-detalle/stock-detalle.component';
 import { StockComponent } from './components/home/stock/stock.component';
 import { LoginComponent } from './components/login/login.component';
-import { EspaciosfisicosComponent } from './components/home/stock/espaciosfisicos/espaciosfisicos.component';
 import { AgregarStockComponent } from './components/home/stock/stock-detalle/agregar-stock/agregar-stock.component';
 import { NuevoContenedorComponent } from './components/home/configuracion/contenedores/nuevo-contenedor/nuevo-contenedor.component';
 import { NuevaDistribuidoraComponent } from './components/home/configuracion/productos/nueva-distribuidora/nueva-distribuidora.component';
@@ -27,24 +26,21 @@ import { ConsumirStockComponent } from './components/home/stock/stock-detalle/co
 import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
-
 import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
 import { ContenedoresComponent } from './components/home/configuracion/contenedores/contenedores.component';
 import { NuevoEspacioComponent } from './components/home/configuracion/espacio-fisico/nuevo-espacio/nuevo-espacio.component';
 import { EspacioFisicoComponent } from './components/home/configuracion/espacio-fisico/espacio-fisico.component';
-
 const routes: Routes = [
   { path: 'home',
     component: HomeComponent,
     children: [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'proyectos', component: ProyectosComponent},
+      {path: 'proyectos/create', component: NuevoProyectoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
       {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
-      {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'stock', component: StockComponent},
-      {path: 'stock/', component: EspaciosfisicosComponent},
       {path: 'stock/:id', component: StockDetalleComponent},
       {path: 'stock/:id/agregar-stock', component: AgregarStockComponent},
       {path: 'stock/:id/agregar-stock/nuevo-contenedor', component: NuevoContenedorComponent},

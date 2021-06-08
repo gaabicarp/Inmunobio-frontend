@@ -40,7 +40,8 @@
       <th scope="row">{{i +1}}</th>
       <td>{{producto.nombre}}</td>
       <td>{{producto.marca}}</td>
-      <td>{{distribuidoras[producto.id_distribuidora-1]?.nombre}}</td>
+      <!-- <td>{{distribuidoras[producto.id_distribuidora -1]?.nombre}}</td>  HAY QUE VER PARA Q SE PONGA EL NOMBRE--> 
+      <td>{{producto.id_distribuidora}}</td>
       <td>{{producto.tipo}}</td>
       <td>{{producto.aka}}</td>
       <td>{{producto.url}}</td>
@@ -68,7 +69,7 @@
   <app-nuevo-producto
   [element]='productoSeleccionado'
   [modo]='modo'
-
+  (volviendo)='onVolviendo($event)'
   >
 </app-nuevo-producto>
 </div>

@@ -2,7 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Usuario } from '../models/usuarios.model';
+import { Producto } from '../models/producto.model';
 import { timestamp } from 'rxjs/operators';
+import { Distribuidora } from '../models/distribuidora.model';
+import { Stock } from '../models/stock.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +26,14 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'permisos');
   }
 
-  obtenerDistribuidoras(): Observable<any>{
+  obtenerDistribuidoras(): Observable<Distribuidora>{
     return this.http.get<any>(this.API_URL + 'getDistribuidoras');
   }
   obtenerDistribuidorasPorId(id : number): Observable<any>{
     return this.http.get<any>(this.API_URL + 'distribuidora/' + id);
   }
 
-  obtenerProductos(): Observable<any>{
+  obtenerProductos(): Observable<Producto>{
     return this.http.get<any>(this.API_URL + 'getProductos');
   }
   obtenerProductosPorId(id : number): Observable<any>{
@@ -39,15 +42,13 @@ export class GetService {
 
   //Hay que poner -->  obtenerStock(id_grupo:number, id_espacio: number): Observable<any>{
   //  return this.http.get<any>(this.API_URL + 'obtenerStock/'+ id_grupo + '/'+ id_espacio);
-  obtenerStock(): Observable<any>{
-    return this.http.get<any>(this.API_URL + 'obtenerStock/1/1');
+  obtenerStock(id_espacioFisico : number): Observable<Stock>{
+    return this.http.get<any>(this.API_URL + 'obtenerStock/1/'+ id_espacioFisico);
   }
   obtenerContenedores(): Observable<any>{
     return this.http.get<any>(this.API_URL + 'contenedores');
   }
-  // obtenerEspacios(): Observable<any>{
-  //   return this.http.get<any>(this.API_URL + 'espaciosFisicos')
-  // }
+
   // obtenerProductoEnStock(): Observable<any>{
   //   return this.http.get<any>(this.API_URL + 'productoEnStock');
   // }

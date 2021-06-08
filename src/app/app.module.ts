@@ -19,7 +19,6 @@ import { StockComponent } from './components/home/stock/stock.component';
 import { StockDetalleComponent } from './components/home/stock/stock-detalle/stock-detalle.component';
 import { NuevoProductoComponent } from './components/home/configuracion/productos/nuevo-producto/nuevo-producto.component';
 import { ProductosComponent } from './components/home/configuracion/productos/productos.component';
-import { EspaciosfisicosComponent } from './components/home/stock/espaciosfisicos/espaciosfisicos.component';
 import { AgregarStockComponent } from './components/home/stock/stock-detalle/agregar-stock/agregar-stock.component';
 import { NuevoContenedorComponent } from './components/home/configuracion/contenedores/nuevo-contenedor/nuevo-contenedor.component';
 import { NuevaDistribuidoraComponent } from './components/home/configuracion/productos/nueva-distribuidora/nueva-distribuidora.component';
@@ -57,7 +56,6 @@ import { NuevoEspacioComponent } from './components/home/configuracion/espacio-f
     StockDetalleComponent,
     NuevoProductoComponent,
     ProductosComponent,
-    EspaciosfisicosComponent,
     AgregarStockComponent,
     NuevoContenedorComponent,
     NuevaDistribuidoraComponent,
