@@ -21,6 +21,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   contenedores = [];
 
   productoSeleccionado: any;
+  idProducto:number;
   step: number;
   modo: string;
   espacio: number
@@ -57,8 +58,9 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     this.step = 2;
   }
 
-  editar(stock: Stock): void {
+  editar(stock: Stock, id:number): void {
     this.productoSeleccionado = stock;
+    this.idProducto = id;
     this.espacio = this.id_espacio;
     this.modo = 'EDITAR';
     this.step = 2;
@@ -70,6 +72,13 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     this.postService.eliminarStock(id_productoEnStock, id_productos).subscribe(res =>{
       console.log(res);
     })
+  }
+
+  consumir(stock: Stock, id: number){
+    this.productoSeleccionado = stock;
+    this.idProducto = id;
+    this.espacio = this.id_espacio;
+    this.step = 3;
   }
 
   volver(): void{

@@ -5,7 +5,7 @@ import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { Producto } from 'src/app/models/producto.model'
 import { DatePipe } from '@angular/common';
-import { ProductoStock, Stock } from 'src/app/models/stock.model';
+import { ProductoEdic, ProductoStock, Stock, StockEdicion } from 'src/app/models/stock.model';
 
 @Component({
   selector: 'app-agregar-stock',
@@ -18,6 +18,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   @Input() element!: any;
+  @Input() idProducto!: any;
   @Input() modo!: string;
   @Input() espacio!: number;
   @Output() volviendo = new EventEmitter<number>();
@@ -41,6 +42,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
     this.step = 2;
     this.alert = false;
     console.log(this.espacio)
+    console.log(this.idProducto)
     this.subscription.add( this.getService.obtenerProductos().subscribe(res => {
                             console.log(res)
                             this.productos = res; })
@@ -57,17 +59,17 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
       detalleUbicacion: new FormControl('', [Validators.maxLength(11)]),
       fechaVencimiento: new FormControl('', [Validators.maxLength(11)]),
     });
-    // if (this.modo === 'EDITAR'){
-    //   console.log(this.element)
-    //   this.formStock.patchValue({
-    //     producto: this.element.id_producto,
-    //     lote: this.element.producto[0].lote,
-    //     unidad: this.element.producto[0].unidad,
-    //     contenedor: this.element.producto[0].codigoContenedor,
-    //     detalleUbicacion: this.element.producto[0].detalleUbicacion,
-    //     fechaVencimiento: this.element.producto[0].fechaVencimiento
-    //   });
-    // }
+    if (this.modo === 'EDITAR'){
+      console.log(this.element)
+      this.formStock.patchValue({
+        producto: this.element.id_producto,
+        lote: this.element.producto[this.idProducto].lote,
+        unidad: this.element.producto[this.idProducto].unidad,
+        contenedor: this.element.producto[this.idProducto].codigoContenedor,
+        detalleUbicacion: this.element.producto[this.idProducto].detalleUbicacion,
+        fechaVencimiento: this.datepipe.transform(this.element.producto[this.idProducto].fechaVencimiento, 'yyyy-MM-dd')
+      });
+    }
   }
 
   productoEnStock(): void{
@@ -109,11 +111,33 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
         this.mensajeAlert = JSON.stringify(err.error.error);
       });
     } 
-    //   else {
-    //   this.postService.editarStock(stock).subscribe(res => {
-    //     console.log(res);
-    //   });
-    // }
+      else {
+        const prod : ProductoEdic = {
+          codigoContenedor: this.formStock.value.contenedor,
+          detalleUbicacion : this.formStock.value.detalleUbicacion,
+          unidad : 0,
+          id_productos : this.element.producto[this.idProducto].id_productos
+        }
+        const edicion : StockEdicion = {
+          id_productoEnStock: this.element.id_productoEnStock,
+          producto: prod
+        }
+      this.postService.editarStock(edicion).subscribe(res => {
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'Producto en stock agregado correctamente';
+          setTimeout(() => {
+            this.volviendo.emit(1);
+          }, 2000);
+        }
+        console.log(res);
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
+      });
+    }
   }
   volver(): void{
     this.volviendo.emit(1);

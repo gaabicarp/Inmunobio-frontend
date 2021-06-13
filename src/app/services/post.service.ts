@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Distribuidora } from '../models/distribuidora.model';
 import { Producto } from '../models/producto.model';
-import { Stock } from '../models/stock.model';
+import { Consumir, Stock } from '../models/stock.model';
 import { postUsuario, Usuario } from '../models/usuarios.model';
 
 @Injectable({
@@ -95,8 +95,11 @@ export class PostService {
   editarStock(stock : any):Observable<any>{
     return this.http.put<any>(this.API_URL + 'productoEnStock', stock); //VER ESTO
   }
-  eliminarStock(id_productoStock: number, id_productos: number): Observable<any>{ //VER --> Error: "No hay productos activos con id_productos 9"
+  eliminarStock(id_productoStock: number, id_productos: number): Observable<any>{ //VER tmb
     return this.http.delete<any>(this.API_URL + 'stock/' + id_productoStock + '/' + id_productos);
+  }
+  consumirStock(stock: Consumir): Observable<any>{
+    return this.http.put<any>(this.API_URL + 'consumirStock', stock);
   }
 
   crearContenedor(nuevoContenedor : any): Observable<any>{

@@ -1,24 +1,15 @@
-<div class="m-4" routerLink="../" role="button">
-    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+<div class="m-4" (click)='volver()' role="button">
+  <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
   <h3 class="text-center mt-4" >Consumir Stock</h3>
   <div class="card rounded shadow p-4 m-5">
-  <form>
-     <div class=" m-3">
-          <label  class="form-label">Cantidad consumida</label>
-          <div class="input-group m-3">
-              <select class="form-control" aria-label=".form-select-lg example">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="3">4</option>
-                  <option value="3">5</option>
-
-                </select>
-          </div>
-        </div>
+  <form [formGroup]="formConsumir" (ngSubmit)="consumir()">
+    <div class="m-3">
+      <label for="cantidad" class="form-label">Cantidad</label>
+      <input type="number" class="form-control" id="cantidad" formControlName="cantidad">
+</div>
+<div class="text-center">
+  <button class="btn btn-success btn-lg" type="submit" [disabled]="!formConsumir.valid">Guardar</button>
+</div>
     </form>
-    <div class="text-center">
-      <button type="button" class="btn btn-success btn-lg">Guardar</button>
-  </div>
   </div>

@@ -19,33 +19,43 @@
                     <th scope="col">Detalle Ubicación</th>
                     <th scope="col">Fecha de vencimiento</th>
                     <th></th>
+                    <th></th>
                   </tr>
               </thead>
               <tbody>
-                  <tr *ngFor='let stock of stocks; let i = index'>
+                  <ng-container *ngFor='let a of stocks;let i = index'>
+                    <tr *ngFor='let stock of a.producto; let j = index'>
                       <th scope="row">{{i + 1}}</th>
-                      <td>{{stock.nombre}}</td>
-                      <td>{{stock.producto[0].lote}}</td>
-                      <td>{{stock.producto[0].unidad}}</td>
-                      <td>{{contenedores[stock.producto[0].codigoContenedor-1]?.nombre}}</td>
-                      <td>{{stock.producto[0].detalleUbicacion}}</td>
-                      <td>{{stock.producto[0].fechaVencimiento | date: 'shortDate'}}</td>
+                      <td>{{a.nombre}}</td>
+                      <td>{{stock.lote}}</td>
+                      <td>{{stock.unidad}}</td>
+                      <td>{{contenedores[stock.codigoContenedor-1]?.nombre}}</td>
+                      <td>{{stock.detalleUbicacion}}</td>
+                      <td>{{stock.fechaVencimiento | date: 'shortDate'}}</td>
+                      <td>
+                          <a class="text-primary" role="button" (click)=consumir(a,j)>
+                            <i>Consumir</i>
+                          </a>
+                      </td>
                       <td class="d-flex">
                           <div class="mr-4">
-                            <a class="text-primary" role="button" >
+                            <a class="text-primary" role="button" (click)=editar(a,j) >
                               <!-- (click)=editar(stock) -->
                               <i class="bi bi-pencil"></i>
                             </a>
                           </div>
                           <div>
-                            <a class="text-danger" role="button" (click)=eliminar(stock.id_productoEnStock,stock)>
+                            <a class="text-danger" role="button" (click)=eliminar(a,j)>
                               <i class="bi bi-trash"></i>
                             </a>
                           </div>
-                        </td>
-                      
-                  </tr>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  
+
               </tbody>
+            
           </table>
       </div>
   <button class="btn btn-primary" (click)=crear()>Agregar Stock</button>
@@ -54,9 +64,19 @@
 <div *ngIf='step === 2'>
   <app-agregar-stock
   [element]='productoSeleccionado'
+  [idProducto]='idProducto'
   [espacio] = 'espacio'
   [modo]='modo'
   (volviendo)='onVolviendo($event)'
   >
 </app-agregar-stock>
+</div>
+<div *ngIf='step === 3'>
+  <app-consumir-stock
+  [element]='productoSeleccionado'
+  [idProducto]='idProducto'
+  [espacio] = 'espacio'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-consumir-stock>
 </div>
