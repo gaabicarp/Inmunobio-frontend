@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../../../services/post.service';
 import { GetService } from '../../../../services/get.service';
+import { Contenedor } from 'src/app/models/contenedores.model';
 
 @Component({
   selector: 'app-contenedores',
@@ -8,7 +9,7 @@ import { GetService } from '../../../../services/get.service';
   styleUrls: ['./contenedores.component.css']
 })
 export class ContenedoresComponent implements OnInit {
-  contenedores = [];
+  contenedores: Contenedor;
   proyectos = [];
 
   contenedorSeleccionado: any;

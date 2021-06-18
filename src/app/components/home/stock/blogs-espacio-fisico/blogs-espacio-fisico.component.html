@@ -1,0 +1,43 @@
+<div *ngIf='step === 5'>
+  <div class="search-container flex-wrap">
+    <div class="input-group mb-3">
+        <span class="input-group-text">
+            <i class="bi bi-search"></i>
+        </span>
+        <input type="text" class="form-control" id="usuario" placeholder="Filtrar según usuario">
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary btn-lg" (click)=nuevoBlog()>Crear entrada de Blog</button>
+    </div>
+  </div>
+  <div>
+    <div class="row m-2" >
+        <ng-container *ngFor='let a of blogs;let i = index'>
+      <div class="col-1 d-flex flex-column  align-items-center">
+        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
+          <i class="bi bi-journal"></i>
+        </div>
+        <p class="text-center mb-0">{{a.fecha | date: 'shortDate'}}</p>
+        <div>
+        <a class="text-danger" role="button" (click)=eliminar(a.id_blog)>
+          <i class="">eliminar</i>
+        </a>
+      </div>
+      </div>
+      <div class=" col-11 card shadow  mb-3">
+        <div class="card-header"><strong>Blog n°{{i+1}}</strong></div> 
+          <p class="mb-1"><i>{{a.id_usuario}}</i></p>
+          <p>{{a.detalle}}</p>
+      </div>
+    </ng-container>
+    </div>
+  </div>
+</div>
+
+<div *ngIf='step === 6'>
+  <app-nuevo-blog-espacio
+  [espacio] = 'espacio'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-nuevo-blog-espacio>
+</div>

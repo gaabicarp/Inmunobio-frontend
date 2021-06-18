@@ -6,6 +6,7 @@ import { PostService } from 'src/app/services/post.service';
 import { Producto } from 'src/app/models/producto.model'
 import { DatePipe } from '@angular/common';
 import { ProductoEdic, ProductoStock, Stock, StockEdicion } from 'src/app/models/stock.model';
+import { Contenedor } from 'src/app/models/contenedores.model';
 
 @Component({
   selector: 'app-agregar-stock',
@@ -24,7 +25,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
   @Output() volviendo = new EventEmitter<number>();
 
   productos: Producto;
-  contenedores = [];
+  contenedores: Contenedor;
   nuevoStocks = [];
   lista = [];
   

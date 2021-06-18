@@ -2,14 +2,14 @@
   <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
   <h3 class="text-center mt-4" >Consumir Stock</h3>
-  <div class="card rounded shadow p-4 m-5">
+<div class="card rounded shadow p-4 m-5">
   <form [formGroup]="formConsumir" (ngSubmit)="consumir()">
     <div class="m-3">
       <label for="cantidad" class="form-label">Cantidad</label>
       <input type="number" class="form-control" id="cantidad" formControlName="cantidad">
+    </div>
+    <div class="text-center">
+      <button class="btn btn-success btn-lg" type="submit" [disabled]="!formConsumir.valid">Guardar</button>
+    </div>
+  </form>
 </div>
-<div class="text-center">
-  <button class="btn btn-success btn-lg" type="submit" [disabled]="!formConsumir.valid">Guardar</button>
-</div>
-    </form>
-  </div>

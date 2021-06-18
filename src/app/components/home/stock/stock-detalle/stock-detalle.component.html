@@ -1,12 +1,27 @@
-<div *ngIf='step === 1'>
+<div>
   <div class="m-4" (click)='volver()' role="button">
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+  </div>
+  <div class="text-center my-4">
+    <h2>{{element}}</h2>
+  </div>
 </div>
+<ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
+  <li [ngbNavItem]="1">
+    <a ngbNavLink (click)= irStock()>Stock</a>
+    <ng-template ngbNavContent>
+    </ng-template>
+  </li>
+
+  <li [ngbNavItem]="2">
+    <a ngbNavLink (click)= irBlogs()>Blogs</a>
+    <ng-template ngbNavContent>
+    </ng-template>
+  </li>
+</ul>
+
+<div *ngIf='step === 1'>
   <div class="mx-4">        
-      
-      <div class="text-center my-4">
-          <h2>Stock</h2>
-      </div>
       <div class="card rounded shadow p-4 mb-4">
           <table class="table table-hover">
               <thead>
@@ -80,3 +95,32 @@
   >
 </app-consumir-stock>
 </div>
+
+<div *ngIf='step === 4'>
+  <div class="card rounded shadow p-4 m-5">
+    <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
+      <div class="m-3">
+        <label for="fecDesde" class="form-label">Fecha inicial</label>
+        <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
+      </div>
+      <div class="m-3">
+        <label for="fecHasta" class="form-label">Fecha final</label>
+        <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary btn-lg m-2" (click)=cancelar() >Cancelar</button>
+        <button class="btn btn-success btn-lg m-2" type="submit" [disabled]="!formFecha.valid">Buscar</button>
+      </div>
+    </form>
+  </div>
+  
+</div>
+
+<div *ngIf='step === 5'>
+  <app-blogs-espacio-fisico
+  [blog] = 'blog'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-blogs-espacio-fisico>
+</div>
+

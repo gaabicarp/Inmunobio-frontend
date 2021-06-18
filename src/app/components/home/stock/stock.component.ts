@@ -34,5 +34,5 @@ export class StockComponent implements OnInit, OnDestroy {
   onVolviendo(e: number): void{
     this.step = e;
   }
-
+  
 }

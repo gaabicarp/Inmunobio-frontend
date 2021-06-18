@@ -49,11 +49,18 @@ export class NuevoContenedorComponent implements OnInit {
 
   crearContenedor(): void{
     console.log(this.element);
-    var isChecked = this.formContenedor.value.checked;
-    var estado 
-        if(isChecked){
-            estado = true;
-          } else estado = false;
+    // var isChecked = document.getElementById('disponible').checked;
+    // var estado 
+    //     if(isChecked){
+    //         estado = true;
+    //       } else estado = false;
+    var checkbox = document.getElementById('disponible') as HTMLInputElement;
+    var estado = false;
+    checkbox.addEventListener( 'change', function() {
+        if(this.checked ) {
+          estado = true;
+        }
+      });
     const contenedor: any = {
       codigo: this.formContenedor.value.codigo,
       nombre: this.formContenedor.value.nombre,
@@ -63,8 +70,6 @@ export class NuevoContenedorComponent implements OnInit {
       temperatura: this.formContenedor.value.temperatura,
       fichaTecnica: this.formContenedor.value.fichaTecnica,
       disponible: estado
-       // Hay que ver aca porq espera un booleano 
-       //this.formContenedor.value.disponible,
     };
     if (this.modo === 'CREAR'){
       this.postService.crearContenedor(contenedor).subscribe(res => {

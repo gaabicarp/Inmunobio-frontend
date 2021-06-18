@@ -29,7 +29,7 @@ export class ConsumirStockComponent implements OnInit {
     this.step = 3;
     this.alert = false;
       this.formConsumir = new FormGroup({
-        cantidad: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+        cantidad: new FormControl('', [Validators.required, Validators.maxLength(20)])
       });
   }
   consumir(){

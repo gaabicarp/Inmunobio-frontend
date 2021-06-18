@@ -25,7 +25,6 @@ export class ProductoEdic{
     id_productos: number;
 
 }
-
 export class Consumir{
     unidad: number;
     id_productoEnStock:number;

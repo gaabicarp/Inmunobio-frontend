@@ -1,3 +1,4 @@
+
 <div class="m-4" routerLink="../" role="button">
       <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
     </div>
@@ -6,7 +7,7 @@
           <h2>{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Contenedor</h2>
       </div>
     <div class="card rounded shadow p-4 m-5">
-    <form [formGroup]="formContenedor" (ngSubmit)="crearContenedor()">
+    <form name='formContenedor' [formGroup]="formContenedor" (ngSubmit)="crearContenedor()">
       <div class="m-3">
         <label  for="codigo" class="form-label">Código</label>
         <input type="text" class="form-control" id="codigo" formControlName="codigo">

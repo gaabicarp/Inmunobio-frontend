@@ -3,8 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Distribuidora } from '../models/distribuidora.model';
 import { Producto } from '../models/producto.model';
-import { Consumir, Stock } from '../models/stock.model';
+import { Consumir, Stock, StockEdicion } from '../models/stock.model';
 import { postUsuario, Usuario } from '../models/usuarios.model';
+import { BlogEspacio, BlogHerramienta, Blogs } from '../models/blogs.model';
+import { Herramienta } from '../models/herramientas.model';
+import { Contenedor } from '../models/contenedores.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -92,30 +96,54 @@ export class PostService {
   agregarStock(nuevoStock : Stock){
     return this.http.post<any>(this.API_URL + 'productoEnStock', nuevoStock);
   }
-  editarStock(stock : any):Observable<any>{
-    return this.http.put<any>(this.API_URL + 'productoEnStock', stock); //VER ESTO
+  editarStock(stock : StockEdicion):Observable<any>{
+    return this.http.put<any>(this.API_URL + 'productoEnStock', stock); 
   }
-  eliminarStock(id_productoStock: number, id_productos: number): Observable<any>{ //VER tmb
+  eliminarStock(id_productoStock: number, id_productos: number): Observable<any>{ 
     return this.http.delete<any>(this.API_URL + 'stock/' + id_productoStock + '/' + id_productos);
   }
   consumirStock(stock: Consumir): Observable<any>{
     return this.http.put<any>(this.API_URL + 'consumirStock', stock);
   }
 
-  crearContenedor(nuevoContenedor : any): Observable<any>{
+  crearContenedor(nuevoContenedor : Contenedor): Observable<any>{
     return this.http.post<any>(this.API_URL + 'nuevoContenedor', nuevoContenedor);
   }
-  editarContenedor(contenedor : any):Observable<any>{ // CREO QUE NO SE PUEDE MODIFICAR
+  editarContenedor(contenedor : Contenedor):Observable<any>{ // CREO QUE NO SE PUEDE MODIFICAR
     return this.http.put<any>(this.API_URL + '', contenedor);
   }
+
   crearAnimal(animal: any): Observable<any> {
     return this.http.post<any>(this.API_URL + 'nuevoAnimal', animal);
   }
 
-  
+  crearBlogEspacio(nuevo: BlogEspacio):Observable<any> {
+    return this.http.post<any>(this.API_URL + 'crearBlogEspacio', nuevo);
+  }
+  obtenerBlogEspacioFisico(blog: Blogs): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'blogsEspacio',blog);
+  }
+  eliminarBlogEspacioFisico(id_espacio: number, id_blog: number): Observable<any>{
+    return this.http.delete<any>(this.API_URL + 'borrarBlogEspacio/' + id_espacio + '/'+ id_blog);
+  }
 
-  // crearStock(nuevoStock : any): Observable<any>{
-  //   return this.http.post<any>(this.API_URL +'productoEnStock', nuevoStock)
-  // }
+  crearHerramienta(nuevaHerramienta: Herramienta): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'herramienta', nuevaHerramienta);
+  }
+  editarHerramienta( herramienta:Herramienta ): Observable<any>{
+    return this.http.put<any>(this.API_URL + 'herramienta', herramienta);
+  }
+  eliminarHerramienta(id_herramienta:number):Observable<any>{
+    return this.http.delete<any>(this.API_URL + 'herramienta/' + id_herramienta);
+  }
+  crearBlogHerramienta(nuevo: BlogHerramienta):Observable<any>{
+    return this.http.post<any>(this.API_URL + 'crearBlogHerramienta', nuevo);
+  }
+  eliminarBlogHerramienta(id_herramienta: number, id_blog: number): Observable<any>{
+    return this.http.delete<any>(this.API_URL + 'blogHerramienta/' + id_herramienta + '/'+ id_blog);
+  }
+  obtenerBlogHerramientas(blog: Blogs): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'blogHerramienta', blog);
+  }
 
 }

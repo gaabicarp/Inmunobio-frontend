@@ -6,6 +6,9 @@ import { Producto } from '../models/producto.model';
 import { timestamp } from 'rxjs/operators';
 import { Distribuidora } from '../models/distribuidora.model';
 import { Stock } from '../models/stock.model';
+import { BlogsBuscados } from '../models/blogs.model';
+import { Herramienta } from '../models/herramientas.model';
+import { Contenedor } from '../models/contenedores.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,9 +52,17 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'contenedores');
   }
 
-  // obtenerProductoEnStock(): Observable<any>{
-  //   return this.http.get<any>(this.API_URL + 'productoEnStock');
-  // }
+  obtenerHerramienta(id_herramienta: number): Observable<Herramienta>{
+    return this.http.get<any>(this.API_URL + 'herramienta/'+ id_herramienta);
+  }
+  obtenerHerramientas():Observable<Herramienta>{
+    return this.http.get<any>(this.API_URL + 'herramientas');
+  }
+
+  
+
+
+
 
 
   obtenerGruposExperimentales(): Observable<any>{
