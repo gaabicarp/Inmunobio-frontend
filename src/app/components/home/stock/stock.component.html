@@ -1,30 +1,48 @@
-<div class="m-4" routerLink="../" role="button">
-  <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+
+<div *ngIf='step === 0'>
+  <div class="mx-4">        
+    <div>
+      <div class="text-center my-4">
+        <h2>Seleccione espacio físico</h2>
+      </div>
+    </div>
+      <div class="card rounded shadow p-4 mb-4">
+        <table class="table table-hover">
+          <thead>
+              <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Sala</th>
+              <th scope="col">Piso</th>
+              <th scope="col"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor='let espacio of espacios; let i = index' (click)=ver(espacio.id_espacioFisico)>
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{espacio.nombre}}</td>
+                  <td>{{espacio.sala}}</td>
+                  <td>{{espacio.piso}}</td>
+                  <td class="d-flex">
+                      <div>
+                        <a class="" role="button">
+                          <i class="bi bi-box-arrow-in-right"></i>
+                        </a>
+                      </div>
+                    </td>
+                  
+              </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
 </div>
-<h3 class="text-center p-5">Seleccionar espacio fisico para visualizar el stock</h3>
-<div class="container">
-  <div class="row align-items-start text-center ">
-    <div class="col p-5 card shadow rounded list-group-item-action m-2" style="cursor: pointer;" routerLink='1' >
-      Laboratorio 1
-    </div>
-    <div class="col p-5  card shadow rounded list-group-item-action m-2" style="cursor: pointer;" routerLink='2' >
-      Laboratorio 2
-    </div>
-    <div class="col p-5  card shadow rounded list-group-item-action m-2" style="cursor: pointer;" routerLink='3' >
-      Laboratorio 3
-    </div>
-  </div>
-  <div class="row align-items-center text-center">
-    <div class="col p-5 card shadow rounded list-group-item-action m-2" style="cursor: pointer;" routerLink='4'>
-      Laboratorio 4
-    </div>
-    <div class="col p-5 card shadow rounded list-group-item-action m-2" style="cursor: pointer;" routerLink='5'>
-      Laboratorio 5
-    </div>
-    <div class="col p-5 card shadow rounded list-group-item-action m-2" style="cursor: pointer;" routerLink='6'>
-      Laboratorio 6
-    </div>
-  </div>
+<div *ngIf='step === 1'>
+  <app-stock-detalle
+  [element]='espacioSeleccionado'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-stock-detalle>
 </div>
 
 

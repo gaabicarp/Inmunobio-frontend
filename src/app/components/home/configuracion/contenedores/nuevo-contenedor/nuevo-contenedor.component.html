@@ -1,0 +1,56 @@
+
+<div class="m-4" routerLink="../" role="button">
+      <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+    </div>
+  <div class="mx-4">
+      <div class="text-center my-4">
+          <h2>{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Contenedor</h2>
+      </div>
+    <div class="card rounded shadow p-4 m-5">
+    <form name='formContenedor' [formGroup]="formContenedor" (ngSubmit)="crearContenedor()">
+      <div class="m-3">
+        <label  for="codigo" class="form-label">Código</label>
+        <input type="text" class="form-control" id="codigo" formControlName="codigo">
+      </div>
+      <div class="m-3">
+        <label  for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" formControlName="nombre">
+      </div>
+      <div class="m-3">
+        <label  for="descripcion" class="form-label">Descripción</label>
+        <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+      </div>
+      <div class="m-3">
+        <label  for="temperatura" class="form-label">Temperatura</label>
+        <input type="text" class="form-control" id="temperatura" formControlName="temperatura">
+      </div>
+      <div class=" m-3">
+        <label  class="form-label" for="proyecto">Proyecto Asignado</label>
+            <select class="form-control" aria-label=".form-select-lg example" id="proyecto" formControlName="proyecto">
+              <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
+            </select>
+      </div>
+      <div class="m-3">
+        <label  for="capacidad" class="form-label">Capacidad</label>
+        <input type="number" class="form-control" id="capacidad" formControlName="capacidad">
+      </div>
+      <div class="m-3">
+        <label  for="fichaTecnica" class="form-label">Ficha Técnica</label>
+        <input type="text" class="form-control" id="fichaTecnica" formControlName="fichaTecnica">
+      </div>
+      <div class="m-3">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="disponible" name='disponible'>
+          <label class="form-check-label" for="disponible">
+            Disponible
+          </label>
+        </div>
+      </div>
+          <div class="d-flex flex-row justify-content-end">
+              <div class="mx-3">
+                  <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formContenedor.valid">{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Contenedor</button>
+              </div>
+          </div>
+      </form>
+    </div>
+  </div>

@@ -1,15 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { GetService } from 'src/app/services/get.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
   styleUrls: ['./stock.component.css']
 })
-export class StockComponent implements OnInit {
+export class StockComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
+  espacios = [];
 
-  constructor() { }
+  espacioSeleccionado: any;
+  step: number;
+  seleccionado : number
 
-  ngOnInit(): void {
+  constructor(private getService: GetService) { }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
-
+  ngOnInit(): void {
+    this.step = 0;
+    this.subscription.add( this.getService.obtenerEspaciosFisicos().subscribe(res => {
+                            console.log(res)
+                            this.espacios = res; })
+    );
+  }
+  ver(id_espacio: any){
+    this.espacioSeleccionado = id_espacio;
+    this.step = 1;
+  }
+  
+  onVolviendo(e: number): void{
+    this.step = e;
+  }
+  
 }

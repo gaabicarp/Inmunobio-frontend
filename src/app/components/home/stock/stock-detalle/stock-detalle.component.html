@@ -1,66 +1,126 @@
-<div class="m-4" routerLink="../" role="button">
-  <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-</div>
-<div class="mx-4">
-  <div class="text-center mt-4">
-      <h2>Stock</h2>
+<div>
+  <div class="m-4" (click)='volver()' role="button">
+    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
-
-<div class="search-container flex-wrap">
-    <div class="input-group mb-3">
-        <span class="input-group-text">
-            <i class="bi bi-search"></i>
-        </span>
-        <input type="text" class="form-control" id="usuario" placeholder="Buscar por Nombre de Producto">
-    </div>
-    <div>
-        <button type="button" class="btn btn-primary btn-lg" routerLink='agregar-stock'>Agregar Stock</button>
-    </div>
+  <div class="text-center my-4">
+    <h2>{{element}}</h2>
+  </div>
 </div>
-  <table class="table table-hover">
-      <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Producto</th>
-            <th scope="col">Unidades</th>
-            <th scope="col">Contenedor</th>
-            <th scope="col">Fecha de vencimiento</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>aaaa</td>
-            <td>12</td>
-            <td>aaaa</td>
-            <td>12/5/2021</td>
-            <button type="button" class="btn btn-outline-secondary m-2" routerLink="consumir-stock">Consumir Stock</button>
+<ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
+  <li [ngbNavItem]="1">
+    <a ngbNavLink (click)= irStock()>Stock</a>
+    <ng-template ngbNavContent>
+    </ng-template>
+  </li>
+
+  <li [ngbNavItem]="2">
+    <a ngbNavLink (click)= irBlogs()>Blogs</a>
+    <ng-template ngbNavContent>
+    </ng-template>
+  </li>
+</ul>
+
+<div *ngIf='step === 1'>
+  <div class="mx-4">        
+      <div class="card rounded shadow p-4 mb-4">
+          <table class="table table-hover">
+              <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Lote</th>
+                    <th scope="col">Unidades</th>
+                    <th scope="col">Contenedor</th>
+                    <th scope="col">Detalle Ubicación</th>
+                    <th scope="col">Fecha de vencimiento</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <ng-container *ngFor='let a of stocks;let i = index'>
+                    <tr *ngFor='let stock of a.producto; let j = index'>
+                      <th scope="row">{{i + 1}}</th>
+                      <td>{{a.nombre}}</td>
+                      <td>{{stock.lote}}</td>
+                      <td>{{stock.unidad}}</td>
+                      <td>{{contenedores[stock.codigoContenedor-1]?.nombre}}</td>
+                      <td>{{stock.detalleUbicacion}}</td>
+                      <td>{{stock.fechaVencimiento | date: 'shortDate'}}</td>
+                      <td>
+                          <a class="text-primary" role="button" (click)=consumir(a,j)>
+                            <i>Consumir</i>
+                          </a>
+                      </td>
+                      <td class="d-flex">
+                          <div class="mr-4">
+                            <a class="text-primary" role="button" (click)=editar(a,j) >
+                              <!-- (click)=editar(stock) -->
+                              <i class="bi bi-pencil"></i>
+                            </a>
+                          </div>
+                          <div>
+                            <a class="text-danger" role="button" (click)=eliminar(a,j)>
+                              <i class="bi bi-trash"></i>
+                            </a>
+                          </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  
+
+              </tbody>
             
-          </tr>
-          <tr>
-              <th scope="row">2</th>
-              <td>bbbbb</td>
-              <td>12</td>
-              <td>aaaa</td>
-              <td>12/5/2021</td>
-              <button type="button" class="btn btn-outline-secondary m-2" routerLink="consumir-stock">Consumir Stock</button>
-          </tr>
-          <tr>
-              <th scope="row">3</th>
-              <td>cccc</td>
-              <td>12</td>
-              <td>aaaa</td>
-              <td>12/5/2021</td>
-              <button type="button" class="btn btn-outline-secondary m-2" routerLink="consumir-stock">Consumir Stock</button>
-          </tr>
-          <tr>
-              <th scope="row">4</th>
-              <td>dddd</td>
-              <td>12</td>
-              <td>aaaa</td>
-              <td>12/5/2021</td>
-              <button type="button" class="btn btn-outline-secondary m-2" routerLink="consumir-stock">Consumir Stock</button>
-          </tr>
-        </tbody>
-  </table>
+          </table>
+      </div>
+  <button class="btn btn-primary" (click)=crear()>Agregar Stock</button>
+  </div>
+</div>
+<div *ngIf='step === 2'>
+  <app-agregar-stock
+  [element]='productoSeleccionado'
+  [idProducto]='idProducto'
+  [espacio] = 'espacio'
+  [modo]='modo'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-agregar-stock>
+</div>
+<div *ngIf='step === 3'>
+  <app-consumir-stock
+  [element]='productoSeleccionado'
+  [idProducto]='idProducto'
+  [espacio] = 'espacio'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-consumir-stock>
+</div>
+
+<div *ngIf='step === 4'>
+  <div class="card rounded shadow p-4 m-5">
+    <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
+      <div class="m-3">
+        <label for="fecDesde" class="form-label">Fecha inicial</label>
+        <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
+      </div>
+      <div class="m-3">
+        <label for="fecHasta" class="form-label">Fecha final</label>
+        <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary btn-lg m-2" (click)=cancelar() >Cancelar</button>
+        <button class="btn btn-success btn-lg m-2" type="submit" [disabled]="!formFecha.valid">Buscar</button>
+      </div>
+    </form>
+  </div>
+  
+</div>
+
+<div *ngIf='step === 5'>
+  <app-blogs-espacio-fisico
+  [blog] = 'blog'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-blogs-espacio-fisico>
+</div>
+

@@ -26,7 +26,9 @@ export class NuevoUsuarioComponent implements OnInit {
     this.alert = false;
     this.getService.obtenerPermisos().subscribe(res => {
       this.permisos = res;
+      console.log(res)
     });
+
     this.formUsuario = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       email: new FormControl('', [Validators.required, Validators.maxLength(50)]),
