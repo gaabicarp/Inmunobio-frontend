@@ -32,6 +32,9 @@ import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-exp
 import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
 import { NuevoEspacioComponent } from './components/home/configuracion/espacio-fisico/nuevo-espacio/nuevo-espacio.component';
 import { EspacioFisicoComponent } from './components/home/configuracion/espacio-fisico/espacio-fisico.component';
+import { FinalizarProyectoComponent } from './components/home/proyectos/detalle-proyecto/finalizar-proyecto/finalizar-proyecto.component';
+import { FinalizarExperimentoComponent } from './components/home/proyectos/detalle-experimentos/finalizar-experimento/finalizar-experimento.component';
+import {GrupoExperimentalComponent} from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -39,11 +42,16 @@ const routes: Routes = [
     children: [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'proyectos', component: ProyectosComponent},
+      {path: 'proyectos/nuevo-proyecto', component: NuevoProyectoComponent},
+      {path: 'proyectos/editar-proyecto/:id', component: NuevoProyectoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       //{path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
+      {path: 'proyectos/:id/experimento/:idExperimento/finalizar-experimento', component: FinalizarExperimentoComponent},
+      {path: 'proyectos/:id/experimento/:idExperimento/grupo-experimental/:idGrupo', component: GrupoExperimentalComponent},
       {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
+      {path: 'proyectos/:id/finalizar-proyecto', component: FinalizarProyectoComponent},
       {path: 'stock', component: StockComponent},
       {path: 'stock/', component: EspaciosfisicosComponent},
       {path: 'stock/:id', component: StockDetalleComponent},

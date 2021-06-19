@@ -90,7 +90,25 @@ export class PostService {
     return this.http.post<any>(this.API_URL + 'nuevoAnimal', animal);
   }
 
-  
+  cerrarProyecto(obj: any): Observable<any> {
+    return this.http.put<any>(this.API_URL + 'cerrarProyecto', obj);
+  }
+
+  modificarProyecto(obj: any): Observable<any> {
+    return this.http.put<any>(this.API_URL + 'modificarProyecto', obj);
+  }
+
+  cerrarExperimento(obj: any): Observable<any> {
+    return this.http.put<any>(this.API_URL + 'cerrarExperimento', obj);
+  }
+
+  crearGrupoExperimental(obj: any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'nuevoGrupoExperimental', obj);
+  }
+
+  crearFuenteExperimental(obj: any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'nuevasFuentesExperimentales', obj);
+  }
 
   // crearStock(nuevoStock : any): Observable<any>{
   //   return this.http.post<any>(this.API_URL +'productoEnStock', nuevoStock)

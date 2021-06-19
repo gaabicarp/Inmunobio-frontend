@@ -19,8 +19,9 @@ export class JaulaDetalleComponent implements OnInit {
       console.log(res);
     })
     this.getService.obtenerAnimalesPorJaula(this.idJaula).subscribe(res => {
-      console.log(res);
-      this.animales = res;
+      if(!res.Status){
+        this.animales = res;
+      }
     })
   }
 

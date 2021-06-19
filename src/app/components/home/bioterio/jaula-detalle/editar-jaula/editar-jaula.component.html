@@ -38,17 +38,16 @@
                   </select>
               </div>
           </div>
-          <!-- <div class=" m-3">
+          
+          <div class=" m-3">
             <label  class="form-label">Proyecto Asociado</label>
               <div class="input-group mb-3">
-                  <select class="form-control" aria-label=".form-select-lg example">
-                    <option selected>Seleccionar Proyecto</option>
-                      <option value="1">Inmunobio</option>
-                      <option value="2">Coronavirus</option>
-                      <option value="3">COVID</option>
+                  <select class="form-control" aria-label=".form-select-lg example" formControlName='id_proyecto'>
+                      <option value="0">Sin Asignar</option>
+                      <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
                   </select>
               </div>
-          </div> -->
+          </div>
           <div class="text-center">
             <button type="submit" class="btn btn-success btn-lg">Crear Jaula</button>
           </div>

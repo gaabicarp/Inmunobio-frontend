@@ -18,28 +18,41 @@
             <ng-template ngbNavContent>
                 
                 <div class="mt-4">
-                  <div class="card rounded shadow p-4">
-                        <h4 class="text-center"><i>Objectivo</i></h4>
+                    <div class="card rounded shadow p-4">
+                        <h4 class="text-center"><i>Objetivo</i></h4>
                         <p>{{experimento?.objetivos}}</p>
-                    <div class="row mt-5">
-                      <div class="col">
-                        <h5><i>Grupo Experimental</i></h5>
-                        <p>AAA-11111</p>
-                      </div>
-                      <div class="col">
+                    <div class="d-flex justify-content-center">
+                      <div class="col text-center">
                         <h5><i>Fecha Inicio</i></h5>
-                        <p>{{experimento?.fechaInicio}}</p>
+                        <p>{{experimento?.fechaInicio | date}}</p>
                       </div>
-                      <div class="col">
+                      <div class="col text-center" *ngIf='experimento?.fechaFin'>
                         <h5><i>Fecha Fin</i></h5>
-                        <p>{{experimento?.fechaInicio}}</p>
+                        <p>{{experimento?.fechaFin | date}}</p>
                       </div>
-                      <div class="col">
+                      <div class="col text-center">
                         <h5><i>Metodologia de trabajo</i></h5>
                         <p>{{experimento?.metodologia}}</p>
                       </div>
-                    </div>                    
+                    </div>
+                    <div class="text-center" *ngIf='experimento?.resultados'>
+                      <h4><i>Resultados</i></h4>
+                      <p>{{experimento?.resultados}}</p>
+                    </div>
+                    <div class="text-center" *ngIf='experimento?.conclusiones'>
+                      <h4><i>Conclusiones</i></h4>
+                      <p>{{experimento?.conclusiones}}</p>
+                    </div>
+                    <div class="text-center mt-3">
+                      <button class="btn btn-secondary mx-2 btn-lg" routerLink='../editar-proyecto/{{proyecto?.id_proyecto}}'>
+                          Editar Experimento
+                      </button>
+                      <button class="btn btn-primary mx-2 btn-lg" routerLink='finalizar-experimento'>
+                          Finalizar Experimento
+                      </button>
+                  </div>
                 </div>
+
               </div>
                 
 
@@ -151,89 +164,203 @@
             </ng-template>
         </li>
         <li [ngbNavItem]="3">
-            <a ngbNavLink>Stock</a>
+            <a ngbNavLink>Grupos experimentales</a>
             <ng-template ngbNavContent>
                 <div class="p-4 m-4">
-                    <h4 class="text-center"><i>Animales asociados</i></h4>
+                    <h4 class="text-center"><i>Grupos experimentales</i></h4>
+                    <form [formGroup]='formGrupoExperimental'>
                     <table class="table table-hover">
-                        <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Nombre</th>
-                              <th scope="col">Ultimo acceso</th>
-                              <th scope="col">Ultimas entradas</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Gabriel Jotallan</td>
-                              <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                              <td>VER</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Gabriel Jotallan</td>
-                                <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                                <td>VER</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Gabriel Jotallan</td>
-                                <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                                <td>VER</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Gabriel Jotallan</td>
-                                <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                                <td>VER</td>
-                              </tr>
-                          </tbody>
+                      <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Codigo</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Fuentes Experimentales</th>
+                        <th scope="col">Muestras</th>
+                        <td scope="col"><a class="link-primary" style="cursor: pointer" (click)='agregarGrupo = !agregarGrupo'>+Agregar</a></td>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngIf='agregarGrupo'>
+                            <td colspan="2">
+                                <label for="tipo" class="form-label">Tipo</label>
+                                <select class="form-control"  id='tipo' aria-label="Default select example" formControlName='tipo'>
+                                        <option value="animal">Animal</option>
+                                        <option value="otro">Otro</option>
+                                </select>
+                            </td>
+                            <td colspan="2">
+                                <!-- <div class='' *ngIf="formExperimento.value.tipo === 'animal'">
+                                    <label for="animal" class="form-label">Seleccionar animal</label>
+                                    <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
+                                            <option *ngFor='let animal of animalesProyecto' value="{{animal}}">{{animal.especie}} - {{animal.cepa}}</option>
+                                    </select> -->
+                                <!-- </div>  -->
+                                <div class=''>
+                                    <label for="otro" class="form-label">Codigo de grupo experimental</label>
+                                    <input type="text" class="form-control" id="otro" formControlName='codigo'>
+                                </div>
+                            </td>
+                            <td colspan='2' style="vertical-align: bottom;">
+                                <div class='agregar'>
+                                    <button class="btn btn-primary mr-3" (click)='crearGrupoExperimental()'>Agregar+</button>
+                                    <button class="btn btn-danger" (click)='agregarGrupo = false'>Cancelar</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngFor='let grupo of gruposExperimentales; let i = index' routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
+                            <th scope="row">{{ i + 1 }}</th> 
+                            <td>
+                             {{grupo?.codigo}} 
+                            </td>
+                            <td>
+                             {{grupo?.tipo}} 
+                            </td>
+                            <td>
+                             {{grupo?.fuentesExperimentales.length}} 
+                            </td>
+                            <td colspan="2">
+                             {{grupo?.muestras.length}} 
+                            </td>
+                        </tr>
+                        <tr *ngIf='gruposExperimentales.length === 0'>
+                            <td colspan="6">Sin experimentos</td>
+                        </tr>
+                      </tbody>
                     </table>
-                </div>
-
-                <div class="p-4 m-4">
-                    <h4 class="text-center"><i>Muestras asociadas</i></h4>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                              <th scope="col">#</th>
-                              <th scope="col">Nombre</th>
-                              <th scope="col">Ultimo acceso</th>
-                              <th scope="col">Ultimas entradas</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th scope="row">1</th>
-                              <td>Gabriel Jotallan</td>
-                              <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                              <td>VER</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Gabriel Jotallan</td>
-                                <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                                <td>VER</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Gabriel Jotallan</td>
-                                <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                                <td>VER</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Gabriel Jotallan</td>
-                                <td>{{"Fri Mar 12 2021 14:56:41 GMT-0300 (hora estándar de Argentina)"}}</td>
-                                <td>VER</td>
-                              </tr>
-                          </tbody>
-                    </table>
+                  </form>
                 </div>
             </ng-template>
         </li>
     </ul>
     <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
+
+
+
+
+
+
+
+<!--<h4 class='my-4'>Agregar Fuentes Experimentales</h4>
+            <div>
+                <label for="codigo" class="form-label">Tipo</label>
+                <select class="form-control"  id='director' aria-label="Default select example" formControlName='tipo'>
+                        <option  value="animal">Animal</option>
+                        <option  value="otro">Otro</option>
+                </select>
+            </div>
+            <div class='row mb-5'>
+                <div class='col' *ngIf="formExperimento.value.tipo === 'animal'">
+                    <label for="codigo" class="form-label">Seleccionar animal</label>
+                    <select class="form-control"  id='director' aria-label="Default select example">
+                            <option *ngFor='let animal of animalesProyecto' value="{{animal}}">{{animal.especie}} - {{animal.cepa}}</option>
+                    </select>
+                </div>
+                <div class='col' *ngIf="formExperimento.value.tipo === 'otro'">
+                    <label for="codigo" class="form-label">Nombre de fuente</label>
+                    <input type="text" class="form-control" id="codigo" formControlName='codigo'>
+                </div> 
+                 <div class='col agregar' *ngIf="formExperimento.value.tipo === 'otro' || formExperimento.value.tipo === 'animal'">
+                    <button class="btn btn-primary">Agregar+</button>
+                </div> 
+            </div>  
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Fecha Inicio</th>
+                <th scope="col">Fuente Experimental</th>
+                <th scope="col">Fecha Fin</th>
+                <td scope="col"><a class="link-primary" style="cursor: pointer" (click)='agregarAnimal = !agregarAnimal'>+Agregar</a></td>
+              </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf='agregarAnimal'>
+                    <td colspan="2">
+                        <label for="tipo" class="form-label">Tipo</label>
+                        <select class="form-control"  id='tipo' aria-label="Default select example" formControlName='tipo'>
+                                <option value="animal">Animal</option>
+                                <option value="otro">Otro</option>
+                        </select>
+                    </td>
+                    <td colspan="2">
+                        <div class='' *ngIf="formExperimento.value.tipo === 'animal'">
+                            <label for="animal" class="form-label">Seleccionar animal</label>
+                            <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
+                                    <option *ngFor='let animal of animalesProyecto' value="{{animal}}">{{animal.especie}} - {{animal.cepa}}</option>
+                            </select>
+                        </div> 
+                        <div class=''>
+                            <label for="otro" class="form-label">Codigo de grupo experimental</label>
+                            <input type="text" class="form-control" id="otro" formControlName='Codigo'>
+                        </div>
+                    </td>
+                    <td colspan='2' style="vertical-align: bottom;">
+                        <div class='agregar'>
+                            <button class="btn btn-primary mr-3">Agregar+</button>
+                            <button class="btn btn-danger" (click)='agregarAnimal = false'>Cancelar</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf='animalesExperimento.length != 0'>
+                     <th scope="row">{{ i + 1 }}</th> 
+                    <td>
+                     {{experimento?.conclusiones}} 
+                    </td>
+                    <td>
+                     {{experimento?.fechaInicio}} 
+                    </td>
+                    <td>
+                     {{experimento?.metodologia}} 
+                    </td>
+                    <td>
+                     {{experimento?.objetivos}} 
+                    </td>
+                </tr>
+                <tr *ngIf='animalesExperimento.length === 0'>
+                    <td colspan="6">Sin experimentos</td>
+                </tr>
+              </tbody>
+            </table>
+
+             <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripcion</label>
+                <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" formControlName='descripcion'></textarea>
+            </div>
+
+            <div class="mx-4">
+                <div class="row justify-content-between">
+                    <div class="col-5">
+                        <h5 class="text-center">Usuarios Disponibles</h5>
+                        <div class="card rounded shadow">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let usuario of usuariosDisponibles">
+                                    <div class="d-flex flex-row justify-content-between">
+                                        {{usuario.nombre}}
+                                        <div class="text-primary">
+                                            <i class="bi bi-arrow-right-circle-fill" (click)='asignarUsuario(usuario)'></i>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <h5 class="text-center">Usuarios asignados</h5>
+                        <div class="card rounded shadow">
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor='let usuario of usuariosAsignados'>
+                                    <div class="d-flex flex-row justify-content-between">
+                                        {{usuario.nombre}}
+                                        <div class="text-danger">
+                                            <i class="bi bi-x-circle-fill" (click)='desasignarUsuario(usuario)'></i>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> -->

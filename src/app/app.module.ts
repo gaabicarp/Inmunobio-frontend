@@ -9,7 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/home/dashboard/dashboard.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationComponent } from './components/shared/navigation/navigation.component';
 import { ProyectosComponent } from './components/home/proyectos/proyectos.component';
 import { DetalleProyectoComponent } from './components/home/proyectos/detalle-proyecto/detalle-proyecto.component';
@@ -40,6 +40,9 @@ import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-exp
 import { DistribuidorasComponent } from './components/home/configuracion/distribuidoras/distribuidoras.component';
 import { EspacioFisicoComponent } from './components/home/configuracion/espacio-fisico/espacio-fisico.component';
 import { NuevoEspacioComponent } from './components/home/configuracion/espacio-fisico/nuevo-espacio/nuevo-espacio.component';
+import { FinalizarProyectoComponent } from './components/home/proyectos/detalle-proyecto/finalizar-proyecto/finalizar-proyecto.component';
+import { FinalizarExperimentoComponent } from './components/home/proyectos/detalle-experimentos/finalizar-experimento/finalizar-experimento.component';
+import { GrupoExperimentalComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +80,10 @@ import { NuevoEspacioComponent } from './components/home/configuracion/espacio-f
     //NuevoGrupoComponent,
     DistribuidorasComponent,
     EspacioFisicoComponent,
-    NuevoEspacioComponent
+    NuevoEspacioComponent,
+    FinalizarProyectoComponent,
+    FinalizarExperimentoComponent,
+    GrupoExperimentalComponent
 
   ],
   imports: [
@@ -86,7 +92,7 @@ import { NuevoEspacioComponent } from './components/home/configuracion/espacio-f
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

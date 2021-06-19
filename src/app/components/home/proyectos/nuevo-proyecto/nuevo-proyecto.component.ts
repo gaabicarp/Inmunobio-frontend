@@ -4,6 +4,8 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { Usuario } from 'src/app/models/usuarios.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nuevo-proyecto',
@@ -11,19 +13,22 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./nuevo-proyecto.component.css']
 })
 export class NuevoProyectoComponent implements OnInit {
-  @Input() element!: any;
-  @Input() modo!: string;
-  @Output() volviendo = new EventEmitter<number>();
+  element!: any;
+  modo!: string;
+  mensajeAlert: string;
+  alert!: boolean;
+  estado!: string;
 
   formProyecto!: FormGroup;
+  idProyecto!: number;
   directoresProyecto = [];
   usuariosDisponibles = [];
   usuariosAsignados = [];
 
-  constructor(private getService: GetService, private postService: PostService) { }
+  constructor(private getService: GetService, private postService: PostService, private activatedRouter: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    console.log(this.element);
+    window.location.href.includes('editar') ? this.modo = 'EDITAR' : this.modo = 'CREAR'
     this.formProyecto = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       codigoProyecto: new FormControl('', [Validators.required, Validators.maxLength(10)]),
@@ -32,16 +37,19 @@ export class NuevoProyectoComponent implements OnInit {
       descripcion: new FormControl('', [Validators.required, Validators.maxLength(200)]),
     });
     this.getService.obtenerUsuarios().subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.directoresProyecto = res.filter(usuario => {
         return usuario.permisos.some(permiso => permiso.id_permiso === 4);
       });
       this.usuariosDisponibles = res;
-      console.log(this.directoresProyecto)
+      // console.log(this.directoresProyecto)
     });
 
     if (this.modo === 'EDITAR'){
-      this.formProyecto.patchValue({
+      this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
+      this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
+        this.element = res;
+        this.formProyecto.patchValue({
         nombre: this.element.nombre,
         codigoProyecto: this.element.codigoProyecto,
         montoInicial: this.element.montoInicial,
@@ -54,14 +62,18 @@ export class NuevoProyectoComponent implements OnInit {
           this.asignarUsuario(usuario);
         });
       });
+      })
     }
 
   }
 
   asignarUsuario(usuario: any): void{
+    console.log(usuario)
+    // console.log(this.usuariosDisponibles)
     this.usuariosDisponibles = this.usuariosDisponibles.filter(usuarioSeleccionado => {
       return usuarioSeleccionado !== usuario;
     });
+    console.log(this.usuariosDisponibles)
     this.usuariosAsignados.push(usuario);
   }
 
@@ -77,7 +89,7 @@ export class NuevoProyectoComponent implements OnInit {
     this.usuariosAsignados.map(usuario => {
       int.push(usuario.id_usuario);
     });
-    const proyecto = {
+    const proyecto: any = {
       codigoProyecto: this.formProyecto.value.codigoProyecto,
       nombre: this.formProyecto.value.nombre,
       descripcion: this.formProyecto.value.descripcion,
@@ -86,13 +98,40 @@ export class NuevoProyectoComponent implements OnInit {
       montoInicial: this.formProyecto.value.montoInicial,
     };
 
-    this.postService.crearProyecto(proyecto).subscribe(res => {
-      console.log(res);
-    });
+    if (this.modo === 'CREAR'){
+      this.postService.crearProyecto(proyecto).subscribe(res => {
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'El proyecto fue creado correctamente';
+          setTimeout(() => {
+            this.volver()
+          }, 2000);
+        }, err => {
+          this.alert = true;
+          this.estado = 'danger';
+          this.mensajeAlert = JSON.stringify(err.error.error);
+        });
+    } else {
+      proyecto.id_proyecto = this.idProyecto;
+      this.postService.modificarProyecto(proyecto).subscribe(res =>{
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'El proyecto fue editado correctamente';
+          setTimeout(() => {
+            this.volver()
+          }, 2000);
+        }, err => {
+          this.alert = true;
+          this.estado = 'danger';
+          this.mensajeAlert = JSON.stringify(err.error.error);
+      });
+    }
   }
 
   volver(): void{
-    this.volviendo.emit(0);
+    let ruta;
+    this.modo === 'EDITAR' ? ruta = `home/proyectos/${this.idProyecto}` : ruta = 'home/proyectos';
+    this.router.navigateByUrl(ruta);
   }
 
 }

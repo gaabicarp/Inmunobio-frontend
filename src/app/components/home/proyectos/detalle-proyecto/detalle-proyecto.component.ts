@@ -6,6 +6,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { GetService } from 'src/app/services/get.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-detalle-proyecto',
@@ -22,16 +23,19 @@ export class DetalleProyectoComponent implements OnInit {
   proyecto: any;
   jefeProyecto: any;
   usuariosProyecto = [];
+  idProyecto: number;
 
-  constructor(private router: Router, private getService: GetService) {}
+  constructor(private router: Router, private getService: GetService, private activatedRouter: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.getService.obtenerProyectosPorId(1).subscribe(res => {
+    this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
+    this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
+      console.log(res)
       this.proyecto = res;
       this.traerDirector(res.idDirectorProyecto);
       this.traerUsuarios(res.participantes);
     });
-    this.getService.obtenerExperimentos(1).subscribe(res => {
+    this.getService.obtenerExperimentos(this.idProyecto).subscribe(res => {
       console.log(res);
       this.experimentos = res;
       this.experimentoFiltro = res;
