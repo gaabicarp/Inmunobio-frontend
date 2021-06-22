@@ -1,6 +1,4 @@
-<div class="m-4" (click)='volver()' role="button">
-  <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-</div>
+
   <h3 class="text-center mt-4" >Consumir Stock</h3>
 <div class="card rounded shadow p-4 m-5">
   <form [formGroup]="formConsumir" (ngSubmit)="consumir()">
@@ -8,8 +6,16 @@
       <label for="cantidad" class="form-label">Cantidad</label>
       <input type="number" class="form-control" id="cantidad" formControlName="cantidad">
     </div>
-    <div class="text-center">
-      <button class="btn btn-success btn-lg" type="submit" [disabled]="!formConsumir.valid">Guardar</button>
+    <div class="d-flex flex-row justify-content-end">
+      <div class="mx-3 justify-content-start">
+        <button class="btn btn-secondary btn-lg" (click)=volver()>Cancelar</button>
+    </div>  
+      <div class="mx-3">
+        <button class="btn btn-success btn-lg" type="submit" [disabled]="!formConsumir.valid">Guardar</button>
+        </div>
     </div>
+    <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+      {{mensajeAlert}}
+  </div>
   </form>
 </div>

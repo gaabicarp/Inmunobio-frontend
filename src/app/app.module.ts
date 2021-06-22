@@ -40,6 +40,10 @@ import { EspacioFisicoComponent } from './components/home/configuracion/espacio-
 import { NuevoEspacioComponent } from './components/home/configuracion/espacio-fisico/nuevo-espacio/nuevo-espacio.component';
 import { NuevoBlogEspacioComponent } from './components/home/stock/nuevo-blog-espacio/nuevo-blog-espacio.component';
 import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espacio-fisico/blogs-espacio-fisico.component';
+import { NuevoBlogHerramientaComponent } from './components/home/stock/blog-herramientas/nuevo-blog-herramienta/nuevo-blog-herramienta.component';
+import { BlogHerramientasComponent } from './components/home/stock/blog-herramientas/blog-herramientas.component';
+import { HerramientasComponent } from './components/home/stock/herramientas/herramientas.component';
+import { NuevaHerramientaComponent } from './components/home/stock/herramientas/nueva-herramienta/nueva-herramienta.component';
 
 
 @NgModule({
@@ -78,7 +82,11 @@ import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espac
     EspacioFisicoComponent,
     NuevoEspacioComponent,
     NuevoBlogEspacioComponent,
-    BlogsEspacioFisicoComponent
+    BlogsEspacioFisicoComponent,
+    NuevoBlogHerramientaComponent,
+    BlogHerramientasComponent,
+    HerramientasComponent,
+    NuevaHerramientaComponent
 
   ],
   imports: [

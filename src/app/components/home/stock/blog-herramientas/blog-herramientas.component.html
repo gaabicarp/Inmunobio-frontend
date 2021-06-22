@@ -1,25 +1,27 @@
-<div *ngIf='step === 5'>
+<div *ngIf='step === 9'>
   <div class="d-flex bd-highlight m-2">
-    <div class="p-2 flex-grow-1 bd-highlight"></div>
+    <div class="p-2 flex-grow-1 bd-highlight">
+      <button type="button" class="btn btn-outline-secondary" (click)=volver()>Volver</button>
+    </div>
     <div class="p-2 bd-highlight">
       <button type="button" class="btn btn-primary" (click)=nuevoBlog()>Nuevo Blog</button>
     </div>
   </div>
-  <div class="card rounded shadow m-3 p-4">
-    <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
-      <div class="row">
-        <div class="col">
-          <label for="fecDesde" class="form-label">Fecha inicial</label>
-          <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
-        </div>
-        <div class="col">
-          <label for="fecHasta" class="form-label">Fecha final</label>
-          <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
-        </div>
-        <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">Buscar</button>
+<div class="card rounded shadow m-3 p-4">
+  <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
+    <div class="row">
+      <div class="col">
+        <label for="fecDesde" class="form-label">Fecha inicial</label>
+        <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
       </div>
-    </form>
-  </div>
+      <div class="col">
+        <label for="fecHasta" class="form-label">Fecha final</label>
+        <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
+      </div>
+      <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">Buscar</button>
+    </div>
+  </form>
+</div>
   <div>
     <div class="row m-2" >
         <ng-container *ngFor='let a of blogs;let i = index'>
@@ -44,10 +46,10 @@
   </div>
 </div>
 
-<div *ngIf='step === 6'>
-  <app-nuevo-blog-espacio
-  [espacio] = 'espacio'
+<div *ngIf='step === 10'>
+  <app-nuevo-blog-herramienta
+  [herramienta] = 'herramienta'
   (volviendo)='onVolviendo($event)'
   >
-</app-nuevo-blog-espacio>
+</app-nuevo-blog-herramienta>
 </div>

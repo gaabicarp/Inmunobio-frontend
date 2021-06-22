@@ -26,8 +26,6 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
 
   productos: Producto;
   contenedores: Contenedor;
-  nuevoStocks = [];
-  lista = [];
   
   formStock!: FormGroup;
   step: number;
@@ -82,8 +80,6 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
       detalleUbicacion: this.formStock.value.detalleUbicacion,
       fechaVencimiento: this.datepipe.transform( fecha,'yyyy-MM-ddT23:01:10.288Z')
     }
-    this.lista = [productoEnStock]
-    this.AgregarStock(this.lista)
   }
 
   AgregarStock(productoEnStock): void{
@@ -93,9 +89,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
       id_producto: this.formStock.value.producto,
       producto: productoEnStock
     };
-    this.nuevoStocks.push(stock) // esto es para que me aparezca la lista abajo
     if (this.modo === 'CREAR'){
-      console.log(this.nuevoStocks)
       this.postService.agregarStock(stock).subscribe(res => {
         if (res.Status === 'ok'){
           this.alert = true;

@@ -5,7 +5,7 @@ import { Distribuidora } from '../models/distribuidora.model';
 import { Producto } from '../models/producto.model';
 import { Consumir, Stock, StockEdicion } from '../models/stock.model';
 import { postUsuario, Usuario } from '../models/usuarios.model';
-import { BlogEspacio, BlogHerramienta, Blogs } from '../models/blogs.model';
+import { BlogEspacio, BlogHerramienta, Blogs, BlogsBuscados, BlogsBuscadosHerr } from '../models/blogs.model';
 import { Herramienta } from '../models/herramientas.model';
 import { Contenedor } from '../models/contenedores.model';
 
@@ -120,7 +120,7 @@ export class PostService {
   crearBlogEspacio(nuevo: BlogEspacio):Observable<any> {
     return this.http.post<any>(this.API_URL + 'crearBlogEspacio', nuevo);
   }
-  obtenerBlogEspacioFisico(blog: Blogs): Observable<any>{
+  obtenerBlogEspacioFisico(blog: BlogsBuscados): Observable<any>{
     return this.http.post<any>(this.API_URL + 'blogsEspacio',blog);
   }
   eliminarBlogEspacioFisico(id_espacio: number, id_blog: number): Observable<any>{
@@ -142,7 +142,7 @@ export class PostService {
   eliminarBlogHerramienta(id_herramienta: number, id_blog: number): Observable<any>{
     return this.http.delete<any>(this.API_URL + 'blogHerramienta/' + id_herramienta + '/'+ id_blog);
   }
-  obtenerBlogHerramientas(blog: Blogs): Observable<any>{
+  obtenerBlogHerramientas(blog: BlogsBuscadosHerr): Observable<any>{
     return this.http.post<any>(this.API_URL + 'blogHerramienta', blog);
   }
 

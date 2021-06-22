@@ -3,27 +3,38 @@
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
   <div class="text-center my-4">
-    <h2>{{element}}</h2>
+    <h2>{{element.nombre}}</h2>
   </div>
 </div>
 <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
-  <li [ngbNavItem]="1">
+  <li [ngbNavItem]="1" >
     <a ngbNavLink (click)= irStock()>Stock</a>
     <ng-template ngbNavContent>
     </ng-template>
   </li>
 
   <li [ngbNavItem]="2">
-    <a ngbNavLink (click)= irBlogs()>Blogs</a>
+    <a ngbNavLink (click)= irBlogs()>Blog Espacio Fisico</a>
     <ng-template ngbNavContent>
     </ng-template>
   </li>
+
+  <li [ngbNavItem]="3">
+    <a ngbNavLink (click)= irHerramientas()>Herramientas</a>
+    <ng-template ngbNavContent>
+    </ng-template>
+  </li>
+  <!-- <li [ngbNavItem]="4">
+    <a ngbNavLink (click)=>Blogs Stock</a>
+    <ng-template ngbNavContent>
+    </ng-template>
+  </li> -->
 </ul>
 
 <div *ngIf='step === 1'>
   <div class="mx-4">        
       <div class="card rounded shadow p-4 mb-4">
-          <table class="table table-hover">
+          <table class="table table-hover text-center">
               <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -33,7 +44,7 @@
                     <th scope="col">Contenedor</th>
                     <th scope="col">Detalle Ubicación</th>
                     <th scope="col">Fecha de vencimiento</th>
-                    <th></th>
+                    <th><i class="bi bi-bag-check"></i></th>
                     <th></th>
                   </tr>
               </thead>
@@ -48,14 +59,13 @@
                       <td>{{stock.detalleUbicacion}}</td>
                       <td>{{stock.fechaVencimiento | date: 'shortDate'}}</td>
                       <td>
-                          <a class="text-primary" role="button" (click)=consumir(a,j)>
+                          <a class="text-success" role="button" (click)=consumir(a,j)>
                             <i>Consumir</i>
                           </a>
                       </td>
                       <td class="d-flex">
                           <div class="mr-4">
                             <a class="text-primary" role="button" (click)=editar(a,j) >
-                              <!-- (click)=editar(stock) -->
                               <i class="bi bi-pencil"></i>
                             </a>
                           </div>
@@ -97,30 +107,19 @@
 </div>
 
 <div *ngIf='step === 4'>
-  <div class="card rounded shadow p-4 m-5">
-    <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
-      <div class="m-3">
-        <label for="fecDesde" class="form-label">Fecha inicial</label>
-        <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
-      </div>
-      <div class="m-3">
-        <label for="fecHasta" class="form-label">Fecha final</label>
-        <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
-      </div>
-      <div class="text-center">
-        <button class="btn btn-primary btn-lg m-2" (click)=cancelar() >Cancelar</button>
-        <button class="btn btn-success btn-lg m-2" type="submit" [disabled]="!formFecha.valid">Buscar</button>
-      </div>
-    </form>
-  </div>
-  
-</div>
-
-<div *ngIf='step === 5'>
   <app-blogs-espacio-fisico
-  [blog] = 'blog'
+  [espacio]='espacio'  
   (volviendo)='onVolviendo($event)'
   >
 </app-blogs-espacio-fisico>
 </div>
+
+<div *ngIf='step === 6'>
+  <app-herramientas
+  [espacio] = 'espacio'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-herramientas>
+</div>
+
 

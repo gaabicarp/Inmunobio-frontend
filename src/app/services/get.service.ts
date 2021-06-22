@@ -52,10 +52,10 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'contenedores');
   }
 
-  obtenerHerramienta(id_herramienta: number): Observable<Herramienta>{
+  obtenerHerramienta(id_herramienta: number): Observable<any>{
     return this.http.get<any>(this.API_URL + 'herramienta/'+ id_herramienta);
   }
-  obtenerHerramientas():Observable<Herramienta>{
+  obtenerHerramientas():Observable<any>{
     return this.http.get<any>(this.API_URL + 'herramientas');
   }
 
