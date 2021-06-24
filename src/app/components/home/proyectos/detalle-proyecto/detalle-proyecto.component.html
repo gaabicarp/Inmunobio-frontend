@@ -4,7 +4,7 @@
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
 <div class="card rounded shadow portada-content">
-    <h2 class="text-staatliches title">{{proyecto.nombre}} - {{proyecto.codigoProyecto}}</h2>
+    <h2 class="text-staatliches title">{{proyecto?.nombre}} - {{proyecto?.codigoProyecto}}</h2>
 </div>
 
 
@@ -16,15 +16,15 @@
             <div class="mt-5">
                 <div class="card rounded shadow p-4">
                     <h5><i>Descripcion</i></h5>
-                    <p>{{proyecto.descripcion}}</p>
+                    <p>{{proyecto?.descripcion}}</p>
                     <div class="d-flex flex-row justify-content-around mt-5">
                         <div>
                             <h5><i>Fecha Inicio</i></h5>
-                            <p>{{proyecto.fechaInicio | date}}</p>
+                            <p>{{proyecto?.fechaInicio | date}}</p>
                         </div>
-                        <div *ngIf='proyecto.fechaFin'>
+                        <div *ngIf='proyecto?.fechaFinal'>
                             <h5><i>Fecha Fin</i></h5>
-                            <p>{{proyecto.fechaFinal | date}}</p>
+                            <p>{{proyecto?.fechaFinal | date}}</p>
                         </div>
                         <div>
                           <h5><i>Jefe de proyecto</i></h5>
@@ -32,7 +32,7 @@
                         </div>
                         <div>
                             <h5><i>Monto Inicial</i></h5>
-                            <p>${{proyecto.montoInicial}}</p>
+                            <p>${{proyecto?.montoInicial}}</p>
                         </div>
                     </div>
                     <div class="my-3">
@@ -49,19 +49,19 @@
                             <tbody>
                               <tr *ngFor='let usuario of usuariosProyecto; let i = index'>
                                 <th scope="row">{{i + 1}}</th>
-                                <td>{{usuario.nombre}}</td>
-                                <td>{{usuario.id_grupoDeTrabajo}}</td>
+                                <td>{{usuario?.nombre}}</td>
+                                <td>{{usuario?.id_grupoDeTrabajo}}</td>
                                 <td>
-                                  <span *ngFor='let permiso of usuario.permisos'>{{permiso.descripcion}} - </span>
+                                  <span *ngFor='let permiso of usuario.permisos'>{{permiso?.descripcion}} - </span>
                               </tr>
                             </tbody>
                       </table>
                   </div>
                     <div class="text-center">
-                      <button class="btn btn-secondary mx-2 btn-lg" routerLink='../create'>
+                      <button class="btn btn-secondary mx-2 btn-lg" routerLink='../editar-proyecto/{{proyecto?.id_proyecto}}'>
                           Editar Proyecto
                       </button>
-                      <button class="btn btn-primary mx-2 btn-lg">
+                      <button class="btn btn-primary mx-2 btn-lg" routerLink='finalizar-proyecto'>
                           Finalizar Proyecto
                       </button>
                     </div>
@@ -215,17 +215,20 @@
               <tr *ngFor="let experimento of experimentoFiltro; index as i" routerLink="experimento/{{experimento.id_experimento}}" style="cursor: pointer;">
                 <th scope="row">{{ i + 1 }}</th>
                 <td>
-                  {{experimento.conclusiones}}
+                  {{experimento?.conclusiones}}
                 </td>
                 <td>
-                  {{experimento.fechaInicio}}
+                  {{experimento?.fechaInicio}}
                 </td>
                 <td>
-                  {{experimento.metodologia}}
+                  {{experimento?.metodologia}}
                 </td>
                 <td>
-                  {{experimento.objetivos}}
+                  {{experimento?.objetivos}}
                 </td>
+              </tr>
+              <tr *ngIf='experimentoFiltro.length === 0'>
+                <td colspan="5">Sin experimentos</td>
               </tr>
               </tbody>
             </table>

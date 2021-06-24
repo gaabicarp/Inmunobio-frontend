@@ -1,0 +1,213 @@
+<div class="m-4" routerLink="../../" role="button">
+    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+</div>
+<div class="mx-4">
+    <div class="text-center my-4">
+        <h2>Grupo experimental - {{grupoExperimental?.codigo}}</h2>
+    </div>
+
+    <h3>Fuentes Experimentales</h3>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Codigo</th>
+            <th scope="col">Especie</th>
+            <th scope="col">Cepa</th>
+            <th scope="col">Sexo</th>
+            <th scope="col">Descripcion</th>
+            <td scope="col"><a class="link-primary" style="cursor: pointer" (click)="open(fuente)">+Agregar</a></td>
+            <!-- <td scope="col">
+                <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+            </td> -->
+          </tr>
+          </thead>
+          <tbody>
+            <!-- <tr *ngIf='agregarGrupo'>
+                <td colspan="2">
+                    <div class=''>
+                        <label for="codigo" class="form-label">Codigo de fuente experimental</label>
+                        <input type="text" class="form-control" id="codigo" formControlName='codigo'>
+                    </div>
+                </td>
+                <td colspan="2">
+                    <div class=''>
+                        <label for="animal" class="form-label">Seleccionar animal</label>
+                        <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
+                                <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
+                        </select>
+                    </div> 
+                    <div class=''>
+                        <label for="otro" class="form-label">Codigo de grupo experimental</label>
+                        <input type="text" class="form-control" id="otro" formControlName='codigo'>
+                    </div>
+                </td>
+                <td colspan='2' style="vertical-align: bottom;">
+                    <div class='agregar'>
+                        <button class="btn btn-primary mr-3" (click)='crearFuente()'>Agregar+</button>
+                        <button class="btn btn-danger" (click)='agregarGrupo = false'>Cancelar</button>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf='agregarGrupo'>
+                <td colspan="6">
+                    <label for="descripcion" class="form-label">Descripcion</label>
+                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
+                </td>
+            </tr> -->
+            <tr *ngFor='let fuente of grupoExperimental.fuentesExperimentales; let i = index'>
+                <th scope="row">{{ i + 1 }}</th> 
+                <td>
+                 {{fuente?.codigo}} 
+                </td>
+                <td>
+                 {{fuente?.especie}} 
+                </td>
+                <td>
+                 {{fuente?.cepa}} 
+                </td>
+                <td>
+                 {{fuente?.sexo}} 
+                </td>
+                <td colspan="2">
+                    {{fuente?.descripcion}} 
+                </td>
+            </tr>
+            <tr *ngIf='grupoExperimental.fuentesExperimentales?.length === 0'>
+                <td colspan="6">Sin fuentes</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Muestras</h3>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Codigo</th>
+            <th scope="col">fecha</th>
+            <th scope="col">Descripcion</th>
+            <td scope="col"><a class="link-primary" style="cursor: pointer" (click)="open(muestra)">+Agregar</a></td>
+            <!-- <td scope="col">
+                <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
+            </td> -->
+          </tr>
+          </thead>
+          <tbody>
+            <!-- <tr *ngIf='agregarGrupo'>
+                <td colspan="2">
+                    <div class=''>
+                        <label for="codigo" class="form-label">Codigo de fuente experimental</label>
+                        <input type="text" class="form-control" id="codigo" formControlName='codigo'>
+                    </div>
+                </td>
+                <td colspan="2">
+                    <div class=''>
+                        <label for="animal" class="form-label">Seleccionar animal</label>
+                        <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
+                                <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
+                        </select>
+                    </div> 
+                    <div class=''>
+                        <label for="otro" class="form-label">Codigo de grupo experimental</label>
+                        <input type="text" class="form-control" id="otro" formControlName='codigo'>
+                    </div>
+                </td>
+                <td colspan='2' style="vertical-align: bottom;">
+                    <div class='agregar'>
+                        <button class="btn btn-primary mr-3" (click)='crearFuente()'>Agregar+</button>
+                        <button class="btn btn-danger" (click)='agregarGrupo = false'>Cancelar</button>
+                    </div>
+                </td>
+            </tr>
+            <tr *ngIf='agregarGrupo'>
+                <td colspan="6">
+                    <label for="descripcion" class="form-label">Descripcion</label>
+                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
+                </td>
+            </tr> -->
+            <tr *ngFor='let muestra of grupoExperimental.muestras; let i = index'>
+                <th scope="row">{{ i + 1 }}</th> 
+                <td>
+                 {{muestra?.codigo}} 
+                </td>
+                <td>
+                 {{muestra?.fecha}} 
+                </td>
+                <td colspan="2">
+                    {{muestra?.descripcion}} 
+                </td>
+            </tr>
+            <tr *ngIf='grupoExperimental.muestras?.length === 0'>
+                <td colspan="6">Sin muestras</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+
+<ng-template #fuente let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Agregar Fuente</h4>
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]='formFuenteExperimental'>
+            <div class=''>
+                <label for="codigo" class="form-label">Codigo de fuente experimental</label>
+                <input type="text" class="form-control" id="codigo" formControlName='codigo'>
+            </div>
+            <div class=''>
+                <label for="animal" class="form-label">Seleccionar animal</label>
+                <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
+                        <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
+                </select>
+            </div> 
+            <!-- <div class=''>
+                <label for="otro" class="form-label">Codigo de grupo experimental</label>
+                <input type="text" class="form-control" id="otro" formControlName='codigo'>
+            </div> -->
+            <label for="descripcion" class="form-label">Descripcion</label>
+            <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary mr-3" (click)='crearFuente()'>Agregar</button>
+    </div>
+  </ng-template>
+
+  <ng-template #muestra let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Agregar muestra</h4>
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]='formMuestra'>
+            <div class=''>
+                <label for="codigo" class="form-label">Codigo de muestra</label>
+                <input type="text" class="form-control" id="codigo" formControlName='codigo'>
+            </div>
+            <div class=''>
+                <label for="animal" class="form-label">Seleccionar contenedor</label>
+                <select class="form-control"  id='animal' aria-label="Default select example" formControlName='contenedor'>
+                        <option *ngFor='let contenedor of contenedores' value="{{contenedor.id_contenedor}}">{{contenedor.nombre}} - {{contenedor.codigo}}</option>
+                </select>
+            </div> 
+            <!-- <div class=''>
+                <label for="otro" class="form-label">Codigo de grupo experimental</label>
+                <input type="text" class="form-control" id="otro" formControlName='codigo'>
+            </div> -->
+            <label for="descripcion" class="form-label">Descripcion</label>
+            <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
+      </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary mr-3" (click)='crearMuestra()'>Agregar</button>
+    </div>
+  </ng-template>
+  
+  <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+  
+  <hr>

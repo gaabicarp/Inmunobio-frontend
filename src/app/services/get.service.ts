@@ -52,7 +52,11 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'contenedores');
   }
 
-  obtenerHerramienta(id_herramienta: number): Observable<any>{
+  obtenerContenedoresPorProyecto(idProyecto: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + `contenedoresDelProyecto/${idProyecto}`);
+  }
+
+  obtenerHerramienta(id_herramienta: number): Observable<Herramienta>{
     return this.http.get<any>(this.API_URL + 'herramienta/'+ id_herramienta);
   }
   obtenerHerramientas():Observable<any>{
@@ -68,6 +72,15 @@ export class GetService {
   obtenerGruposExperimentales(): Observable<any>{
     return this.http.get<any>(this.API_URL + 'grupos');
   }
+
+  obtenerGruposExperimentalesPorExperimento(idExperimento: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + `experimento/${idExperimento}/gruposExperimentales`);
+  }
+
+  obtenerGruposExperimentalesPorId(idGrupo: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + `grupoExperimental/${idGrupo}`);
+  }
+
   obtenerMuestras(): Observable<any>{
     return this.http.get<any>(this.API_URL + 'muestras');
   }
@@ -100,15 +113,31 @@ export class GetService {
   }
 
   obtenerJaulas(): Observable<any> {
-    return this.http.get<any>(this.API_URL + 'jaulasDisponibles');
+    return this.http.get<any>(this.API_URL + 'jaulas');
   }
 
   obtenerJaulasPorId(idJaula: number): Observable<any> {
     return this.http.get<any>(this.API_URL + 'jaula/' + idJaula);
   }
 
+  obtenerJaulasSinProyecto(): Observable<any> {
+    return this.http.get<any>(this.API_URL + '/api/v1/jaulasDisponibles');
+  }
+
   obtenerAnimalesPorJaula(idJaula: number): Observable<any> {
     return this.http.get<any>(this.API_URL + `jaula/${idJaula}/animales`);
 
+  }
+
+  obtenerJaulasPorProyecto(idJaula: number): Observable<any> {
+    return this.http.get<any>(this.API_URL + `jaula/${idJaula}/animales`);
+  }
+
+  obtenerAnimalesPorProyectos(idProyecto: number): Observable<any> {
+    return this.http.get<any>(this.API_URL + `proyecto/${idProyecto}/animales`);
+  }
+
+  obtenerAnimales(): Observable<any> {
+    return this.http.get<any>(this.API_URL + `animales`);
   }
 }

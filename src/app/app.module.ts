@@ -9,7 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './components/home/dashboard/dashboard.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationComponent } from './components/shared/navigation/navigation.component';
 import { ProyectosComponent } from './components/home/proyectos/proyectos.component';
 import { DetalleProyectoComponent } from './components/home/proyectos/detalle-proyecto/detalle-proyecto.component';
@@ -38,6 +38,9 @@ import { DistribuidorasComponent } from './components/home/configuracion/distrib
 import { ContenedoresComponent } from './components/home/configuracion/contenedores/contenedores.component';
 import { EspacioFisicoComponent } from './components/home/configuracion/espacio-fisico/espacio-fisico.component';
 import { NuevoEspacioComponent } from './components/home/configuracion/espacio-fisico/nuevo-espacio/nuevo-espacio.component';
+import { FinalizarProyectoComponent } from './components/home/proyectos/detalle-proyecto/finalizar-proyecto/finalizar-proyecto.component';
+import { FinalizarExperimentoComponent } from './components/home/proyectos/detalle-experimentos/finalizar-experimento/finalizar-experimento.component';
+import { GrupoExperimentalComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
 import { NuevoBlogEspacioComponent } from './components/home/stock/nuevo-blog-espacio/nuevo-blog-espacio.component';
 import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espacio-fisico/blogs-espacio-fisico.component';
 import { NuevoBlogHerramientaComponent } from './components/home/stock/blog-herramientas/nuevo-blog-herramienta/nuevo-blog-herramienta.component';
@@ -81,6 +84,9 @@ import { NuevaHerramientaComponent } from './components/home/stock/herramientas/
     ContenedoresComponent,
     EspacioFisicoComponent,
     NuevoEspacioComponent,
+    FinalizarProyectoComponent,
+    FinalizarExperimentoComponent,
+    GrupoExperimentalComponent,
     NuevoBlogEspacioComponent,
     BlogsEspacioFisicoComponent,
     NuevoBlogHerramientaComponent,
@@ -95,7 +101,7 @@ import { NuevaHerramientaComponent } from './components/home/stock/herramientas/
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
