@@ -19,7 +19,9 @@ export class ConsumirStockComponent implements OnInit {
   step: number;
   estado: string;
   mensajeAlert: string;
+  mensajeAlertOK: string;
   alert: boolean;
+  alertOK: boolean;
 
   formConsumir! :FormGroup;
 
@@ -27,6 +29,7 @@ export class ConsumirStockComponent implements OnInit {
 
   ngOnInit(): void {
     this.step = 3;
+    console.log(this.element.producto[this.idProducto].unidad)
     this.alert = false;
       this.formConsumir = new FormGroup({
         cantidad: new FormControl('', [Validators.required, Validators.maxLength(20)])
@@ -40,9 +43,9 @@ export class ConsumirStockComponent implements OnInit {
     }
     this.postService.consumirStock(consumir).subscribe(res =>{
       if (res.Status === 'ok'){
-        this.alert = true;
+        this.alertOK = true;
         this.estado = 'success';
-        this.mensajeAlert = 'Stock consumido correctamente';
+        this.mensajeAlertOK = 'Stock consumido correctamente';
         setTimeout(() => {
           this.volviendo.emit(1);
         }, 2000);
@@ -51,7 +54,7 @@ export class ConsumirStockComponent implements OnInit {
     }, err => {
       this.alert = true;
       this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.error);
+      this.mensajeAlert = 'ERROR - La cantidad solicitada no se encuentra en stock';
     });
 
   }

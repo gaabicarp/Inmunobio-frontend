@@ -1,0 +1,17 @@
+.main-navigation{
+    background-color: #4d758f ;
+}
+.navigation-item:hover{
+    /* color: #031910; */
+    color: #1f303a;
+}
+.navigation-item:focus{
+    background-color: #3D5E73;
+}
+.image{
+    height: 80px;
+    width: 80px;
+}
+.img2{
+    height: 80px;
+}

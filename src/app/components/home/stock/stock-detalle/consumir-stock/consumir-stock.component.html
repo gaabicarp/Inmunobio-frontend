@@ -1,5 +1,5 @@
 
-  <h3 class="text-center mt-4" >Consumir Stock</h3>
+  <h3 class="text-center mt-4" >Consumir Stock - {{element.nombre}}</h3>
 <div class="card rounded shadow p-4 m-5">
   <form [formGroup]="formConsumir" (ngSubmit)="consumir()">
     <div class="m-3">
@@ -11,11 +11,15 @@
         <button class="btn btn-secondary btn-lg" (click)=volver()>Cancelar</button>
     </div>  
       <div class="mx-3">
-        <button class="btn btn-success btn-lg" type="submit" [disabled]="!formConsumir.valid">Guardar</button>
+        <button class="btn btn-success btn-lg" type="submit" [disabled]="!formConsumir.valid">Consumir</button>
         </div>
     </div>
     <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-      {{mensajeAlert}}
-  </div>
+      <h5>ERROR - La cantidad solicitada no se encuentra en stock </h5>
+      <p>Hay {{element.producto[this.idProducto].unidad}} unidades disponibles</p>
+    </div>
+    <div class="alert alert-{{estado}} mt-3" role="alertOK" *ngIf='alertOK'>
+        {{mensajeAlertOK}}
+    </div>
   </form>
 </div>

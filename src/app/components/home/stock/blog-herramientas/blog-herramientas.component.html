@@ -1,12 +1,4 @@
 <div *ngIf='step === 9'>
-  <div class="d-flex bd-highlight m-2">
-    <div class="p-2 flex-grow-1 bd-highlight">
-      <button type="button" class="btn btn-outline-secondary" (click)=volver()>Volver</button>
-    </div>
-    <div class="p-2 bd-highlight">
-      <button type="button" class="btn btn-primary" (click)=nuevoBlog()>Nuevo Blog</button>
-    </div>
-  </div>
 <div class="card rounded shadow m-3 p-4">
   <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
     <div class="row">
@@ -23,6 +15,14 @@
   </form>
 </div>
   <div>
+    <div class="d-flex bd-highlight m-2">
+      <div class="p-2 flex-grow-1 bd-highlight">
+        <button type="button" class="btn btn-outline-secondary" (click)=volver()>Volver</button>
+      </div>
+      <div class="p-2 bd-highlight">
+        <button type="button" class="btn btn-primary" (click)=nuevoBlog()>Nuevo Blog</button>
+      </div>
+    </div>
     <div class="row m-2" >
         <ng-container *ngFor='let a of blogs;let i = index'>
       <div class="col-1 d-flex flex-column  align-items-center">

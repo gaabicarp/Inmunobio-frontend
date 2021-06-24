@@ -62,7 +62,9 @@ export class NuevaHerramientaComponent implements OnInit {
         this.mensajeAlert = JSON.stringify(err.error.error);
       });
     } else {
+      herramienta.id_espacioFisico  = this.element.id_espacioFisico;
       herramienta.id_herramienta = this.element.id_herramienta;
+
       this.postService.editarHerramienta(herramienta).subscribe(res => {
         if (res.Status === 'ok'){
           this.alert = true;
