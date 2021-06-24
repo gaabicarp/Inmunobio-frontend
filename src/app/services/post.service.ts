@@ -166,4 +166,8 @@ export class PostService {
     return this.http.post<any>(this.API_URL + 'blogHerramienta', blog);
   }
 
+  crearMuestra(muestra: any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'nuevaMuestra', muestra);
+  }
+
 }

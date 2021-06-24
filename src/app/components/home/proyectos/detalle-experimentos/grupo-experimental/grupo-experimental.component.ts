@@ -18,8 +18,8 @@ export class GrupoExperimentalComponent implements OnInit {
   grupoExperimental: any;
   animalesProyecto = [];
   formFuenteExperimental: FormGroup;
-  agregarGrupo
-  
+  formMuestra: FormGroup;
+  contenedores = [];
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -39,25 +39,29 @@ export class GrupoExperimentalComponent implements OnInit {
 
       }
     });
+    this.getService.obtenerContenedoresPorProyecto(this.idProyecto).subscribe(res => {
+      console.log(res);
+      this.contenedores = res;
+    })
     this.formFuenteExperimental = new FormGroup({
       tipo: new FormControl(''),
       codigo: new FormControl(''),
       animal: new FormControl(''),
       descripcion: new FormControl('')
-    })
+    });
+    this.formMuestra = new FormGroup({
+      codigo: new FormControl(''),
+      descripcion: new FormControl(''),
+      contenedor: new FormControl('')
+    });
     this.getService.obtenerAnimalesPorProyectos(this.idProyecto).subscribe(res => {
       console.log(res);
       this.animalesProyecto = res;
     });
-    this.getService.obtenerAnimales().subscribe(res => {
-      console.log(res)
-    })
   }
 
-  open(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-
-    });
+  open(content): void {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
   }
 
 
@@ -88,5 +92,21 @@ export class GrupoExperimentalComponent implements OnInit {
       console.log(res);
     })
   }
+
+
+  crearMuestra(): void{
+    const obj = {
+      id_proyecto : this.idProyecto,
+      id_experimento : this.idExperimento,
+      id_grupoExperimental : this.idGrupo,
+      codigo : this.formMuestra.value.codigo,
+      descripcion : this.formMuestra.value.descripcion,
+      tipo : this.grupoExperimental.tipo,
+      id_contenedor : this.formMuestra.value.contenedor
+    }
+    this.postService.crearMuestra([obj]).subscribe(res => {
+      console.log(res)
+    })
+  } 
 
 }
