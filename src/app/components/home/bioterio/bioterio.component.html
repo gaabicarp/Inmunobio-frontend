@@ -1,22 +1,15 @@
 
-<div class="m-5">
+<div class="m-5" *ngIf='step === 0'>
     <h2 class="text-center ">Bioterio</h2>
-</div>
-<div class="mx-4">
+
+<div class="mx-4" >
     <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
         <li [ngbNavItem]="1">
           <a ngbNavLink>Jaulas</a>
           <ng-template ngbNavContent>
             <div class="search-container flex-wrap">
-              <div class="input-group mb-3">
-                  <span class="input-group-text">
-                      <i class="bi bi-search"></i>
-                  </span>
-                  <input type="text" class="form-control" id="usuario" placeholder="Filtrar según salón">
-              </div>
-              <div>
-                  <button type="button" class="btn btn-primary btn-lg" routerLink="editar-jaula" >Nueva Jaula</button>
-              </div>
+              
+              
             </div>
             <div class="m-4">
             <table class="table table-hover text-center">
@@ -29,17 +22,28 @@
                     <th scope="col">Tipo</th>
                     <th scope="col">Proyecto Asociado</th>
                     <th></th>
+                    <th><a type="button" class="btn btn-primary" (click)=crear() >Nueva Jaula</a></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor='let jaula of jaulas'>
                     <th scope="row">{{jaula.codigo}}</th>
-                    <td>{{jaula.id_espacioFisico}}</td>
+                    <td>{{espacios[jaula.id_espacio_fisico-1]?.nombre}}</td>
                     <td>{{jaula.rack}}</td>
                     <td>{{jaula.estante}}</td>
                     <td>{{jaula.tipo}}</td>
                     <td>{{jaula.nombre_proyecto ? jaula.nombre_proyecto : 'Sin asignar'}}</td>
-                    <td><a href="" routerLink='{{jaula.id_jaula}}' >Ver</a></td>
+                    <td><div class="mr-4">
+                      <a class="text-primary" role="button" (click)=editar(jaula)>
+                        <i class="bi bi-pencil"></i>
+                      </a>
+                    </div></td>
+                    <td><div class="mr-4">
+                      <a class="text-secondary" role="button" (click)=ver(jaula.id_jaula)>
+                        <i class="bi bi-arrow-right-square-fill"></i>
+                      </a>
+                    </div></td>
+                    
                   </tr>
                 </tbody>
               </table>
@@ -62,120 +66,7 @@
                     <button type="button" class="btn btn-primary btn-lg" routerLink="entrada-blog">Crear entrada de Blog</button>
                 </div>
               </div>
-
                   <div>
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 123 - Baja Animal</strong></div> 
-                          <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 665 - Cambio de Lugar</strong></div> 
-                        <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 123 - Baja Animal</strong></div> 
-                          <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 665 - Cambio de Lugar</strong></div> 
-                        <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 123 - Baja Animal</strong></div> 
-                          <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 665 - Cambio de Lugar</strong></div> 
-                        <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 123 - Baja Animal</strong></div> 
-                          <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 665 - Cambio de Lugar</strong></div> 
-                        <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                    </div>
                     <div class="row">
                       <div class="col-1 d-flex flex-column justify-content-center align-items-center">
                         <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
@@ -211,9 +102,21 @@
       </ul>
       
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </div> 
+</div>
+<div *ngIf='step === 1'>
+  <app-editar-jaula
+  [element]='jaulaSeleccionada'
+  [modo]='modo'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-editar-jaula>
+</div>
 
-
-
-
-    
+<div *ngIf='step === 2'>
+  <app-jaula-detalle
+  [element]='id'
+  (volviendo)='onVolviendo($event)'
+  >
+</app-jaula-detalle>
 </div>

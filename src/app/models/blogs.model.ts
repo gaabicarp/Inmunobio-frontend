@@ -7,6 +7,10 @@ export class BlogHerramienta{
     id_herramienta:number;
     blogs: Blogs
 }
+export class BlogJaula{
+    id_jaula:number;
+    blogs: Blogs
+}
 export class Blogs{
     id_usuario: number;
     detalle: string;
@@ -19,6 +23,11 @@ export class BlogsBuscados{
 }
 export class BlogsBuscadosHerr{
     id_herramienta:number;
+    fechaDesde: any;
+    fechaHasta:any;
+}
+export class BlogBuscadoJaula{
+    id_jaula:number;
     fechaDesde: any;
     fechaHasta:any;
 }

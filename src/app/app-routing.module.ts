@@ -61,12 +61,7 @@ const routes: Routes = [
       {path: 'configuracion/productos', component: ProductosComponent },
       {path: 'configuracion/distribuidoras', component: DistribuidorasComponent},
       {path: 'configuracion/contenedores', component: ContenedoresComponent},
-      {path: 'bioterio', component: BioterioComponent},
-      {path: 'bioterio/entrada-blog', component: EntradaBlogComponent},
-      {path: 'bioterio/editar-jaula', component: EditarJaulaComponent},
-      {path: 'bioterio/:id', component: JaulaDetalleComponent},
-      {path: 'bioterio/:id/editar-jaula', component: EditarJaulaComponent},
-      {path: 'bioterio/:id/alta-animal', component: AltaAnimalComponent}
+      {path: 'bioterio', component: BioterioComponent}
     ]},
   { path: 'login', component: LoginComponent},
   { path: '', pathMatch: 'full', redirectTo: 'login'}

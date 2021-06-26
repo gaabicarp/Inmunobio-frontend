@@ -25,7 +25,7 @@ export class NuevoBlogHerramientaComponent implements OnInit {
     this.alert = false;
     this.step = 10;
     this.formBlogH = new FormGroup({
-      detalle: new FormControl('', [Validators.maxLength(50)]),
+      detalle: new FormControl('', [Validators.maxLength(100)]),
     });
   }
 

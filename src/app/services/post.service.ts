@@ -5,9 +5,10 @@ import { Distribuidora } from '../models/distribuidora.model';
 import { Producto } from '../models/producto.model';
 import { Consumir, Stock, StockEdicion } from '../models/stock.model';
 import { postUsuario, Usuario } from '../models/usuarios.model';
-import { BlogEspacio, BlogHerramienta, Blogs, BlogsBuscados, BlogsBuscadosHerr } from '../models/blogs.model';
+import { BlogEspacio, BlogHerramienta, Blogs, BlogsBuscados, BlogsBuscadosHerr, BlogBuscadoJaula, BlogJaula } from '../models/blogs.model';
 import { Herramienta } from '../models/herramientas.model';
 import { Contenedor } from '../models/contenedores.model';
+import { Jaula } from '../models/jaula.model';
 
 
 @Injectable({
@@ -89,8 +90,23 @@ export class PostService {
     return this.http.put<any>(this.API_URL + 'espacioFisico', espacio);
   }
 
-  crearJaula(jaula: any): Observable<any> {
+  crearJaula(jaula: Jaula): Observable<any> {
     return this.http.post<any>(this.API_URL + 'nuevaJaula', jaula);
+  }
+  eliminarJaula(id_jaula:number): Observable<any>{
+    return this.http.delete<any>(this.API_URL + 'bajarJaula/' + id_jaula);
+  }
+  asignarJaulaProyecto(datos:any): Observable<any>{
+    return this.http.put<any>(this.API_URL + 'asignarJaulaAProyecto', datos);
+  }
+  editarJaula(jaula: Jaula): Observable<any>{
+    return this.http.put<any>(this.API_URL + 'nuevaJaula', jaula);
+  }
+  obtenerBlogJaula(blog : BlogBuscadoJaula): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'proyecto/blogsJaula', blog);
+  }
+  nuevoBlogJaula(nuevo:any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'proyecto/blogJaula', nuevo);
   }
 
   agregarStock(nuevoStock : Stock){
@@ -115,6 +131,10 @@ export class PostService {
 
   crearAnimal(animal: any): Observable<any> {
     return this.http.post<any>(this.API_URL + 'nuevoAnimal', animal);
+  }
+  
+  eliminarAnimal(id_animal: number): Observable<any>{
+    return this.http.put<any>(this.API_URL + 'bajaAnimal/' + id_animal, id_animal);
   }
 
   cerrarProyecto(obj: any): Observable<any> {

@@ -1,12 +1,11 @@
-<div class="m-4" routerLink="../" role="button">
-    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-</div>
-<div class="mb-5">
-    <h2 class="text-center ">Jaula</h2>
-</div>
 
-
-<div class="mx-4">
+<div class="mx-4" *ngIf='step === 2'>
+    <div class="m-4" (click)='volver()' role="button">
+        <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+      </div>
+    <div class="mb-5">
+        <h2 class="text-center ">Jaula - {{jaula?.codigo}}</h2>
+    </div>
     <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
         <li [ngbNavItem]="1">
           <a ngbNavLink>Información</a>
@@ -15,47 +14,34 @@
             <table class="table table-striped table-hover">
                 <tbody>
                 <tr>
-                    <td class="table-active">Nombre</td>
-                    <td>asdasda</td>
-                </tr>
-                <tr>
-                    <td class="table-active">Número</td>
-                    <td>1</td>
-                </tr>
-                <tr>
                     <td class="table-active">Rack</td>
-                    <td>33</td>
+                    <td>{{jaula?.rack}}</td>
                 </tr>
                 <tr>
                     <td class="table-active">Estante</td>
-                    <td>7</td>
+                    <td>{{jaula?.estante}}</td>
                 </tr>
                 <tr>
                     <td class="table-active">Tipo</td>
-                    <td>Transparente</td>
+                    <td>{{jaula?.tipo}}</td>
                 </tr>
                 <tr>
                     <td class="table-active">Salón</td>
-                    <td>Laboratorio 1</td>
+                    <td>{{espacios[jaula?.id_espacio_fisico-1]?.nombre}}</td>
                 </tr>
                 <tr>
                     <td class="table-active">Proyecto Asociado</td>
                     <td>
                         <div>
-                            Coronavirus
-                        <span>
-                            <button>asdasd</button>
-                        </span>
+                           {{jaula?.nombre_proyecto}}
                         </div>
                     </td>
                 </tr>
                 </tbody>
             </table>
             </div>
-            <div class="text-center mb-5">
-                <button type="button" class="btn btn-outline-primary text-center" routerLink="editar-jaula">Editar Información</button>
-              </div>
- 
+            <button type="button" class="btn btn-danger text-center" (click)=eliminarJaula()>Eliminar Jaula</button>
+            <button type="button" class="btn btn-secondary text-center" (click)=asociarProyecto()>Asociar Proyecto</button>
           </ng-template>
         </li>
         <li [ngbNavItem]="2">
@@ -70,11 +56,11 @@
                     <input type="text" class="form-control" id="usuario" placeholder="Filtrar según código">
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary btn-lg" routerLink="alta-animal" >Alta de Animal</button>
+                    <button type="button" class="btn btn-primary btn-lg" (click)=altaAnimal() >Alta de Animal</button>
                 </div>
-              </div>
+            </div>
             <div class="m-4">
-            <table class="table table-striped table-hover text-center">
+            <table class="table table-hover text-center">
                 <thead>
                   <tr>
                     <th scope="col">Código</th>
@@ -90,7 +76,11 @@
                         <th scope="col">{{animal.especie}}</th>
                         <th scope="col">{{animal.cepa}}</th>
                         <th scope="col">{{animal.sexo}}</th>
-                        <th><button type="button" class="btn btn-outline-danger">Baja</button></th>
+                        <th><div class="mr-4">
+                            <a class="text-danger" role="button" (click)=eliminar(animal.id_fuenteExperimental)>
+                              <i class="bi bi-trash"></i>
+                            </a>
+                          </div></th>
                     </tr>                  
                 </tbody>
               </table>
@@ -98,11 +88,86 @@
             
           </ng-template>
         </li>
+        <li [ngbNavItem]="3">
+          <a ngbNavLink>Blogs</a>
+          <ng-template ngbNavContent>
+            <div class="card rounded shadow m-3 p-4">
+              <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
+                <div class="row">
+                  <div class="col">
+                    <label for="fecDesde" class="form-label">Fecha inicial</label>
+                    <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
+                  </div>
+                  <div class="col">
+                    <label for="fecHasta" class="form-label">Fecha final</label>
+                    <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
+                  </div>
+                  <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">Buscar</button>
+                </div>
+              </form>
+            </div>
+            <div class="p-2 bd-highlight">
+              <button type="button" class="btn btn-primary" (click)=nuevoBlog()>Nuevo Blog</button>
+            </div>
+            <div class="row m-2" >
+              <ng-container *ngFor='let a of blogs;let i = index'>
+            <div class="col-1 d-flex flex-column  align-items-center">
+              <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
+                <i class="bi bi-journal"></i>
+              </div>
+              <p class="text-center mb-0">{{a.fecha | date: 'shortDate'}}</p>
+              <div>
+            </div>
+            </div>
+            <div class=" col-11 card shadow  mb-3">
+              <div class="card-header"><strong>Blog n°{{i+1}}</strong></div> 
+                <p class="mb-1"><i>{{a.id_usuario}}</i></p>
+                <p>{{a.detalle}}</p>
+            </div>
+          </ng-container>
+          </div>
+            
+          </ng-template>
+        </li>
       </ul>
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
-
-
-
-
-    
 </div>
+<div *ngIf='step === 3'>
+    <app-alta-animal
+    [element]='id'
+    (volviendo)='onVolviendo($event)'
+    >
+  </app-alta-animal>
+  </div>
+  <div *ngIf='step === 4'>
+    <app-entrada-blog
+    [element]='id'
+    (volviendo)='onVolviendo($event)'
+    >
+  </app-entrada-blog>
+  </div>
+  <div *ngIf='step === 5'>
+    
+  <h3 class="text-center mt-4" >Asociar un proyecto a Jaula - {{jaula?.codigo}}</h3>
+  <div class="card rounded shadow p-4 m-5">
+    <form [formGroup]="formProyecto" (ngSubmit)="asociar()">
+      <div class="m-3">
+        <select class="form-control" aria-label=".form-select-lg example" formControlName='id_proyecto'>
+          <option value="0">Sin Asignar</option>
+          <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
+        </select>
+      </div>
+      <div class="d-flex flex-row justify-content-end">
+        <div class="mx-3 justify-content-start">
+          <button class="btn btn-secondary btn-lg" (click)=volverDetalle()>Cancelar</button>
+      </div>  
+        <div class="mx-3">
+          <button class="btn btn-success btn-lg" type="submit" [disabled]="!formProyecto.valid">Asociar</button>
+          </div>
+      </div>
+      <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+          {{mensajeAlert}}
+      </div>
+    </form>
+  </div>
+  </div>

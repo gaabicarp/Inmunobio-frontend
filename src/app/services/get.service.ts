@@ -62,7 +62,7 @@ export class GetService {
   obtenerHerramientas():Observable<any>{
     return this.http.get<any>(this.API_URL + 'herramientas');
   }
-
+  
   
 
 

@@ -1,6 +1,6 @@
-<div class="m-4" routerLink="../" role="button">
+<div class="m-4" (click)='volver()' role="button">
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-</div>
+  </div>
 <h3 class="text-center mt-4">Alta de Animal</h3>
 <div class="card rounded shadow p-4 m-5">
   <form [formGroup]="formAnimal" (ngSubmit)="crearAnimal()">
