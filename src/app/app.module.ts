@@ -43,6 +43,9 @@ import { FinalizarExperimentoComponent } from './components/home/proyectos/detal
 import { GrupoExperimentalComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
 import { NuevoBlogEspacioComponent } from './components/home/stock/nuevo-blog-espacio/nuevo-blog-espacio.component';
 import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espacio-fisico/blogs-espacio-fisico.component';
+import { FilterPipe } from './pipe/filter.pipe';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { FilterStatePipe } from './pipe/filter-state.pipe';
 
 
 @NgModule({
@@ -84,7 +87,9 @@ import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espac
     FinalizarExperimentoComponent,
     GrupoExperimentalComponent,
     NuevoBlogEspacioComponent,
-    BlogsEspacioFisicoComponent
+    BlogsEspacioFisicoComponent,
+    FilterPipe,
+    FilterStatePipe
 
   ],
   imports: [
@@ -93,6 +98,7 @@ import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espac
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AngularMultiSelectModule,
     NgbModule,
   ],
   providers: [],

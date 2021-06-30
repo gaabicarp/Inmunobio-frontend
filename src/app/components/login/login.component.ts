@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   successMessage: string;
   @ViewChild('selfClosingAlert', {static: false}) selfClosingAlert: NgbAlert;
 
+  cargando: boolean;
 
   loginForm: FormGroup;
 
@@ -30,24 +31,31 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.successMessage = '';
+    this.cargando = false;
   }
 
   login(): void{
+    this.cargando = true;
     if (this.loginForm.controls.usuario.value === ''){
       this.successMessage = 'El usuario es requerido';
+      this.cargando = false;
       return;
     }
 
     if (this.loginForm.controls.password.value === ''){
       this.successMessage = 'La contraseña es requerida';
+      this.cargando = false;
       return;
     }
 
     if (this.loginForm.controls.usuario.value !== 'user1' && this.loginForm.controls.password.value !== 'inmunobio'){
       this.successMessage = 'Las credenciales no son validas';
+      this.cargando = false;
       return;
     }
 
-    this.router.navigateByUrl('home/dashboard');
+    setTimeout(() => {
+      this.router.navigateByUrl('home/dashboard');
+    }, 3000);
   }
 }

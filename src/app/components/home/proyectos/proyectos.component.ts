@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Proyecto } from 'src/app/models/proyectos.model';
 import { GetService } from 'src/app/services/get.service';
 
 @Component({
@@ -7,29 +8,19 @@ import { GetService } from 'src/app/services/get.service';
   styleUrls: ['./proyectos.component.css']
 })
 export class ProyectosComponent implements OnInit {
-  proyectos = [];
-  step: number;
-  modo: string;
-  proyectoSeleccionado: any;
+  proyectos: Proyecto[] = [];
+  filterPost: string;
+  cargando: boolean;
 
   constructor(private getService: GetService) { }
 
   ngOnInit(): void {
-    this.step = 0;
+    this.cargando = true;
+    this.filterPost = '';
     this.getService.obtenerProyectos().subscribe(res => {
       console.log(res);
       this.proyectos = res;
+      this.cargando = false;
     });
-  }
-
-  crearProyecto(): void {
-    this.step = 1;
-    this.modo = 'CREAR';
-  }
-
-  editarProyecto(proyecto: any): void {
-    this.step = 1;
-    this.modo = 'EDITAR';
-    this.proyectoSeleccionado = proyecto;
   }
 }

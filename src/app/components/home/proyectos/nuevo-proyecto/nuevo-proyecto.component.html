@@ -2,11 +2,11 @@
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
 <div class="mx-4">
-    <div class="text-center my-4">
+    <div class="my-3">
         <h2>Nuevo Proyecto</h2>
     </div>
 
-    <div class="card rounded shadow p-4 mb-4">
+    <div class="p-5 mx-5 mb-4">
         <form [formGroup]="formProyecto" (ngSubmit)="crearProyecto()">
             <div class="row">
                 <div class="col-9">
@@ -47,39 +47,16 @@
                 <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
 
-            <div class="mx-4">
-                <div class="row justify-content-between">
-                    <div class="col-5">
-                        <h5 class="text-center">Usuarios Disponibles</h5>
-                        <div class="card rounded shadow">
-                            <ul class="list-group">
-                                <li class="list-group-item" *ngFor="let usuario of usuariosDisponibles">
-                                    <div class="d-flex flex-row justify-content-between">
-                                        {{usuario.nombre}}
-                                        <div class="text-primary">
-                                            <i class="bi bi-arrow-right-circle-fill" (click)='asignarUsuario(usuario)'></i>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-5">
-                        <h5 class="text-center">Usuarios asignados</h5>
-                        <div class="card rounded shadow">
-                            <ul class="list-group">
-                                <li class="list-group-item" *ngFor='let usuario of usuariosAsignados'>
-                                    <div class="d-flex flex-row justify-content-between">
-                                        {{usuario.nombre}}
-                                        <div class="text-danger">
-                                            <i class="bi bi-x-circle-fill" (click)='desasignarUsuario(usuario)'></i>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+
+            <div class="my-4">
+
+                <label for="descripcion" class="form-label">Usuarios Asignados</label>
+                <angular2-multiselect [data]="itemList" 
+                    [(ngModel)]="selectedItems" 
+                    [settings]="settings"                 
+                    formControlName="usuarios">
+                </angular2-multiselect>
+
             </div>
 
 

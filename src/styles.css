@@ -2,9 +2,13 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 
-
 .text-staatliches{
     font-family: 'Staatliches', cursive;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Staatliches', cursive;
+    color: #011C40;
 }
 
 body{
@@ -24,15 +28,20 @@ ul li {
 }
 
 hr{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     width: 80%;
     margin: auto;
+}
+
+.navbar{
+    background-color:  #033980;;
 }
 
 .main-navigation{
     width: 17rem;
     color:#FFF;
     min-height: 100%;
+    background-color: #011C40;
 }
 
 .mobile-menu-toggle{
@@ -112,7 +121,7 @@ hr{
         top: 0.8em;
         left: 2rem;
         z-index: 1000;
-        background-color: transparent;
+        background-color: #0455BF;
         min-height: 1rem;
         width: 2rem;
     }

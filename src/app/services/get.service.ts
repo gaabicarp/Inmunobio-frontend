@@ -9,6 +9,7 @@ import { Stock } from '../models/stock.model';
 import { BlogsBuscados } from '../models/blogs.model';
 import { Herramienta } from '../models/herramientas.model';
 import { Contenedor } from '../models/contenedores.model';
+import { Proyecto } from '../models/proyectos.model';
 
 @Injectable({
   providedIn: 'root'
@@ -88,12 +89,12 @@ export class GetService {
     return this.http .get<any>(this.API_URL + 'gruposDeTrabajo');
   }
 
-  obtenerProyectos(): Observable<any>{
-    return this.http.get<any>(this.API_URL + 'proyectos');
+  obtenerProyectos(): Observable<Proyecto[]>{
+    return this.http.get<Proyecto[]>(this.API_URL + 'proyectos');
   }
 
-  obtenerProyectosPorId(id: number): Observable<any>{
-    return this.http.get<any>(this.API_URL + `proyecto/${id}`);
+  obtenerProyectosPorId(id: number): Observable<Proyecto>{
+    return this.http.get<Proyecto>(this.API_URL + `proyecto/${id}`);
   }
 
   obtenerExperimentos(idProyecto: number): Observable<any>{

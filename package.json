@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~10.0.4",
     "@angular/router": "~10.0.4",
     "@ng-bootstrap/ng-bootstrap": "^8.0.4",
+    "angular2-multiselect-dropdown": "^5.0.4",
     "bootstrap": "^4.6.0",
     "bootstrap-icons": "^1.4.0",
     "rxjs": "~6.5.5",

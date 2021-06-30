@@ -9,18 +9,25 @@ h3{
     justify-content: space-around;
 }
 
-.search-container .form-control{
+/* .search-container .form-control{
     width: 32%;
 }
 
 .input-group{
     width: 32%;
-}
+} */
 
 .card{
-    width: 95%;
+    width: 25%;
     margin: auto;
     padding: 0.5em;
+}
+
+.proyects-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
 }
 
 @media screen and (max-width: 1024px){
