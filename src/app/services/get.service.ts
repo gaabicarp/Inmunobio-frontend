@@ -129,8 +129,8 @@ export class GetService {
 
   }
 
-  obtenerJaulasPorProyecto(idJaula: number): Observable<any> {
-    return this.http.get<any>(this.API_URL + `jaula/${idJaula}/animales`);
+  obtenerJaulasPorProyecto(idProyecto: number): Observable<any> {
+    return this.http.get<any>(this.API_URL + `proyecto/${idProyecto}/jaulasDelProyecto`);
   }
 
   obtenerAnimalesPorProyectos(idProyecto: number): Observable<any> {

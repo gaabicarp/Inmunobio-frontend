@@ -7,15 +7,22 @@ export class BlogHerramienta{
     id_herramienta:number;
     blogs: Blogs
 }
-export class BlogJaula{
-    id_jaula:number;
-    blogs: Blogs
-}
 export class Blogs{
     id_usuario: number;
     detalle: string;
     tipo: string;
 }
+export class BlogBuscadoProyecto{
+    id_proyecto: number;
+    fechaDesde: any;
+    fechaHasta:any;
+}
+export class BlogProyecto{
+    id_proyecto:number;
+    id:number;
+    blogs: Blogs;
+}
+
 export class BlogsBuscados{
     id_espacioFisico: number;
     fechaDesde: any;

@@ -6,7 +6,7 @@
       <div class="text-center my-4">
           <h2>{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Contenedor</h2>
       </div>
-    <div class="card rounded shadow p-4 m-5">
+    <div class="card rounded shadow p-4 m-5 ">
     <form name='formContenedor' [formGroup]="formContenedor" (ngSubmit)="crearContenedor()">
       <div class="m-3">
         <label  for="codigo" class="form-label">Código</label>
@@ -27,7 +27,14 @@
       <div class=" m-3">
         <label  class="form-label" for="proyecto">Proyecto Asignado</label>
             <select class="form-control" aria-label=".form-select-lg example" id="proyecto" formControlName="proyecto">
+              <option value="-1">Sin asignar</option>
               <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
+            </select>
+      </div>
+      <div class=" m-3">
+        <label  class="form-label" for="espacioFisico">Espacio Físico</label>
+            <select class="form-control" aria-label=".form-select-lg example" id="espacioFisico" formControlName="espacioFisico">
+              <option *ngFor='let espacio of espacios' value="{{espacio.id_espacioFisico}}">{{espacio.nombre}}</option>
             </select>
       </div>
       <div class="m-3">
@@ -41,9 +48,7 @@
       <div class="m-3">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="disponible" name='disponible'>
-          <label class="form-check-label" for="disponible">
-            Disponible
-          </label>
+          <label class="form-check-label" for="disponible">Disponible</label>
         </div>
       </div>
           <div class="d-flex flex-row justify-content-end">

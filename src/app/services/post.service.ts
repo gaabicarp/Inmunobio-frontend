@@ -5,10 +5,10 @@ import { Distribuidora } from '../models/distribuidora.model';
 import { Producto } from '../models/producto.model';
 import { Consumir, Stock, StockEdicion } from '../models/stock.model';
 import { postUsuario, Usuario } from '../models/usuarios.model';
-import { BlogEspacio, BlogHerramienta, Blogs, BlogsBuscados, BlogsBuscadosHerr, BlogBuscadoJaula, BlogJaula } from '../models/blogs.model';
+import { BlogBuscadoProyecto, BlogEspacio, BlogHerramienta,BlogProyecto,BlogsBuscados, BlogsBuscadosHerr} from '../models/blogs.model';
 import { Herramienta } from '../models/herramientas.model';
 import { Contenedor } from '../models/contenedores.model';
-import { Jaula } from '../models/jaula.model';
+import { BuscarBlogJaula, Jaula } from '../models/jaula.model';
 
 
 @Injectable({
@@ -89,6 +89,15 @@ export class PostService {
   editarEspacio(espacio: any): Observable<any> {
     return this.http.put<any>(this.API_URL + 'espacioFisico', espacio);
   }
+  eliminarEspacioFisico(id:number):Observable<any> {
+    return this.http.delete<any>(this.API_URL + 'espacioFisico/' + id);
+  }
+  obtenerBlogsProyecto(datos : BlogBuscadoProyecto): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'blogsProyecto', datos);
+  }
+  nuevoBlogProyecto(nuevoBlog: BlogProyecto): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'crearblogProyecto', nuevoBlog);
+  }
 
   crearJaula(jaula: Jaula): Observable<any> {
     return this.http.post<any>(this.API_URL + 'nuevaJaula', jaula);
@@ -100,13 +109,16 @@ export class PostService {
     return this.http.put<any>(this.API_URL + 'asignarJaulaAProyecto', datos);
   }
   editarJaula(jaula: Jaula): Observable<any>{
-    return this.http.put<any>(this.API_URL + 'nuevaJaula', jaula);
+    return this.http.put<any>(this.API_URL + 'modificarJaula', jaula);
   }
-  obtenerBlogJaula(blog : BlogBuscadoJaula): Observable<any>{
+  obtenerBlogJaula(blog : BuscarBlogJaula): Observable<any>{
     return this.http.post<any>(this.API_URL + 'proyecto/blogsJaula', blog);
   }
   nuevoBlogJaula(nuevo:any): Observable<any>{
     return this.http.post<any>(this.API_URL + 'proyecto/blogJaula', nuevo);
+  }
+  obtenerTodosBlogsJaulas(fechas: any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'blogsJaulas', fechas);
   }
 
   agregarStock(nuevoStock : Stock){
@@ -125,8 +137,11 @@ export class PostService {
   crearContenedor(nuevoContenedor : Contenedor): Observable<any>{
     return this.http.post<any>(this.API_URL + 'nuevoContenedor', nuevoContenedor);
   }
-  editarContenedor(contenedor : Contenedor):Observable<any>{ // CREO QUE NO SE PUEDE MODIFICAR
-    return this.http.put<any>(this.API_URL + '', contenedor);
+  editarContenedor(contenedor : Contenedor):Observable<any>{ 
+    return this.http.put<any>(this.API_URL + 'modificarContenedor', contenedor);
+  }
+  eliminarContenedor(id:number): Observable<any>{
+    return this.http.delete<any>(this.API_URL + 'eliminarContenedor/'+id);
   }
 
   crearAnimal(animal: any): Observable<any> {
@@ -144,7 +159,9 @@ export class PostService {
   modificarProyecto(obj: any): Observable<any> {
     return this.http.put<any>(this.API_URL + 'modificarProyecto', obj);
   }
-
+  editarExperimento(experimento:any): Observable<any>{
+    return this.http.put<any>(this.API_URL + 'modificarExperimento', experimento);
+  }
   cerrarExperimento(obj: any): Observable<any> {
     return this.http.put<any>(this.API_URL + 'cerrarExperimento', obj);
   }

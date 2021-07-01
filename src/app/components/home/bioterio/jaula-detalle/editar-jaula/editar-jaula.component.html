@@ -1,6 +1,6 @@
-<div class="m-4" routerLink="../" role="button">
-    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-  </div>
+<div class="m-4" (click)='volver()' role="button">
+  <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+</div>
   <h3 class="text-center mt-4">Datos de la Jaula</h3>
   <div class="card rounded shadow p-4 m-5">
   <form [formGroup]="formJaula" (ngSubmit)="crearJaula()">
@@ -33,23 +33,11 @@
           <div class=" m-3">
             <label  class="form-label">Espacio Fisico</label>
               <div class="input-group mb-3">
-                  <select class="form-control" aria-label=".form-select-lg example" formControlName='id_espacio_fisico'>
+                  <select class="form-control" aria-label=".form-select-lg example" formControlName='id_espacioFisico'>
                     <option *ngFor='let espacios of espaciosFisicos' value="{{espacios.id_espacioFisico}}">{{espacios.nombre}}</option>
                   </select>
               </div>
           </div>
-          
-          <!-- <div class=" m-3">
-            <label  class="form-label">Proyecto Asociado</label>
-              <div class="input-group mb-3">
-                  <select class="form-control" aria-label=".form-select-lg example" formControlName='id_proyecto'>
-                      <option value="0">Sin Asignar</option>
-                      <ng-container *ngIf= "modo == 'EDITAR'" >
-                      <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
-                    </ng-container>
-                    </select>
-              </div>
-          </div> -->
           <div class="text-center">
             <button type="submit" class="btn btn-success btn-lg">Crear Jaula</button>
           </div>

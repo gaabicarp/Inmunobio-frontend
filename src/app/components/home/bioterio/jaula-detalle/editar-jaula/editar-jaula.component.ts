@@ -4,7 +4,6 @@ import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { Jaula } from 'src/app/models/jaula.model';
 
-
 @Component({
   selector: 'app-editar-jaula',
   templateUrl: './editar-jaula.component.html',
@@ -21,10 +20,12 @@ export class EditarJaulaComponent implements OnInit {
   mensajeAlert: string;
   estado: string;
   alert: boolean;
+  step:number;
 
   constructor(private getService: GetService, private postService: PostService) { }
 
   ngOnInit(): void {
+    this.step = 2;
     this.getService.obtenerEspaciosFisicos().subscribe(res => {
       this.espaciosFisicos = res;
     });
@@ -38,7 +39,7 @@ export class EditarJaulaComponent implements OnInit {
       estante: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       capacidad: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       tipo: new FormControl('', [Validators.maxLength(100)]),
-      id_espacio_fisico: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      id_espacioFisico: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       id_proyecto: new FormControl('')
     });
     if (this.modo === 'EDITAR'){
@@ -48,9 +49,9 @@ export class EditarJaulaComponent implements OnInit {
       estante:this.element.estante,
       capacidad: this.element.capacidad,
       tipo: this.element.tipo,
-      id_espacio_fisico: this.element.id_espacio_fisico,
+      id_espacioFisico: this.element.id_espacio_fisico,
       // id_proyecto: this.element.id_proyecto
-      id_proyecto: 0
+      id_proyecto: 1
       });
     }
   }
@@ -62,8 +63,8 @@ export class EditarJaulaComponent implements OnInit {
       estante : this.formJaula.value.estante,
       capacidad:this.formJaula.value.capacidad,
       // id_proyecto: this.formJaula.value.id_proyecto,
-      id_proyecto: 0,
-      id_espacio_fisico:this.formJaula.value.id_espacio_fisico,
+      id_proyecto: 1,
+      id_espacioFisico:this.formJaula.value.id_espacioFisico,
       tipo: this.formJaula.value.tipo
     }
     if (this.modo === 'CREAR'){
@@ -80,25 +81,6 @@ export class EditarJaulaComponent implements OnInit {
         this.mensajeAlert = JSON.stringify(err.error.error);
       });
     } else {
-      // if(jaula.id_proyecto != 0 ){
-      //   const datos: any = {
-      //     id_jaula : this.element.id_jaula,
-      //     id_proyecto : parseInt(this.formJaula.value.id_proyecto),
-      //     nombre_proyecto: this.proyectos[this.formJaula.value.id_proyecto -1].nombre
-      //   }
-      //   this.postService.asignarJaulaProyecto(jaula).subscribe(res => {
-      //     console.log(res)
-      //     if (res.Status === 'ok'){
-      //       this.alert = true;
-      //       this.estado = 'success';
-      //       this.mensajeAlert = 'Jaula asociada correctamente';
-      //     }
-      //     } , err => {
-      //       this.alert = true;
-      //       this.estado = 'danger';
-      //       this.mensajeAlert = JSON.stringify(err.error.error);
-      //   })
-      // }
       jaula.id_jaula = this.element.id_jaula
       this.postService.editarJaula(jaula).subscribe(res => {
         console.log(res);
@@ -113,6 +95,12 @@ export class EditarJaulaComponent implements OnInit {
         this.mensajeAlert = JSON.stringify(err.error.error);
       });
     }
+  }
+  volver(): void{
+    this.volviendo.emit(0);
+  }
+  onVolviendo(e: number): void{
+    this.step = e;
   }
 
 }

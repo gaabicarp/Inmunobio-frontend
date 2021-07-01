@@ -11,6 +11,7 @@ import { Contenedor } from 'src/app/models/contenedores.model';
 export class ContenedoresComponent implements OnInit {
   contenedores: Contenedor;
   proyectos = [];
+  espacios = [];
 
   contenedorSeleccionado: any;
   step: number;
@@ -27,6 +28,9 @@ export class ContenedoresComponent implements OnInit {
       console.log(res)
       this.proyectos = res;
     });
+    this.getService.obtenerEspaciosFisicos().subscribe(res =>{
+      this.espacios = res;
+    })
   }
 
   crear(){
@@ -40,11 +44,11 @@ export class ContenedoresComponent implements OnInit {
     this.step = 1;
   }
 
-  // eliminar(distribuidora : any){
-  //   this.postService.eliminarDistribuidora(distribuidora.id_distribuidora).subscribe(res =>{
-  //     console.log(res);
-  //   })
-  // }
+  eliminar(id : number){
+    this.postService.eliminarContenedor(id).subscribe(res =>{
+      console.log(res);
+    })
+  }
 
   volver(){
     this.step = 0;

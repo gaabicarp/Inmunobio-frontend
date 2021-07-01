@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BlogJaula, Blogs } from 'src/app/models/blogs.model';
+import { Blogs } from 'src/app/models/blogs.model';
+import { BlogJaula } from 'src/app/models/jaula.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 
@@ -33,9 +34,9 @@ export class EntradaBlogComponent implements OnInit {
     const blog: Blogs ={
       id_usuario: 1,
       detalle: this.formBlogJ.value.detalle,
-      tipo :'jaula'
+      tipo :'Jaula'
     }
-    const nuevoBlog : BlogJaula ={
+    const nuevoBlog : BlogJaula={
       id_jaula: this.element,
       blogs: blog
     }
@@ -53,7 +54,8 @@ export class EntradaBlogComponent implements OnInit {
     }, err => {
       this.alert = true;
       this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.error);
+      this.mensajeAlert = JSON.stringify(err);
+      console.log(err)
     });
   }
   volver(): void{

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { GetService } from 'src/app/services/get.service';
@@ -10,6 +10,7 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./detalle-experimentos.component.css']
 })
 export class DetalleExperimentosComponent implements OnInit {
+  
   idProyecto!: number;
   idExperimento!: number;
   proyecto: any;
@@ -17,10 +18,13 @@ export class DetalleExperimentosComponent implements OnInit {
   gruposExperimentales = [];
   formGrupoExperimental: FormGroup;
   agregarGrupo: boolean;
-
+  step:number;
+  modo:string;
+  
   constructor(private activatedRouter: ActivatedRoute, private getService: GetService, private postService: PostService) { }
 
   ngOnInit(): void {
+    this.step = 0;
     this.agregarGrupo = false;
     this.formGrupoExperimental = new FormGroup({
       tipo: new FormControl('', Validators.required),
@@ -48,6 +52,11 @@ export class DetalleExperimentosComponent implements OnInit {
     this.postService.crearGrupoExperimental(grupoExperimental).subscribe(res => {
       console.log(res);
     })
+  }
+  editarExp(){
+    this.experimento = this.experimento;
+    this.modo = 'EDITAR';
+    this.step = 1;
   }
 
 }

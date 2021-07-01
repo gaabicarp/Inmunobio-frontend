@@ -47,6 +47,8 @@ import { NuevoBlogHerramientaComponent } from './components/home/stock/blog-herr
 import { BlogHerramientasComponent } from './components/home/stock/blog-herramientas/blog-herramientas.component';
 import { HerramientasComponent } from './components/home/stock/herramientas/herramientas.component';
 import { NuevaHerramientaComponent } from './components/home/stock/herramientas/nueva-herramienta/nueva-herramienta.component';
+import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
+
 
 
 @NgModule({
@@ -92,7 +94,8 @@ import { NuevaHerramientaComponent } from './components/home/stock/herramientas/
     NuevoBlogHerramientaComponent,
     BlogHerramientasComponent,
     HerramientasComponent,
-    NuevaHerramientaComponent
+    NuevaHerramientaComponent,
+    NuevoBlogProyectoComponent
 
   ],
   imports: [

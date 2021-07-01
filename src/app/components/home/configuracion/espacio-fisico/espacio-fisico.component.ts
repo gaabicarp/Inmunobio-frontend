@@ -37,9 +37,9 @@ export class EspacioFisicoComponent implements OnInit {
   }
 
   eliminar(espacio: any): void{
-    // this.postService.eliminarEspacioFisico(espacio.id_espacio).subscribe(res => {
-    //   console.log(res);
-    // });
+    this.postService.eliminarEspacioFisico(espacio.id_espacioFisico).subscribe(res => {
+      console.log(res);
+    });
   }
 
   onVolviendo(e: number): void {

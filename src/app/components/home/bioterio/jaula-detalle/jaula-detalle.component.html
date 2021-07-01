@@ -27,7 +27,7 @@
                 </tr>
                 <tr>
                     <td class="table-active">Salón</td>
-                    <td>{{espacios[jaula?.id_espacio_fisico-1]?.nombre}}</td>
+                    <td>{{espacioFisico?.nombre}}</td>
                 </tr>
                 <tr>
                     <td class="table-active">Proyecto Asociado</td>
@@ -40,14 +40,14 @@
                 </tbody>
             </table>
             </div>
-            <button type="button" class="btn btn-danger text-center" (click)=eliminarJaula()>Eliminar Jaula</button>
+            <div class="text-center">
             <button type="button" class="btn btn-secondary text-center" (click)=asociarProyecto()>Asociar Proyecto</button>
+          </div>
           </ng-template>
         </li>
         <li [ngbNavItem]="2">
           <a ngbNavLink>Animales</a>
           <ng-template ngbNavContent>
-
             <div class="search-container flex-wrap">
                 <div class="input-group mb-3">
                     <span class="input-group-text">
@@ -138,7 +138,7 @@
     (volviendo)='onVolviendo($event)'
     >
   </app-alta-animal>
-  </div>
+</div>
   <div *ngIf='step === 4'>
     <app-entrada-blog
     [element]='id'
