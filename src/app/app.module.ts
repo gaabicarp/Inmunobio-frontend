@@ -46,6 +46,7 @@ import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espac
 import { FilterPipe } from './pipe/filter.pipe';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { FilterStatePipe } from './pipe/filter-state.pipe';
+import { ToastComponent } from './components/shared/toast/toast.component';
 
 
 @NgModule({
@@ -89,7 +90,8 @@ import { FilterStatePipe } from './pipe/filter-state.pipe';
     NuevoBlogEspacioComponent,
     BlogsEspacioFisicoComponent,
     FilterPipe,
-    FilterStatePipe
+    FilterStatePipe,
+    ToastComponent
 
   ],
   imports: [
