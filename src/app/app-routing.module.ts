@@ -34,6 +34,7 @@ import { FinalizarProyectoComponent } from './components/home/proyectos/detalle-
 import { FinalizarExperimentoComponent } from './components/home/proyectos/detalle-experimentos/finalizar-experimento/finalizar-experimento.component';
 import {GrupoExperimentalComponent} from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
 import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
+import { AsociarProyectoJaulaComponent } from './components/home/bioterio/jaula-detalle/asociar-proyecto-jaula/asociar-proyecto-jaula.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -63,7 +64,13 @@ const routes: Routes = [
       {path: 'configuracion/productos', component: ProductosComponent },
       {path: 'configuracion/distribuidoras', component: DistribuidorasComponent},
       {path: 'configuracion/contenedores', component: ContenedoresComponent},
-      {path: 'bioterio', component: BioterioComponent}
+      {path: 'bioterio', component: BioterioComponent},
+      {path: 'bioterio/:id', component: JaulaDetalleComponent},
+      {path: 'bioterio/:id/alta-animal', component: AltaAnimalComponent},
+      {path: 'bioterio/:id/entrada-blog', component: EntradaBlogComponent},
+      {path: 'bioterio/:id/asociar-proyecto', component: AsociarProyectoJaulaComponent},
+      {path: 'bioterio/:id/editar-jaula', component: EditarJaulaComponent}
+
     ]},
   { path: 'login', component: LoginComponent},
   { path: '', pathMatch: 'full', redirectTo: 'login'}

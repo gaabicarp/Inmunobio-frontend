@@ -48,6 +48,7 @@ import { BlogHerramientasComponent } from './components/home/stock/blog-herramie
 import { HerramientasComponent } from './components/home/stock/herramientas/herramientas.component';
 import { NuevaHerramientaComponent } from './components/home/stock/herramientas/nueva-herramienta/nueva-herramienta.component';
 import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
+import { AsociarProyectoJaulaComponent } from './components/home/bioterio/jaula-detalle/asociar-proyecto-jaula/asociar-proyecto-jaula.component';
 
 
 
@@ -95,7 +96,8 @@ import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-
     BlogHerramientasComponent,
     HerramientasComponent,
     NuevaHerramientaComponent,
-    NuevoBlogProyectoComponent
+    NuevoBlogProyectoComponent,
+    AsociarProyectoJaulaComponent
 
   ],
   imports: [

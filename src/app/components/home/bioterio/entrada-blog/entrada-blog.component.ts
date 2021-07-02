@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Blogs } from 'src/app/models/blogs.model';
 import { BlogJaula } from 'src/app/models/jaula.model';
 import { GetService } from 'src/app/services/get.service';
@@ -11,21 +12,19 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./entrada-blog.component.css']
 })
 export class EntradaBlogComponent implements OnInit {
-  @Input() element!: any;
-  @Output() volviendo = new EventEmitter<number>();
 
   formBlogJ!: FormGroup;
   estado: string;
   mensajeAlert: string;
   alert: boolean;
-  step:number;
+  idJaula:number;
 
-  constructor(private getService: GetService, private postService: PostService) { }
+  constructor(private router: Router, private postService: PostService,private getService: GetService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.alert = false;
-    this.step = 4;
-    console.log(this.element)
+    this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
+    console.log(this.idJaula)
     this.formBlogJ = new FormGroup({
       detalle: new FormControl('', [Validators.maxLength(100)]),
     });
@@ -37,7 +36,7 @@ export class EntradaBlogComponent implements OnInit {
       tipo :'Jaula'
     }
     const nuevoBlog : BlogJaula={
-      id_jaula: this.element,
+      id_jaula: this.idJaula,
       blogs: blog
     }
     console.log(nuevoBlog)
@@ -46,9 +45,6 @@ export class EntradaBlogComponent implements OnInit {
         this.alert = true;
         this.estado = 'success';
         this.mensajeAlert = 'Blog creado correctamente';
-        setTimeout(() => {
-          this.volviendo.emit(3);
-        }, 2000);
       }
       console.log(res)
     }, err => {
@@ -58,9 +54,7 @@ export class EntradaBlogComponent implements OnInit {
       console.log(err)
     });
   }
-  volver(): void{
-    this.volviendo.emit(2);
-  }
+
 
 }
 

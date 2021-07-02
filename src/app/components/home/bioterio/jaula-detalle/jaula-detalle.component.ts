@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, VirtualTimeScheduler } from 'rxjs';
 import { EspacioFisico } from 'src/app/models/espacioFisico.model';
 import { BlogJaula, BuscarBlogJaula, Jaula } from 'src/app/models/jaula.model';
@@ -13,9 +14,8 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class JaulaDetalleComponent implements OnInit {
   private subscription: Subscription = new Subscription();
-  @Input() element!: any;
   @Output() volviendo = new EventEmitter<number>();
-  
+  idJaula:number;
   animales = [];
   espacios=[];
   blogs: BlogJaula;
@@ -35,19 +35,19 @@ export class JaulaDetalleComponent implements OnInit {
   alert: boolean;
   espacioFisico:any;
 
-  constructor(private getService: GetService, private postService : PostService) { }
+  constructor(private router: Router, private postService: PostService,private getService: GetService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.step = 2; 
-    console.log(this.element)
-    this.subscription.add(this.getService.obtenerJaulasPorId(this.element).subscribe(res => {
+    this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
+    this.subscription.add(this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res => {
       console.log(res)
       this.jaula = res;
     }))
-    this.subscription.add(this.getService.obtenerAnimalesPorJaula(this.element).subscribe(res => {
+    this.subscription.add(this.getService.obtenerAnimalesPorJaula(this.idJaula).subscribe(res => {
       if(!res.Status){
         this.animales = res;
       }
+      console.log(res)
     }))
     this.subscription.add(this.getService.obtenerEspaciosFisicos().subscribe(res => {
       console.log(res)
@@ -62,7 +62,7 @@ export class JaulaDetalleComponent implements OnInit {
     console.log(this.fecHasta)
     this.fecHasta = this.fecHasta.toDateString();
     const blog : BuscarBlogJaula = {
-          id_jaula: this.element,
+          id_jaula: this.idJaula,
           fechaDesde: 'Mon May 31 2021',
           fechaHasta: this.fecHasta
         } 
@@ -84,16 +84,22 @@ export class JaulaDetalleComponent implements OnInit {
     },500)
   }
 
-  altaAnimal(){
-    this.id = this.element;
-    this.step = 3;
-  }
-
   eliminar(id_animal: number){
     this.subscription.add(this.postService.eliminarAnimal(id_animal).subscribe(res =>{
-      console.log(res);
+      if (res.Status === 'ok'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Animal eliminado correctamente';
+      }
+      console.log(res)
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err);
+      console.log(err)
     }))
   }
+
   Buscar(){
     this.fecDesde = new Date(this.formFecha.value.fecDesde);
     this.fecHastaReal= new Date(this.formFecha.value.fecHasta);
@@ -103,49 +109,28 @@ export class JaulaDetalleComponent implements OnInit {
     this.fecHasta = this.fecHasta.toDateString();
     console.log(this.fecHasta)
     const blog : BuscarBlogJaula = {
-      id_jaula: this.element,
+      id_jaula: this.idJaula,
       fechaDesde: this.fecDesde,
       fechaHasta: this.fecHasta
     }
     this.subscription.add(this.postService.obtenerBlogJaula(blog).subscribe(res =>{
       this.blogs = res; }))
   }
-  nuevoBlog(){
-    this.id =  this.element;
-    this.step = 4;
-  }
-  asociarProyecto(){
-    this.step = 5;
-  }
-  asociar(){
-      const datos: any = {
-        id_jaula : this.element,
-        id_proyecto : parseInt(this.formProyecto.value.id_proyecto),
-        nombre_proyecto: this.proyectos[this.formProyecto.value.id_proyecto -1]?.nombre
+  eliminarJaula(){
+    this.subscription.add(this.postService.eliminarJaula(this.idJaula).subscribe(res =>{
+      if (res.Status === 'ok'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Jaula eliminada correctamente';
+        this.step = 0;
       }
-      console.log(datos)
-      this.subscription.add(this.postService.asignarJaulaProyecto(datos).subscribe(res => {
-        console.log(res)
-        if (res.Status === 'ok'){
-          this.alert = true;
-          this.estado = 'success';
-          this.mensajeAlert = 'Jaula asociada correctamente';
-        }
-        } , err => {
-          this.alert = true;
-          this.estado = 'danger';
-          this.mensajeAlert = JSON.stringify(err.error.error);
-      }))
-    }
-  
-  volver(): void{
-    this.volviendo.emit(0);
-  }
-  volverDetalle(){
-    this.step = 2
-  }
-  onVolviendo(e: number): void{
-    this.step = e;
+      console.log(res)
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err.error.Status);
+      console.log(err)
+    }))
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

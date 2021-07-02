@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -11,14 +12,14 @@ import { PostService } from 'src/app/services/post.service';
 export class AltaAnimalComponent implements OnInit {
   @Input() element!: any;
   @Output() volviendo = new EventEmitter<number>();
-
+  idJaula:number;
   formAnimal!: FormGroup;
   step:number;
 
-  constructor(private activatedRouter: ActivatedRoute, private postService: PostService) { }
+  constructor(private postService: PostService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.step =3;
+    this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.formAnimal = new FormGroup({
       especie: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       cepa: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -28,16 +29,10 @@ export class AltaAnimalComponent implements OnInit {
 
   crearAnimal(): void{
     const animal = this.formAnimal.value;
-    animal.id_jaula = this.element;
+    animal.id_jaula = this.idJaula;
     this.postService.crearAnimal(animal).subscribe(res => {
       console.log(res)
     })
-  }
-  volver(): void{
-    this.volviendo.emit(2);
-  }
-  onVolviendo(e: number): void{
-    this.step = e;
   }
 
 }

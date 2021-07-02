@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { Jaula } from 'src/app/models/jaula.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-editar-jaula',
@@ -20,12 +21,20 @@ export class EditarJaulaComponent implements OnInit {
   mensajeAlert: string;
   estado: string;
   alert: boolean;
-  step:number;
+  idJaula:number;
+  jaula:Jaula;
 
-  constructor(private getService: GetService, private postService: PostService) { }
+  constructor(private getService: GetService, private postService: PostService,private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.step = 2;
+    this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
+    console.log(this.idJaula)
+    if (!isNaN(this.idJaula)){
+      this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res =>{
+        this.jaula = res;
+        console.log(res)
+      })
+    }
     this.getService.obtenerEspaciosFisicos().subscribe(res => {
       this.espaciosFisicos = res;
     });
@@ -39,21 +48,21 @@ export class EditarJaulaComponent implements OnInit {
       estante: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       capacidad: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       tipo: new FormControl('', [Validators.maxLength(100)]),
-      id_espacioFisico: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      id_proyecto: new FormControl('')
+      id_espacioFisico: new FormControl('', [Validators.required, Validators.maxLength(100)])
     });
-    if (this.modo === 'EDITAR'){
-      this.formJaula.patchValue({
-      codigo: this.element.codigo,
-      rack: this.element.rack,
-      estante:this.element.estante,
-      capacidad: this.element.capacidad,
-      tipo: this.element.tipo,
-      id_espacioFisico: this.element.id_espacio_fisico,
-      // id_proyecto: this.element.id_proyecto
-      id_proyecto: 1
-      });
-    }
+    setTimeout(() => {
+      if (!isNaN(this.idJaula)){
+        this.formJaula.patchValue({
+        codigo: this.jaula.codigo,
+        rack: this.jaula.rack,
+        estante:this.jaula.estante,
+        capacidad: this.jaula.capacidad,
+        tipo: this.jaula.tipo,
+        id_espacioFisico: this.jaula.id_espacioFisico
+        });
+      }
+    }, 500);
+    
   }
 
   crearJaula(): void{
@@ -62,8 +71,6 @@ export class EditarJaulaComponent implements OnInit {
       rack : this.formJaula.value.rack,
       estante : this.formJaula.value.estante,
       capacidad:this.formJaula.value.capacidad,
-      // id_proyecto: this.formJaula.value.id_proyecto,
-      id_proyecto: 1,
       id_espacioFisico:this.formJaula.value.id_espacioFisico,
       tipo: this.formJaula.value.tipo
     }
@@ -81,7 +88,7 @@ export class EditarJaulaComponent implements OnInit {
         this.mensajeAlert = JSON.stringify(err.error.error);
       });
     } else {
-      jaula.id_jaula = this.element.id_jaula
+      jaula.id_jaula = this.idJaula
       this.postService.editarJaula(jaula).subscribe(res => {
         console.log(res);
         if (res.Status === 'ok'){
@@ -95,12 +102,6 @@ export class EditarJaulaComponent implements OnInit {
         this.mensajeAlert = JSON.stringify(err.error.error);
       });
     }
-  }
-  volver(): void{
-    this.volviendo.emit(0);
-  }
-  onVolviendo(e: number): void{
-    this.step = e;
   }
 
 }

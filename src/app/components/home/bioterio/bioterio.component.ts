@@ -65,31 +65,22 @@ export class BioterioComponent implements OnInit {
     this.modo = 'CREAR';
     this.step = 1;
   }
-  editar(jaula : Jaula): void {
-    this.jaulaSeleccionada = jaula;
-    this.modo = 'EDITAR';
-    this.step = 1;
-  }
-  ver(id_jaula:number):void{
-    this.jaulaSeleccionada = id_jaula;
-    this.step = 2;
-  }
-  eliminar(id: number){
-    this.subscription.add(this.postService.eliminarJaula(id).subscribe(res =>{
-      if (res.Status === 'ok'){
-        this.alert = true;
-        this.estado = 'success';
-        this.mensajeAlert = 'Jaula eliminada correctamente';
-        this.step = 0;
-      }
-      console.log(res)
-    }, err => {
-      this.alert = true;
-      this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.Status);
-      console.log(err)
-    }))
-  }
+  // eliminar(id: number){
+  //   this.subscription.add(this.postService.eliminarJaula(id).subscribe(res =>{
+  //     if (res.Status === 'ok'){
+  //       this.alert = true;
+  //       this.estado = 'success';
+  //       this.mensajeAlert = 'Jaula eliminada correctamente';
+  //       this.step = 0;
+  //     }
+  //     console.log(res)
+  //   }, err => {
+  //     this.alert = true;
+  //     this.estado = 'danger';
+  //     this.mensajeAlert = JSON.stringify(err.error.Status);
+  //     console.log(err)
+  //   }))
+  // }
   Buscar(){
     this.fecDesde = new Date(this.formFecha.value.fecDesde);
     this.fecHastaReal= new Date(this.formFecha.value.fecHasta);

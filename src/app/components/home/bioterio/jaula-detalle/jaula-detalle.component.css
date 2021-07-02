@@ -17,3 +17,7 @@
     background-color: #4d758f59    ;
     border-color: #4d758f ;
 }
+.card{
+    width: auto;
+    margin: auto auto;
+}

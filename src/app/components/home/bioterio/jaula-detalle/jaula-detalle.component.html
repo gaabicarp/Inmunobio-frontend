@@ -1,8 +1,7 @@
 
-<div class="mx-4" *ngIf='step === 2'>
-    <div class="m-4" (click)='volver()' role="button">
-        <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-      </div>
+    <div class="text-black ml-3 mt-3" routerLink="../" role="button" style="position: relative;">
+      <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+    </div>
     <div class="mb-5">
         <h2 class="text-center ">Jaula - {{jaula?.codigo}}</h2>
     </div>
@@ -10,39 +9,24 @@
         <li [ngbNavItem]="1">
           <a ngbNavLink>Información</a>
           <ng-template ngbNavContent>
-            <div class="m-5">
-            <table class="table table-striped table-hover">
-                <tbody>
-                <tr>
-                    <td class="table-active">Rack</td>
-                    <td>{{jaula?.rack}}</td>
-                </tr>
-                <tr>
-                    <td class="table-active">Estante</td>
-                    <td>{{jaula?.estante}}</td>
-                </tr>
-                <tr>
-                    <td class="table-active">Tipo</td>
-                    <td>{{jaula?.tipo}}</td>
-                </tr>
-                <tr>
-                    <td class="table-active">Salón</td>
-                    <td>{{espacioFisico?.nombre}}</td>
-                </tr>
-                <tr>
-                    <td class="table-active">Proyecto Asociado</td>
-                    <td>
-                        <div>
-                           {{jaula?.nombre_proyecto}}
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="card text-center m-5">
+              <div class="card-header">
+               Proyecto Asociado: {{jaula?.nombre_proyecto}}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Ubicación</h5>
+                <p class="card-text">Rack {{jaula?.rack}} - Estante {{jaula?.estante}} </p>
+                <p class="card-text">Tipo {{jaula?.tipo}}</p>
+                <a class="btn btn-primary" routerLink='editar-jaula'>Editar Información</a>
+              </div>
             </div>
-            <div class="text-center">
-            <button type="button" class="btn btn-secondary text-center" (click)=asociarProyecto()>Asociar Proyecto</button>
-          </div>
+            <div class="d-flex bd-highlight">
+              <div class="p-2 flex-grow-1 bd-highlight"><button type="button" class="btn btn-outline-danger" (click)=eliminarJaula()>Eliminar Jaula</button></div>
+              <div class="p-2 bd-highlight"><button type="button" class="btn btn-secondary" routerLink='asociar-proyecto'>Asociar Proyecto</button></div>
+            </div>
+            <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+              {{mensajeAlert}}
+            </div>
           </ng-template>
         </li>
         <li [ngbNavItem]="2">
@@ -50,16 +34,16 @@
           <ng-template ngbNavContent>
             <div class="search-container flex-wrap">
                 <div class="input-group mb-3">
-                    <span class="input-group-text">
+                    <!-- <span class="input-group-text">
                         <i class="bi bi-search"></i>
                     </span>
-                    <input type="text" class="form-control" id="usuario" placeholder="Filtrar según código">
+                    <input type="text" class="form-control" id="filtro" placeholder="Filtrar según cepa"> -->
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary btn-lg" (click)=altaAnimal() >Alta de Animal</button>
+                    
                 </div>
             </div>
-            <div class="m-4">
+            <div class="m-2">
             <table class="table table-hover text-center">
                 <thead>
                   <tr>
@@ -67,7 +51,7 @@
                     <th scope="col">Especie</th>
                     <th scope="col">Cepa</th>
                     <th scope="col">Sexo</th>
-                    <th></th>
+                    <th><a class="link-primary" style="cursor: pointer" routerLink='alta-animal'>+Agregar</a></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -81,9 +65,15 @@
                               <i class="bi bi-trash"></i>
                             </a>
                           </div></th>
-                    </tr>                  
+                    </tr>                
                 </tbody>
               </table>
+              <div class="alert alert-danger text-center" role="alert" *ngIf='animales.length === 0 '>
+                No hay animales en la Jaula
+              </div> 
+              <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+                {{mensajeAlert}}
+              </div>
             </div>
             
           </ng-template>
@@ -106,68 +96,30 @@
                 </div>
               </form>
             </div>
-            <div class="p-2 bd-highlight">
-              <button type="button" class="btn btn-primary" (click)=nuevoBlog()>Nuevo Blog</button>
+            <div class="d-flex bd-highlight">
+              <div class="p-2 flex-grow-1 bd-highlight"></div>
+              <div class="p-2 bd-highlight"><button type="button" class="btn btn-primary" routerLink='entrada-blog'>Nuevo Blog</button></div>
             </div>
             <div class="row m-2" >
               <ng-container *ngFor='let a of blogs;let i = index'>
-            <div class="col-1 d-flex flex-column  align-items-center">
-              <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
-                <i class="bi bi-journal"></i>
-              </div>
-              <p class="text-center mb-0">{{a.fecha | date: 'shortDate'}}</p>
-              <div>
+                  <div class="col-1 d-flex flex-column  align-items-center">
+                    <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
+                        <i class="bi bi-journal"></i>
+                    </div>
+                    <p class="text-center mb-0">{{a.fecha | date: 'shortDate'}}</p>
+                  </div>
+                  <div class=" col-11 card shadow  mb-3">
+                    <div class="card-header"><strong>Blog n°{{i+1}}</strong></div> 
+                    <p class="mb-1"><i>{{a.id_usuario}}</i></p>
+                    <p>{{a.detalle}}</p>
+                  </div>
+              </ng-container>
             </div>
-            </div>
-            <div class=" col-11 card shadow  mb-3">
-              <div class="card-header"><strong>Blog n°{{i+1}}</strong></div> 
-                <p class="mb-1"><i>{{a.id_usuario}}</i></p>
-                <p>{{a.detalle}}</p>
-            </div>
-          </ng-container>
-          </div>
+            <div class="alert alert-danger text-center" role="alert" *ngIf='blogs.length === 0 '>
+              No existen blogs
+            </div> 
             
           </ng-template>
         </li>
       </ul>
-      <div [ngbNavOutlet]="nav" class="mt-2"></div>
-</div>
-<div *ngIf='step === 3'>
-    <app-alta-animal
-    [element]='id'
-    (volviendo)='onVolviendo($event)'
-    >
-  </app-alta-animal>
-</div>
-  <div *ngIf='step === 4'>
-    <app-entrada-blog
-    [element]='id'
-    (volviendo)='onVolviendo($event)'
-    >
-  </app-entrada-blog>
-  </div>
-  <div *ngIf='step === 5'>
-    
-  <h3 class="text-center mt-4" >Asociar un proyecto a Jaula - {{jaula?.codigo}}</h3>
-  <div class="card rounded shadow p-4 m-5">
-    <form [formGroup]="formProyecto" (ngSubmit)="asociar()">
-      <div class="m-3">
-        <select class="form-control" aria-label=".form-select-lg example" formControlName='id_proyecto'>
-          <option value="0">Sin Asignar</option>
-          <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
-        </select>
-      </div>
-      <div class="d-flex flex-row justify-content-end">
-        <div class="mx-3 justify-content-start">
-          <button class="btn btn-secondary btn-lg" (click)=volverDetalle()>Cancelar</button>
-      </div>  
-        <div class="mx-3">
-          <button class="btn btn-success btn-lg" type="submit" [disabled]="!formProyecto.valid">Asociar</button>
-          </div>
-      </div>
-      <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-          {{mensajeAlert}}
-      </div>
-    </form>
-  </div>
-  </div>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
