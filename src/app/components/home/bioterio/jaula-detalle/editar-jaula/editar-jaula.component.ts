@@ -74,20 +74,7 @@ export class EditarJaulaComponent implements OnInit {
       id_espacioFisico:this.formJaula.value.id_espacioFisico,
       tipo: this.formJaula.value.tipo
     }
-    if (this.modo === 'CREAR'){
-      this.postService.crearJaula(jaula).subscribe(res => {
-        console.log(res);
-        if (res.Status === 'ok'){
-          this.alert = true;
-          this.estado = 'success';
-          this.mensajeAlert = 'La jaula fue creada correctamente';
-        }
-      }, err => {
-        this.alert = true;
-        this.estado = 'danger';
-        this.mensajeAlert = JSON.stringify(err.error.error);
-      });
-    } else {
+    if (!isNaN(this.idJaula)){
       jaula.id_jaula = this.idJaula
       this.postService.editarJaula(jaula).subscribe(res => {
         console.log(res);
@@ -95,6 +82,19 @@ export class EditarJaulaComponent implements OnInit {
           this.alert = true;
           this.estado = 'success';
           this.mensajeAlert = 'La información fue editada correctamente';
+        }
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
+      });
+    } else {
+      this.postService.crearJaula(jaula).subscribe(res => {
+        console.log(res);
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'La jaula fue creada correctamente';
         }
       }, err => {
         this.alert = true;

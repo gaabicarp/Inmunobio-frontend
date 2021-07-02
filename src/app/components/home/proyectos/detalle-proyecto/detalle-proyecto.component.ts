@@ -3,12 +3,10 @@ import { Component, OnInit, PipeTransform } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { ActivatedRoute } from '@angular/router';
-import { BlogBuscadoJaula, BlogBuscadoProyecto } from 'src/app/models/blogs.model';
+import { BlogBuscadoProyecto } from 'src/app/models/blogs.model';
 
 @Component({
   selector: 'app-detalle-proyecto',

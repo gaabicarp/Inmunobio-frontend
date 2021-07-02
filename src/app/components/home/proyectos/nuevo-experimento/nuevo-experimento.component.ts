@@ -13,28 +13,37 @@ export class NuevoExperimentoComponent implements OnInit {
   @Input() modo!: string;
   @Input() element!: string;
   formExperimento!: FormGroup;
-  id_proyecto!: number;
+  idProyecto!: number;
+  idExperimento:number;
   experimento:any;
+  editar = false;
 
   constructor(private postService: PostService, private getService: GetService, private activatedRouter: ActivatedRoute,) { }
 
   ngOnInit(): void {
-    if(this.modo === 'EDITAR'){
-      this.experimento = this.element
+    this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
+    this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
+    if (!isNaN(this.idExperimento)){
+      this.getService.obtenerExperimentoPorId(this.idExperimento).subscribe(res =>{
+        this.experimento = res;
+        console.log(res)
+      })
+      this.editar = true;
     }
-    this.id_proyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.formExperimento = new FormGroup({
       codigo: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       metodologia: new FormControl('', [Validators.required, Validators.maxLength(10)]),
-      objetivos: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      objetivos: new FormControl('', [Validators.required, Validators.maxLength(100)])
     });
-    if (this.modo === 'EDITAR'){
-      this.formExperimento.patchValue({
-        codigo: this.experimento.codigo,
-        metodologia: this.experimento.metodologia,
-        objetivos: this.experimento.objetivos
-       });
-    }
+    setTimeout(() => {
+      if (!isNaN(this.idExperimento)){
+        this.formExperimento.patchValue({
+          codigo: this.experimento.codigo,
+          metodologia: this.experimento.metodologia,
+          objetivos: this.experimento.objetivos
+        });
+      }
+    }, 500);
   }
 
   crearExperimento(): void{
@@ -42,19 +51,18 @@ export class NuevoExperimentoComponent implements OnInit {
       metodologia: this.formExperimento.value.metodologia,
       objetivos: this.formExperimento.value.objetivos,
       codigo: this.formExperimento.value.codigo,
-      id_proyecto: this.id_proyecto
+      id_proyecto: this.idProyecto
     };
-    if(this.modo === 'EDITAR'){
-      experimento.id_experimento = this.experimento.id_experimento
-
+    if (!isNaN(this.idExperimento)){
+      experimento.id_experimento = this.idExperimento
       console.log(experimento)
       this.postService.editarExperimento(experimento).subscribe(res =>{
         console.log(res)
       })
     } else {
-    this.postService.crearExperimento(experimento).subscribe(res => {
-      console.log(res);
-    });
+      this.postService.crearExperimento(experimento).subscribe(res => {
+        console.log(res);
+      });
     }
   }
 

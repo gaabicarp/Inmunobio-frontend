@@ -3,7 +3,7 @@
 </div>
 <div class="mx-4">
     <div class="text-center my-4">
-        <h2>{{modo === 'EDITAR' ? 'Editar' : 'Nuevo' }} Experimento</h2>
+        <h2>Datos del Experimento</h2>
     </div>
 
     <div class="card rounded shadow p-4 mb-4">
@@ -16,7 +16,7 @@
                             <input type="text" class="form-control" id="metodologia" formControlName='metodologia'>
                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                         </div>
-                        <div class="col">
+                        <div class="col" *ngIf='editar === false'>
                             <label for="codigo" class="form-label">Codigo de experimento</label>
                             <input type="text" class="form-control" id="codigo" formControlName='codigo'>
                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
@@ -39,7 +39,7 @@
             
             <div class="d-flex flex-row justify-content-end">
                 <div class="mx-3">
-                    <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formExperimento.valid'>Crear Experimento</button>
+                    <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formExperimento.valid'>Guardar</button>
                 </div>
             </div>
         </form>

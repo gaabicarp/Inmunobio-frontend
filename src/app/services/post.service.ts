@@ -165,6 +165,12 @@ export class PostService {
   cerrarExperimento(obj: any): Observable<any> {
     return this.http.put<any>(this.API_URL + 'cerrarExperimento', obj);
   }
+  obtenerBlogsExperimento(datos:any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'blogExperimento', datos);
+  }
+  crearBlogExperimento(nuevoBlog:any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'nuevoBlogExperimento', nuevoBlog);
+  }
 
   crearGrupoExperimental(obj: any): Observable<any>{
     return this.http.post<any>(this.API_URL + 'nuevoGrupoExperimental', obj);

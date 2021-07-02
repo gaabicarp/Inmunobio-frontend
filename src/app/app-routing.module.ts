@@ -35,6 +35,7 @@ import { FinalizarExperimentoComponent } from './components/home/proyectos/detal
 import {GrupoExperimentalComponent} from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
 import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
 import { AsociarProyectoJaulaComponent } from './components/home/bioterio/jaula-detalle/asociar-proyecto-jaula/asociar-proyecto-jaula.component';
+import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detalle-experimentos/nuevo-blog-experimento/nuevo-blog-experimento.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -48,6 +49,8 @@ const routes: Routes = [
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'proyectos/:id/nuevo-blog-proyecto', component: NuevoBlogProyectoComponent },
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
+      {path: 'proyectos/:id/experimento/:idExperimento/nuevo-experimento', component: NuevoExperimentoComponent},
+      {path: 'proyectos/:id/experimento/:idExperimento/nuevo-blog-experimento', component: NuevoBlogExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento/finalizar-experimento', component: FinalizarExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento/grupo-experimental/:idGrupo', component: GrupoExperimentalComponent},
       {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
