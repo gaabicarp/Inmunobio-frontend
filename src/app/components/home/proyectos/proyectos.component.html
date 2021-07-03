@@ -5,21 +5,21 @@
             <span class="input-group-text">
                 <i class="bi bi-search"></i>
             </span>
-            <input type="text" class="form-control" id="usuario" placeholder="Buscar por titulo">
+            <input type="text" class="form-control" id="usuario" placeholder="Buscar por titulo" [(ngModel)]='filterPost'>
         </div>
-        <select class="form-control"  aria-label="Default select example">
+        <!-- <select class="form-control"  aria-label="Default select example">
             <option selected>-Filtrar por estado-</option>
             <option value="1">Todos</option>
             <option value="2">Activo</option>
             <option value="3">Inactivo</option>
-        </select>
+        </select> -->
         <div>
             <button type="button" class="btn btn-primary btn-lg" routerLink='nuevo-proyecto'>NUEVO PROYECTO</button>
         </div>
     </div>
     <hr>
     <div class="proyects-container">
-        <div *ngFor="let proyecto of proyectos" class="card my-3 p-4 shadow rounded list-group-item-action" routerLink='{{proyecto.id_proyecto}}'>
+        <div *ngFor="let proyecto of proyectos | filter: filterPost" class="card my-3 p-4 shadow rounded list-group-item-action" routerLink='{{proyecto.id_proyecto}}'>
             <div class="row g-0">
                 <div class="col-md-4">
                     <img src="../../../../assets/img/default1.jpg" class="img-fluid" alt="">

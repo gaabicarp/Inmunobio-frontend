@@ -48,6 +48,6 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.router.navigateByUrl('home/dashboard');
+    this.router.navigateByUrl('home/proyectos');
   }
 }
