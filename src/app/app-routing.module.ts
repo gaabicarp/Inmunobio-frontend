@@ -75,6 +75,7 @@ const routes: Routes = [
       {path: 'configuracion/distribuidoras', component: DistribuidorasComponent},
       {path: 'configuracion/contenedores', component: ContenedoresComponent},
       {path: 'bioterio', component: BioterioComponent},
+      {path: 'bioterio/editar-jaula', component: EditarJaulaComponent},
       {path: 'bioterio/:id', component: JaulaDetalleComponent},
       {path: 'bioterio/:id/alta-animal', component: AltaAnimalComponent},
       {path: 'bioterio/:id/entrada-blog', component: EntradaBlogComponent},
