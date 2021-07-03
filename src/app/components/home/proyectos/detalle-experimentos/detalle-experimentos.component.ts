@@ -18,6 +18,7 @@ export class DetalleExperimentosComponent implements OnInit {
   gruposExperimentales = [];
   formGrupoExperimental: FormGroup;
   agregarGrupo: boolean;
+  detalleExperimento: string;
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -58,6 +59,33 @@ export class DetalleExperimentosComponent implements OnInit {
 
   open(content): void {
     this.modalService.open(content, { centered: true, size: 'xl' });
+  }
+
+  crearBlog(): void{
+    const Blog: any={
+      id_usuario: 1,
+      detalle: this.detalleExperimento,
+      tipo: 'Experimento'
+    }
+    const nuevoBlog : any ={
+      id_proyecto: this.idProyecto,
+      id: this.idExperimento,
+      blogs: Blog
+    }
+    console.log(nuevoBlog)
+    this.postService.crearBlogProyecto(nuevoBlog).subscribe(res =>{
+      console.log(res)
+      if (res.Status === 'ok'){
+        // this.alert = true;
+        // this.estado = 'success';
+        // this.mensajeAlert = 'Blog creado correctamente';
+      }
+    }, err => {
+      console.log(err)
+      // this.alert = true;
+      // this.estado = 'danger';
+      // this.mensajeAlert = JSON.stringify(err.error.error);
+    })
   }
 
 }
