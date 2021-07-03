@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { BlogEspacio, BlogHerramienta, Blogs } from 'src/app/models/blogs.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
@@ -18,12 +19,14 @@ export class NuevoBlogHerramientaComponent implements OnInit {
   mensajeAlert: string;
   alert: boolean;
   step:number;
+  idHerramienta:number;
 
-  constructor(private getService: GetService, private postService: PostService) { }
+  constructor(private getService: GetService, private postService: PostService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.alert = false;
     this.step = 10;
+    this.idHerramienta = parseInt(this.activatedRouter.snapshot.paramMap.get('idHerramienta'), 10);
     this.formBlogH = new FormGroup({
       detalle: new FormControl('', [Validators.maxLength(100)]),
     });
@@ -36,7 +39,7 @@ export class NuevoBlogHerramientaComponent implements OnInit {
       tipo :'herramienta'
     }
     const nuevoBlog : BlogHerramienta ={
-      id_herramienta: this.herramienta,
+      id_herramienta: this.idHerramienta,
       blogs: blog
     }
     this.postService.crearBlogHerramienta(nuevoBlog).subscribe(res => {

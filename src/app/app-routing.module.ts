@@ -36,6 +36,9 @@ import {GrupoExperimentalComponent} from './components/home/proyectos/detalle-ex
 import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
 import { AsociarProyectoJaulaComponent } from './components/home/bioterio/jaula-detalle/asociar-proyecto-jaula/asociar-proyecto-jaula.component';
 import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detalle-experimentos/nuevo-blog-experimento/nuevo-blog-experimento.component';
+import { NuevoBlogEspacioComponent } from './components/home/stock/nuevo-blog-espacio/nuevo-blog-espacio.component';
+import { BlogHerramientasComponent } from './components/home/stock/blog-herramientas/blog-herramientas.component';
+import { NuevoBlogHerramientaComponent } from './components/home/stock/blog-herramientas/nuevo-blog-herramienta/nuevo-blog-herramienta.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -57,6 +60,10 @@ const routes: Routes = [
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'proyectos/:id/finalizar-proyecto', component: FinalizarProyectoComponent},
       {path: 'stock', component: StockComponent},
+      {path: 'stock/:idEspacio', component: StockDetalleComponent},
+      {path: 'stock/:idEspacio/nuevo-blog-espacio', component: NuevoBlogEspacioComponent},
+      {path: 'stock/:idEspacio/:idHerramienta', component: BlogHerramientasComponent},
+      {path: 'stock/:idEspacio/:idHerramienta/nuevo-blog-herramienta', component: NuevoBlogHerramientaComponent},
       {path: 'configuracion', component: ConfiguracionComponent},
       {path: 'configuracion/usuarios', component: UsuariosComponent},
       {path: 'configuracion/usuarios/nuevo-usuario', component: NuevoUsuarioComponent},

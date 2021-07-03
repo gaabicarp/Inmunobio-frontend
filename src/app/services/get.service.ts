@@ -111,6 +111,9 @@ export class GetService {
   obtenerEspaciosFisicos(): Observable<any>{
     return this.http.get<any>(this.API_URL + 'espaciosFisicos');
   }
+  obtenerEspacioFisico(id:number): Observable<any>{
+    return this.http.get<any>(this.API_URL + 'espacioFisico/'+ id);
+  }
 
   obtenerJaulas(): Observable<any> {
     return this.http.get<any>(this.API_URL + 'jaulas');

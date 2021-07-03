@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BlogsBuscadosHerr } from 'src/app/models/blogs.model';
 import { GetService } from 'src/app/services/get.service';
@@ -13,7 +14,6 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class BlogHerramientasComponent implements OnInit {
   private subscription: Subscription = new Subscription();
-  @Input() herramienta!: any;
   @Output() volviendo = new EventEmitter<number>();
 
   step : number;
@@ -22,10 +22,13 @@ export class BlogHerramientasComponent implements OnInit {
   fecHasta
   fecHoy: any;
   blogs = [];
-
+  idEspacioFisico:number;
+  idHerramienta:number;
+  herramienta:any;
   formFecha!:FormGroup;
+  herr:any;
   
-  constructor(private getService: GetService, private postService: PostService) { }
+  constructor(private getService: GetService, private postService: PostService, private activatedRouter: ActivatedRoute) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -33,8 +36,12 @@ export class BlogHerramientasComponent implements OnInit {
 
   ngOnInit(): void {
     this.step = 9;
-    console.log(this.herramienta)
-
+    this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
+    this.idHerramienta = parseInt(this.activatedRouter.snapshot.paramMap.get('idHerramienta'), 10);
+    this.getService.obtenerHerramienta(this.idHerramienta).subscribe(res => {
+      this.herramienta = res;
+      console.log(res)
+    })
     this.fecHoy = new Date(Date.now());
     const dia = (this.fecHoy).getDate() + 1;
 
@@ -42,7 +49,7 @@ export class BlogHerramientasComponent implements OnInit {
     console.log(this.fecHasta)
     this.fecHasta = this.fecHasta.toDateString();
     const blog : BlogsBuscadosHerr = {
-          id_herramienta: this.herramienta.id_herramienta,
+          id_herramienta: this.idHerramienta,
           fechaDesde: 'Mon May 31 2021',
           fechaHasta: this.fecHasta
         } 
@@ -67,7 +74,7 @@ export class BlogHerramientasComponent implements OnInit {
       this.fecHasta = this.fecHasta.toDateString();
       console.log(this.fecHasta)
       const blog : BlogsBuscadosHerr = {
-        id_herramienta: this.herramienta.id_herramienta,
+        id_herramienta: this.idHerramienta,
         fechaDesde: this.fecDesde,
         fechaHasta: this.fecHasta
       }
@@ -78,7 +85,7 @@ export class BlogHerramientasComponent implements OnInit {
       
     }
   nuevoBlog(){
-    this.herramienta =  this.herramienta.id_herramienta;
+    this.herr =  this.idHerramienta;
     this.step = 10;
   }
   volver(): void{
