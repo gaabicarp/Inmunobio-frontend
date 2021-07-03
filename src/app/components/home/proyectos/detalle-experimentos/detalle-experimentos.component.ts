@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 
@@ -18,7 +19,12 @@ export class DetalleExperimentosComponent implements OnInit {
   formGrupoExperimental: FormGroup;
   agregarGrupo: boolean;
 
-  constructor(private activatedRouter: ActivatedRoute, private getService: GetService, private postService: PostService) { }
+  constructor(
+    private activatedRouter: ActivatedRoute,
+    private getService: GetService,
+    private postService: PostService,
+    private modalService: NgbModal
+  ) { }
 
   ngOnInit(): void {
     this.agregarGrupo = false;
@@ -48,6 +54,10 @@ export class DetalleExperimentosComponent implements OnInit {
     this.postService.crearGrupoExperimental(grupoExperimental).subscribe(res => {
       console.log(res);
     })
+  }
+
+  open(content): void {
+    this.modalService.open(content, { centered: true, size: 'xl' });
   }
 
 }

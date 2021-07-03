@@ -21,3 +21,20 @@
     margin: auto;
 }
 
+.barra{
+    border: none;
+    border-left: 2px solid #999;
+    background-color: rgb(148, 148, 148);
+    height: 40px;
+    width: 2px;
+}
+
+.cards-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.card-experimento{
+    max-width: 25em;
+}

@@ -20,6 +20,7 @@ export class GrupoExperimentalComponent implements OnInit {
   formFuenteExperimental: FormGroup;
   formMuestra: FormGroup;
   contenedores = [];
+  active = 1;
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -56,14 +57,14 @@ export class GrupoExperimentalComponent implements OnInit {
     });
     this.getService.obtenerAnimalesPorProyectos(this.idProyecto).subscribe(res => {
       console.log(res);
-      this.animalesProyecto = res;
+      res.Status ? this.animalesProyecto = [] : this.animalesProyecto = res;
     });
   }
 
   open(content): void {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});
+    console.log(this.animalesProyecto)
+    this.modalService.open(content, { centered: true, size: 'xl' });
   }
-
 
   crearFuente(): void{
     const animal = this.animalesProyecto.filter(animal=> animal.id_fuenteExperimental == this.formFuenteExperimental.value.animal)[0];

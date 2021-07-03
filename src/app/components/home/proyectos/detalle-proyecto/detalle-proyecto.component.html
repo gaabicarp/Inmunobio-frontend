@@ -80,11 +80,10 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="d-flex justify-content-around">
-                            <button class="btn btn-primary btn-lg" routerLink='{{proyecto.id_proyecto}}'>Ver</button>
-                            <button class="btn btn-primary btn-lg" (click)='editarProyecto(proyecto)'>Editar</button>
-                        </div> -->
                   </div>
+              </div>
+              <div class="my-3" *ngIf='experimentos.length === 0'>
+                <p class="text-danger"><i>No hay experimentos creados</i></p>
               </div>
             </div>
         </div>
@@ -96,11 +95,11 @@
         <div class="m-4">
           <div class="">
             <form class="row">
-              <div class="col-3 d-flex justify-content-center" *ngIf='!proyecto?.finalizado'>
+              <!-- <div class="col-3 d-flex justify-content-center" *ngIf='!proyecto?.finalizado'>
                 <button class="btn btn-outline-success" (click)="open(blog)">Nueva Entrada</button>
-              </div>
-              <div class="barra" *ngIf='!proyecto?.finalizado'></div>
-              <div class="{{!proyecto.finalizado ? 'col-8' : 'col-12' }} d-flex justify-content-around align-items-center">
+              </div> -->
+              <!-- <div class="barra" *ngIf='!proyecto?.finalizado'></div> -->
+              <div class="col-6 d-flex justify-content-around align-items-center">
                 <div class="form-group mb-0">
                   <div class="input-group">
                     <input class="form-control" placeholder="Fecha Desde"
@@ -126,38 +125,6 @@
           </div>
           
           <div class="p-4 d-flex flex-column">
-            <ngb-alert [dismissible]="false" class="w-75">
-              <div class="row">
-                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                    <i class="bi bi-arrow-left-right"></i>
-                  </div>
-                  <p class="text-center mb-0">20/03/19</p>
-                  <p>20:24hs</p>
-                </div>
-                <div class="col">
-                  <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
-                  <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                  <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
-                </div>
-              </div>
-            </ngb-alert>
-            <ngb-alert [dismissible]="false" class="w-75">
-              <div class="row">
-                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                    <i class="bi bi-arrow-left-right"></i>
-                  </div>
-                  <p class="text-center mb-0">20/03/19</p>
-                  <p>20:24hs</p>
-                </div>
-                <div class="col">
-                  <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
-                  <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                  <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
-                </div>
-              </div>
-            </ngb-alert>
             <ngb-alert [dismissible]="false" class="w-75">
               <div class="row">
                 <div class="col-1 d-flex flex-column justify-content-center align-items-center">
@@ -201,7 +168,7 @@
   </div> -->
 </ng-template>
 
-
+<!-- 
 <ng-template #blog let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Crear Publicacion</h4>
@@ -222,4 +189,4 @@
   <div class="modal-footer">
       <button class="btn btn-outline-primary btn-lg mr-3">Crear</button>
   </div>
-</ng-template>
+</ng-template> -->

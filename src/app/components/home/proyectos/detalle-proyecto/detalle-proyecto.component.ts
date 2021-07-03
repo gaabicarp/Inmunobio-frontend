@@ -25,7 +25,7 @@ export class DetalleProyectoComponent implements OnInit {
   jefeProyecto: any;
   usuariosProyecto = [];
   idProyecto: number;
-  active = 2;
+  active = 1;
 
   constructor(
     private router: Router,
