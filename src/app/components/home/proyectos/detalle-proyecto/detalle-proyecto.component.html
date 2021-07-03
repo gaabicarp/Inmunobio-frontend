@@ -8,7 +8,7 @@
       <h2 class="mb-0">{{proyecto?.nombre}} - {{proyecto?.codigoProyecto}}</h2>
       <div class="ml-4" *ngIf='!proyecto?.finalizado'>
         <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='../editar-proyecto/{{proyecto?.id_proyecto}}'><i class="bi bi-pencil text-primary"></i> Editar</button>
-        <button class="btn btn-outline-danger ml-4" (click)="open(muestra)">Finalizar Proyecto</button>
+        <button class="btn btn-outline-danger ml-4" (click)="open(finalizarProyecto)">Finalizar Proyecto</button>
       </div>
     </div>
     <span class="text-danger" *ngIf='proyecto?.finalizado'>Proyecto cerrado</span>
@@ -94,8 +94,35 @@
       <a ngbNavLink>Entradas de Blog</a>
       <ng-template ngbNavContent>
         <div class="m-4">
-          <div class="d-flex align-items-center">
-            
+          <div class="">
+            <form class="row">
+              <div class="col-3 d-flex justify-content-center" *ngIf='!proyecto?.finalizado'>
+                <button class="btn btn-outline-success" (click)="open(blog)">Nueva Entrada</button>
+              </div>
+              <div class="barra" *ngIf='!proyecto?.finalizado'></div>
+              <div class="{{!proyecto.finalizado ? 'col-8' : 'col-12' }} d-flex justify-content-around align-items-center">
+                <div class="form-group mb-0">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="Fecha Desde"
+                           name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group mb-0">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="Fecha Hasta"
+                           name="dp" [(ngModel)]="model2" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-outline-secondary">Filtrar</button>
+              </div>
+              
+            </form>
           </div>
           
           <div class="p-4 d-flex flex-column">
@@ -159,7 +186,7 @@
 <div [ngbNavOutlet]="nav" class="mt-2"></div>
 
 
-<ng-template #muestra let-modal>
+<ng-template #finalizarProyecto let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Finalizar Proyecto</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -172,4 +199,27 @@
   <!-- <div class="modal-footer">
       <button class="btn btn-primary mr-3"(propagar)="procesaPropagar($event)">Agregar</button>
   </div> -->
+</ng-template>
+
+
+<ng-template #blog let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Crear Publicacion</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body mx-5">
+    <div class="row">
+      <div class="col-8 d-flex justify-content-center align-items-center">
+        <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6"></textarea>
+      </div>
+      <div class="col d-flex justify-content-center align-items-center">
+        <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-outline-primary btn-lg mr-3">Crear</button>
+  </div>
 </ng-template>

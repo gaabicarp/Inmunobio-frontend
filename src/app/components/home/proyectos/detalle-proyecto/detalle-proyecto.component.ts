@@ -2,7 +2,7 @@ import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, PipeTransform } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateParserFormatter, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { GetService } from 'src/app/services/get.service';
@@ -20,6 +20,7 @@ export class DetalleProyectoComponent implements OnInit {
   experimentoFiltro = [];
   filter = new FormControl('');
   model: NgbDateStruct;
+  model2: NgbDateStruct;
   proyecto: any;
   jefeProyecto: any;
   usuariosProyecto = [];
