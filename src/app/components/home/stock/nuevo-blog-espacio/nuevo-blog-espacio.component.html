@@ -16,8 +16,11 @@
                 <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formBlog.valid">Crear Blog</button>
             </div>
         </div>
-        <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-            {{mensajeAlert}}
+        <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+            <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
+            <div class="p-2 bd-highlight">
+            <button type="button" class="btn btn-outline-dark" routerLink="../">VOLVER</button>
+            </div>
         </div>
     </form>
   </div>
