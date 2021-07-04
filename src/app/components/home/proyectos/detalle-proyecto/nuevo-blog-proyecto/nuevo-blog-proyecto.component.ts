@@ -47,7 +47,7 @@ export class NuevoBlogProyectoComponent implements OnInit {
       tipo: this.formBlog.value.tipo
     }
     const nuevoBlog : any ={
-      id_proyecto:this.id_proyecto,
+      id_proyecto: this.id_proyecto,
       id: this.formBlog.value.id,
       blogs: Blog
     }

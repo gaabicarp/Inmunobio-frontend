@@ -144,12 +144,12 @@
                      </td>
                     <td class="d-flex">
                       <div class="mr-4">
-                        <a class="text-primary" role="button" (click)=editar(a)>
+                        <a class="text-primary" role="button" routerLink='nueva-herramienta/{{a.id_herramienta}}'>
                           <i class="bi bi-pencil"></i>
                         </a>
                       </div>
                       <div>
-                        <a class="text-danger" role="button" (click)=eliminar(a)>
+                        <a class="text-danger" role="button" (click)=eliminarHerramienta(a.id_herramienta)>
                           <i class="bi bi-trash"></i>
                         </a>
                       </div>
@@ -159,15 +159,12 @@
           
         </table>
     </div>
-<button class="btn btn-primary" (click)=nuevaHerramienta()>Nueva Herramienta</button>
+<button class="btn btn-primary" routerLink=nueva-herramienta>Nueva Herramienta</button>
     </ng-template>
   </li>
 </ul>
 <div [ngbNavOutlet]="nav" class="mt-2"></div>
 
-<div *ngIf='step === 1'>
-  
-</div>
 <div *ngIf='step === 2'>
   <app-agregar-stock
   [element]='productoSeleccionado'
@@ -188,20 +185,6 @@
 </app-consumir-stock>
 </div>
 
-<div *ngIf='step === 4'>
-  <app-blogs-espacio-fisico
-  [espacio]='espacio'  
-  (volviendo)='onVolviendo($event)'
-  >
-</app-blogs-espacio-fisico>
-</div>
 
-<div *ngIf='step === 6'>
-  <app-herramientas
-  [espacio] = 'espacio'
-  (volviendo)='onVolviendo($event)'
-  >
-</app-herramientas>
-</div>
 
 

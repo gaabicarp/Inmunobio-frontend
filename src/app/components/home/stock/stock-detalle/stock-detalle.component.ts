@@ -7,6 +7,7 @@ import { Stock } from '../../../../models/stock.model';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BlogsBuscados } from 'src/app/models/blogs.model';
+import { Herramienta } from 'src/app/models/herramientas.model';
 
 @Component({
   selector: 'app-stock-detalle',
@@ -144,21 +145,10 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     this.espacio = this.idEspacioFisico;
     this.step = 3;
   }
-  irBlogs(){
-    this.espacio = this.idEspacioFisico;
-    this.step = 4;
+  eliminarHerramienta(idHerr : number){
+    this.postService.eliminarHerramienta(idHerr).subscribe(res =>{
+      console.log(res);
+    })
   }
-  irStock(){
-    this.step = 1;
-  }
-  irHerramientas(){
-    this.espacio = this.idEspacioFisico;
-    this.step = 6;
-  }
-  volver(): void{
-    this.volviendo.emit(0);
-  }
-  onVolviendo(e: number): void{
-    this.step = e;
-  }
+
 }
