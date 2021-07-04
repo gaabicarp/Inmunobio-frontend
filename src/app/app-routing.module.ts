@@ -39,6 +39,7 @@ import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detal
 import { NuevoBlogEspacioComponent } from './components/home/stock/nuevo-blog-espacio/nuevo-blog-espacio.component';
 import { BlogHerramientasComponent } from './components/home/stock/blog-herramientas/blog-herramientas.component';
 import { NuevoBlogHerramientaComponent } from './components/home/stock/blog-herramientas/nuevo-blog-herramienta/nuevo-blog-herramienta.component';
+import { NuevaHerramientaComponent } from './components/home/stock/herramientas/nueva-herramienta/nueva-herramienta.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -61,6 +62,11 @@ const routes: Routes = [
       {path: 'proyectos/:id/finalizar-proyecto', component: FinalizarProyectoComponent},
       {path: 'stock', component: StockComponent},
       {path: 'stock/:idEspacio', component: StockDetalleComponent},
+      {path: 'stock/:idEspacio/agregar-stock', component: AgregarStockComponent},
+      {path: 'stock/:idEspacio/agregar-stock/:idProducto/:idProductoEnStock/:idUbicacion', component: AgregarStockComponent},
+      {path: 'stock/:idEspacio/:idProducto/:idProductoEnStock/:idUbicacion', component: ConsumirStockComponent},
+      {path: 'stock/:idEspacio/nueva-herramienta', component: NuevaHerramientaComponent},
+      {path: 'stock/:idEspacio/nueva-herramienta/:idHerramienta', component: NuevaHerramientaComponent},
       {path: 'stock/:idEspacio/nuevo-blog-espacio', component: NuevoBlogEspacioComponent},
       {path: 'stock/:idEspacio/:idHerramienta', component: BlogHerramientasComponent},
       {path: 'stock/:idEspacio/:idHerramienta/nuevo-blog-herramienta', component: NuevoBlogHerramientaComponent},

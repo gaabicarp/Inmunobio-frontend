@@ -27,7 +27,7 @@
       <div class=" m-3">
         <label  class="form-label" for="proyecto">Proyecto Asignado</label>
             <select class="form-control" aria-label=".form-select-lg example" id="proyecto" formControlName="proyecto">
-              <option value="-1">Sin asignar</option>
+              <option value="0">Sin asignar</option>
               <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
             </select>
       </div>

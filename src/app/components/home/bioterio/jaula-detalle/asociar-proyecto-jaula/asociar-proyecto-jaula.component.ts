@@ -25,6 +25,7 @@ export class AsociarProyectoJaulaComponent implements OnInit {
   constructor(private postService: PostService,private getService: GetService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.alert = false;
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.subscription.add(this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res => {
       console.log(res)
@@ -51,7 +52,7 @@ export class AsociarProyectoJaulaComponent implements OnInit {
     console.log(datos)
     this.subscription.add(this.postService.asignarJaulaProyecto(datos).subscribe(res => {
       console.log(res)
-      if (res.Status === 'ok'){
+      if (res.status === 'Se asignó la jaula al proyecto'){
         this.alert = true;
         this.estado = 'success';
         this.mensajeAlert = 'Jaula asociada correctamente';

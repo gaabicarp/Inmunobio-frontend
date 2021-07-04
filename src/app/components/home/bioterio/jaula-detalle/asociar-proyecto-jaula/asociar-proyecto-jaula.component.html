@@ -1,6 +1,4 @@
-<div class="text-black ml-3 mt-3" routerLink="../" role="button" style="position: relative;">
-    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-  </div>
+
 <h3 class="text-center mt-4" >Asociar un proyecto a Jaula - {{jaula?.codigo}}</h3>
   <div class="card rounded shadow p-4 m-5">
     <form [formGroup]="formProyecto" (ngSubmit)="asociar()">
@@ -11,12 +9,18 @@
         </select>
       </div>
       <div class="d-flex flex-row justify-content-end"> 
+        <div class="mx-3 justify-content-start">
+          <button class="btn btn-secondary btn-lg" routerLink="../">Cancelar</button>
+      </div>
         <div class="mx-3">
           <button class="btn btn-success btn-lg" type="submit" [disabled]="!formProyecto.valid" >Asociar</button>
           </div>
       </div>
-      <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-          {{mensajeAlert}}
+      <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+        <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
+        <div class="p-2 bd-highlight">
+        <button type="button" class="btn btn-outline-dark" routerLink="../">VOLVER</button>
+        </div>
       </div>
     </form>
   </div>

@@ -34,6 +34,9 @@
               </tr>
           </tbody>
         </table>
+        <div class="alert alert-danger" role="alert" *ngIf='espacios?.length === 0'>
+          No hay espacios fisicos disponibles
+        </div>
       </div>
   </div>
 </div>
