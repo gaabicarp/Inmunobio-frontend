@@ -38,6 +38,7 @@ export class JaulaDetalleComponent implements OnInit {
   constructor(private router: Router, private postService: PostService,private getService: GetService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.alert = false;
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.subscription.add(this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res => {
       console.log(res)
@@ -86,10 +87,13 @@ export class JaulaDetalleComponent implements OnInit {
 
   eliminar(id_animal: number){
     this.subscription.add(this.postService.eliminarAnimal(id_animal).subscribe(res =>{
-      if (res.Status === 'ok'){
+      if (res.Status === 'Se dio de baja el animal con id '+ id_animal ){
         this.alert = true;
         this.estado = 'success';
         this.mensajeAlert = 'Animal eliminado correctamente';
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 1000);
       }
       console.log(res)
     }, err => {
@@ -118,18 +122,22 @@ export class JaulaDetalleComponent implements OnInit {
   }
   eliminarJaula(){
     this.subscription.add(this.postService.eliminarJaula(this.idJaula).subscribe(res =>{
-      if (res.Status === 'ok'){
+      if (res.Status === 'Ok'){
         this.alert = true;
         this.estado = 'success';
         this.mensajeAlert = 'Jaula eliminada correctamente';
-        this.step = 0;
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 1000);
       }
       console.log(res)
     }, err => {
       this.alert = true;
       this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.Status);
-      console.log(err)
+      this.mensajeAlert ='La jaula debe estar vacía para poder darla de baja';
+      setTimeout(() => {
+        this.ngOnInit()
+      }, 2000);
     }))
   }
   ngOnDestroy(): void {

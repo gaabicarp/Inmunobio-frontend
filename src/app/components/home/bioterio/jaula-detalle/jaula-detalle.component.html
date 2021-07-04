@@ -10,9 +10,12 @@
           <a ngbNavLink>Información</a>
           <ng-template ngbNavContent>
             <div class="card text-center m-5">
-              <div class="card-header">
+              <div class="card-header" *ngIf="jaula?.nombre_proyecto.length >0 ">
                Proyecto Asociado: {{jaula?.nombre_proyecto}}
               </div>
+              <div class="card-header" *ngIf="jaula?.nombre_proyecto == '' ">
+                Proyecto Asociado: Sin Asignar
+               </div>
               <div class="card-body">
                 <h5 class="card-title">Ubicación</h5>
                 <p class="card-text">Rack {{jaula?.rack}} - Estante {{jaula?.estante}} </p>
@@ -118,7 +121,6 @@
             <div class="alert alert-danger text-center" role="alert" *ngIf='blogs.length === 0 '>
               No existen blogs
             </div> 
-            
           </ng-template>
         </li>
       </ul>

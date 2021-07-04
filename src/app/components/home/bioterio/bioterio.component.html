@@ -8,13 +8,8 @@
           <a ngbNavLink>Jaulas</a>
           <ng-template ngbNavContent>
             <div class="search-container flex-wrap">
-              
-              
             </div>
             <div class="m-4">
-              <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-                {{mensajeAlert}}
-              </div>
             <table class="table table-hover text-center">
                 <thead>
                   <tr>
@@ -50,13 +45,12 @@
                   </tr>
                 </tbody>
               </table>
-              
-              
+              <div class="alert alert-danger" role="alert" *ngIf='jaulas?.length === 0'>
+                No hay jaulas existentes
+              </div>
             </div>
           </ng-template>
-          
         </li>
-
         <li [ngbNavItem]="2">
           <a ngbNavLink>Blogs</a>
           <ng-template ngbNavContent>
@@ -92,11 +86,13 @@
             </div>
           </ng-container>
           </div>
+          <div class="alert alert-danger" role="alert" *ngIf='blogs?.length === 0'>
+            No hay blogs existentes
+          </div>
           </ng-template>
         </li>
         
       </ul>
-      
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
     </div> 
 </div>

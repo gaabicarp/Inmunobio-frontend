@@ -10,11 +10,13 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./alta-animal.component.css']
 })
 export class AltaAnimalComponent implements OnInit {
-  @Input() element!: any;
-  @Output() volviendo = new EventEmitter<number>();
+
   idJaula:number;
   formAnimal!: FormGroup;
-  step:number;
+
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
 
   constructor(private postService: PostService, private activatedRouter: ActivatedRoute) { }
 
@@ -31,7 +33,17 @@ export class AltaAnimalComponent implements OnInit {
     const animal = this.formAnimal.value;
     animal.id_jaula = this.idJaula;
     this.postService.crearAnimal(animal).subscribe(res => {
+      if (res.Status === 'Se creó el nuevo animal.'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Animal creado correctamente';
+      }
       console.log(res)
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err);
+      console.log(err)
     })
   }
 

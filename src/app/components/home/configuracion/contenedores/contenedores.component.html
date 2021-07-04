@@ -31,8 +31,9 @@
                         <td>{{contenedor.temperatura}}</td>
                         <td>{{contenedor.capacidad}}</td>
                         <td>{{contenedor.fichaTecnica}}</td>
-                        <td>{{proyectos[contenedor.id_proyecto-1]?.nombre}}</td>
-                        <td>{{espacios[contenedor.id_espacioFisico-1]?.nombre}}</td>
+                        <td *ngIf='contenedor.nombreProyecto != 0'  >{{contenedor.nombreProyecto}}</td>
+                        <td *ngIf='contenedor.nombreProyecto === 0'>Sin Asignar</td>
+                        <td>{{contenedor.nombreEspFisico}}</td>
                         <td>{{contenedor.disponible}}</td>
                         <td class="d-flex">
                             <div class="mr-4">

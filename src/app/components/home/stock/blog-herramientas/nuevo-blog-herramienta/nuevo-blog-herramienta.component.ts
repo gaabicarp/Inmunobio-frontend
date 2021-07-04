@@ -11,9 +11,6 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./nuevo-blog-herramienta.component.css']
 })
 export class NuevoBlogHerramientaComponent implements OnInit {
-  @Output() volviendo = new EventEmitter<number>();
-  @Input() herramienta!: number;
-
   formBlogH!: FormGroup;
   estado: string;
   mensajeAlert: string;
@@ -21,11 +18,10 @@ export class NuevoBlogHerramientaComponent implements OnInit {
   step:number;
   idHerramienta:number;
 
-  constructor(private getService: GetService, private postService: PostService, private activatedRouter: ActivatedRoute) { }
+  constructor(private postService: PostService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.alert = false;
-    this.step = 10;
     this.idHerramienta = parseInt(this.activatedRouter.snapshot.paramMap.get('idHerramienta'), 10);
     this.formBlogH = new FormGroup({
       detalle: new FormControl('', [Validators.maxLength(100)]),
@@ -47,9 +43,7 @@ export class NuevoBlogHerramientaComponent implements OnInit {
         this.alert = true;
         this.estado = 'success';
         this.mensajeAlert = 'Blog creado correctamente';
-        setTimeout(() => {
-          this.volviendo.emit(0);
-        }, 2000);
+
       }
       console.log(res)
     }, err => {
@@ -57,10 +51,6 @@ export class NuevoBlogHerramientaComponent implements OnInit {
       this.estado = 'danger';
       this.mensajeAlert = JSON.stringify(err.error.error);
     });
-  }
-
-  volver(): void{
-    this.volviendo.emit(9);
   }
 
 }

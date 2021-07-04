@@ -78,7 +78,7 @@ export class EditarJaulaComponent implements OnInit {
       jaula.id_jaula = this.idJaula
       this.postService.editarJaula(jaula).subscribe(res => {
         console.log(res);
-        if (res.Status === 'ok'){
+        if (res.status === 'Jaula modificada'){
           this.alert = true;
           this.estado = 'success';
           this.mensajeAlert = 'La información fue editada correctamente';
@@ -91,7 +91,7 @@ export class EditarJaulaComponent implements OnInit {
     } else {
       this.postService.crearJaula(jaula).subscribe(res => {
         console.log(res);
-        if (res.Status === 'ok'){
+        if (res.status === 'Jaula creada.'){
           this.alert = true;
           this.estado = 'success';
           this.mensajeAlert = 'La jaula fue creada correctamente';

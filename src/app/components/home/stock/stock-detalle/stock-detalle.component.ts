@@ -40,6 +40,10 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
 
   herramientas= [];
   herramientasFiltradas=[];
+
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
   
   constructor(private getService: GetService, private postService: PostService, private activatedRouter: ActivatedRoute) { }
 
@@ -48,7 +52,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.step = 1;
+    this.alert = false;
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     console.log(this.idEspacioFisico);
     //STOCK
@@ -119,36 +123,41 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     );
     
   }
-
-  crear(){
-    this.modo = 'CREAR';
-    this.espacio = this.idEspacioFisico;
-    this.step = 2;
-  }
-  editar(stock: Stock, id:number): void {
-    this.productoSeleccionado = stock;
-    this.idProducto = id;
-    this.espacio = this.idEspacioFisico;
-    this.modo = 'EDITAR';
-    this.step = 2;
-  }
   eliminar(stock: Stock, id: number){
     const id_productoEnStock= stock.id_productoEnStock
     const id_productos = stock.producto[id].id_productos
     this.subscription.add( this.postService.eliminarStock(id_productoEnStock, id_productos).subscribe(res =>{
-      console.log(res); })
-    );
-  }
-  consumir(stock: Stock, id: number){
-    this.productoSeleccionado = stock;
-    this.idProducto = id;
-    this.espacio = this.idEspacioFisico;
-    this.step = 3;
+      if (res.Status === 'ok'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Stock eliminado correctamente';
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 1000);
+      }
+      console.log(res); 
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err.error.error);;
+    }));
   }
   eliminarHerramienta(idHerr : number){
     this.postService.eliminarHerramienta(idHerr).subscribe(res =>{
+      if (res.Status === 'ok'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Herramienta eliminada correctamente';
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 1000);
+      }
       console.log(res);
-    })
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err.error.error);;
+    });
   }
 
 }
