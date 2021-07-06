@@ -78,6 +78,9 @@ export class DetalleExperimentosComponent implements OnInit {
     grupoExperimental.id_experimento = this.idExperimento;
     this.postService.crearGrupoExperimental(grupoExperimental).subscribe(res => {
       console.log(res);
+      setTimeout(() => {
+        this.ngOnInit()
+      }, 500);
     })
   }
   editarExp(){

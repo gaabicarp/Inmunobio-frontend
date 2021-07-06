@@ -1,6 +1,6 @@
 
 <div class="m-5" *ngIf='step === 0'>
-    <h2 class="text-center ">Bioterio</h2>
+    <h2 class="text-center text-staatliches title ">Bioterio</h2>
 
 <div class="mx-4" >
     <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
@@ -65,7 +65,7 @@
                     <label for="fecHasta" class="form-label">Fecha final</label>
                     <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
                   </div>
-                  <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">Buscar</button>
+                  <button class="btn btn-success btn-lg" type="submit" [disabled]="!formFecha.valid"><i class="bi bi-search"></i></button>
                 </div>
               </form>
             </div>
@@ -80,7 +80,7 @@
             </div>
             </div>
             <div class=" col-11 card shadow  mb-3">
-              <div class="card-header"><strong>Blog n°{{a.id_blog}} - Jaula {{a.codigo}}</strong></div> 
+              <div class="card-header"><strong>Blog n°{{a.id_blog}} - Jaula {{a.codigoJaula}}</strong></div> 
                 <p class="mb-1"><i> usuario :{{a.id_usuario}}</i></p>
                 <p>{{a.detalle}}</p>
             </div>

@@ -26,7 +26,7 @@ export class EntradaBlogComponent implements OnInit {
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     console.log(this.idJaula)
     this.formBlogJ = new FormGroup({
-      detalle: new FormControl('', [Validators.maxLength(100)]),
+      detalle: new FormControl('', [Validators.maxLength(200)]),
     });
   }
   crearBlogJaula(): void{
@@ -41,7 +41,7 @@ export class EntradaBlogComponent implements OnInit {
     }
     console.log(nuevoBlog)
     this.postService.nuevoBlogJaula(nuevoBlog).subscribe(res => {
-      if (res.Status === 'ok'){
+      if (res.Status === 'Ok'){
         this.alert = true;
         this.estado = 'success';
         this.mensajeAlert = 'Blog creado correctamente';

@@ -3,7 +3,7 @@
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
   <div class="text-center m-3">
-    <h2>{{espacioFisico?.nombre}}</h2>
+    <h2 class='text-staatliches title'>{{espacioFisico?.nombre}}</h2>
   </div>
 </div>
 
@@ -34,7 +34,7 @@
                         <td>{{a.nombre}}</td>
                         <td>{{stock.lote}}</td>
                         <td>{{stock.unidad}}</td>
-                        <td>{{stock.codigoContenedor}}</td>
+                        <td>{{stock.nombreContenedor}}</td>
                         <td>{{stock.detalleUbicacion}}</td>
                         <td>{{stock.fechaVencimiento | date: 'shortDate'}}</td>
                         <td>
@@ -73,9 +73,9 @@
   </li>
   
   <li [ngbNavItem]="2">
-    <a ngbNavLink>Blog Espacio Fisico</a>
+    <a ngbNavLink>Blogs</a>
     <ng-template ngbNavContent>
-      <div class="card rounded shadow m-3 p-4">
+      <div class="card rounded shadow m-3 p-3">
         <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
           <div class="row">
             <div class="col">
@@ -86,7 +86,26 @@
               <label for="fecHasta" class="form-label">Fecha final</label>
               <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
             </div>
-            <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">Buscar</button>
+            <div class="col">
+              <label  class="form-label">Tipo de blog</label>
+              <div class="col">
+                <select class="form-control" aria-label=".form-select-lg example" formControlName='filtro'>
+                  <option value='espacioFisico'>Espacio físico</option>
+                  <option value='herramienta'>Herramienta</option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf ="formFecha.value.filtro === 'herramienta'">
+            <label class="form-label">Herramienta</label>
+              <select class="form-control" aria-label=".form-select-lg example" formControlName='herramienta'>
+                <option *ngFor='let herramienta of herramientas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
+              </select>
+            </div>
+              <div class="button align-middle m-2">
+                <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">
+                  <i class="bi bi-search"></i></button>
+              </div>
+            
           </div>
         </form>
       </div>
@@ -99,24 +118,29 @@
         </div>
         
         <div class="row m-2 float-lg-start" >
-            <ng-container *ngFor='let a of blogs;let i = index'>
-          <div class="col-1 d-flex flex-column  align-items-center">
-            <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
-              <i class="bi bi-journal"></i>
+          <ng-container *ngFor='let a of blogs;let i = index'>
+            <div class="col-1 d-flex flex-column align-items-center">
+              <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
+                <i class="bi bi-journal"></i>
+              </div>
+              <div class="fecha">
+                <p class="text-center">{{a.fecha | date: 'dd/MM/yy'}}</p>
+              </div>
+              <!-- <div>
+                  <a class="text-danger" role="button" (click)=eliminar(a.id_blog)>
+                    <i class="">eliminar</i>
+                  </a>
+                </div> -->
             </div>
-            <p class="text-center mb-0">{{a.fecha | date: 'shortDate'}}</p>
-            <div>
-            <!-- <a class="text-danger" role="button" (click)=eliminar(a.id_blog)>
-              <i class="">eliminar</i>
-            </a> -->
-          </div>
-          </div>
-          <div class=" col-11 card shadow  mb-3">
-            <div class="card-header"><strong>Blog n°{{i+1}}</strong></div> 
+            <div class="col-11 card shadow  mb-3">
+              <div class="card-header" ><strong>Blog n°{{i+1}}</strong> 
+                <ng-container *ngIf= "formFecha.value.filtro === 'herramienta'">- Herramienta</ng-container>
+                <ng-container *ngIf=" a.tipo === 'espacioFisico' "> - Espacio físico</ng-container>
+              </div> 
               <p class="mb-1"><i>{{a.id_usuario}}</i></p>
               <p>{{a.detalle}}</p>
-          </div>
-        </ng-container>
+            </div>
+          </ng-container>
         </div>
         <div class="alert alert-danger" role="alert" *ngIf='blogs?.length === 0'>
           No existen blogs
@@ -129,7 +153,7 @@
     <a ngbNavLink >Herramientas</a>
     <ng-template ngbNavContent>
       <div class="card rounded shadow p-4 mb-4 table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
             <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -178,17 +202,6 @@
   </li>
 </ul>
 <div [ngbNavOutlet]="nav" class="mt-2"></div>
-
-<div *ngIf='step === 2'>
-  <app-agregar-stock
-  [element]='productoSeleccionado'
-  [idProducto]='idProducto'
-  [espacio] = 'espacio'
-  [modo]='modo'
-  (volviendo)='onVolviendo($event)'
-  >
-</app-agregar-stock>
-</div>
 
 
 

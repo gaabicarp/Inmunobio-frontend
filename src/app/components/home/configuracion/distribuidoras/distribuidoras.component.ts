@@ -14,9 +14,9 @@ export class DistribuidorasComponent implements OnInit, OnDestroy {
 
   distribuidoras : Distribuidora;
 
-  distribuidoraSeleccionada: Distribuidora;
-  step: number;
-  modo: string;
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
   constructor(private getService: GetService, private postService: PostService) { }
 
   ngOnDestroy(): void {
@@ -24,7 +24,7 @@ export class DistribuidorasComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.step = 0;
+    this.alert = false;
     this.subscription.add( this.getService.obtenerDistribuidoras().subscribe(res => {
                             console.log(res)
                             this.distribuidoras = res;}) 
@@ -34,25 +34,22 @@ export class DistribuidorasComponent implements OnInit, OnDestroy {
                             this.distribuidoras = res; })
     );
   }
-  crear(){
-    this.modo = 'CREAR';
-    this.step = 1;
-  }
-
-  editar(distribuidora: Distribuidora): void {
-    this.distribuidoraSeleccionada = distribuidora;
-    this.modo = 'EDITAR';
-    this.step = 1;
-  }
-
   eliminar(distribuidora : Distribuidora){
     this.postService.eliminarDistribuidora(distribuidora.id_distribuidora).subscribe(res =>{
+      if (res.Status === 'ok'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Distribuidora eliminada correctamente';
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 2000);
+      }
       console.log(res);
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err.error.error);
     })
-  }
-
-  onVolviendo(e: number): void{
-    this.step = e;
   }
 
 }

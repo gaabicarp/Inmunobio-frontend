@@ -3,7 +3,7 @@
       <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
     </div>
     <div class="mb-5">
-        <h2 class="text-center ">Jaula - {{jaula?.codigo}}</h2>
+        <h2 class="text-center text-staatliches title ">Jaula - {{jaula?.codigo}}</h2>
     </div>
     <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
         <li [ngbNavItem]="1">
@@ -17,7 +17,7 @@
                 Proyecto Asociado: Sin Asignar
                </div>
               <div class="card-body">
-                <h5 class="card-title">Ubicación</h5>
+                <h5 class="card-title">Ubicación - {{espacioFisico?.nombre}}</h5>
                 <p class="card-text">Rack {{jaula?.rack}} - Estante {{jaula?.estante}} </p>
                 <p class="card-text">Tipo {{jaula?.tipo}}</p>
                 <a class="btn btn-primary" routerLink='editar-jaula'>Editar Información</a>
@@ -109,11 +109,11 @@
                     <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
                         <i class="bi bi-journal"></i>
                     </div>
-                    <p class="text-center mb-0">{{a.fecha | date: 'shortDate'}}</p>
+                    <p class="text-center mb-0">{{a.fecha | date: 'dd/MM/yy'}}</p>
                   </div>
                   <div class=" col-11 card shadow  mb-3">
                     <div class="card-header"><strong>Blog n°{{i+1}}</strong></div> 
-                    <p class="mb-1"><i>{{a.id_usuario}}</i></p>
+                    <p class="mb-1"><i> usuario: {{a.id_usuario}}</i></p>
                     <p>{{a.detalle}}</p>
                   </div>
               </ng-container>

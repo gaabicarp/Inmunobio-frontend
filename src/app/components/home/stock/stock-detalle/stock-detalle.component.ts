@@ -6,7 +6,7 @@ import {Producto} from '../../../../models/producto.model';
 import { Stock } from '../../../../models/stock.model';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BlogsBuscados } from 'src/app/models/blogs.model';
+import { BlogsBuscados, BlogsBuscadosHerr } from 'src/app/models/blogs.model';
 import { Herramienta } from 'src/app/models/herramientas.model';
 
 @Component({
@@ -68,10 +68,6 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
                             console.log(res);
                             this.productos = res ; })
     );
-    this.subscription.add( this.getService.obtenerContenedores().subscribe(res => {
-                            console.log(res);
-                            this.contenedores = res ; })
-    );
     //BLOGS 
     const dia = (this.fecHoy).getDate() + 1;
     this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)
@@ -88,7 +84,9 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     );
     this.formFecha = new FormGroup({
       fecDesde: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      fecHasta: new FormControl('', [Validators.required, Validators.maxLength(20)])
+      fecHasta: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      filtro: new FormControl(),
+      herramienta: new FormControl()
     })
     //HERRAMIENTAS 
     this.subscription.add( this.getService.obtenerHerramientas().subscribe(res => {
@@ -112,15 +110,29 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     this.fecHasta = new Date(this.fecHastaReal.getFullYear(),this.fecHastaReal.getMonth(), diaMas1)
     this.fecDesde = this.fecDesde.toDateString();
     this.fecHasta = this.fecHasta.toDateString();
-    const blog : BlogsBuscados = {
-      id_espacioFisico: this.idEspacioFisico,
-      fechaDesde: this.fecDesde,
-      fechaHasta: this.fecHasta
+    
+    if(this.formFecha.value.filtro == 'herramienta'){
+      const blog: BlogsBuscadosHerr ={
+        id_herramienta: this.formFecha.value.herramienta,
+        fechaDesde: this.fecDesde,
+        fechaHasta: this.fecHasta
+      }
+      this.subscription.add(this.postService.obtenerBlogHerramientas(blog).subscribe(res =>{
+        console.log(res);
+        this.blogs = res; })
+      );
+    } else {
+      const blog : BlogsBuscados = {
+        id_espacioFisico: this.idEspacioFisico,
+        fechaDesde: this.fecDesde,
+        fechaHasta: this.fecHasta
+      }
+      this.subscription.add(this.postService.obtenerBlogEspacioFisico(blog).subscribe(res =>{
+        console.log(res);
+        this.blogs = res; })
+      );
     }
-    this.subscription.add(this.postService.obtenerBlogEspacioFisico(blog).subscribe(res =>{
-      console.log(res);
-      this.blogs = res; })
-    );
+    
     
   }
   eliminar(stock: Stock, id: number){
