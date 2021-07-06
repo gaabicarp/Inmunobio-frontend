@@ -55,7 +55,7 @@
                     <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
                 </td>
             </tr> -->
-            <tr *ngFor='let fuente of grupoExperimental.fuentesExperimentales; let i = index'>
+            <tr *ngFor='let fuente of grupoExperimental?.fuentesExperimentales; let i = index'>
                 <th scope="row">{{ i + 1 }}</th> 
                 <td>
                  {{fuente?.codigo}} 
@@ -73,7 +73,7 @@
                     {{fuente?.descripcion}} 
                 </td>
             </tr>
-            <tr *ngIf='grupoExperimental.fuentesExperimentales?.length === 0'>
+            <tr *ngIf='grupoExperimental?.fuentesExperimentales?.length === 0'>
                 <td colspan="6">Sin fuentes</td>
             </tr>
           </tbody>
@@ -125,7 +125,7 @@
                     <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
                 </td>
             </tr> -->
-            <tr *ngFor='let muestra of grupoExperimental.muestras; let i = index'>
+            <tr *ngFor='let muestra of grupoExperimental?.muestras; let i = index'>
                 <th scope="row">{{ i + 1 }}</th> 
                 <td>
                  {{muestra?.codigo}} 
@@ -137,7 +137,7 @@
                     {{muestra?.descripcion}} 
                 </td>
             </tr>
-            <tr *ngIf='grupoExperimental.muestras?.length === 0'>
+            <tr *ngIf='grupoExperimental?.muestras?.length === 0'>
                 <td colspan="6">Sin muestras</td>
             </tr>
           </tbody>

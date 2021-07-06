@@ -44,16 +44,21 @@ export class JaulaDetalleComponent implements OnInit {
       console.log(res)
       this.jaula = res;
     }))
+    setTimeout(() => {
+      this.subscription.add(this.getService.obtenerEspacioFisico(this.jaula.id_espacioFisico).subscribe(res =>{
+        this.espacioFisico = res;
+      }))
+    },500);
     this.subscription.add(this.getService.obtenerAnimalesPorJaula(this.idJaula).subscribe(res => {
       if(!res.Status){
         this.animales = res;
       }
       console.log(res)
     }))
-    this.subscription.add(this.getService.obtenerEspaciosFisicos().subscribe(res => {
-      console.log(res)
-        this.espacios = res;
-    }))
+    // this.subscription.add(this.getService.obtenerEspaciosFisicos().subscribe(res => {
+    //   console.log(res)
+    //     this.espacios = res;
+    // }))
     this.subscription.add(this.getService.obtenerProyectos().subscribe(res => {
       this.proyectos = res.filter(proyecto => !proyecto.finalizado );
       console.log(res)
@@ -80,9 +85,9 @@ export class JaulaDetalleComponent implements OnInit {
     })
     this.formProyecto = new FormGroup({
       id_proyecto : new FormControl('', [Validators.required, ]) })
-    setTimeout( () => {
-      this.espacioFisico = this.espacios.find(espacio => espacio.id_espacioFisico === this.jaula.id_espacioFisico)
-    },500)
+    // setTimeout( () => {
+    //   this.espacioFisico = this.espacios.find(espacio => espacio.id_espacioFisico === this.jaula.id_espacioFisico)
+    // },500)
   }
 
   eliminar(id_animal: number){
@@ -127,7 +132,7 @@ export class JaulaDetalleComponent implements OnInit {
         this.estado = 'success';
         this.mensajeAlert = 'Jaula eliminada correctamente';
         setTimeout(() => {
-          this.ngOnInit()
+          this.router.navigate(['/home/bioterio']);
         }, 1000);
       }
       console.log(res)

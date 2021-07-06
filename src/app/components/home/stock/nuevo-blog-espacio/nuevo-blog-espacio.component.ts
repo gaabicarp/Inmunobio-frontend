@@ -26,7 +26,7 @@ export class NuevoBlogEspacioComponent implements OnInit {
     this.alert = false;
     this.step = 6;
     this.formBlog = new FormGroup({
-      detalle: new FormControl('', [Validators.maxLength(50)]),
+      detalle: new FormControl('', [Validators.maxLength(200)]),
     });
   }
 

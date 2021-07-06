@@ -27,7 +27,7 @@ export class NuevoBlogProyectoComponent implements OnInit {
     this.id_proyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     console.log(this.id_proyecto);
     this.formBlog = new FormGroup({
-      detalle: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      detalle: new FormControl('', [Validators.required, Validators.maxLength(200)]),
       tipo: new FormControl('', []),
       id: new FormControl('',[] )
     });

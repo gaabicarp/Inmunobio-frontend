@@ -74,11 +74,11 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
                             this.contenedores = res; })
     );
     this.formStock = new FormGroup({
-      producto: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      producto: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       lote: new FormControl('', [Validators.maxLength(50)]),
-      unidad: new FormControl('', [Validators.required,Validators.maxLength(50)]),
-      contenedor: new FormControl('', [Validators.maxLength(11)]),
-      detalleUbicacion: new FormControl('', [Validators.maxLength(11)]),
+      unidad: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      contenedor: new FormControl('', [Validators.maxLength(30)]),
+      detalleUbicacion: new FormControl('', [Validators.maxLength(50)]),
       fechaVencimiento: new FormControl('', [Validators.maxLength(11)]),
     });
     setTimeout(() => {
@@ -95,8 +95,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
     },500);
     
   }
-
-  productoEnStock(): void{
+  agregarStock(): void{
     var fecha = this.formStock.value.fechaVencimiento;
     const productoEnStock : any = {
       lote: this.formStock.value.lote,
@@ -105,11 +104,6 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
       detalleUbicacion: this.formStock.value.detalleUbicacion,
       fechaVencimiento: this.datepipe.transform( fecha,'yyyy-MM-ddT23:01:10.288Z')
     }
-    const lista = Array(productoEnStock) 
-    this.AgregarStock(lista)
-  }
-
-  AgregarStock(productoEnStock): void{
     const stock : Stock = {
       id_grupoDeTrabajo : 1 ,
       id_espacioFisico : this.idEspacioFisico ,

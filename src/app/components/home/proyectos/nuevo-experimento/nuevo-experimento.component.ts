@@ -18,6 +18,9 @@ export class NuevoExperimentoComponent implements OnInit {
   experimento:any;
   editar = false;
 
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
   constructor(private postService: PostService, private getService: GetService, private activatedRouter: ActivatedRoute,) { }
 
   ngOnInit(): void {
@@ -32,7 +35,7 @@ export class NuevoExperimentoComponent implements OnInit {
     }
     this.formExperimento = new FormGroup({
       codigo: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      metodologia: new FormControl('', [Validators.required, Validators.maxLength(10)]),
+      metodologia: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       objetivos: new FormControl('', [Validators.required, Validators.maxLength(100)])
     });
     setTimeout(() => {
@@ -57,11 +60,29 @@ export class NuevoExperimentoComponent implements OnInit {
       experimento.id_experimento = this.idExperimento
       console.log(experimento)
       this.postService.editarExperimento(experimento).subscribe(res =>{
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'La información fue editada correctamente';
+        }
         console.log(res)
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
       })
     } else {
       this.postService.crearExperimento(experimento).subscribe(res => {
+        if (res.Status === 'ok'){
+          this.alert = true;
+          this.estado = 'success';
+          this.mensajeAlert = 'Experimento creado correctamente';
+        }
         console.log(res);
+      }, err => {
+        this.alert = true;
+        this.estado = 'danger';
+        this.mensajeAlert = JSON.stringify(err.error.error);
       });
     }
   }

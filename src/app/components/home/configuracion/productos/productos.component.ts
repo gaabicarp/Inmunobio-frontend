@@ -15,9 +15,9 @@ export class ProductosComponent implements OnInit, OnDestroy {
   productos : Producto;
   distribuidoras : Distribuidora;
 
-  productoSeleccionado: Producto;
-  step: number;
-  modo: string;
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
 
   constructor(private getService: GetService, private postService: PostService) { }
 
@@ -26,7 +26,7 @@ export class ProductosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.step = 0;
+    this.alert = false;
     this.subscription.add( this.getService.obtenerProductos().subscribe(res => {
                             console.log(res)
                             this.productos = res; })
@@ -37,25 +37,23 @@ export class ProductosComponent implements OnInit, OnDestroy {
     );
   }
   
-  crear(){
-    this.modo = 'CREAR';
-    this.step = 1;
-  }
-
-  editar(producto: Producto): void {
-    this.productoSeleccionado = producto;
-    this.modo = 'EDITAR';
-    this.step = 1;
-  }
-
+ 
   eliminar(producto : Producto){
     this.postService.eliminarProducto(producto.id_producto).subscribe(res =>{
+      if (res.Status === 'ok'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Producto eliminado correctamente';
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 2000);
+      }
       console.log(res);
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err.error.error);
     })
-  }
-
-  onVolviendo(e: number): void{
-    this.step = e;
   }
 
 }
