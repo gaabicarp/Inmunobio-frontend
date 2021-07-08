@@ -55,8 +55,11 @@ export class GrupoExperimentalComponent implements OnInit {
       contenedor: new FormControl('')
     });
     this.getService.obtenerAnimalesPorProyectos(this.idProyecto).subscribe(res => {
-      console.log(res);
-      this.animalesProyecto = res;
+      if(res.Status){
+        this.animalesProyecto = [];
+      } else {
+        this.animalesProyecto = res;
+      }
     });
   }
 
