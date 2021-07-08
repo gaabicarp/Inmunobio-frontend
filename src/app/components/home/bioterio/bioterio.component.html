@@ -29,7 +29,7 @@
                     <td>{{jaula?.rack}}</td>
                     <td>{{jaula?.estante}}</td>
                     <td>{{jaula?.tipo}}</td>
-                    <td>{{jaula?.nombre_proyecto ? jaula?.nombre_proyecto : 'Sin asignar'}}</td>
+                    <td>{{jaula?.nombreProyecto ? jaula?.nombreProyecto : 'Sin asignar'}}</td>
                     <!-- <td>
                     <div class="mr-4">
                       <a class="text-danger" role="button" (click)=eliminar(jaula.id_jaula)>
@@ -75,7 +75,7 @@
               <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
                 <i class="bi bi-journal"></i>
               </div>
-              <p class="text-center mb-0">{{a.fecha | date: 'shortDate'}}</p>
+              <p class="text-center mb-0">{{a.fecha | date: 'dd/MM/yy'}}</p>
               <div>
             </div>
             </div>

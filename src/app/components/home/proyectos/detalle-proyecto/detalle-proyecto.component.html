@@ -119,7 +119,13 @@
             </div>
             </div>
             <div class=" col-11 card shadow  mb-3">
-              <div class="card-header"><strong>Blog {{a.tipo}} n°{{a.id_blog}} </strong></div> 
+              <div class="card-header"><strong>Blog n°{{a.id_blog}} - {{a.tipo}}
+                <ng-container *ngIf='a.tipo === "Jaula"'>
+                   {{a.codigoJaula}}
+                </ng-container>
+                <ng-container *ngIf='a.tipo === "Experimento"'>
+                   {{a.codigoExperimento}}
+                </ng-container> </strong></div> 
                 <p class="mb-1"><i> usuario :{{a.id_usuario}}</i></p>
                 <p>{{a.detalle}}</p>
             </div>

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
 import { Subscription, VirtualTimeScheduler } from 'rxjs';
 import { EspacioFisico } from 'src/app/models/espacioFisico.model';
 import { BlogJaula, BuscarBlogJaula, Jaula } from 'src/app/models/jaula.model';
@@ -34,12 +35,14 @@ export class JaulaDetalleComponent implements OnInit {
   mensajeAlert: string;
   alert: boolean;
   espacioFisico:any;
+  miProyecto:any;
 
   constructor(private router: Router, private postService: PostService,private getService: GetService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.alert = false;
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
+    
     this.subscription.add(this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res => {
       console.log(res)
       this.jaula = res;
@@ -63,6 +66,11 @@ export class JaulaDetalleComponent implements OnInit {
       this.proyectos = res.filter(proyecto => !proyecto.finalizado );
       console.log(res)
     }))
+    //MEJORAR
+    setTimeout(() => {
+      this.miProyecto = this.proyectos.find(proyecto => proyecto.id_proyecto === this.jaula.id_proyecto)
+      console.log(this.miProyecto)
+    }, 500);
     const dia = (this.fecHoy).getDate() + 1;
     this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)
     console.log(this.fecHasta)
@@ -122,6 +130,7 @@ export class JaulaDetalleComponent implements OnInit {
       fechaDesde: this.fecDesde,
       fechaHasta: this.fecHasta
     }
+    console.log(blog)
     this.subscription.add(this.postService.obtenerBlogJaula(blog).subscribe(res =>{
       this.blogs = res; }))
   }

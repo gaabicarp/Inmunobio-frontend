@@ -10,10 +10,10 @@
           <a ngbNavLink>Información</a>
           <ng-template ngbNavContent>
             <div class="card text-center m-5">
-              <div class="card-header" *ngIf="jaula?.nombre_proyecto.length >0 ">
-               Proyecto Asociado: {{jaula?.nombre_proyecto}}
+              <div class="card-header" *ngIf="miProyecto?.nombre.length > 0 ">
+               Proyecto Asociado: {{miProyecto?.nombre}}
               </div>
-              <div class="card-header" *ngIf="jaula?.nombre_proyecto == '' ">
+              <div class="card-header" *ngIf="miProyecto?.nombre.length == '' ">
                 Proyecto Asociado: Sin Asignar
                </div>
               <div class="card-body">
@@ -112,7 +112,7 @@
                     <p class="text-center mb-0">{{a.fecha | date: 'dd/MM/yy'}}</p>
                   </div>
                   <div class=" col-11 card shadow  mb-3">
-                    <div class="card-header"><strong>Blog n°{{i+1}}</strong></div> 
+                    <div class="card-header"><strong>Blog n°{{a.id_blog}} - Jaula {{a.codigoJaula}}</strong></div> 
                     <p class="mb-1"><i> usuario: {{a.id_usuario}}</i></p>
                     <p>{{a.detalle}}</p>
                   </div>

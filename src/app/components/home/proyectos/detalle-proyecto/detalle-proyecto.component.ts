@@ -103,22 +103,29 @@ export class DetalleProyectoComponent implements OnInit {
       fechaDesde: this.fecDesde,
       fechaHasta: this.fecHasta
     }
+    console.log(blog)
     this.postService.obtenerBlogsProyecto(blog).subscribe(res =>{
       console.log(res)
       this.blogs = res; })
-    if (this.formFecha.value.filtro == 'Jaula'){
-      var filtrados= this.blogs.filter(blog => blog.tipo === 'Jaula')
+
       setTimeout(() => {
-        this.blogs=filtrados;
-        console.log(this.blogs)
-      }, 1000);
-    } else if (this.formFecha.value.filtro == 'Experimento'){
-      var filtrados= this.blogs.filter(blog => blog.tipo === 'Experimento')
-      setTimeout(() => {
-        this.blogs=filtrados;
-        console.log(this.blogs)
-      }, 1000);
-    }
+        if (this.formFecha.value.filtro == 'Jaula'){
+          var filtrados= this.blogs.filter(blog => blog.tipo === 'Jaula')
+          console.log(filtrados)
+          setTimeout(() => {
+            this.blogs =filtrados;
+            console.log(this.blogs)
+          }, 1000);
+        } else if (this.formFecha.value.filtro == 'Experimento'){
+          var filtrados= this.blogs.filter(blog => blog.tipo === 'Experimento')
+          setTimeout(() => {
+            this.blogs=filtrados;
+            console.log(this.blogs)
+          }, 1000);
+        }
+      }, 2000);
+    
+    
   }
 
 

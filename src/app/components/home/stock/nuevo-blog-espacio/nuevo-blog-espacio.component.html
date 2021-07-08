@@ -7,9 +7,26 @@
     </div>
   <div class="card rounded shadow p-4 m-5">
   <form [formGroup]="formBlog" (ngSubmit)="crearBlogEspacio()"> 
+    <div class=" m-3">
+        <label  class="form-label">Tipo de Blog</label>
+            <div class="input-group mb-3">
+                <select class="form-control" aria-label=".form-select-lg example" formControlName='tipo'>
+                  <option selected>Seleccionar tipo de blog</option>
+                  <option value="espacioFisico">Espacio Físico</option>
+                  <option value="herramienta">Herramienta</option>
+                </select>
+            </div>
+    </div><div *ngIf = "formBlog.value.tipo === 'herramienta' " class=" m-3">
+        <label  class="form-label">Herramienta</label>
+            <div class="input-group mb-3">
+                <select class="form-control" aria-label=".form-select-lg example" formControlName='id'>
+                    <option *ngFor='let herr of herramientasFiltradas' value="{{herr.id_herramienta}}">{{herr.nombre}}</option>
+                </select>
+            </div>
+    </div>
         <div class="m-3">
               <label for="detalle" class="form-label">Detalle</label>
-              <input type="text" class="form-control" id="detalle" formControlName="detalle">
+              <textarea type="text" class="form-control" id="detalle" formControlName="detalle"></textarea>
         </div> 
         <div class="d-flex flex-row justify-content-end">
             <div class="mx-3">
