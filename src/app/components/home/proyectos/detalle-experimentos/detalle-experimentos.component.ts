@@ -27,12 +27,14 @@ export class DetalleExperimentosComponent implements OnInit {
   fecHastaReal:any;
   formFecha!:FormGroup;
   blogs:any;
+  filterPost: string;
   
   constructor(private activatedRouter: ActivatedRoute, private getService: GetService, private postService: PostService) { }
 
   ngOnInit(): void {
     this.step = 0;
     this.agregarGrupo = false;
+    this.filterPost = '';
     this.formGrupoExperimental = new FormGroup({
       tipo: new FormControl('', Validators.required),
       codigo: new FormControl('', Validators.required),

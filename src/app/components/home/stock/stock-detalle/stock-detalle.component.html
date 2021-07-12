@@ -11,6 +11,17 @@
   <li [ngbNavItem]="1" >
     <a ngbNavLink >Stock</a>
     <ng-template ngbNavContent>
+      <div class="search-container flex-wrap">
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control" id="usuario" placeholder="Buscar por nombre" [(ngModel)]='filterPost'>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary btn-lg" routerLink='agregar-stock'>Agregar Stock</button>
+        </div>
+    </div>
       <div class="mx-4">        
         <div class="card rounded shadow p-4 mb-4 table-responsive">
             <table class="table table-hover text-center">
@@ -28,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor='let a of stocks;let i = index'>
+                    <ng-container *ngFor='let a of stocks | filter: filterPost ; let i = index'>
                       <tr *ngFor='let stock of a.producto; let j = index'>
                         <th scope="row">{{i + 1}}</th>
                         <td>{{a.nombre}}</td>
@@ -36,7 +47,7 @@
                         <td>{{stock.unidad}}</td>
                         <td>{{stock.nombreContenedor}}</td>
                         <td>{{stock.detalleUbicacion}}</td>
-                        <td>{{stock.fechaVencimiento | date: 'shortDate'}}</td>
+                        <td>{{stock.fechaVencimiento | date: 'dd/MM/yy'}}</td>
                         <td>
                             <a class="text-success" role="button"  routerLink='{{a.id_producto}}/{{a.id_productoEnStock}}/{{j}}'>
                               <i>Consumir</i>
@@ -67,7 +78,7 @@
                 <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
               </div>
         </div>
-    <button class="btn btn-primary" routerLink=agregar-stock>Agregar Stock</button>
+    
     </div>
     </ng-template>
   </li>
@@ -152,6 +163,17 @@
   <li [ngbNavItem]="3">
     <a ngbNavLink >Herramientas</a>
     <ng-template ngbNavContent>
+      <div class="search-container flex-wrap">
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control" id="usuario" placeholder="Buscar por nombre" [(ngModel)]='filterPost2'>
+        </div>
+        <div>
+          <button class="btn btn-primary" routerLink=nueva-herramienta>Nueva Herramienta</button>
+        </div>
+    </div>
       <div class="card rounded shadow p-4 mb-4 table-responsive">
         <table class="table table-hover text-center">
             <thead>
@@ -164,7 +186,7 @@
                 </tr>
             </thead>
             <tbody>
-                  <tr *ngFor='let a of herramientasFiltradas;let i = index'>
+                  <tr *ngFor='let a of herramientasFiltradas | filter: filterPost2 ;let i = index'>
                     <th scope="row">{{i + 1}}</th>
                     <td>{{a.nombre}}</td>
                     <td>{{a.detalle}}</td>
@@ -197,7 +219,7 @@
           <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
         </div>
     </div>
-<button class="btn btn-primary" routerLink=nueva-herramienta>Nueva Herramienta</button>
+
     </ng-template>
   </li>
 </ul>

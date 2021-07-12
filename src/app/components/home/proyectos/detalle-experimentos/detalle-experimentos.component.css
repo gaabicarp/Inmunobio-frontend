@@ -8,7 +8,20 @@
     position: absolute;
     width: 100%;
 }
-
+.search-container{
+    width: 100%;
+    padding: 0.7em;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+.search-container .input-group{
+    width: 32%;
+}
+.item{
+    margin: auto;
+    justify-content: space-around;
+}
 .portada-content{
     position: relative;
     width: 40%;

@@ -44,6 +44,9 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   estado: string;
   mensajeAlert: string;
   alert: boolean;
+
+  filterPost: string;
+  filterPost2: string;
   
   constructor(private getService: GetService, private postService: PostService, private activatedRouter: ActivatedRoute) { }
 
@@ -53,6 +56,8 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.alert = false;
+    this.filterPost = '';
+    this.filterPost2 = '';
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     console.log(this.idEspacioFisico);
     //STOCK

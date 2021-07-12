@@ -71,35 +71,85 @@
           </ng-template>
         </li>
         <li [ngbNavItem]="2">
+          <a ngbNavLink>Experimentos</a>
+          <ng-template ngbNavContent>
+            <div class="search-container flex-wrap">
+              <div class="input-group mb-3">
+                  <span class="input-group-text">
+                      <i class="bi bi-search"></i>
+                  </span>
+                  <input type="text" class="form-control" id="f1" placeholder="Buscar por código" [(ngModel)]='filterPost'>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" class="form-control" id="f2" placeholder="Buscar por metodología" [(ngModel)]='filterPost2'>
+              </div>
+              <div>
+                <button class="btn btn-primary" routerLink='nuevo-experimento'>Nuevo Experimento</button>
+              </div>
+            </div>
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Código</th>
+                <th scope="col">Fecha Inicio</th>
+                <th scope="col">Metodología</th>
+                <th scope="col">Objetivos</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let experimento of experimentoFiltro | filterCodigos: filterPost | filterMetodologia: filterPost2; index as i" routerLink="experimento/{{experimento.id_experimento}}" style="cursor: pointer;">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>
+                  {{experimento?.codigo}}
+                </td>
+                <td>
+                  {{experimento?.fechaInicio | date:'dd/MM/yy'}}
+                </td>
+                <td>
+                  {{experimento?.metodologia}}
+                </td>
+                <td>
+                  {{experimento?.objetivos}}
+                </td>
+              </tr>
+              <tr *ngIf='experimentoFiltro.length === 0'>
+                <td colspan="5">Sin experimentos</td>
+              </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
           <a ngbNavLink>Blog</a>
           <ng-template ngbNavContent>
             <div class="card rounded shadow m-3 p-3">
               <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
-                <div class="row">
-                  <div class="col">
+                <div class="d-flex bd-highlight mb-3">
+                  <div class="item p-2 bd-highlight">
                     <label for="fecDesde" class="form-label">Fecha inicial</label>
                     <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
                   </div>
-                  <div class="col">
+                  <div class="item p-2 bd-highlight">
                     <label for="fecHasta" class="form-label">Fecha final</label>
-                    <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
+                      <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
                   </div>
-                  <div class="col">
-                      <label  class="form-label">Tipo de blog</label>
-                    <div class="input-group mb-3">
-                        <select class="form-control" aria-label=".form-select-lg example" formControlName='filtro'>
-                            <option value='Todos'>Todos</option>
-                            <option value='Jaula'>Jaula</option>
-                            <option value='Experimento'>Experimento</option>
-                        </select>
-                      </div>
+                  <div class="item p-2 bd-highlight">
+                    <label  class="form-label">Tipo de blog</label>
+                      <div class="">
+                          <select class="form-control" aria-label=".form-select-lg example" formControlName='filtro'>
+                              <option value='Todos'>Todos</option>
+                              <option value='Jaula'>Jaula</option>
+                              <option value='Experimento'>Experimento</option>
+                          </select>
+                        </div>
                   </div>
-                  <div class="col align-self-center ">
-                    <div class="">
-                      <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">
-                        <i class="bi bi-search"></i></button>
-                    </div>
-                    
+                  <div class="item p-2 bd-highlight">
+                    <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">
+                      <i class="bi bi-search"></i></button>
                   </div>
                 </div>
               </form>
@@ -136,52 +186,7 @@
         </div>
           </ng-template>
         </li>
-        <li [ngbNavItem]="3">
-          <a ngbNavLink>Experimentos</a>
-          <ng-template ngbNavContent>
-
-            <form>
-              <div class="form-group form-inline m-4 justify-content-around">
-                <div>
-                  Buscar experimento: <input class="form-control ml-2" type="text" [formControl]="filter"/>
-                </div>
-                  <button class="btn btn-primary" routerLink='nuevo-experimento'>Nuevo Experimento</button>
-              </div>
-            </form>
-
-            <table class="table table-hover">
-              <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Código</th>
-                <th scope="col">Fecha Inicio</th>
-                <th scope="col">Metodología</th>
-                <th scope="col">Objetivos</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let experimento of experimentoFiltro; index as i" routerLink="experimento/{{experimento.id_experimento}}" style="cursor: pointer;">
-                <th scope="row">{{ i + 1 }}</th>
-                <td>
-                  {{experimento?.codigo}}
-                </td>
-                <td>
-                  {{experimento?.fechaInicio | date:'shortDate'}}
-                </td>
-                <td>
-                  {{experimento?.metodologia}}
-                </td>
-                <td>
-                  {{experimento?.objetivos}}
-                </td>
-              </tr>
-              <tr *ngIf='experimentoFiltro.length === 0'>
-                <td colspan="5">Sin experimentos</td>
-              </tr>
-              </tbody>
-            </table>
-          </ng-template>
-        </li>
+        
       </ul>
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>

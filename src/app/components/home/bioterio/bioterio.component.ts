@@ -30,11 +30,14 @@ export class BioterioComponent implements OnInit {
   mensajeAlert:any;
   modo: string;
   jaulaSeleccionada: any;
+
+  filterPost: string;
   
   constructor(private getService: GetService,private postService: PostService) { }
 
   ngOnInit(): void {
     this.alert = false;
+    this.filterPost = '';
     this.step = 0;
     this.subscription.add( this.getService.obtenerJaulas().subscribe(res => {
       console.log(res)

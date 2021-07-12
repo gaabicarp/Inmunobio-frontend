@@ -50,6 +50,8 @@ import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-
 import { AsociarProyectoJaulaComponent } from './components/home/bioterio/jaula-detalle/asociar-proyecto-jaula/asociar-proyecto-jaula.component';
 import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detalle-experimentos/nuevo-blog-experimento/nuevo-blog-experimento.component';
 import { FilterPipe } from './pipe/filter.pipe';
+import { FilterCodigosPipe } from './pipe/filter-codigos.pipe';
+import { FilterMetodologiaPipe } from './pipe/filter-metodologia.pipe';
 
 
 
@@ -99,7 +101,9 @@ import { FilterPipe } from './pipe/filter.pipe';
     NuevoBlogProyectoComponent,
     AsociarProyectoJaulaComponent,
     NuevoBlogExperimentoComponent,
-    FilterPipe
+    FilterPipe,
+    FilterCodigosPipe,
+    FilterMetodologiaPipe
 
   ],
   imports: [

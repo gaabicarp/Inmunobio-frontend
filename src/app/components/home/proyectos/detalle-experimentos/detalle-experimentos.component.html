@@ -62,16 +62,19 @@
             <ng-template ngbNavContent>
               <div class="card rounded shadow m-3 p-4">
                 <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
-                  <div class="row">
-                    <div class="col">
+                  <div class="d-flex bd-highlight mb-3">
+                    <div class="item p-2 bd-highlight">
                       <label for="fecDesde" class="form-label">Fecha inicial</label>
                       <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
                     </div>
-                    <div class="col">
+                    <div class="item p-2 bd-highlight">
                       <label for="fecHasta" class="form-label">Fecha final</label>
-                      <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
+                        <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
                     </div>
-                    <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">Buscar</button>
+                    <div class="item p-2 bd-highlight">
+                      <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">
+                        <i class="bi bi-search"></i></button>
+                    </div>
                   </div>
                 </form>
               </div>
@@ -102,7 +105,18 @@
         <li [ngbNavItem]="3">
             <a ngbNavLink>Grupos experimentales</a>
             <ng-template ngbNavContent>
-                <div class="p-4 m-4">
+              <div class="search-container flex-wrap">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" class="form-control" id="f1" placeholder="Buscar por código" [(ngModel)]='filterPost'>
+                </div>
+                <div>
+                  <button class="btn btn-primary" (click)='agregarGrupo = !agregarGrupo'>Nuevo grupo</button>
+                </div>
+              </div>
+                <div class="p-2 m-2">
                     <h4 class="text-center"><i>Grupos experimentales</i></h4>
                     <form [formGroup]='formGrupoExperimental'>
                     <table class="table table-hover">
@@ -113,7 +127,7 @@
                         <th scope="col">Tipo</th>
                         <th scope="col">Fuentes Experimentales</th>
                         <th scope="col">Muestras</th>
-                        <td scope="col"><a class="link-primary" style="cursor: pointer" (click)='agregarGrupo = !agregarGrupo'>+Agregar</a></td>
+                        <td scope="col"></td>
                       </tr>
                       </thead>
                       <tbody>
@@ -144,7 +158,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr *ngFor='let grupo of gruposExperimentales; let i = index' routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
+                        <tr *ngFor='let grupo of gruposExperimentales | filterCodigos: filterPost; let i = index' routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
                             <th scope="row">{{ i + 1 }}</th> 
                             <td>
                              {{grupo?.codigo}} 

@@ -60,6 +60,7 @@ export class GrupoExperimentalComponent implements OnInit {
       } else {
         this.animalesProyecto = res;
       }
+      console.log(res)
     });
   }
 
