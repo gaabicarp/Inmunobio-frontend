@@ -64,7 +64,9 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'herramientas');
   }
 
-  
+  obtenerBlogExperimento(idExperimento: number): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'blogExperimento', [idExperimento])
+  }
 
 
 

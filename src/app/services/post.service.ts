@@ -75,6 +75,10 @@ export class PostService {
     return this.http.delete<any>(this.API_URL + 'producto/' + id);
   }
 
+  obtenerBlogExperimento(obj: any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'blogExperimento', obj);
+  }
+
   subirArchivo(file, id): Observable<string> {
     const formData = new FormData();
     formData.append('detallesTecnicos', file[0]);

@@ -19,6 +19,9 @@ export class DetalleExperimentosComponent implements OnInit {
   formGrupoExperimental: FormGroup;
   agregarGrupo: boolean;
   detalleExperimento: string;
+  fechaHoy: any;
+  fechaDesde: any;
+  fechaHasta: any;
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -36,17 +39,33 @@ export class DetalleExperimentosComponent implements OnInit {
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
     this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.proyecto = res;
     });
     this.getService.obtenerExperimentoPorId(this.idExperimento).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.experimento = res;
     });
     this.getService.obtenerGruposExperimentalesPorExperimento(this.idExperimento).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       res === null ? this.gruposExperimentales = [] : this.gruposExperimentales = res;
     });
+    this.fechaHoy = new Date()
+    console.log(this.fechaHoy)
+    this.fechaDesde = new Date();
+    console.log(this.fechaDesde.getDate())
+    this.fechaDesde.setDate(this.fechaDesde.getDate() - 3)
+    console.log(this.fechaDesde)
+    this.fechaDesde = this.fechaDesde.toLocaleString();
+    console.log(this.fechaDesde)
+    this.fechaHasta = new Date().toLocaleString();
+    this.postService.obtenerBlogExperimento({
+      id_experimento: this.idExperimento,
+      fechaDesde: this.fechaDesde,
+      fechaHasta: this.fechaHasta
+    }).subscribe(res => {
+      console.log(res);
+    })
   }
 
   crearGrupoExperimental(): void {
