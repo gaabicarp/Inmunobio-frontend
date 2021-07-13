@@ -56,9 +56,9 @@ export class DetalleExperimentosComponent implements OnInit {
     console.log(this.fechaDesde.getDate())
     this.fechaDesde.setDate(this.fechaDesde.getDate() - 3)
     console.log(this.fechaDesde)
-    this.fechaDesde = this.fechaDesde.toLocaleString();
+    this.fechaDesde = this.fechaDesde.toDateString();
     console.log(this.fechaDesde)
-    this.fechaHasta = new Date().toLocaleString();
+    this.fechaHasta = new Date().toDateString();
     this.postService.obtenerBlogExperimento({
       id_experimento: this.idExperimento,
       fechaDesde: this.fechaDesde,
