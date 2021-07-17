@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Consumir } from 'src/app/models/stock.model';
+import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 
 
@@ -10,23 +12,43 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./consumir-stock.component.css']
 })
 export class ConsumirStockComponent implements OnInit {
-
-  @Input() element!: any;
-  @Input() idProducto!: any;
-  @Input() espacio!: number;
-  @Output() volviendo = new EventEmitter<number>();
-
-  step: number;
   estado: string;
   mensajeAlert: string;
+  mensajeAlertOK: string;
   alert: boolean;
+  alertOK: boolean;
 
   formConsumir! :FormGroup;
-
-  constructor(private postService: PostService) { }
+  idEspacioFisico:number;
+  idProd:number;
+  idUbicacion:number;
+  stocks:any;
+  producto:any;
+  prodEspecifico:any;
+  idProdEnStock:number;
+  constructor(
+    private router: Router,
+    private activatedRouter: ActivatedRoute,
+    private getService: GetService,
+    private postService: PostService
+  ) { }
 
   ngOnInit(): void {
-    this.step = 3;
+    this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
+    this.idProd = parseInt(this.activatedRouter.snapshot.paramMap.get('idProducto'), 10);
+    this.idProdEnStock = parseInt(this.activatedRouter.snapshot.paramMap.get('idProductoEnStock'), 10);
+    this.idUbicacion = parseInt(this.activatedRouter.snapshot.paramMap.get('idUbicacion'), 10);
+    this.getService.obtenerStock(this.idEspacioFisico).subscribe(res =>{
+      this.stocks = res;
+      console.log(res)
+    })
+    setTimeout(() => {
+      this.producto = this.stocks.find(stock => (stock.id_producto == this.idProd) && (stock.id_productoEnStock == this.idProdEnStock))
+      console.log(this.producto)
+      this.prodEspecifico = this.producto.producto[this.idUbicacion]
+      console.log(this.prodEspecifico)
+    }, 500);
+  
     this.alert = false;
       this.formConsumir = new FormGroup({
         cantidad: new FormControl('', [Validators.required, Validators.maxLength(20)])
@@ -35,29 +57,26 @@ export class ConsumirStockComponent implements OnInit {
   consumir(){
     const consumir : Consumir ={
       unidad: this.formConsumir.value.cantidad,
-      id_productoEnStock : this.element.id_productoEnStock,
-      id_productos: this.element.producto[this.idProducto].id_productos
+      id_productoEnStock : this.producto.id_productoEnStock,
+      id_productos: this.prodEspecifico.id_productos
     }
     this.postService.consumirStock(consumir).subscribe(res =>{
       if (res.Status === 'ok'){
-        this.alert = true;
+        this.alertOK = true;
         this.estado = 'success';
-        this.mensajeAlert = 'Stock consumido correctamente';
+        this.mensajeAlertOK = 'Stock consumido correctamente';
         setTimeout(() => {
-          this.volviendo.emit(1);
+          this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
         }, 2000);
       }
       console.log(res)
     }, err => {
       this.alert = true;
       this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.error);
+      this.mensajeAlert = 'ERROR - La cantidad solicitada no se encuentra en stock';
     });
 
-  }
-  
-  volver(): void{
-    this.volviendo.emit(1);
+
   }
 
 }

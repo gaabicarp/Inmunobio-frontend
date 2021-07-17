@@ -5,6 +5,18 @@
     display: flex;
     justify-content: space-around;
 }
+.barra{
+    border: none;
+    border-left: 2px solid #999;
+    background-color: rgb(148, 148, 148);
+    height: 100px;
+    width: 2px;
+}
+.card-stock{
+    width: auto;
+    height: 50%;
+    margin: auto;
+}
 
 .search-container .form-control{
     width: 32%;

@@ -47,6 +47,7 @@ import { FilterPipe } from './pipe/filter.pipe';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { FilterStatePipe } from './pipe/filter-state.pipe';
 import { ToastComponent } from './components/shared/toast/toast.component';
+import { FilterCodigosPipe } from './pipe/filter-codigos.pipe';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import { ToastComponent } from './components/shared/toast/toast.component';
     BlogsEspacioFisicoComponent,
     FilterPipe,
     FilterStatePipe,
-    ToastComponent
+    ToastComponent,
+    FilterCodigosPipe
 
   ],
   imports: [

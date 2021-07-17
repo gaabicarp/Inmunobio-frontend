@@ -1,219 +1,117 @@
+<h2 class="m-5 text-center">Bioterio</h2>
+<div class="mx-4" >
+  <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>Jaulas</a>
+        <ng-template ngbNavContent>
 
-<div class="m-5">
-    <h2 class="text-center ">Bioterio</h2>
-</div>
-<div class="mx-4">
-    <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
-        <li [ngbNavItem]="1">
-          <a ngbNavLink>Jaulas</a>
-          <ng-template ngbNavContent>
-            <div class="search-container flex-wrap">
-              <div class="input-group mb-3">
-                  <span class="input-group-text">
-                      <i class="bi bi-search"></i>
-                  </span>
-                  <input type="text" class="form-control" id="usuario" placeholder="Filtrar según salón">
-              </div>
-              <div>
-                  <button type="button" class="btn btn-primary btn-lg" routerLink="editar-jaula" >Nueva Jaula</button>
-              </div>
+          <div class="search-container row">
+            <div class="col-5">
+                <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por código de jaula" [(ngModel)]='filterPost'>
             </div>
-            <div class="m-4">
-            <table class="table table-hover text-center">
-                <thead>
-                  <tr>
-                    <th scope="col">Codigo</th>
-                    <th scope="col">Salón</th>
-                    <th scope="col">Rack</th>
-                    <th scope="col">Estante</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Proyecto Asociado</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor='let jaula of jaulas'>
-                    <th scope="row">{{jaula.codigo}}</th>
-                    <td>{{jaula.id_espacioFisico}}</td>
-                    <td>{{jaula.rack}}</td>
-                    <td>{{jaula.estante}}</td>
-                    <td>{{jaula.tipo}}</td>
-                    <td>{{jaula.nombre_proyecto ? jaula.nombre_proyecto : 'Sin asignar'}}</td>
-                    <td><a href="" routerLink='{{jaula.id_jaula}}' >Ver</a></td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="">
+                <button class="btn btn-outline-primary" routerLink='editar-jaula'>+Agregar</button>
             </div>
-          </ng-template>
-        </li>
-
-        <li [ngbNavItem]="2">
-          <a ngbNavLink>Blogs</a>
-          <ng-template ngbNavContent>
-            
-            <div class="search-container flex-wrap">
-                <div class="input-group mb-3">
-                    <span class="input-group-text">
-                        <i class="bi bi-search"></i>
-                    </span>
-                    <input type="text" class="form-control" id="usuario" placeholder="Filtrar según usuario">
+        </div>
+        <hr class="my-5">
+        <div class="jaula-container" *ngIf='!cargando'>
+            <div *ngFor="let jaula of jaulas| filterCodigos: filterPost" class="card my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='{{jaula.id_jaula}}'>
+                <div class="">
+                    <div class="">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">{{jaula?.codigo}}</h4>
+                            <h6 class="card-title text-center">{{jaula?.nombreEspFisico}}</h6>
+                            <hr class="my-3 bg-success">
+                            <p class="card-text text-center">Estante {{jaula?.estante}}</p>
+                            <p class="card-text text-center">Rack {{jaula?.rack}} </p>
+                            <p class="card-text text-center">Tipo {{jaula?.tipo}}</p>
+                            <div class="card-text text-center">
+                                    <h6><i>Proyecto</i></h6>
+                                    <p class="mb-0">{{jaula?.nombreProyecto ? jaula?.nombreProyecto : 'Sin asignar'}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-primary btn-lg" routerLink="entrada-blog">Crear entrada de Blog</button>
-                </div>
-              </div>
-
-                  <div>
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 123 - Baja Animal</strong></div> 
-                          <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 665 - Cambio de Lugar</strong></div> 
-                        <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 123 - Baja Animal</strong></div> 
-                          <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 665 - Cambio de Lugar</strong></div> 
-                        <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 123 - Baja Animal</strong></div> 
-                          <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 665 - Cambio de Lugar</strong></div> 
-                        <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 123 - Baja Animal</strong></div> 
-                          <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 665 - Cambio de Lugar</strong></div> 
-                        <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 123 - Baja Animal</strong></div> 
-                          <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class=" col-11 card shadow  mb-3">
-                        <div class="card-header"><strong>Jaula 665 - Cambio de Lugar</strong></div> 
-                        <p class="mb-1"><i>Gabriel Jotallan</i></p>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                      </div>
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 40px; height: 40px;">
-                          <i class="bi bi-journal"></i>
-                        </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
-                      </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center" *ngIf='cargando'>
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>Blogs</a>
+        <ng-template ngbNavContent>
+          <div class=" row m-2 p-2">
+              <div class="col-6 d-flex justify-content-around align-items-center">
+                <div class="form-group m-2">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
+                           name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                     </div>
                   </div>
-          </ng-template>
-        </li>
-        
-      </ul>
+                </div>
+                <div class="form-group m-2">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
+                           name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-outline-secondary m-2"  (click)=Buscar() >Filtrar</button>
+              </div>
+          </div>
+          <div class="row" >
+            <ng-container *ngFor='let a of blogs;let i = index'  >
+                <ng-container *ngIf = 'i%2==0'>
+                  <div class=" row card-blog shadow rounded m-2">
+                    <div class="col-1 d-flex flex-column align-items-center">
+                      <i class="bi bi-journals m-2"></i>
+                      <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                    </div>
+                    <div class="col-11" >
+                      <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
+                      <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                      <p>{{a.detalle}}</p>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf = 'i%2!=0'>
+                  <div class="row card-blog shadow rounded m-2">
+                    <div class="col-11" >
+                      <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
+                      <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                      <p>{{a.detalle}}</p>
+                    </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                      <i class="bi bi-journals m-2"></i>
+                      <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                    </div>
+                  </div>
+                </ng-container>
+            </ng-container>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf='blogs?.length === 0'>
+          No hay blogs existentes
+        </div>
+        </ng-template>
+      </li>
       
-      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+    </ul>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  </div> 
+
+  
 
 
 
 
-    
-</div>
+
+

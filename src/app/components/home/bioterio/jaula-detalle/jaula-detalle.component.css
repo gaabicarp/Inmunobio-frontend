@@ -5,6 +5,27 @@
     display: flex;
     justify-content: space-around;
 }
+.table{
+    width: 90%;
+    height: auto;
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+}
+.card-blog{
+    width: 100%;
+    margin: auto;
+    vertical-align: auto;
+    align-items: center;
+    background-color: rgba(93, 155, 209, 0.082);
+}
+.barra{
+    border: none;
+    border-left: 2px solid #999;
+    background-color: rgb(148, 148, 148);
+    height: 40px;
+    width: 2px;
+}
 
 .search-container .form-control{
     width: 32%;

@@ -141,4 +141,8 @@ export class GetService {
   obtenerAnimales(): Observable<any> {
     return this.http.get<any>(this.API_URL + `animales`);
   }
+  
+  obtenerEspacioFisico(id:number): Observable<any>{
+    return this.http.get<any>(this.API_URL + 'espacioFisico/'+ id);
+  }
 }

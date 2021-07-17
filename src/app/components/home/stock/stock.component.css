@@ -1,19 +1,13 @@
+.table{
+    width: 90%;
+    height: auto;
+    margin: auto;
+    text-align: center;
+}
 .search-container{
-    width: 100%;
+    width: 70%;
     padding: 0.7em;
     margin: auto;
     display: flex;
-    justify-content:center;
-}
-
-.search-container .form-control{
-    width: 32%;
-}
-
-.input-group{
-    width: 32%;
-}
-.col-11{
-    background-color: #EAD2EA     ;
-    border-color: #87718D ;
+    justify-content: space-around;
 }
