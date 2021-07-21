@@ -24,13 +24,10 @@
             <p>{{proyecto?.descripcion}}</p>
             <h4 class="text-secondary text-staatliches mb-0">Conclusion del proyecto</h4>
             <p class="text-danger"><i>{{proyecto?.conclusion ? proyecto?.conclusion : 'Proyecto Sin Finalizar'}}</i></p>
+            <h4 class="text-secondary text-staatliches mb-0">Participantes</h4>
+            <span *ngFor='let usuario of usuariosProyecto'>{{usuario.nombre}} - </span>
           </div>
-          <div class="rounded pb-5 d-flex align-items-center justify-content-around">
-            <div class="mx-5">
-              <h4 class="text-secondary text-staatliches mb-0">Participantes</h4>
-              <p *ngFor='let usuario of usuariosProyecto' class="mb-0">{{usuario.nombre}}</p>  
-            </div>
-            <div class="barra"></div>
+          <div class="rounded py-5 d-flex align-items-center justify-content-around">
             <div class="mx-5">
               <h4 class="text-secondary text-staatliches mb-0">Fecha de Inicio</h4>
               <p class="mb-0">{{proyecto?.fechaInicio | date}}</p>
@@ -52,38 +49,54 @@
             </div>
           </div>
           <div class="d-flex justify-content-center">
-            <!-- <button class="btn btn-danger text-center" routerLink='finalizar-proyecto'>Finalizar Proyecto</button> -->
           </div>
         </div>
-        <div class="m-4">
+        <div class="mx-5">
           <div class="d-flex align-items-center">
             <h4 class="text-secondary text-staatliches mb-0">Experimentos</h4>
             <div class="ml-4">
               <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='nuevo-experimento' *ngIf='!proyecto?.finalizado'>+ Nuevo</button>
             </div>
           </div>
-          <div class="experimento-container">
-            <div *ngFor="let experimento of experimentos" class="card card-experimento my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='experimento/{{experimento.id_experimento}}' >
-                  <div class="">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{experimento.codigo}}</h5>
-                            <hr class="my-3 bg-{{experimento.finalizado? 'danger' : 'success'}}">
-                            <p class="card-text text-center">{{experimento.objetivos.substring(0,100)}}{{experimento.objetivos.length > 100 ? '...' : ''}}</p>
-                            <div class="d-flex flex-row justify-content-between">
-                                <div>
-                                    <h6><i>Fecha de Inicio</i></h6>
-                                    <p class="mb-0">{{experimento.fechaInicio | date}}</p>
-                                </div>
-                                <div>
-                                    <h6><i>Estado</i></h6>
-                                    <p class="mb-0">{{experimento.finalizado ? 'Finalizado' : 'Activo'}}</p>
-                                </div>
-                            </div>
-                        </div>
-                  </div>
+          <div class="experimento-filtro-container">
+            <div class="d-flex justify-content-around align-items-center my-4" *ngIf='experimentos.length != 0'>
+              <div>
+                <label for="usuario">Filtro por nombre</label>
+                <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por nombre de proyecto" [(ngModel)]='filterPostName'>
               </div>
-              <div class="my-3" *ngIf='experimentos.length === 0'>
-                <p class="text-danger"><i>No hay experimentos creados</i></p>
+              <div>
+                <label for="usuario">Filtro por nombre</label>
+                <select class="form-control"  id='usuario' aria-label="Default select example" [(ngModel)]='filterPostActive'> 
+                  <option selected hidden value="-1">Seleccione director/a de Proyecto</option>
+                  <option value="false">Activo</option>
+                  <option value="true">Finalizado</option>
+                </select>
+              </div>
+            </div>
+            <div class="experimentos-container">
+              <div *ngFor="let experimento of experimentos | filter: filterPostName | filterState: filterPostActive" class="card card-experimento my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='experimento/{{experimento.id_experimento}}' >
+                  <div class="" >
+                      <div class="card-body">
+                          <h5 class="card-title text-center">{{experimento.codigo}}</h5>
+                          <hr class="my-3 bg-{{experimento.finalizado? 'danger' : 'success'}}">
+                          <p class="card-text text-center">{{experimento.objetivos.substring(0,100)}}{{experimento.objetivos.length > 100 ? '...' : ''}}</p>
+                          <div class="d-flex flex-row justify-content-between">
+                              <div>
+                                  <h6><i>Fecha de Inicio</i></h6>
+                                  <p class="mb-0">{{experimento.fechaInicio | date}}</p>
+                              </div>
+                              <div>
+                                  <h6><i>Estado</i></h6>
+                                  <p class="mb-0">{{experimento.finalizado ? 'Finalizado' : 'Activo'}}</p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+              <div class="text-center" *ngIf='experimentos.length === 0'>
+                <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+                <h5>No hay experimentos asignados, cree uno para continuar</h5>
               </div>
             </div>
         </div>
@@ -95,10 +108,6 @@
         <div class="m-4">
           <div class="">
             <form class="row">
-              <!-- <div class="col-3 d-flex justify-content-center" *ngIf='!proyecto?.finalizado'>
-                <button class="btn btn-outline-success" (click)="open(blog)">Nueva Entrada</button>
-              </div> -->
-              <!-- <div class="barra" *ngIf='!proyecto?.finalizado'></div> -->
               <div class="col-6 d-flex justify-content-around align-items-center">
                 <div class="form-group mb-0">
                   <div class="input-group">
@@ -142,7 +151,7 @@
               </div>
             </ngb-alert>
         
-            <!-- <button class="btn btn-outline-primary text-center">Ver mas</button> -->
+            
           </div>
         </div>
       </ng-template>
@@ -163,30 +172,4 @@
   <div class="modal-body">
     <app-finalizar-proyecto (cerrar)="modal.dismiss()"></app-finalizar-proyecto>
   </div>
-  <!-- <div class="modal-footer">
-      <button class="btn btn-primary mr-3"(propagar)="procesaPropagar($event)">Agregar</button>
-  </div> -->
 </ng-template>
-
-<!-- 
-<ng-template #blog let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Crear Publicacion</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body mx-5">
-    <div class="row">
-      <div class="col-8 d-flex justify-content-center align-items-center">
-        <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6"></textarea>
-      </div>
-      <div class="col d-flex justify-content-center align-items-center">
-        <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-      <button class="btn btn-outline-primary btn-lg mr-3">Crear</button>
-  </div>
-</ng-template> -->

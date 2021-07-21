@@ -22,6 +22,7 @@ export class DetalleExperimentosComponent implements OnInit {
   fechaHoy: any;
   fechaDesde: any;
   fechaHasta: any;
+  blogs = [];
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -50,30 +51,28 @@ export class DetalleExperimentosComponent implements OnInit {
       // console.log(res);
       res === null ? this.gruposExperimentales = [] : this.gruposExperimentales = res;
     });
-    this.fechaHoy = new Date()
-    console.log(this.fechaHoy)
+
     this.fechaDesde = new Date();
-    console.log(this.fechaDesde.getDate())
-    this.fechaDesde.setDate(this.fechaDesde.getDate() - 3)
-    console.log(this.fechaDesde)
-    this.fechaDesde = this.fechaDesde.toDateString();
-    console.log(this.fechaDesde)
-    this.fechaHasta = new Date().toDateString();
+    this.fechaDesde.setDate(this.fechaDesde.getDate() - 3);
+    // this.fechaDesde = this.fechaDesde.toDateString();
+    this.fechaHasta = new Date();
+
     this.postService.obtenerBlogExperimento({
       id_experimento: this.idExperimento,
-      fechaDesde: this.fechaDesde,
-      fechaHasta: this.fechaHasta
+      fechaDesde: this.fechaDesde.toDateString(),
+      fechaHasta: this.fechaHasta.toDateString()
     }).subscribe(res => {
       console.log(res);
-    })
+      this.blogs = res;
+    });
   }
 
   crearGrupoExperimental(): void {
-    let grupoExperimental = this.formGrupoExperimental.value;
+    const grupoExperimental = this.formGrupoExperimental.value;
     grupoExperimental.id_experimento = this.idExperimento;
     this.postService.crearGrupoExperimental(grupoExperimental).subscribe(res => {
       console.log(res);
-    })
+    });
   }
 
   open(content): void {
@@ -81,30 +80,40 @@ export class DetalleExperimentosComponent implements OnInit {
   }
 
   crearBlog(): void{
-    const Blog: any={
+    const Blog: any = {
       id_usuario: 1,
       detalle: this.detalleExperimento,
       tipo: 'Experimento'
-    }
-    const nuevoBlog : any ={
+    };
+    const nuevoBlog: any = {
       id_proyecto: this.idProyecto,
       id: this.idExperimento,
       blogs: Blog
-    }
-    console.log(nuevoBlog)
-    this.postService.crearBlogProyecto(nuevoBlog).subscribe(res =>{
-      console.log(res)
+    };
+    // console.log(nuevoBlog)
+    this.postService.crearBlogProyecto(nuevoBlog).subscribe(res => {
       if (res.Status === 'ok'){
         // this.alert = true;
         // this.estado = 'success';
         // this.mensajeAlert = 'Blog creado correctamente';
       }
     }, err => {
-      console.log(err)
+      // console.log(err)
       // this.alert = true;
       // this.estado = 'danger';
       // this.mensajeAlert = JSON.stringify(err.error.error);
-    })
+    });
+  }
+
+  filtrarBlogs(): void{
+    this.postService.obtenerBlogExperimento({
+      id_experimento: this.idExperimento,
+      fechaDesde: new Date(this.fechaDesde.year, this.fechaDesde.month - 1, this.fechaDesde.day).toDateString(),
+      fechaHasta: new Date(this.fechaHasta.year, this.fechaHasta.month - 1, this.fechaHasta.day).toDateString()
+    }).subscribe(res => {
+      console.log(res);
+      this.blogs = res;
+    });
   }
 
 }

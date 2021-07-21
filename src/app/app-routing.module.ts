@@ -47,6 +47,7 @@ const routes: Routes = [
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
       {path: 'proyectos/:id/experimento/:idExperimento/finalizar-experimento', component: FinalizarExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento/grupo-experimental/:idGrupo', component: GrupoExperimentalComponent},
+      {path: 'proyectos/:id/editar-experimento/:idExperimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'proyectos/:id/finalizar-proyecto', component: FinalizarProyectoComponent},

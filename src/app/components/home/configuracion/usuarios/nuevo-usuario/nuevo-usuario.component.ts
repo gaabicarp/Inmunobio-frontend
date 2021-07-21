@@ -68,6 +68,7 @@ export class NuevoUsuarioComponent implements OnInit {
     };
     if (this.modo === 'CREAR'){
       this.postService.crearUsuario(usuario).subscribe(res => {
+        console.log(res)
         if (res.Status === 'ok'){
           this.alert = true;
           this.estado = 'success';
@@ -85,6 +86,7 @@ export class NuevoUsuarioComponent implements OnInit {
       usuario.id_usuario = this.element.id_usuario;
       console.log(usuario);
       this.postService.editarUsuario(usuario).subscribe(res => {
+        console.log(res)
         if (res.Status === 'ok'){
           this.alert = true;
           this.estado = 'success';
@@ -94,6 +96,7 @@ export class NuevoUsuarioComponent implements OnInit {
           }, 2000);
         }
       }, err => {
+        console.log(err)
         this.alert = true;
         this.estado = 'danger';
         this.mensajeAlert = JSON.stringify(err.error.error);

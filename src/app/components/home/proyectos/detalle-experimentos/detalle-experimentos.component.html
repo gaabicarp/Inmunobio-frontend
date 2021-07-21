@@ -9,8 +9,8 @@
     <div class="d-flex align-items-center">
       <h2 class="mb-0">Experimento - {{experimento?.codigo}}</h2>
       <div class="ml-4" *ngIf='!experimento?.finalizado'>
-        <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='../editar-proyecto/{{experimento?.id_proyecto}}'><i class="bi bi-pencil text-primary"></i> Editar</button>
-        <button class="btn btn-outline-danger ml-4" (click)="open(finalizarProyecto)">Finalizar Experimento</button>
+        <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='../../editar-experimento/{{idExperimento}}'><i class="bi bi-pencil text-primary"></i> Editar</button>
+        <button class="btn btn-outline-danger ml-4" (click)="open(finalizarExperimento)">Finalizar Experimento</button>
       </div>
     </div>
   </div>
@@ -23,12 +23,12 @@
                 <div class="p-4">
                   <h4 class="text-secondary text-staatliches mb-0">Objetivo del Experimento</h4>
                   <p>{{experimento?.objetivos}}</p>
-                  <h4 class="text-secondary text-staatliches mb-0">Conclusiones del Experimento</h4>
-                  <p class="text-danger"><i>{{experimento?.conclusiones ? experimento?.conclusiones : 'Experimento Sin Finalizar'}}</i></p>
                   <h4 class="text-secondary text-staatliches mb-0">Resultados del Experimento</h4>
                   <p class="text-danger"><i>{{experimento?.resultados ? experimento?.resultados : 'Experimento Sin Finalizar'}}</i></p>
+                  <h4 class="text-secondary text-staatliches mb-0">Conclusiones del Experimento</h4>
+                  <p class="text-danger"><i>{{experimento?.conclusiones ? experimento?.conclusiones : 'Experimento Sin Finalizar'}}</i></p>
                 </div>
-                <div class="rounded pb-5 d-flex align-items-center justify-content-around">
+                <div class="rounded p-5 d-flex align-items-center justify-content-around">
                   <div class="mx-5">
                     <h4 class="text-secondary text-staatliches mb-0">Fecha de Inicio</h4>
                     <p class="mb-0">{{experimento?.fechaInicio | date}}</p>
@@ -41,11 +41,11 @@
                   <div class="barra"></div>
                   <div class="mx-5">
                     <h4 class="text-secondary text-staatliches mb-0">Metodologia de Trabajo</h4>
-                    <p class="mb-0">{{experimento?.metodologia}}</p>  
+                    <a href='{{experimento?.metodologia}}' target="_blank" class="mb-0">{{experimento?.metodologia}}</a>  
                   </div>
                 </div>
               </div>
-              <div class="m-4">
+              <div class="mx-5">
                 <div class="d-flex align-items-center">
                   <h4 class="text-secondary text-staatliches mb-0">Grupos Experimentales</h4>
                   <div class="ml-4">
@@ -97,7 +97,7 @@
                       <div class="form-group mb-0">
                         <div class="input-group">
                           <input class="form-control" placeholder="Fecha Desde"
-                                 name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                                 name="dp" [(ngModel)]="fechaDesde" max="fechaHasta" ngbDatepicker #d="ngbDatepicker">
                           <div class="input-group-append">
                             <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                           </div>
@@ -106,32 +106,36 @@
                       <div class="form-group mb-0">
                         <div class="input-group">
                           <input class="form-control" placeholder="Fecha Hasta"
-                                 name="dp" [(ngModel)]="model2" ngbDatepicker #d="ngbDatepicker">
+                                 name="dp" [(ngModel)]="fechaHasta" ngbDatepicker min="fechaDesde" #b="ngbDatepicker">
                           <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                            <button class="btn btn-outline-secondary calendar" (click)="b.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                           </div>
                         </div>
                       </div>
-                      <button class="btn btn-outline-secondary">Filtrar</button>
+                      <button class="btn btn-outline-secondary" (click)='filtrarBlogs()'>Filtrar</button>
                     </div>
                     
                   </form>
                 </div>
                 
                 <div class="p-4 d-flex flex-column">
-                  <ngb-alert [dismissible]="false" class="w-75">
-                    <div class="row">
-                      <div class="col-1 d-flex flex-column justify-content-center align-items-center">
+
+                  <div class="my-3" *ngIf='blogs.length === 0'>
+                    <p class="text-danger"><i>No hay blogs creados</i></p>
+                  </div>
+
+                  <ngb-alert [dismissible]="false" class="w-75" *ngFor='let blog of blogs'>
+                    <div class="row" >
+                      <div class="col-3 d-flex flex-column justify-content-center align-items-center">
                         <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
                           <i class="bi bi-arrow-left-right"></i>
                         </div>
-                        <p class="text-center mb-0">20/03/19</p>
-                        <p>20:24hs</p>
+                        <p class="text-center mb-0">{{blog.fecha | date:'short' }}</p>
                       </div>
-                      <div class="col">
-                        <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
-                        <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                        <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
+                      <div class="col-9">
+                        <strong>{{blog.tipo}} - {{blog?.codigoExperimento}}</strong> 
+                        <p class="mb-0"><i>{{blog.id_usuario}}</i></p>
+                        <p>{{blog.detalle}}</p>
                       </div>
                     </div>
                   </ngb-alert>
@@ -141,75 +145,6 @@
               </div>
             </ng-template>
         </li>
-        <!-- <li [ngbNavItem]="3">
-            <a ngbNavLink>Grupos experimentales</a>
-            <ng-template ngbNavContent>
-                <div class="p-4 m-4">
-                    <h4 class="text-center"><i>Grupos experimentales</i></h4>
-                    <form [formGroup]='formGrupoExperimental'>
-                    <table class="table table-hover">
-                      <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Codigo</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Fuentes Experimentales</th>
-                        <th scope="col">Muestras</th>
-                        <td scope="col"><a class="link-primary" style="cursor: pointer" (click)='agregarGrupo = !agregarGrupo'>+Agregar</a></td>
-                      </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngIf='agregarGrupo'>
-                            <td colspan="2">
-                                <label for="tipo" class="form-label">Tipo</label>
-                                <select class="form-control"  id='tipo' aria-label="Default select example" formControlName='tipo'>
-                                        <option value="animal">Animal</option>
-                                        <option value="otro">Otro</option>
-                                </select>
-                            </td>
-                            <td colspan="2">
-                                <!-- <div class='' *ngIf="formExperimento.value.tipo === 'animal'">
-                                    <label for="animal" class="form-label">Seleccionar animal</label>
-                                    <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
-                                            <option *ngFor='let animal of animalesProyecto' value="{{animal}}">{{animal.especie}} - {{animal.cepa}}</option>
-                                    </select> -->
-                                <!-- </div>  -->
-                                <!-- <div class=''>
-                                    <label for="otro" class="form-label">Codigo de grupo experimental</label>
-                                    <input type="text" class="form-control" id="otro" formControlName='codigo'>
-                                </div>
-                            </td>
-                            <td colspan='2' style="vertical-align: bottom;">
-                                <div class='agregar'>
-                                    <button class="btn btn-primary mr-3" (click)='crearGrupoExperimental()'>Agregar+</button>
-                                    <button class="btn btn-danger" (click)='agregarGrupo = false'>Cancelar</button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr *ngFor='let grupo of gruposExperimentales; let i = index' routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
-                            <th scope="row">{{ i + 1 }}</th> 
-                            <td>
-                             {{grupo?.codigo}} 
-                            </td>
-                            <td>
-                             {{grupo?.tipo}} 
-                            </td>
-                            <td>
-                             {{grupo?.fuentesExperimentales.length}} 
-                            </td>
-                            <td colspan="2">
-                             {{grupo?.muestras.length}} 
-                            </td>
-                        </tr>
-                        <tr *ngIf='gruposExperimentales.length === 0'>
-                            <td colspan="6">Sin experimentos</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </form>
-                </div>
-            </ng-template>
-        </li> -->
     </ul>
     <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
@@ -272,4 +207,19 @@
   <div class="modal-footer">
       <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlog()'>Crear</button>
   </div>
+</ng-template>
+
+<ng-template #finalizarExperimento let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Finalizar Proyecto</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-finalizar-proyecto (cerrar)="modal.dismiss()"></app-finalizar-proyecto>
+  </div>
+  <!-- <div class="modal-footer">
+      <button class="btn btn-primary mr-3"(propagar)="procesaPropagar($event)">Agregar</button>
+  </div> -->
 </ng-template>

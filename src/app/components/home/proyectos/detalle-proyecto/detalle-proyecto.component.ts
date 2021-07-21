@@ -26,6 +26,8 @@ export class DetalleProyectoComponent implements OnInit {
   usuariosProyecto = [];
   idProyecto: number;
   active = 1;
+  filterPostName: string;
+  filterPostActive: number;
 
   constructor(
     private router: Router,
@@ -35,6 +37,8 @@ export class DetalleProyectoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.filterPostActive = -1;
+    this.filterPostName = '';
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
       console.log(res)

@@ -6,30 +6,31 @@
         <h2>Nuevo Proyecto</h2>
     </div>
 
-    <div class="p-5 mx-5 mb-4">
+    <div class="p-5 mx-5 mb-4" *ngIf='!cargando'>
         <form [formGroup]="formProyecto" (ngSubmit)="crearProyecto()">
             <div class="row">
                 <div class="col-9">
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre de proyecto</label>
-                        <input type="text" class="form-control" id="nombre" formControlName='nombre'>
+                        <input type="text" class="form-control" id="nombre" formControlName='nombre' placeholder="Ingrese nombre de proyecto">
                         <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="mb-3 row">
                         <div class="col">
                             <label for="codigoProyecto" class="form-label">Codigo de Proyecto</label>
-                            <input type="text" class="form-control" id="codigoProyecto" formControlName='codigoProyecto'>
+                            <input type="text" class="form-control" id="codigoProyecto" formControlName='codigoProyecto' placeholder="Ingrese codigo de proyecto">
                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                         </div>
                         <div class="col">
                             <label for="montoInicial" class="form-label">Presupuesto Inicial</label>
-                            <input type="number" class="form-control" id="montoInicial" formControlName='montoInicial'>
+                            <input type="number" class="form-control" id="montoInicial" formControlName='montoInicial' placeholder="Ingrese monto inicial de proyecto">
                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="director" class="form-label">Director de Proyecto</label>
-                        <select class="form-control"  id='director' aria-label="Default select example" formControlName="idDirectorProyecto">
+                        <select class="form-control"  id='director' aria-label="Default select example" formControlName="idDirectorProyecto" (change)="filtrarDirector()"> 
+                            <option selected hidden value="-1">Seleccione director/a de Proyecto</option>
                             <option *ngFor='let usuario of directoresProyecto' value="{{usuario.id_usuario}}">{{usuario.nombre}}</option>
                         </select>
                     </div>
@@ -43,7 +44,7 @@
 
             <div class="mb-3">
                 <label for="descripcion" class="form-label">Descripcion</label>
-                <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" formControlName='descripcion'></textarea>
+                <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" formControlName='descripcion' placeholder="Ingrese descripcion de proyecto"></textarea>
                 <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
             </div>
 
@@ -66,8 +67,12 @@
                 </div>
             </div>
         </form>
-        <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-            {{mensajeAlert}}
+    </div>
+    <div class="d-flex justify-content-center" *ngIf='cargando'>
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
         </div>
     </div>
 </div>
+
+<app-toast></app-toast>
