@@ -7,6 +7,7 @@ import { Producto } from 'src/app/models/producto.model'
 import { DatePipe } from '@angular/common';
 import { ProductoEdic, ProductoStock, Stock, StockEdicion } from 'src/app/models/stock.model';
 import { Contenedor } from 'src/app/models/contenedores.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-stock',
@@ -18,32 +19,52 @@ import { Contenedor } from 'src/app/models/contenedores.model';
 export class AgregarStockComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
-  @Input() element!: any;
-  @Input() idProducto!: any;
-  @Input() modo!: string;
-  @Input() espacio!: number;
-  @Output() volviendo = new EventEmitter<number>();
-
   productos: Producto;
   contenedores: Contenedor;
-  nuevoStocks = [];
-  lista = [];
   
   formStock!: FormGroup;
   step: number;
   estado: string;
   mensajeAlert: string;
   alert: boolean;
+
+  idEspacioFisico:number;
+  idProd:number;
+  idProdEnStock:number;
+  idUbicacion:number;
+  stocks:any;
+  producto:any;
+  prodEspecifico:any;
+  editar = false;
  
-  constructor(private getService: GetService, private postService: PostService, public datepipe: DatePipe) { }
+  constructor(private getService: GetService, private postService: PostService, public datepipe: DatePipe, private activatedRouter: ActivatedRoute) { }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
   ngOnInit(): void {
     this.step = 2;
     this.alert = false;
-    console.log(this.espacio)
-    console.log(this.idProducto)
+
+    this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
+    this.idProd = parseInt(this.activatedRouter.snapshot.paramMap.get('idProducto'), 10);
+    this.idProdEnStock = parseInt(this.activatedRouter.snapshot.paramMap.get('idProductoEnStock'), 10);
+    this.idUbicacion = parseInt(this.activatedRouter.snapshot.paramMap.get('idUbicacion'), 10);
+    console.log(this.idProd)
+    console.log(this.idUbicacion)
+    if (!isNaN(this.idProd)){
+      this.getService.obtenerStock(this.idEspacioFisico).subscribe(res =>{
+        this.stocks = res;
+        console.log(res)
+      })
+      this.editar = true;
+      setTimeout(() => {
+        this.producto = this.stocks.find(stock => (stock.id_producto = this.idProd) && (stock.id_productoEnStock == this.idProdEnStock))
+        console.log(this.producto)
+
+        this.prodEspecifico = this.producto.producto[this.idUbicacion]
+        console.log(this.prodEspecifico)
+      }, 500);
+    }
     this.subscription.add( this.getService.obtenerProductos().subscribe(res => {
                             console.log(res)
                             this.productos = res; })
@@ -53,95 +74,82 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
                             this.contenedores = res; })
     );
     this.formStock = new FormGroup({
-      producto: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      producto: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       lote: new FormControl('', [Validators.maxLength(50)]),
-      unidad: new FormControl('', [Validators.required,Validators.maxLength(50)]),
-      contenedor: new FormControl('', [Validators.maxLength(11)]),
-      detalleUbicacion: new FormControl('', [Validators.maxLength(11)]),
+      unidad: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      contenedor: new FormControl('', [Validators.maxLength(30)]),
+      detalleUbicacion: new FormControl('', [Validators.maxLength(50)]),
       fechaVencimiento: new FormControl('', [Validators.maxLength(11)]),
     });
-    if (this.modo === 'EDITAR'){
-      console.log(this.element)
-      this.formStock.patchValue({
-        producto: this.element.id_producto,
-        lote: this.element.producto[this.idProducto].lote,
-        unidad: this.element.producto[this.idProducto].unidad,
-        contenedor: this.element.producto[this.idProducto].codigoContenedor,
-        detalleUbicacion: this.element.producto[this.idProducto].detalleUbicacion,
-        fechaVencimiento: this.datepipe.transform(this.element.producto[this.idProducto].fechaVencimiento, 'yyyy-MM-dd')
-      });
-    }
+    setTimeout(() => {
+      if (!isNaN(this.idProd)){
+        this.formStock.patchValue({
+          producto: this.producto.id_producto,
+          lote: this.prodEspecifico.lote,
+          unidad: this.prodEspecifico.unidad,
+          contenedor: this.prodEspecifico.codigoContenedor,
+          detalleUbicacion: this.prodEspecifico.detalleUbicacion,
+          fechaVencimiento: this.datepipe.transform(this.prodEspecifico.fechaVencimiento, 'yyyy-MM-dd')
+        });
+      }
+    },500);
+    
   }
-
-  productoEnStock(): void{
+  agregarStock(): void{
     var fecha = this.formStock.value.fechaVencimiento;
-    const productoEnStock : ProductoStock = {
+    const productoEnStock : any = {
       lote: this.formStock.value.lote,
       unidad: this.formStock.value.unidad,
       codigoContenedor: this.formStock.value.contenedor,
       detalleUbicacion: this.formStock.value.detalleUbicacion,
       fechaVencimiento: this.datepipe.transform( fecha,'yyyy-MM-ddT23:01:10.288Z')
     }
-    this.lista = [productoEnStock]
-    this.AgregarStock(this.lista)
-  }
-
-  AgregarStock(productoEnStock): void{
     const stock : Stock = {
       id_grupoDeTrabajo : 1 ,
-      id_espacioFisico : this.espacio ,
+      id_espacioFisico : this.idEspacioFisico ,
       id_producto: this.formStock.value.producto,
       producto: productoEnStock
     };
-    this.nuevoStocks.push(stock) // esto es para que me aparezca la lista abajo
-    if (this.modo === 'CREAR'){
-      console.log(this.nuevoStocks)
-      this.postService.agregarStock(stock).subscribe(res => {
-        if (res.Status === 'ok'){
-          this.alert = true;
-          this.estado = 'success';
-          this.mensajeAlert = 'Producto en stock agregado correctamente';
-          setTimeout(() => {
-            this.volviendo.emit(1);
-          }, 2000);
-        }
-        console.log(res);
-      }, err => {
+    console.log(stock)
+    if (!isNaN(this.idProd)){
+      const prod : ProductoEdic = {
+        codigoContenedor: this.formStock.value.contenedor,
+        detalleUbicacion : this.formStock.value.detalleUbicacion,
+        unidad : 0,
+        id_productos : this.prodEspecifico.id_productos
+      }
+      const edicion : StockEdicion = {
+        id_productoEnStock: this.producto.id_productoEnStock,
+        producto: prod
+      }
+    this.postService.editarStock(edicion).subscribe(res => {
+      if (res.Status === 'ok'){
         this.alert = true;
-        this.estado = 'danger';
-        this.mensajeAlert = JSON.stringify(err.error.error);
-      });
-    } 
-      else {
-        const prod : ProductoEdic = {
-          codigoContenedor: this.formStock.value.contenedor,
-          detalleUbicacion : this.formStock.value.detalleUbicacion,
-          unidad : 0,
-          id_productos : this.element.producto[this.idProducto].id_productos
-        }
-        const edicion : StockEdicion = {
-          id_productoEnStock: this.element.id_productoEnStock,
-          producto: prod
-        }
-      this.postService.editarStock(edicion).subscribe(res => {
-        if (res.Status === 'ok'){
+        this.estado = 'success';
+        this.mensajeAlert = 'Información editada correctamente';
+      }
+      console.log(res);
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err.error.error);
+    });
+    } else {
+        this.postService.agregarStock(stock).subscribe(res => {
+          if (res.Status === 'ok'){
+            this.alert = true;
+            this.estado = 'success';
+            this.mensajeAlert = 'Producto en stock agregado correctamente';
+          }
+          console.log(res);
+        }, err => {
           this.alert = true;
-          this.estado = 'success';
-          this.mensajeAlert = 'Producto en stock agregado correctamente';
-          setTimeout(() => {
-            this.volviendo.emit(1);
-          }, 2000);
-        }
-        console.log(res);
-      }, err => {
-        this.alert = true;
-        this.estado = 'danger';
-        this.mensajeAlert = JSON.stringify(err.error.error);
-      });
+          this.estado = 'danger';
+          this.mensajeAlert = JSON.stringify(err.error.error);
+          console.log(err)
+        });
     }
   }
-  volver(): void{
-    this.volviendo.emit(1);
-  }
+  
 }
 

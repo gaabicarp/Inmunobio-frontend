@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -10,13 +11,17 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class AltaAnimalComponent implements OnInit {
 
+  idJaula:number;
   formAnimal!: FormGroup;
-  idJaula!: string;
 
-  constructor(private activatedRouter: ActivatedRoute, private postService: PostService) { }
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
+
+  constructor(private postService: PostService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.idJaula = this.activatedRouter.snapshot.paramMap.get('id');
+    this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.formAnimal = new FormGroup({
       especie: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       cepa: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -28,7 +33,17 @@ export class AltaAnimalComponent implements OnInit {
     const animal = this.formAnimal.value;
     animal.id_jaula = this.idJaula;
     this.postService.crearAnimal(animal).subscribe(res => {
+      if (res.Status === 'Se creó el nuevo animal.'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Animal creado correctamente';
+      }
       console.log(res)
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err);
+      console.log(err)
     })
   }
 

@@ -107,6 +107,9 @@ export class GrupoExperimentalComponent implements OnInit {
     }
     this.postService.crearMuestra([obj]).subscribe(res => {
       console.log(res)
+      setTimeout(() => {
+        this.ngOnInit()
+      }, 500);
     })
   } 
 

@@ -143,12 +143,24 @@
                   <!-- <button class="btn btn-outline-primary text-center">Ver mas</button> -->
                 </div>
               </div>
+              <div class="alert alert-danger text-center" role="alert" *ngIf='blogs.length === 0 '>
+                No existen blogs
+              </div> 
             </ng-template>
         </li>
     </ul>
     <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
+</div>
 
+<div *ngIf='step === 1'>
+  <app-nuevo-experimento
+  [element] = 'experimento'
+  [modo]='modo'
+  (onVolver)='volver()'
+  >
+</app-nuevo-experimento>
+</div>
 
 <ng-template #GrupoExperimental let-modal>
   <div class="modal-header">

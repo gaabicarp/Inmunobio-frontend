@@ -47,6 +47,14 @@ import { FilterPipe } from './pipe/filter.pipe';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { FilterStatePipe } from './pipe/filter-state.pipe';
 import { ToastComponent } from './components/shared/toast/toast.component';
+import { NuevoBlogHerramientaComponent } from './components/home/stock/blog-herramientas/nuevo-blog-herramienta/nuevo-blog-herramienta.component';
+import { BlogHerramientasComponent } from './components/home/stock/blog-herramientas/blog-herramientas.component';
+import { HerramientasComponent } from './components/home/stock/herramientas/herramientas.component';
+import { NuevaHerramientaComponent } from './components/home/stock/herramientas/nueva-herramienta/nueva-herramienta.component';
+import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
+import { AsociarProyectoJaulaComponent } from './components/home/bioterio/jaula-detalle/asociar-proyecto-jaula/asociar-proyecto-jaula.component';
+import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detalle-experimentos/nuevo-blog-experimento/nuevo-blog-experimento.component';
+
 
 
 @NgModule({
@@ -91,7 +99,14 @@ import { ToastComponent } from './components/shared/toast/toast.component';
     BlogsEspacioFisicoComponent,
     FilterPipe,
     FilterStatePipe,
-    ToastComponent
+    ToastComponent,
+    NuevoBlogHerramientaComponent,
+    BlogHerramientasComponent,
+    HerramientasComponent,
+    NuevaHerramientaComponent,
+    NuevoBlogProyectoComponent,
+    AsociarProyectoJaulaComponent,
+    NuevoBlogExperimentoComponent
 
   ],
   imports: [

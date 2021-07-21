@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { BlogEspacio, Blogs } from 'src/app/models/blogs.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
@@ -10,21 +11,22 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./nuevo-blog-espacio.component.css']
 })
 export class NuevoBlogEspacioComponent implements OnInit {
-  @Output() volviendo = new EventEmitter<number>();
-  @Input() espacio!: number;
 
   formBlog!: FormGroup;
   estado: string;
   mensajeAlert: string;
   alert: boolean;
+  step: number;
+  idEspacioFisico:number;
 
-  constructor(private getService: GetService, private postService: PostService) { }
+  constructor(private getService: GetService, private postService: PostService, private activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     this.alert = false;
-    
+    this.step = 6;
     this.formBlog = new FormGroup({
-      detalle: new FormControl('', [Validators.maxLength(50)]),
+      detalle: new FormControl('', [Validators.maxLength(200)]),
     });
   }
 
@@ -35,7 +37,7 @@ export class NuevoBlogEspacioComponent implements OnInit {
       tipo :'espacioFisico'
     }
     const nuevoBlog : BlogEspacio ={
-      id_espacioFisico: this.espacio,
+      id_espacioFisico: this.idEspacioFisico,
       blogs: blog
     }
     this.postService.crearBlogEspacio(nuevoBlog).subscribe(res => {
@@ -43,9 +45,6 @@ export class NuevoBlogEspacioComponent implements OnInit {
         this.alert = true;
         this.estado = 'success';
         this.mensajeAlert = 'Blog creado correctamente';
-        setTimeout(() => {
-          this.volviendo.emit(4);
-        }, 2000);
       }
       console.log(res)
     }, err => {
@@ -55,8 +54,5 @@ export class NuevoBlogEspacioComponent implements OnInit {
     });
   }
 
-  volver(): void{
-    this.volviendo.emit(4);
-  }
 
 }

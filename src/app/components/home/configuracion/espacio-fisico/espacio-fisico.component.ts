@@ -10,40 +10,34 @@ import { PostService } from 'src/app/services/post.service';
 export class EspacioFisicoComponent implements OnInit {
 
   espaciosFisicos = [];
-
-  espacioSeleccionado: any;
-  step: number;
-  modo: string;
-
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
   constructor(private getService: GetService, private postService: PostService) { }
 
   ngOnInit(): void {
-    this.step = 0;
+    this.alert = false;
     this.getService.obtenerEspaciosFisicos().subscribe(res => {
       console.log(res)
       this.espaciosFisicos = res;
     });
   }
-
-  editar(espacio: any): void{
-    this.espacioSeleccionado = espacio;
-    this.modo = 'EDITAR';
-    this.step = 1;
-  }
-
-  crear(): void {
-    this.modo = 'CREAR';
-    this.step = 1;
-  }
-
   eliminar(espacio: any): void{
-    // this.postService.eliminarEspacioFisico(espacio.id_espacio).subscribe(res => {
-    //   console.log(res);
-    // });
-  }
-
-  onVolviendo(e: number): void {
-    this.step = e;
+    this.postService.eliminarEspacioFisico(espacio.id_espacioFisico).subscribe(res => {
+      if (res.Status === 'ok'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Espacio fisico eliminado correctamente';
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 2000);
+      }
+      console.log(res);
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err.error.error);
+    });
   }
 
 }

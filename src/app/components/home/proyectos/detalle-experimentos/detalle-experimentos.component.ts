@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -11,6 +11,7 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./detalle-experimentos.component.css']
 })
 export class DetalleExperimentosComponent implements OnInit {
+  
   idProyecto!: number;
   idExperimento!: number;
   proyecto: any;

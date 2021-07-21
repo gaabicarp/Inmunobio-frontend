@@ -1,17 +1,28 @@
 <div *ngIf='step === 5'>
-  <div class="search-container flex-wrap">
-    <div class="input-group mb-3">
-        <span class="input-group-text">
-            <i class="bi bi-search"></i>
-        </span>
-        <input type="text" class="form-control" id="usuario" placeholder="Filtrar según usuario">
-    </div>
-    <div>
-        <button type="button" class="btn btn-primary btn-lg" (click)=nuevoBlog()>Crear entrada de Blog</button>
-    </div>
+  
+  <div class="card rounded shadow m-3 p-4">
+    <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
+      <div class="row">
+        <div class="col">
+          <label for="fecDesde" class="form-label">Fecha inicial</label>
+          <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
+        </div>
+        <div class="col">
+          <label for="fecHasta" class="form-label">Fecha final</label>
+          <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
+        </div>
+        <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">Buscar</button>
+      </div>
+    </form>
   </div>
   <div>
-    <div class="row m-2" >
+    <div class="d-flex bd-highlight m-2">
+      <div class="p-2 flex-grow-1 bd-highlight"></div>
+      <div class="p-2 bd-highlight">
+        <button type="button" class="btn btn-primary" (click)=nuevoBlog()>Nuevo Blog</button>
+      </div>
+    </div>
+    <div class="row m-2 float-lg-start" >
         <ng-container *ngFor='let a of blogs;let i = index'>
       <div class="col-1 d-flex flex-column  align-items-center">
         <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
@@ -19,9 +30,9 @@
         </div>
         <p class="text-center mb-0">{{a.fecha | date: 'shortDate'}}</p>
         <div>
-        <a class="text-danger" role="button" (click)=eliminar(a.id_blog)>
+        <!-- <a class="text-danger" role="button" (click)=eliminar(a.id_blog)>
           <i class="">eliminar</i>
-        </a>
+        </a> -->
       </div>
       </div>
       <div class=" col-11 card shadow  mb-3">

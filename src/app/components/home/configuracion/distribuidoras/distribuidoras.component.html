@@ -1,4 +1,4 @@
-<div *ngIf='step === 0'>
+
     <div class="m-4" routerLink="../" role="button">
         <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
     </div>
@@ -6,6 +6,9 @@
         
         <div class="text-center my-4">
             <h2>Distribuidoras</h2>
+        </div>
+        <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+          <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
         </div>
         <div class="card rounded shadow p-4 mb-4">
             <table class="table table-hover">
@@ -30,7 +33,7 @@
                         <td>{{distribuidora.representante}}</td>
                         <td class="d-flex">
                             <div class="mr-4">
-                              <a class="text-primary" role="button" (click)=editar(distribuidora)>
+                              <a class="text-primary" role="button" routerLink={{distribuidora.id_distribuidora}}>
                                 <i class="bi bi-pencil"></i>
                               </a>
                             </div>
@@ -45,14 +48,6 @@
                 </tbody>
             </table>
         </div>
-    <button class="btn btn-primary" (click)=crear()>Nueva Distribuidora</button>
+    <button class="btn btn-primary" routerLink=nueva-distribuidora>Nueva Distribuidora</button>
     </div>
-</div>
-<div *ngIf='step === 1'>
-    <app-nueva-distribuidora
-    [element]='distribuidoraSeleccionada'
-    [modo]='modo'
-    (volviendo)='onVolviendo($event)'
-    >
-  </app-nueva-distribuidora>
-</div>
+
