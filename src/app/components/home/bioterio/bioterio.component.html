@@ -4,16 +4,18 @@
       <li [ngbNavItem]="1">
         <a ngbNavLink>Jaulas</a>
         <ng-template ngbNavContent>
-
-          <div class="search-container row">
-            <div class="col-5">
+          <div class="search-container d-flex m-2">
+            <div class="input-group w-50">
+                <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                </span>
                 <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por código de jaula" [(ngModel)]='filterPost'>
             </div>
-            <div class="">
-                <button class="btn btn-outline-primary" routerLink='editar-jaula'>+Agregar</button>
+            <div>
+              <button class="btn btn-outline-primary" routerLink='editar-jaula'>+Agregar</button>
             </div>
         </div>
-        <hr class="my-5">
+        <hr class="my-3">
         <div class="jaula-container" *ngIf='!cargando'>
             <div *ngFor="let jaula of jaulas| filterCodigos: filterPost" class="card my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='{{jaula.id_jaula}}'>
                 <div class="">

@@ -17,7 +17,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class StockDetalleComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-
   stocks=[];
   productos: Producto;
   contenedores= [];
@@ -60,6 +59,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   blogsH:any;
   detalleBlog:any;
   id:number;
+  content:any;
   
   
   
@@ -190,6 +190,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   }
   Herramienta(a,content){
     this.open(content,'xl');
+    this.content = content;
     this.a = a
     const dia = (this.fecHoy).getDate() + 1;
     this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)
@@ -304,6 +305,9 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.modalService.dismissAll()
           this.ngOnInit()
+          setTimeout(() => {
+            this.Herramienta(this.a,this.content)
+          }, 1000);
         }, 2000);
       }
       console.log(res)
@@ -320,5 +324,3 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   }
 
 }
-//poner modal de ok eliminar herramienta?
-//reubicar el tacho de basura

@@ -71,6 +71,9 @@
       </ng-container>
       </div>    
     </div>
+    <div class="alert alert-danger m-2" role="alert" *ngIf='stocks?.length === 0'>
+      No hay stock disponible
+    </div>
     </ng-template>
   </li>
   
@@ -105,14 +108,14 @@
                     <option value='herramienta'>Herramienta</option>
                   </select>
                   <div class="input-group-append">
-                    <button class="btn btn-outline-secondary tools" type="button">Blog</button>
+                    <button class="btn btn-outline-secondary" type="button">Blog</button>
                   </div>
               </div>
             </div>
             <div class="form-group m-1" *ngIf ="formFecha.value.filtro === 'herramienta'">
               <div class="input-group w-auto">
               <select class="form-control" aria-label=".form-select-lg example" formControlName='herramienta'>
-                <option *ngFor='let herramienta of herramientas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
+                <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
               </select>
               <div class="input-group-append">
                 <button class="btn btn-outline-secondary tools" type="button"><i class="bi bi-tools"></i></button>
@@ -144,10 +147,6 @@
             </ng-container>
             <ng-container *ngIf = 'i%2!=0'>
               <div class=" row card-blog shadow rounded m-2">
-                <div class="col-1 d-flex flex-column align-items-center">
-                  <i class="bi bi-journals m-2"></i>
-                  <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
-                </div>
                 <div class="col-11" >
                   <div class="card-title card-header">
                     <strong>Blog n°{{a.id_blog}}</strong>
@@ -157,16 +156,19 @@
                     <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
                     <p>{{a.detalle}}</p>
                   </div>
-                </div>
+                  <div class="col-1 d-flex flex-column align-items-center">
+                    <i class="bi bi-journals m-2"></i>
+                    <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                  </div>
+              </div>
             </ng-container>
         </ng-container>
     </div>
-    <div class="alert alert-danger" role="alert" *ngIf='blogs?.length === 0'>
+    <div class="alert alert-danger m-2" role="alert" *ngIf='blogs?.length === 0'>
       No hay blogs existentes
     </div>
     </ng-template>
   </li>
-  
   <li [ngbNavItem]="3">
     <a ngbNavLink >Herramientas</a>
     <ng-template ngbNavContent>
@@ -186,7 +188,7 @@
             <div class="col-3 w-auto">
               <h4 class="card-title ">{{a.nombre}}</h4>
               <div class="d-flex">
-                <a class="text-primary m-2" role="button" routerLink='nueva-herramienta/{{a.id_herramienta}}' >
+                <a class="text-primary mt-1" role="button" routerLink='nueva-herramienta/{{a.id_herramienta}}' >
                   <i class="bi bi-pencil"></i>
                 </a>
               </div>
@@ -198,6 +200,9 @@
                 </div>
               </div>
         </div>
+      </div>
+      <div class="alert alert-danger m-2" role="alert" *ngIf='herramientasFiltradas?.length === 0'>
+        No hay herramientas disponibles
       </div>
   </ng-template>
   </li>
@@ -330,7 +335,7 @@
           </div>
       </div>
         <div class="row m-2" >
-          <ng-container *ngFor='let a of blogsH;let i = index'  >
+          <ng-container *ngFor='let a of blogsH; let i = index'  >
               <ng-container *ngIf = 'i%2==0'>
                 <div class=" row card-blog shadow rounded m-2">
                   <div class="col-1 d-flex flex-column align-items-center">
@@ -348,10 +353,6 @@
               </ng-container>
               <ng-container *ngIf = 'i%2!=0'>
                 <div class=" row card-blog shadow rounded m-2">
-                  <div class="col-1 d-flex flex-column align-items-center">
-                    <i class="bi bi-journals m-2"></i>
-                    <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
-                  </div>
                   <div class="col-11" >
                     <div class="card-title card-header">
                       <strong>Blog n°{{a.id_blog}}</strong>-Herramienta
@@ -359,10 +360,13 @@
                       <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
                       <p>{{a.detalle}}</p>
                     </div>
-                  </div>
+                    <div class="col-1 d-flex flex-column align-items-center">
+                      <i class="bi bi-journals m-2"></i>
+                      <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                    </div>
+                </div>
               </ng-container>
           </ng-container>
-
       </div>
       </div>
     <div class="alert alert-danger" role="alert" *ngIf='blogsH?.length === 0'>

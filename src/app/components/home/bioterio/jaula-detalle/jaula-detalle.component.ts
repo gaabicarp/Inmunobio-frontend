@@ -24,7 +24,7 @@ export class JaulaDetalleComponent implements OnInit {
   mensajeAlert: string;
   estado: string;
   alert: boolean;
-  animales:Animal;
+  animales=[];
   proyectos: Proyecto[];
   miProyecto:Proyecto;
   fecHoy=new Date(Date.now());

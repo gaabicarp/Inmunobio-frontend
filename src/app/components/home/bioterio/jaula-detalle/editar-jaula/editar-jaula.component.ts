@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Jaula } from 'src/app/models/jaula.model';
 import { Proyecto } from 'src/app/models/proyectos.model';
 import { EspacioFisico } from 'src/app/models/EspacioFisico.model';
@@ -23,6 +23,7 @@ export class EditarJaulaComponent implements OnInit {
   alert: boolean;
   
   constructor(
+    private router: Router,
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
     private postService: PostService
@@ -96,6 +97,9 @@ export class EditarJaulaComponent implements OnInit {
           this.alert = true;
           this.estado = 'success';
           this.mensajeAlert = 'La jaula fue creada correctamente';
+          setTimeout(() => {
+            this.router.navigate(['/home/bioterio']);
+          }, 1000);
         }
       }, err => {
         this.alert = true;
