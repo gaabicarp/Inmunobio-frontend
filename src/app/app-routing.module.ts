@@ -22,7 +22,6 @@ import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/en
 import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/editar-jaula/editar-jaula.component';
 import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
-import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
 import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
@@ -33,6 +32,7 @@ import { EspacioFisicoComponent } from './components/home/configuracion/espacio-
 import { FinalizarProyectoComponent } from './components/home/proyectos/detalle-proyecto/finalizar-proyecto/finalizar-proyecto.component';
 import { FinalizarExperimentoComponent } from './components/home/proyectos/detalle-experimentos/finalizar-experimento/finalizar-experimento.component';
 import {GrupoExperimentalComponent} from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
+import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle/nueva-herramienta/nueva-herramienta.component';
 
 const routes: Routes = [
   { path: 'home',
@@ -54,7 +54,8 @@ const routes: Routes = [
       {path: 'stock/:idEspacio', component: StockDetalleComponent},
       {path: 'stock/:idEspacio/agregar-stock', component: AgregarStockComponent},
       {path: 'stock/:idEspacio/agregar-stock/:idProducto/:idProductoEnStock/:idUbicacion', component: AgregarStockComponent},
-      {path: 'stock/:idEspacio/:idProducto/:idProductoEnStock/:idUbicacion', component: ConsumirStockComponent},
+      {path: 'stock/:idEspacio/nueva-herramienta', component: NuevaHerramientaComponent},
+      {path: 'stock/:idEspacio/nueva-herramienta/:idHerramienta', component: NuevaHerramientaComponent},
       {path: 'configuracion', component: ConfiguracionComponent},
       {path: 'configuracion/usuarios', component: UsuariosComponent},
       {path: 'configuracion/usuarios/nuevo-usuario', component: NuevoUsuarioComponent},

@@ -166,7 +166,7 @@ export class PostService {
   eliminarBlogHerramienta(id_herramienta: number, id_blog: number): Observable<any>{
     return this.http.delete<any>(this.API_URL + 'blogHerramienta/' + id_herramienta + '/'+ id_blog);
   }
-  obtenerBlogHerramientas(blog: Blogs): Observable<any>{
+  obtenerBlogHerramientas(blog: any): Observable<any>{
     return this.http.post<any>(this.API_URL + 'blogHerramienta', blog);
   }
 

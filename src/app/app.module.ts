@@ -29,7 +29,6 @@ import { NuevoUsuarioComponent } from './components/home/configuracion/usuarios/
 import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
 import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/editar-jaula/editar-jaula.component';
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
-import { ConsumirStockComponent } from './components/home/stock/stock-detalle/consumir-stock/consumir-stock.component';
 import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
 import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
@@ -48,6 +47,7 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { FilterStatePipe } from './pipe/filter-state.pipe';
 import { ToastComponent } from './components/shared/toast/toast.component';
 import { FilterCodigosPipe } from './pipe/filter-codigos.pipe';
+import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle/nueva-herramienta/nueva-herramienta.component';
 
 
 @NgModule({
@@ -76,7 +76,6 @@ import { FilterCodigosPipe } from './pipe/filter-codigos.pipe';
     JaulaDetalleComponent,
     EditarJaulaComponent,
     AltaAnimalComponent,
-    ConsumirStockComponent,
     EntradaBlogComponent,
     GrupotrabajoComponent,
     NuevoGrupoComponent,
@@ -93,7 +92,8 @@ import { FilterCodigosPipe } from './pipe/filter-codigos.pipe';
     FilterPipe,
     FilterStatePipe,
     ToastComponent,
-    FilterCodigosPipe
+    FilterCodigosPipe,
+    NuevaHerramientaComponent
 
   ],
   imports: [

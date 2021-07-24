@@ -46,7 +46,7 @@ export class GetService {
 
   //Hay que poner -->  obtenerStock(id_grupo:number, id_espacio: number): Observable<any>{
   //  return this.http.get<any>(this.API_URL + 'obtenerStock/'+ id_grupo + '/'+ id_espacio);
-  obtenerStock(id_espacioFisico : number): Observable<Stock>{
+  obtenerStock(id_espacioFisico : number): Observable<any>{
     return this.http.get<any>(this.API_URL + 'obtenerStock/1/'+ id_espacioFisico);
   }
   obtenerContenedores(): Observable<any>{
@@ -60,7 +60,7 @@ export class GetService {
   obtenerHerramienta(id_herramienta: number): Observable<Herramienta>{
     return this.http.get<any>(this.API_URL + 'herramienta/'+ id_herramienta);
   }
-  obtenerHerramientas():Observable<Herramienta>{
+  obtenerHerramientas():Observable<any>{
     return this.http.get<any>(this.API_URL + 'herramientas');
   }
 
