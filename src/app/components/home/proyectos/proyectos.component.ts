@@ -11,11 +11,13 @@ export class ProyectosComponent implements OnInit {
   step: number;
   modo: string;
   proyectoSeleccionado: any;
+  filterPost: string;
 
   constructor(private getService: GetService) { }
 
   ngOnInit(): void {
     this.step = 0;
+    this.filterPost = '';
     this.getService.obtenerProyectos().subscribe(res => {
       console.log(res);
       this.proyectos = res;

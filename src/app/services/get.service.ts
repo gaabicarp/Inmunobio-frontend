@@ -52,13 +52,17 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'contenedores');
   }
 
+  obtenerContenedoresPorProyecto(idProyecto: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + `contenedoresDelProyecto/${idProyecto}`);
+  }
+
   obtenerHerramienta(id_herramienta: number): Observable<Herramienta>{
     return this.http.get<any>(this.API_URL + 'herramienta/'+ id_herramienta);
   }
-  obtenerHerramientas():Observable<Herramienta>{
+  obtenerHerramientas():Observable<any>{
     return this.http.get<any>(this.API_URL + 'herramientas');
   }
-
+  
   
 
 
@@ -107,6 +111,9 @@ export class GetService {
   obtenerEspaciosFisicos(): Observable<any>{
     return this.http.get<any>(this.API_URL + 'espaciosFisicos');
   }
+  obtenerEspacioFisico(id:number): Observable<any>{
+    return this.http.get<any>(this.API_URL + 'espacioFisico/'+ id);
+  }
 
   obtenerJaulas(): Observable<any> {
     return this.http.get<any>(this.API_URL + 'jaulas');
@@ -125,8 +132,8 @@ export class GetService {
 
   }
 
-  obtenerJaulasPorProyecto(idJaula: number): Observable<any> {
-    return this.http.get<any>(this.API_URL + `jaula/${idJaula}/animales`);
+  obtenerJaulasPorProyecto(idProyecto: number): Observable<any> {
+    return this.http.get<any>(this.API_URL + `proyecto/${idProyecto}/jaulasDelProyecto`);
   }
 
   obtenerAnimalesPorProyectos(idProyecto: number): Observable<any> {

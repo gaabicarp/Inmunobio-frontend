@@ -1,0 +1,26 @@
+
+<h3 class="text-center mt-4" >Asociar un proyecto a Jaula - {{jaula?.codigo}}</h3>
+  <div class="card rounded shadow p-4 m-5">
+    <form [formGroup]="formProyecto" (ngSubmit)="asociar()">
+      <div class="m-3">
+        <select class="form-control" aria-label=".form-select-lg example" formControlName='id_proyecto'>
+          <option value="0">Sin Asignar</option>
+          <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
+        </select>
+      </div>
+      <div class="d-flex flex-row justify-content-end"> 
+        <div class="mx-3 justify-content-start">
+          <button class="btn btn-secondary btn-lg" routerLink="../">Cancelar</button>
+      </div>
+        <div class="mx-3">
+          <button class="btn btn-success btn-lg" type="submit" [disabled]="!formProyecto.valid" >Asociar</button>
+          </div>
+      </div>
+      <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+        <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
+        <div class="p-2 bd-highlight">
+        <button type="button" class="btn btn-outline-dark" routerLink="../">VOLVER</button>
+        </div>
+      </div>
+    </form>
+  </div>

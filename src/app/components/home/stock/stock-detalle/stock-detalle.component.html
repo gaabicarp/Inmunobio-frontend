@@ -1,126 +1,231 @@
 <div>
-  <div class="m-4" (click)='volver()' role="button">
+  <div class="text-black ml-3 mt-3" routerLink="../" role="button" style="position: relative;">
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
-  <div class="text-center my-4">
-    <h2>{{element}}</h2>
+  <div class="text-center m-3">
+    <h2 class='text-staatliches title'>{{espacioFisico?.nombre}}</h2>
   </div>
 </div>
+
 <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
-  <li [ngbNavItem]="1">
-    <a ngbNavLink (click)= irStock()>Stock</a>
+  <li [ngbNavItem]="1" >
+    <a ngbNavLink >Stock</a>
     <ng-template ngbNavContent>
+      <div class="search-container flex-wrap">
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control" id="usuario" placeholder="Buscar por nombre" [(ngModel)]='filterPost'>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary btn-lg" routerLink='agregar-stock'>Agregar Stock</button>
+        </div>
+    </div>
+      <div class="mx-4">        
+        <div class="card rounded shadow p-4 mb-4 table-responsive">
+            <table class="table table-hover text-center">
+                <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Producto</th>
+                      <th scope="col">Lote</th>
+                      <th scope="col">Unidades</th>
+                      <th scope="col">Contenedor</th>
+                      <th scope="col">Detalle Ubicación</th>
+                      <th scope="col">Fecha de vencimiento</th>
+                      <th><i class="bi bi-bag-check"></i></th>
+                      <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor='let a of stocks | filter: filterPost ; let i = index'>
+                      <tr *ngFor='let stock of a.producto; let j = index'>
+                        <th scope="row">{{i + 1}}</th>
+                        <td>{{a.nombre}}</td>
+                        <td>{{stock.lote}}</td>
+                        <td>{{stock.unidad}}</td>
+                        <td>{{stock.nombreContenedor}}</td>
+                        <td>{{stock.detalleUbicacion}}</td>
+                        <td>{{stock.fechaVencimiento | date: 'dd/MM/yy'}}</td>
+                        <td>
+                            <a class="text-success" role="button"  routerLink='{{a.id_producto}}/{{a.id_productoEnStock}}/{{j}}'>
+                              <i>Consumir</i>
+                            </a>
+                        </td>
+                        <td class="d-flex">
+                            <div class="mr-4">
+                              <a class="text-primary" role="button" routerLink='agregar-stock/{{a.id_producto}}/{{a.id_productoEnStock}}/{{j}}' >
+                                <!-- (click)=editar(a,j) -->
+                                <i class="bi bi-pencil"></i>
+                              </a>
+                            </div>
+                            <div>
+                              <a class="text-danger" role="button" (click)=eliminar(a,j)>
+                                <i class="bi bi-trash"></i>
+                              </a>
+                            </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                </tbody>
+                
+              </table>
+              <div class="alert alert-danger" role="alert" *ngIf='stocks?.length === 0'>
+                No hay Stock disponible
+              </div>
+              <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+                <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
+              </div>
+        </div>
+    
+    </div>
     </ng-template>
   </li>
-
+  
   <li [ngbNavItem]="2">
-    <a ngbNavLink (click)= irBlogs()>Blogs</a>
+    <a ngbNavLink>Blogs</a>
     <ng-template ngbNavContent>
+      <div class="card rounded shadow m-3 p-3">
+        <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
+          <div class="row">
+            <div class="col">
+              <label for="fecDesde" class="form-label">Fecha inicial</label>
+              <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
+            </div>
+            <div class="col">
+              <label for="fecHasta" class="form-label">Fecha final</label>
+              <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
+            </div>
+            <div class="col">
+              <label  class="form-label">Tipo de blog</label>
+              <div class="col">
+                <select class="form-control" aria-label=".form-select-lg example" formControlName='filtro'>
+                  <option value='espacioFisico'>Espacio físico</option>
+                  <option value='herramienta'>Herramienta</option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf ="formFecha.value.filtro === 'herramienta'">
+            <label class="form-label">Herramienta</label>
+              <select class="form-control" aria-label=".form-select-lg example" formControlName='herramienta'>
+                <option *ngFor='let herramienta of herramientas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
+              </select>
+            </div>
+              <div class="button align-middle m-2">
+                <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">
+                  <i class="bi bi-search"></i></button>
+              </div>
+            
+          </div>
+        </form>
+      </div>
+      <div>
+        <div class="d-flex bd-highlight m-2">
+          <div class="p-2 flex-grow-1 bd-highlight"></div>
+          <div class="p-2 bd-highlight">
+            <button type="button" class="btn btn-primary" routerLink=nuevo-blog-espacio>Nuevo Blog</button>
+          </div>
+        </div>
+        
+        <div class="row m-2 float-lg-start" >
+          <ng-container *ngFor='let a of blogs;let i = index'>
+            <div class="col-1 d-flex flex-column align-items-center">
+              <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
+                <i class="bi bi-journal"></i>
+              </div>
+              <div class="fecha">
+                <p class="text-center">{{a.fecha | date: 'dd/MM/yy'}}</p>
+              </div>
+              <!-- <div>
+                  <a class="text-danger" role="button" (click)=eliminar(a.id_blog)>
+                    <i class="">eliminar</i>
+                  </a>
+                </div> -->
+            </div>
+            <div class="col-11 card shadow  mb-3">
+              <div class="card-header" ><strong>Blog n°{{a.id_blog}}</strong> 
+                <ng-container *ngIf= "formFecha.value.filtro === 'herramienta'">- Herramienta</ng-container>
+                <ng-container *ngIf=" a.tipo === 'espacioFisico' "> - Espacio físico</ng-container>
+              </div> 
+              <p class="mb-1"><i>usuario: {{a.id_usuario}}</i></p>
+              <p>{{a.detalle}}</p>
+            </div>
+          </ng-container>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf='blogs?.length === 0'>
+          No existen blogs
+        </div>
+      </div>
+    </ng-template>
+  </li>
+  
+  <li [ngbNavItem]="3">
+    <a ngbNavLink >Herramientas</a>
+    <ng-template ngbNavContent>
+      <div class="search-container flex-wrap">
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" class="form-control" id="usuario" placeholder="Buscar por nombre" [(ngModel)]='filterPost2'>
+        </div>
+        <div>
+          <button class="btn btn-primary" routerLink=nueva-herramienta>Nueva Herramienta</button>
+        </div>
+    </div>
+      <div class="card rounded shadow p-4 mb-4 table-responsive">
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Detalle</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                  <tr *ngFor='let a of herramientasFiltradas | filter: filterPost2 ;let i = index'>
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{a.nombre}}</td>
+                    <td>{{a.detalle}}</td>
+                    <td>
+                      <div class="mr-4">
+                        <a class="text-success" role="button" routerLink={{a.id_herramienta}}>
+                          <i class="bi bi-book">  Ver Blogs</i>
+                        </a>
+                      </div>
+                     </td>
+                    <td class="d-flex">
+                      <div class="mr-4">
+                        <a class="text-primary" role="button" routerLink='nueva-herramienta/{{a.id_herramienta}}'>
+                          <i class="bi bi-pencil"></i>
+                        </a>
+                      </div>
+                      <div>
+                        <a class="text-danger" role="button" (click)=eliminarHerramienta(a.id_herramienta)>
+                          <i class="bi bi-trash"></i>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-danger" role="alert" *ngIf='herramientasFiltradas?.length === 0'>
+          No hay herramientas disponibles
+        </div>
+        <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+          <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
+        </div>
+    </div>
+
     </ng-template>
   </li>
 </ul>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
 
-<div *ngIf='step === 1'>
-  <div class="mx-4">        
-      <div class="card rounded shadow p-4 mb-4">
-          <table class="table table-hover">
-              <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Lote</th>
-                    <th scope="col">Unidades</th>
-                    <th scope="col">Contenedor</th>
-                    <th scope="col">Detalle Ubicación</th>
-                    <th scope="col">Fecha de vencimiento</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <ng-container *ngFor='let a of stocks;let i = index'>
-                    <tr *ngFor='let stock of a.producto; let j = index'>
-                      <th scope="row">{{i + 1}}</th>
-                      <td>{{a.nombre}}</td>
-                      <td>{{stock.lote}}</td>
-                      <td>{{stock.unidad}}</td>
-                      <td>{{contenedores[stock.codigoContenedor-1]?.nombre}}</td>
-                      <td>{{stock.detalleUbicacion}}</td>
-                      <td>{{stock.fechaVencimiento | date: 'shortDate'}}</td>
-                      <td>
-                          <a class="text-primary" role="button" (click)=consumir(a,j)>
-                            <i>Consumir</i>
-                          </a>
-                      </td>
-                      <td class="d-flex">
-                          <div class="mr-4">
-                            <a class="text-primary" role="button" (click)=editar(a,j) >
-                              <!-- (click)=editar(stock) -->
-                              <i class="bi bi-pencil"></i>
-                            </a>
-                          </div>
-                          <div>
-                            <a class="text-danger" role="button" (click)=eliminar(a,j)>
-                              <i class="bi bi-trash"></i>
-                            </a>
-                          </div>
-                      </td>
-                    </tr>
-                  </ng-container>
-                  
 
-              </tbody>
-            
-          </table>
-      </div>
-  <button class="btn btn-primary" (click)=crear()>Agregar Stock</button>
-  </div>
-</div>
-<div *ngIf='step === 2'>
-  <app-agregar-stock
-  [element]='productoSeleccionado'
-  [idProducto]='idProducto'
-  [espacio] = 'espacio'
-  [modo]='modo'
-  (volviendo)='onVolviendo($event)'
-  >
-</app-agregar-stock>
-</div>
-<div *ngIf='step === 3'>
-  <app-consumir-stock
-  [element]='productoSeleccionado'
-  [idProducto]='idProducto'
-  [espacio] = 'espacio'
-  (volviendo)='onVolviendo($event)'
-  >
-</app-consumir-stock>
-</div>
 
-<div *ngIf='step === 4'>
-  <div class="card rounded shadow p-4 m-5">
-    <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
-      <div class="m-3">
-        <label for="fecDesde" class="form-label">Fecha inicial</label>
-        <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
-      </div>
-      <div class="m-3">
-        <label for="fecHasta" class="form-label">Fecha final</label>
-        <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
-      </div>
-      <div class="text-center">
-        <button class="btn btn-primary btn-lg m-2" (click)=cancelar() >Cancelar</button>
-        <button class="btn btn-success btn-lg m-2" type="submit" [disabled]="!formFecha.valid">Buscar</button>
-      </div>
-    </form>
-  </div>
-  
-</div>
 
-<div *ngIf='step === 5'>
-  <app-blogs-espacio-fisico
-  [blog] = 'blog'
-  (volviendo)='onVolviendo($event)'
-  >
-</app-blogs-espacio-fisico>
-</div>
 

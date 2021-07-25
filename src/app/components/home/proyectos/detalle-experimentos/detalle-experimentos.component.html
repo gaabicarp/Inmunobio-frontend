@@ -7,7 +7,7 @@
     <h2 class="text-staatliches title">{{proyecto?.nombre}}</h2>
     <h4 class="title"><i>Experimento 1</i></h4>
 </div>
-
+<div *ngIf = 'step === 0'>
 <div class="mx-4">
     <div class="text-center mt-4">
     </div>
@@ -44,7 +44,7 @@
                       <p>{{experimento?.conclusiones}}</p>
                     </div>
                     <div class="text-center mt-3">
-                      <button class="btn btn-secondary mx-2 btn-lg" routerLink='../editar-proyecto/{{proyecto?.id_proyecto}}'>
+                      <button class="btn btn-secondary mx-2 btn-lg" routerLink='nuevo-experimento'>
                           Editar Experimento
                       </button>
                       <button class="btn btn-primary mx-2 btn-lg" routerLink='finalizar-experimento'>
@@ -54,119 +54,69 @@
                 </div>
 
               </div>
-                
-
 
             </ng-template>
         </li>
         <li [ngbNavItem]="2">
             <a ngbNavLink>Blog</a>
             <ng-template ngbNavContent>
-              <div class="row">
-                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                    <i class="bi bi-journal"></i>
+              <div class="card rounded shadow m-3 p-4">
+                <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
+                  <div class="d-flex bd-highlight mb-3">
+                    <div class="item p-2 bd-highlight">
+                      <label for="fecDesde" class="form-label">Fecha inicial</label>
+                      <input type="date" class="form-control" id="fecDesde" formControlName="fecDesde">
+                    </div>
+                    <div class="item p-2 bd-highlight">
+                      <label for="fecHasta" class="form-label">Fecha final</label>
+                        <input type="date" class="form-control" id="fecHasta" formControlName="fecHasta">
+                    </div>
+                    <div class="item p-2 bd-highlight">
+                      <button class="btn btn-success btn-lg " type="submit" [disabled]="!formFecha.valid">
+                        <i class="bi bi-search"></i></button>
+                    </div>
                   </div>
-                  <p class="text-center mb-0">20/03/19</p>
-                  <p>20:24hs</p>
-                </div>
-                <div class="col-11">
-                  <ngb-alert [dismissible]="false">
-                    <strong>Experimento AAA-123 - Entrada en Blog</strong> 
-                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                  </ngb-alert>
-                </div>
+                </form>
               </div>
-
-              <div class="row">
-                <div class="col-11">
-                  <ngb-alert [dismissible]="false">
-                    <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
-                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                    <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
-                  </ngb-alert>
-                </div>
-                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                    <i class="bi bi-arrow-left-right"></i>
-                  </div>
-                  <p class="text-center mb-0">20/03/19</p>
-                  <p>20:24hs</p>
-                </div>
+              <div class="d-flex bd-highlight">
+                <div class="p-2 flex-grow-1 bd-highlight"></div>
+                <div class="p-2 bd-highlight"><button type="button" class="btn btn-primary" routerLink='nuevo-blog-experimento'>Nuevo Blog</button></div>
               </div>
-              <div class="row">
-                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                    <i class="bi bi-journal"></i>
-                  </div>
-                  <p class="text-center mb-0">20/03/19</p>
-                  <p>20:24hs</p>
-                </div>
-                <div class="col-11">
-                  <ngb-alert [dismissible]="false">
-                    <strong>Experimento AAA-123 - Entrada en Blog</strong> 
-                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                  </ngb-alert>
-                </div>
+              <div class="row m-2" >
+                <ng-container *ngFor='let a of blogs;let i = index'>
+                    <div class="col-1 d-flex flex-column  align-items-center">
+                      <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-2" style="width: 40px; height: 40px;">
+                          <i class="bi bi-journal"></i>
+                      </div>
+                      <p class="text-center mb-0">{{a.fecha | date: 'dd/MM/yy'}}</p>
+                    </div>
+                    <div class=" col-11 card shadow  mb-3">
+                      <div class="card-header"><strong>Blog n°{{a.id_blog}} - Experimento {{a.codigoExperimento}}</strong></div> 
+                      <p class="mb-1"><i>usuario: {{a.id_usuario}}</i></p>
+                      <p>{{a.detalle}}</p>
+                    </div>
+                </ng-container>
               </div>
-
-              <div class="row">
-                <div class="col-11">
-                  <ngb-alert [dismissible]="false">
-                    <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
-                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                    <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
-                  </ngb-alert>
-                </div>
-                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                    <i class="bi bi-arrow-left-right"></i>
-                  </div>
-                  <p class="text-center mb-0">20/03/19</p>
-                  <p>20:24hs</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                    <i class="bi bi-journal"></i>
-                  </div>
-                  <p class="text-center mb-0">20/03/19</p>
-                  <p>20:24hs</p>
-                </div>
-                <div class="col-11">
-                  <ngb-alert [dismissible]="false">
-                    <strong>Experimento AAA-123 - Entrada en Blog</strong> 
-                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid numquam, ipsam nulla vel veritatis dolore nesciunt dignissimos distinctio! Recusandae, explicabo.</p>
-                  </ngb-alert>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-11">
-                  <ngb-alert [dismissible]="false">
-                    <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
-                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                    <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
-                  </ngb-alert>
-                </div>
-                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                    <i class="bi bi-arrow-left-right"></i>
-                  </div>
-                  <p class="text-center mb-0">20/03/19</p>
-                  <p>20:24hs</p>
-                </div>
-              </div>
+              <div class="alert alert-danger text-center" role="alert" *ngIf='blogs.length === 0 '>
+                No existen blogs
+              </div> 
             </ng-template>
         </li>
         <li [ngbNavItem]="3">
             <a ngbNavLink>Grupos experimentales</a>
             <ng-template ngbNavContent>
-                <div class="p-4 m-4">
+              <div class="search-container flex-wrap">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" class="form-control" id="f1" placeholder="Buscar por código" [(ngModel)]='filterPost'>
+                </div>
+                <div>
+                  <button class="btn btn-primary" (click)='agregarGrupo = !agregarGrupo'>Nuevo grupo</button>
+                </div>
+              </div>
+                <div class="p-2 m-2">
                     <h4 class="text-center"><i>Grupos experimentales</i></h4>
                     <form [formGroup]='formGrupoExperimental'>
                     <table class="table table-hover">
@@ -177,7 +127,7 @@
                         <th scope="col">Tipo</th>
                         <th scope="col">Fuentes Experimentales</th>
                         <th scope="col">Muestras</th>
-                        <td scope="col"><a class="link-primary" style="cursor: pointer" (click)='agregarGrupo = !agregarGrupo'>+Agregar</a></td>
+                        <td scope="col"></td>
                       </tr>
                       </thead>
                       <tbody>
@@ -208,7 +158,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr *ngFor='let grupo of gruposExperimentales; let i = index' routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
+                        <tr *ngFor='let grupo of gruposExperimentales | filterCodigos: filterPost; let i = index' routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
                             <th scope="row">{{ i + 1 }}</th> 
                             <td>
                              {{grupo?.codigo}} 
@@ -235,7 +185,16 @@
     </ul>
     <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
+</div>
 
+<div *ngIf='step === 1'>
+  <app-nuevo-experimento
+  [element] = 'experimento'
+  [modo]='modo'
+  (onVolver)='volver()'
+  >
+</app-nuevo-experimento>
+</div>
 
 
 

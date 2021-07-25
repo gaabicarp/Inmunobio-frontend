@@ -42,7 +42,17 @@ import { FinalizarProyectoComponent } from './components/home/proyectos/detalle-
 import { FinalizarExperimentoComponent } from './components/home/proyectos/detalle-experimentos/finalizar-experimento/finalizar-experimento.component';
 import { GrupoExperimentalComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
 import { NuevoBlogEspacioComponent } from './components/home/stock/nuevo-blog-espacio/nuevo-blog-espacio.component';
-import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espacio-fisico/blogs-espacio-fisico.component';
+import { NuevoBlogHerramientaComponent } from './components/home/stock/blog-herramientas/nuevo-blog-herramienta/nuevo-blog-herramienta.component';
+import { BlogHerramientasComponent } from './components/home/stock/blog-herramientas/blog-herramientas.component';
+import { HerramientasComponent } from './components/home/stock/herramientas/herramientas.component';
+import { NuevaHerramientaComponent } from './components/home/stock/herramientas/nueva-herramienta/nueva-herramienta.component';
+import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
+import { AsociarProyectoJaulaComponent } from './components/home/bioterio/jaula-detalle/asociar-proyecto-jaula/asociar-proyecto-jaula.component';
+import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detalle-experimentos/nuevo-blog-experimento/nuevo-blog-experimento.component';
+import { FilterPipe } from './pipe/filter.pipe';
+import { FilterCodigosPipe } from './pipe/filter-codigos.pipe';
+import { FilterMetodologiaPipe } from './pipe/filter-metodologia.pipe';
+
 
 
 @NgModule({
@@ -84,7 +94,16 @@ import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espac
     FinalizarExperimentoComponent,
     GrupoExperimentalComponent,
     NuevoBlogEspacioComponent,
-    BlogsEspacioFisicoComponent
+    NuevoBlogHerramientaComponent,
+    BlogHerramientasComponent,
+    HerramientasComponent,
+    NuevaHerramientaComponent,
+    NuevoBlogProyectoComponent,
+    AsociarProyectoJaulaComponent,
+    NuevoBlogExperimentoComponent,
+    FilterPipe,
+    FilterCodigosPipe,
+    FilterMetodologiaPipe
 
   ],
   imports: [

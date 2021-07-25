@@ -9,11 +9,15 @@
 .search-container .form-control{
     width: 32%;
 }
-
+.col-1{
+    margin: auto;
+}
 .input-group{
     width: 32%;
 }
 .col-11{
-    background-color: #EAD2EA     ;
-    border-color: #87718D ;
+    width: auto;
+    height: auto;
+    background-color: #4d758f59    ;
+    border-color: #4d758f ;
 }

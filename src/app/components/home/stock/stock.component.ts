@@ -26,8 +26,8 @@ export class StockComponent implements OnInit, OnDestroy {
                             this.espacios = res; })
     );
   }
-  ver(id_espacio: any){
-    this.espacioSeleccionado = id_espacio;
+  ver(espacio: any){
+    this.espacioSeleccionado = espacio;
     this.step = 1;
   }
   

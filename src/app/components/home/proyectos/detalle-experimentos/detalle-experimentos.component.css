@@ -8,7 +8,20 @@
     position: absolute;
     width: 100%;
 }
-
+.search-container{
+    width: 100%;
+    padding: 0.7em;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+.search-container .input-group{
+    width: 32%;
+}
+.item{
+    margin: auto;
+    justify-content: space-around;
+}
 .portada-content{
     position: relative;
     width: 40%;
@@ -16,7 +29,10 @@
     margin-top: 10em;
     padding: 1em;
 }
-
+.col-11{
+    background-color: #4d758f59    ;
+    border-color: #4d758f ;
+}
 .title{
     margin: auto;
 }

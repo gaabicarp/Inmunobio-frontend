@@ -1,4 +1,3 @@
-<div *ngIf='step === 0'>
     <div class="m-4" routerLink="../" role="button">
         <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
     </div>
@@ -7,41 +6,45 @@
         <div class="text-center my-4">
             <h2>Contenedores</h2>
         </div>
+        <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+          <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
+        </div>
         <div class="card rounded shadow p-4 mb-4">
-            <table class="table table-hover">
+            <table class="table table-hover table-responsive text-center">
                 <thead>
                     <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Código</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Descripción</th>
                     <th scope="col">Temperatura</th>
-                    <th scope="col">Proyecto Asignado</th>
                     <th scope="col">Capacidad</th>
                     <th scope="col">Ficha Técnica</th>
+                    <th scope="col">Proyecto Asignado</th>
+                    <th scope="col">Espacio Físico</th>
                     <th scope="col">Disponible</th>
                     <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor='let contenedor of contenedores; let i = index'>
-                        <th scope="row">{{i + 1}}</th>
                         <td>{{contenedor.codigo}}</td>
                         <td>{{contenedor.nombre}}</td>
                         <td>{{contenedor.descripcion}}</td>
                         <td>{{contenedor.temperatura}}</td>
-                        <td>{{proyectos[contenedor.id_proyecto]?.nombre}}</td>
                         <td>{{contenedor.capacidad}}</td>
                         <td>{{contenedor.fichaTecnica}}</td>
+                        <td *ngIf='contenedor.nombreProyecto != 0'  >{{contenedor.nombreProyecto}}</td>
+                        <td *ngIf='contenedor.nombreProyecto === 0'>Sin Asignar</td>
+                        <td>{{contenedor.nombreEspFisico}}</td>
                         <td>{{contenedor.disponible}}</td>
                         <td class="d-flex">
                             <div class="mr-4">
-                              <a class="text-primary" role="button" (click)=editar(contenedor)>
+                              <a class="text-primary" role="button" routerLink={{contenedor.id_contenedor}}>
                                 <i class="bi bi-pencil"></i>
                               </a>
                             </div>
                             <div>
-                              <a class="text-danger" role="button" (click)=eliminar(contenedor)>
+                              <a class="text-danger" role="button" (click)=eliminar(contenedor.id_contenedor)>
                                 <i class="bi bi-trash"></i>
                               </a>
                             </div>
@@ -51,14 +54,6 @@
                 </tbody>
             </table>
         </div>
-    <button class="btn btn-primary" (click)=crear()>Nuevo Contenedor</button>
+    <button class="btn btn-primary" routerLink='nuevo-contenedor'>Nuevo Contenedor</button>
     </div>
-</div>
-<div *ngIf='step === 1'>
-    <app-nuevo-contenedor
-    [element]='contenedorSeleccionado'
-    [modo]='modo'
-    (onVolver)='volver()'
-    >
-  </app-nuevo-contenedor>
-</div>
+

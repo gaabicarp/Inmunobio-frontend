@@ -56,14 +56,13 @@ export class NuevoProyectoComponent implements OnInit {
         idDirectorProyecto: this.element.idDirectorProyecto,
         descripcion: this.element.descripcion
       });
-
       this.getService.obtenerUsuarioPorProyecto(this.element.id_proyecto).subscribe(res => {
-        res.map(usuario => {
-          this.asignarUsuario(usuario);
+            res.map(usuario => {
+            this.asignarUsuario(usuario);
+          });
         });
-      });
       })
-    }
+   }
 
   }
 
