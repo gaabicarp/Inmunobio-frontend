@@ -1,7 +1,7 @@
 FROM node:alpine as builder 
 WORKDIR /app
-COPY package.json ./
-RUN npm install --force
+COPY package.json package-lock.json  ./
+RUN npm install && mv ./node_modules ./
 COPY . ./
 RUN npm run build --prod
 
@@ -9,7 +9,6 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/dist/Inmunobio /usr/share/nginx/html
-COPY appshell.sh appshell.sh
-EXPOSE 80 
-ENTRYPOINT ["sh", "/appshell.sh"]
+EXPOSE 4200  80 
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
