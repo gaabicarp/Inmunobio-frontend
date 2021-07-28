@@ -15,7 +15,7 @@ import { BuscarBlogJaula, Jaula } from '../models/jaula.model';
   providedIn: 'root'
 })
 export class PostService {
-  private API_URL = 'http://localhost:8080/api/v1/';
+  private API_URL = 'http://10.1.74.195:8080/api/v1/';
 
   constructor(private http: HttpClient) { }
 
