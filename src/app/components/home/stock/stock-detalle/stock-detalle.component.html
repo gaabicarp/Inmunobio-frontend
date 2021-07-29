@@ -11,25 +11,24 @@
   <li [ngbNavItem]="1" >
     <a ngbNavLink >Stock</a>
     <ng-template ngbNavContent>
-
-      <div class="search-container flex-wrap">
-        <div class="input-group mb-3">
+      <div class="search-container">
+        <div class="input-group">
             <span class="input-group-text">
                 <i class="bi bi-search"></i>
             </span>
-            <input type="text" class="form-control" id="usuario" placeholder="Buscar por nombre" [(ngModel)]='filterPost'>
+            <input type="text" class="form-control " id="usuario" name='filterPost' placeholder="Buscar por nombre" [(ngModel)]='filterPost'>
         </div>
         <div>
-            <button type="button" class="btn btn-outline-primary" routerLink='agregar-stock'>Agregar Stock</button>
+          <button class="btn btn-outline-primary button-agregarstock" routerLink='agregar-stock'>Agregar Stock</button>
         </div>
-    </div>
-      <div class="m-4">
+      </div>
+      <div class="">
         <div class="" *ngIf='!cargando'>
           <ng-container *ngFor='let a of stocks | filter: filterPost ; let i = index'>
             <ng-container *ngFor='let stock of a.producto; let j = index'>
-              <div class="card shadow card-stock m-2 p-1">
-              <div class="row m-2">
-                <div class="col-3 w-50">
+              <div class="card shadow card-stock">
+              <div class="datos">
+                <div class="datos-internos">
                   <h4 class="card-title ">{{a.nombre}}</h4>
                   <h5 class="card-title "> lote {{stock.lote}}</h5>
                   <div class="d-flex">
@@ -37,30 +36,26 @@
                       <i class="bi bi-pencil"></i>
                     </a>
                     <a class="text-danger m-2" role="button" (click)=eliminarP(a,j,eliminar)  >
-                      <!-- (click)=eliminar(a,j) -->
-                      <!-- (click)=open(eliminar) -->
                       <i class="bi bi-trash"></i>
                     </a>
                   </div>
                 </div>
-                <div class="barra m-2"></div>
-                  <div class=" justify-content-around align-items-center">
-                    <div class="form-group m-2 align-items-center">
+                  <div class="datos-internos">
+                    <div class="">
                         <div class="d-flex">
-                          <h6 class="card-title p-1"> stock: </h6>
+                          <h6 class="card-title p-1 text-secondary text-staatliches"> stock: </h6>
                           <p class="">{{stock.unidad}}</p>
                           <hr class="m-3 bg-white">
                           <a class="text-success" role="button" (click)=consumirP(a,j,consumir) >
-                            <!-- routerLink='{{a.id_producto}}/{{a.id_productoEnStock}}/{{j}}' -->
                             <i>Consumir</i>
                           </a>
                         </div>
                         <div class="d-flex">
-                          <h6 class="card-title p-1"> Ubicacion:   </h6>
+                          <h6 class="card-title p-1 text-secondary text-staatliches"> Ubicacion:   </h6>
                           <p class=""> {{stock.detalleUbicacion}} - {{stock.nombreContenedor}}</p>
                         </div>
                         <div class="d-flex">
-                          <h6 class="card-title p-1"> Fecha Vencimiento:   </h6>
+                          <h6 class="card-title p-1 text-secondary text-staatliches"> Fecha Vencimiento:   </h6>
                           <p class="">{{stock.fechaVencimiento | date: 'dd/MM/yy'}}</p>
                         </div>
                     </div>
@@ -80,90 +75,100 @@
   <li [ngbNavItem]="2">
     <a ngbNavLink>Blogs</a>
     <ng-template ngbNavContent>
-      <form [formGroup]="formFecha" (ngSubmit)="Buscar()">
-      <div class=" row m-2 p-2">
-          <div class="search-container">
-            <div class="form-group m-1">
-              <div class="input-group w-75">
+
+      <div class="busqueda">
+        <div class="form-group ">
+          <button class="btn btn-outline-success nueva-entrada" (click)="open(blog,'lg')">Nueva Entrada</button>
+        </div>
+          <div class="filtro-fecha-blogs">
+            <div class="fechas">
+            <div class="form-group my-2">
+              <div class="input-group">
                 <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
-                       name="dp" ngbDatepicker #d="ngbDatepicker" formControlName="fecDesde">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                       name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
+                <div class="">
+                  <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                 </div>
               </div>
             </div>
-            <div class="form-group m-1">
-              <div class="input-group w-75">
+            <div class="form-group my-2">
+              <div class="input-group">
                 <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
-                       name="dp2" ngbDatepicker #d2="ngbDatepicker" formControlName="fecHasta">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                       name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
+                <div class="">
+                  <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                 </div>
               </div>
             </div>
-            <div class="form-group m-1">
-              <div class="input-group w-auto" >
-                  <select class="form-control" formControlName='filtro' >
+          </div>
+          <div class="tipo-blog">
+            <div class="form-group my-2">
+              <div class="input-group">
+                  <select class="form-control" [(ngModel)]="tipo">
                     <option value='espacioFisico'>Espacio físico</option>
                     <option value='herramienta'>Herramienta</option>
                   </select>
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">Blog</button>
-                  </div>
+                <div class="">
+                  <button class="btn btn-outline-secondary" type="button">Blog</button>
+                </div>
               </div>
             </div>
-            <div class="form-group m-1" *ngIf ="formFecha.value.filtro === 'herramienta'">
-              <div class="input-group w-auto">
-              <select class="form-control" aria-label=".form-select-lg example" formControlName='herramienta'>
-                <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
-              </select>
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary tools" type="button"><i class="bi bi-tools"></i></button>
-              </div>
+            <div class="form-group my-2" *ngIf ="tipo === 'herramienta'">
+              <div class="input-group">
+                <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionada">
+                  <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
+                </select>
+                <div class="">
+                  <button class="btn btn-outline-secondary tools" type="button"><i class="bi bi-tools"></i></button>
+                </div>
               </div>
             </div>
-            <button class="btn btn-outline-secondary m-1"  type="submit" [disabled]="!formFecha.valid" >Filtrar</button>
+            <div class="form-group my-2" *ngIf ="tipo === 'espacioFisico'">
+              <div class="input-group">
+                <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionada" disabled>
+                  <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
+                </select>
+                <div class="">
+                  <button class="btn btn-outline-secondary tools" type="button"><i class="bi bi-tools"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+            <button class="btn btn-outline-secondary filtro-blogs"  (click)=Buscar() >Filtrar</button>
           </div>
       </div>
-    </form>
-      <div class="row m-2" >
-        <ng-container *ngFor='let a of blogs;let i = index'  >
-            <ng-container *ngIf = 'i%2==0'>
-              <div class=" row card-blog shadow rounded m-2">
-                <div class="col-1 d-flex flex-column align-items-center">
-                  <i class="bi bi-journals m-2"></i>
-                  <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
-                </div>
-                <div class="col-11" >
-                  <div class="card-title card-header">
-                  <strong>Blog n°{{a.id_blog}}</strong>
-                  <ng-container *ngIf= "formFecha.value.filtro === 'herramienta'">- Herramienta</ng-container>
-                  <ng-container *ngIf=" a.tipo === 'espacioFisico' "> - Espacio físico</ng-container>
-                  </div>
-                  <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
-                  <p>{{a.detalle}}</p>
-                </div>
-                </div>
-            </ng-container>
-            <ng-container *ngIf = 'i%2!=0'>
-              <div class=" row card-blog shadow rounded m-2">
-                <div class="col-11" >
-                  <div class="card-title card-header">
-                    <strong>Blog n°{{a.id_blog}}</strong>
-                    <ng-container *ngIf= "formFecha.value.filtro === 'herramienta'">- Herramienta</ng-container>
-                    <ng-container *ngIf=" a.tipo === 'espacioFisico' "> - Espacio físico</ng-container>
-                    </div>
-                    <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
-                    <p>{{a.detalle}}</p>
-                  </div>
-                  <div class="col-1 d-flex flex-column align-items-center">
-                    <i class="bi bi-journals m-2"></i>
-                    <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
-                  </div>
-              </div>
-            </ng-container>
+  <div class="" >
+    <ng-container *ngFor='let a of blogs;let i = index'  >
+        <ng-container *ngIf = 'i%2==0'>
+          <div class="card-blog shadow rounded">
+            <div class="fecha">
+              <i class="bi bi-journals m-2"></i>
+              <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+            </div>
+            <div class="blog" >
+              <h5 class="card-title card-header" *ngIf= "a.tipo === 'herramienta'"> Blog N° {{a.id_blog}} - Herramienta</h5>
+              <h5 class="card-title card-header" *ngIf=" a.tipo === 'espacioFisico' "> Blog N° {{a.id_blog}} - Espacio Físico</h5>
+              <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+              <p>{{a.detalle}}</p>
+            </div>
+          </div>
         </ng-container>
-    </div>
+        <ng-container *ngIf = 'i%2!=0'>
+          <div class="card-blog shadow rounded">
+            <div class="blog" >
+              <h5 class="card-title card-header" *ngIf= "a.tipo === 'herramienta'"> Blog N° {{a.id_blog}} - Herramienta</h5>
+              <h5 class="card-title card-header" *ngIf=" a.tipo === 'espacioFisico' "> Blog N° {{a.id_blog}} - Espacio Físico</h5>
+              <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+              <p>{{a.detalle}}</p>
+            </div>
+            <div class="fecha">
+              <i class="bi bi-journals m-2"></i>
+              <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+            </div>
+          </div>
+        </ng-container>
+    </ng-container>
+</div>
     <div class="alert alert-danger m-2" role="alert" *ngIf='blogs?.length === 0'>
       No hay blogs existentes
     </div>
@@ -172,34 +177,33 @@
   <li [ngbNavItem]="3">
     <a ngbNavLink >Herramientas</a>
     <ng-template ngbNavContent>
-      <div class="search-container flex-wrap m-2">
-        <div class="input-group mb-3">
+
+      <div class="search-container">
+        <div class="input-group">
             <span class="input-group-text">
                 <i class="bi bi-search"></i>
             </span>
             <input type="text" class="form-control" id="usuario" placeholder="Buscar por nombre" [(ngModel)]='filterPost2'>
         </div>
         <div>
-          <button class="btn btn-outline-primary" routerLink=nueva-herramienta>Nueva Herramienta</button>
+          <button class="btn btn-outline-primary button-nuevaHerramienta" routerLink=nueva-herramienta>Nueva Herramienta</button>
         </div>
     </div>
-      <div *ngFor="let a of herramientasFiltradas | filter: filterPost2 ;let i = index" class="card m-4 p-1 shadow rounded list-group-item-action" (click)=Herramienta(a,herramienta)>
-          <div class="row m-2">
-            <div class="col-3 w-auto">
-              <h4 class="card-title ">{{a.nombre}}</h4>
+
+      <div *ngFor="let a of herramientasFiltradas | filter: filterPost2 ;let i = index" (click)=Herramienta(a,herramienta)>
+          <div class="card-herramienta card shadow rounded list-group-item-action">
+            <div class="datos">
               <div class="d-flex">
-                <a class="text-primary mt-1" role="button" routerLink='nueva-herramienta/{{a.id_herramienta}}' >
-                  <i class="bi bi-pencil"></i>
-                </a>
+                <h4 class="card-title ">{{a.nombre}}</h4>
+                  <a class="text-primary mx-4" role="button" routerLink='nueva-herramienta/{{a.id_herramienta}}' >
+                    <i class="bi bi-pencil"></i>
+                  </a>
+              </div>
+              <div class="">
+                  <p>{{a.detalle}}</p>
               </div>
             </div>
-            <div class="barra3 m-2"></div>
-              <div class=" justify-content-around align-items-center d-flex">
-                <div class="form-group m-2 align-items-center">
-                    <p>{{a.detalle}}</p>
-                </div>
-              </div>
-        </div>
+      </div>
       </div>
       <div class="alert alert-danger m-2" role="alert" *ngIf='herramientasFiltradas?.length === 0'>
         No hay herramientas disponibles
@@ -216,8 +220,8 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body ">
-    <div class="row">
+  <div class="modal-body">
+    <div class="row justify-content-around">
       <div class="col-8 form-group d-flex m-2 align-items-center">
         <i class="bi bi-exclamation-triangle m-2" style="font-size: 2em;"></i>
         <label for="tipo" class="form-label m-4">¿Está seguro que desea eliminar el stock de forma permanente?</label>
@@ -307,63 +311,59 @@
       </div>
       <div class="m-3">
         <h4 for="cantidad" class="form-label">Blogs</h4>
-        <div class=" row m-2">
-          <div class="col-3 d-flex justify-content-center">
-            <button class="btn btn-outline-success m-2" (click)="open(blogHerramienta,'lg')">Nueva Entrada</button>
+
+        <div class="busqueda">
+          <div class="form-group ">
+            <button class="btn btn-outline-success nuevo-blog" (click)="open(blogHerramienta,'lg')">Nueva Entrada</button>
           </div>
-          <div class="barra2 m-2"></div>
-          <div class="col-6 d-flex justify-content-around align-items-center">
-            <div class="form-group m-2">
-              <div class="input-group w-100">
-                <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
-                       name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+            <div class="filtro-fecha-blogs">
+              <div class="form-group my-2">
+                <div class="input-group">
+                  <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
+                         name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
+                  <div class="">
+                    <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="form-group m-2">
-              <div class="input-group w-100">
-                <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
-                       name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+              <div class="form-group my-2">
+                <div class="input-group">
+                  <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
+                         name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
+                  <div class="">
+                    <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                  </div>
                 </div>
               </div>
+              <button class="btn btn-outline-secondary button-filtrarBlogHerramienta"  (click)=Buscar() >Filtrar</button>
             </div>
-            <button class="btn btn-outline-secondary m-2"  (click)=BuscarBlogH() >Filtrar</button>
-          </div>
-      </div>
-        <div class="row m-2" >
-          <ng-container *ngFor='let a of blogsH; let i = index'  >
+        </div>
+        <div class="" >
+          <ng-container *ngFor='let a of blogs;let i = index'  >
               <ng-container *ngIf = 'i%2==0'>
-                <div class=" row card-blog shadow rounded m-2">
-                  <div class="col-1 d-flex flex-column align-items-center">
+                <div class="card-blog shadow rounded">
+                  <div class="fecha">
                     <i class="bi bi-journals m-2"></i>
                     <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
                   </div>
-                  <div class="col-11" >
-                    <div class="card-title card-header">
-                    <strong>Blog n°{{a.id_blog}}</strong>-Herramienta
-                    </div>
+                  <div class="blog" >
+                    <h5 class="card-title card-header"> Blog N° {{a.id_blog}} - Herramienta</h5>
                     <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
                     <p>{{a.detalle}}</p>
                   </div>
-                  </div>
+                </div>
               </ng-container>
               <ng-container *ngIf = 'i%2!=0'>
-                <div class=" row card-blog shadow rounded m-2">
-                  <div class="col-11" >
-                    <div class="card-title card-header">
-                      <strong>Blog n°{{a.id_blog}}</strong>-Herramienta
-                      </div>
-                      <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
-                      <p>{{a.detalle}}</p>
-                    </div>
-                    <div class="col-1 d-flex flex-column align-items-center">
-                      <i class="bi bi-journals m-2"></i>
-                      <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
-                    </div>
+                <div class="card-blog shadow rounded">
+                  <div class="blog" >
+                    <h5 class="card-title card-header"> Blog N° {{a.id_blog}} - Herramienta</h5>
+                    <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                    <p>{{a.detalle}}</p>
+                  </div>
+                  <div class="fecha">
+                    <i class="bi bi-journals m-2"></i>
+                    <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                  </div>
                 </div>
               </ng-container>
           </ng-container>
@@ -380,7 +380,7 @@
 
 <ng-template #blogHerramienta let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Crear Publicacion</h4>
+    <h4 class="modal-title" id="modal-basic-title">Crear Publicacion - Herramienta</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -402,8 +402,57 @@
     </div>
   </div>
   <div class="modal-footer">
-      <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlog()'>Crear</button>
+      <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlogHerramienta()'>Crear</button>
   </div>
 </ng-template>
 
+<ng-template #blog let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Crear Publicacion</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="body">
+      <div class="">
+        <label  class="form-label">Tipo de Blog</label>
+                <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]='tipoBlog'>
+                  <option selected>Seleccionar tipo de blog</option>
+                  <option value="espacioFisico">Espacio Físico</option>
+                  <option value="herramienta">Herramienta</option>
+                </select>
+      </div>
+      <div class="" *ngIf='tipoBlog === "herramienta"'>
+        <label  class="form-label">Herramienta</label>
+        <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionadaBlog">
+          <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
+        </select>
+      </div>
+      <div class="" *ngIf='tipoBlog === "espacioFisico"'>
+        <label  class="form-label">Herramienta</label>
+        <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionadaBlog" disabled>
+          <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
+        </select>
+      </div>
+      <div class="d-flex">
+        <div class="">
+          <label for="tipo" class="form-label">Escriba una publicacion</label>
+          <textarea class="form-control escritura" id='descripcion' aria-label="With textarea" rows="6" [(ngModel)]='detalleBlog'></textarea>
+        </div>
+        <div class="imagenModal">
+          <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex bd-highlight alert alert-{{estadoM}} mt-3" role="alertM" *ngIf='alertM'>
+      <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertM}}</div>
+      <div class="p-2 bd-highlight">
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlog()'>Crear</button>
+  </div>
+</ng-template>
 

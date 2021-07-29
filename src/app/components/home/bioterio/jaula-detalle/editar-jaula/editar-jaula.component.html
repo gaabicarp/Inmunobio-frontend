@@ -2,30 +2,31 @@
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
   <h3 class="text-center m-3">Datos de la Jaula</h3>
-  <div class="p-4 m-5">
+  
+  <div class="">
   <form [formGroup]="formJaula" (ngSubmit)="crearJaula()">
-    <div class="row">
-      <div class="col-9">
-        <div class="mb-3">
+    <div class="filaMayor">
+      <div class="">
+        <div class="fila">
           <label  class="form-label">Código</label>
           <input type="text" class="form-control" formControlName='codigo'>
         </div> 
-          <div class="mb-3 row">
-            <div class="col">
+        <div class="fila">
+            <div class="">
               <label  class="form-label">Rack</label>
               <input type="number" class="form-control" formControlName='rack'>
-          </div> 
-              <div class="col">
-                <label  class="form-label">Estante</label>
-                <input type="number" class="form-control" formControlName='estante'>
-              </div>
-          </div>
-          <div class="mb-3">
+            </div> 
+            <div class="estante">
+              <label  class="form-label">Estante</label>
+              <input type="number" class="form-control" formControlName='estante'>
+            </div>
+        </div>
+          <div class="fila">
             <label  class="form-label">Capacidad</label>
             <input type="number" class="form-control" formControlName='capacidad'>
           </div>
       </div>
-      <div class="col-3">
+      <div class="imagen mx-4 mt-4">
           <div class="text-center">
               <i class="bi bi-archive" style="font-size: 8em;"></i>
           </div>

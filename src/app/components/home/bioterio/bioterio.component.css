@@ -2,26 +2,42 @@ h3{
     margin: 1.5em;
 }
 .search-container{
-    width: auto;
+    width: 70%;
     height: auto;
     margin: auto;
     display: flex;
     justify-content: space-around;
 }
+.fecha{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding:0.7em;
+}
+.blog{
+    width: 100%;
+    margin-left: 5px;
+}
 .card{
     width: 25%;
-    margin: auto;
-    padding: 0.5em;
+    margin: 5px;
+    padding: 4px;
 }
-
 .card-blog{
     width: 100%;
-    margin: auto;
+    margin: 1em;
+    margin-left: 0px;
     vertical-align: auto;
     align-items: center;
     background-color: rgba(93, 155, 209, 0.082);
+    display: flex;
 }
-
+.form-group{
+    margin: 2px;
+    display: flex;
+    width: auto;
+}
 .jaula-container{
     display: flex;
     flex-wrap: wrap;
@@ -29,11 +45,24 @@ h3{
     justify-content: center;
 }
 
-@media screen and (max-width: 1024px){
-    .search-container .form-control{
-        width: 40%;
+@media screen and (max-width: 360px){
+    .search-container{
+        width: 100%;
+        height: auto;
+        display: block;
+        align-items: center;
     }
-    .input-group{
-        width: 40%;
-    }   
+    button{
+        width: 100%;
+    }
+    .jaula-container{
+        display: block;
+        justify-content: center;
+        margin: 2;
+    }
+    .card{
+        width:90%;
+        align-items: center;
+    }
+      
 }

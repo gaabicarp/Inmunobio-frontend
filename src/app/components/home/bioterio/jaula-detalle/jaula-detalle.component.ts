@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription } from 'rxjs';
+import { Subscription, VirtualTimeScheduler } from 'rxjs';
 import { EspacioFisico } from 'src/app/models/EspacioFisico.model';
 import { Jaula } from 'src/app/models/jaula.model';
 import { Animal } from 'src/app/models/animal.model';
@@ -10,6 +10,7 @@ import { PostService } from 'src/app/services/post.service';
 import { Proyecto } from 'src/app/models/proyectos.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BlogBuscadoJaula, BlogJaula, BlogsJaula } from 'src/app/models/blogs.model';
+import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
 
 @Component({
   selector: 'app-jaula-detalle',
@@ -40,6 +41,7 @@ export class JaulaDetalleComponent implements OnInit {
   estadoM: string;
   alertM: boolean;
   detalleBlog:string;
+  id:number;
 
   constructor(
     private router: Router,
@@ -102,7 +104,7 @@ export class JaulaDetalleComponent implements OnInit {
       id_proyecto : new FormControl('', [Validators.required, ]) })
   }
   open(content): void {
-    this.modalService.open(content, { centered: true, size: 'xl' });
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
   
   asociar(){
@@ -147,6 +149,7 @@ export class JaulaDetalleComponent implements OnInit {
         this.estado = 'success';
         this.mensajeAlert = 'Jaula eliminada correctamente';
         setTimeout(() => {
+          this.modalService.dismissAll()
           this.router.navigate(['/home/bioterio']);
         }, 1000);
       }
@@ -156,6 +159,7 @@ export class JaulaDetalleComponent implements OnInit {
       this.estado = 'danger';
       this.mensajeAlert ='La jaula debe estar vacía para poder darla de baja';
       setTimeout(() => {
+        this.modalService.dismissAll()
         this.ngOnInit()
       }, 2000);
     }))
@@ -214,13 +218,15 @@ export class JaulaDetalleComponent implements OnInit {
     });
   }
 
-  eliminar(id_animal: number){
-    this.subscription.add(this.postService.eliminarAnimal(id_animal).subscribe(res =>{
-      if (res.Status === 'Se dio de baja el animal con id '+ id_animal ){
+  eliminarAnimal(){
+    this.subscription.add(this.postService.eliminarAnimal(this.id).subscribe(res =>{
+      if (res.Status === "Se dio de baja el animal con id "+ this.id){
         this.alert = true;
         this.estado = 'success';
         this.mensajeAlert = 'Animal eliminado correctamente';
         setTimeout(() => {
+          this.animales = [];
+          this.modalService.dismissAll()
           this.ngOnInit()
         }, 1000);
       }
@@ -232,5 +238,9 @@ export class JaulaDetalleComponent implements OnInit {
       console.log(err)
     }))
   }
+  eliminarModalAnimal(id:number,content){
+    this.id= id;
+    this.open(content)
+  }
 }
-//Crear blog, alta animal, eliminar animal
+

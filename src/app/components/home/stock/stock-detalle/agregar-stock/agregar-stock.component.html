@@ -9,50 +9,51 @@
       <h2 *ngIf='editar === true'> Editar Stock</h2>
       <h2 *ngIf='editar === false'> Agregar Stock</h2>
   </div>
-<div class="p-4 m-5">
+</div>
 
-<form [formGroup]="formStock" (ngSubmit)="agregarStock()">
-      <div class="m-3">
-          <label  for="producto" class="form-label">Producto</label>
-          <select    *ngIf='editar === false' class="form-control" aria-label=".form-select-lg example" id="producto" formControlName="producto">
-            <option *ngFor='let producto of productos' value="{{producto.id_producto}}">{{producto.nombre}}</option>
-          </select>
-          <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{producto.nombre}}" aria-label="unidad" disabled>
+<div class="">
+  <form [formGroup]="formStock" (ngSubmit)="agregarStock()">
+        <div class="m-3">
+            <label  for="producto" class="form-label">Producto</label>
+            <select    *ngIf='editar === false' class="form-control" aria-label=".form-select-lg example" id="producto" formControlName="producto">
+              <option *ngFor='let producto of productos' value="{{producto?.id_producto}}">{{producto?.nombre}}</option>
+            </select>
+            <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{producto?.nombre}}" aria-label="unidad" disabled>
 
-      </div> 
-      <div class="m-3">
-            <label for="lote" class="form-label">Lote</label>
-            <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{prodEspecifico?.lote}}" aria-label="lote" disabled>
-            <input *ngIf='editar === false' type="text" class="form-control" id="lote" formControlName="lote">
-      </div> 
-      <div class="m-3">
-            <label for="unidad" class="form-label">Unidades</label>
-            <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{prodEspecifico?.unidad}}" aria-label="unidad" disabled>
-            <input *ngIf='editar === false' type="number" class="form-control" id="unidad" formControlName="unidad">
-      </div> 
-      <div class=" m-3">
-          <label  for="codigoContenedor" class="form-label">Contenedor</label>
-          <select class="form-control" aria-label=".form-select-lg example" id="contenedor" formControlName="contenedor">
-            <option *ngFor='let contenedor of contenedores' value="{{contenedor.id_contenedor}}">{{contenedor.nombre}}</option>
-          </select>
-      </div>
-      <div class="m-3">
-              <label for="detalleUbicacion" class="form-label">Detalle Ubicación</label>
-              <input type="text" class="form-control" id="detalleUbicacion" formControlName="detalleUbicacion">
-      </div>
-      <div class="m-3">
-        <label for="fechaVencimiento" class="form-label">Fecha Vencimiento</label>
-        <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{prodEspecifico?.fechaVencimiento | date: 'dd/MM/yy'}}" aria-label="fechaVencimiento" disabled>
-        <input  *ngIf='editar === false' type="date" class="form-control" id="fechaVencimiento" formControlName="fechaVencimiento">
-</div> 
-      <div class="d-flex flex-row justify-content-end">
-        <div class="mx-3">
-              <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formStock.valid">Guardar</button>
-          </div>
-      </div>
-      <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-        <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
-      </div>
-  </form>
+        </div> 
+        <div class="m-3">
+              <label for="lote" class="form-label">Lote</label>
+              <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{prodEspecifico?.lote}}" aria-label="lote" disabled>
+              <input *ngIf='editar === false' type="text" class="form-control" id="lote" formControlName="lote">
+        </div> 
+        <div class="m-3">
+              <label for="unidad" class="form-label">Unidades</label>
+              <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{prodEspecifico?.unidad}}" aria-label="unidad" disabled>
+              <input *ngIf='editar === false' type="number" class="form-control" id="unidad" formControlName="unidad">
+        </div> 
+        <div class=" m-3">
+            <label  for="codigoContenedor" class="form-label">Contenedor</label>
+            <select class="form-control" aria-label=".form-select-lg example" id="contenedor" formControlName="contenedor">
+              <option *ngFor='let contenedor of contenedores' value="{{contenedor?.id_contenedor}}">{{contenedor?.nombre}}</option>
+            </select>
+        </div>
+        <div class="m-3">
+                <label for="detalleUbicacion" class="form-label">Detalle Ubicación</label>
+                <input type="text" class="form-control" id="detalleUbicacion" formControlName="detalleUbicacion">
+        </div>
+        <div class="m-3">
+          <label for="fechaVencimiento" class="form-label">Fecha Vencimiento</label>
+          <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{prodEspecifico?.fechaVencimiento | date: 'dd/MM/yy'}}" aria-label="fechaVencimiento" disabled>
+          <input  *ngIf='editar === false' type="date" class="form-control" id="fechaVencimiento" formControlName="fechaVencimiento">
+  </div> 
+        <div class="text-center">
+          <div class="">
+                <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formStock.valid">Guardar</button>
+            </div>
+        </div>
+        <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+          <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
+        </div>
+    </form>
 </div>
 

@@ -34,7 +34,6 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   fecHasta:any;
   fecHoy=new Date(Date.now());
   blogs = [];
-  formFecha!: FormGroup;
 
   herramientas =[];
   herramientasFiltradas=[];
@@ -60,6 +59,11 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   detalleBlog:any;
   id:number;
   content:any;
+
+  tipo = 'espacioFisico';
+  tipoBlog= 'espacioFisico';
+  herramientaSeleccionada:any;
+  herramientaSeleccionadaBlog:any;
   
   
   
@@ -108,12 +112,6 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       console.log(res);
       this.blogs = res; })
     );
-    this.formFecha = new FormGroup({
-      fecDesde: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      fecHasta: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      filtro: new FormControl(),
-      herramienta: new FormControl()
-    })
     //HERRAMIENTAS 
     this.subscription.add( this.getService.obtenerHerramientas().subscribe(res => {
       console.log(res)
@@ -131,17 +129,17 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     this.modalService.open(content, { centered: true, size: size });
   }
   Buscar(){
-    this.fecDesde =  new Date(this.formFecha.value.fecDesde.year,(this.formFecha.value.fecDesde.month -1)  ,this.formFecha.value.fecDesde.day)
-    this.fecHastaReal =   new Date(this.formFecha.value.fecHasta.year,(this.formFecha.value.fecHasta.month -1) ,this.formFecha.value.fecHasta.day)
+    this.fecDesde =  new Date(this.fecDesde.year,(this.fecDesde.month -1)  ,this.fecDesde.day)
+    this.fecHastaReal =   new Date(this.fecHasta.year,(this.fecHasta.month -1) ,this.fecHasta.day)
     console.log(this.fecDesde, this.fecHastaReal)
     const diaMas1 = (this.fecHastaReal).getDate() + 2;
     this.fecHasta = new Date(this.fecHastaReal.getFullYear(),this.fecHastaReal.getMonth(), diaMas1)
     this.fecDesde = this.fecDesde.toDateString();
     this.fecHasta = this.fecHasta.toDateString();
 
-    if(this.formFecha.value.filtro == 'herramienta'){
+    if(this.tipo == 'herramienta'){
       const blog: any ={
-        id_herramienta: this.formFecha.value.herramienta,
+        id_herramienta: this.herramientaSeleccionada,
         fechaDesde: this.fecDesde,
         fechaHasta: this.fecHasta
       }
@@ -286,11 +284,11 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       this.mensajeAlert = JSON.stringify(err.error.error);;
     });
   }
-  crearBlog(){
+  crearBlogHerramienta(){
     const blog: any ={
       id_usuario: 1,
       detalle: this.detalleBlog,
-      tipo :'Herramienta'
+      tipo :'herramienta'
     }
     const nuevoBlog : BlogHerramienta ={
       id_herramienta: this.a.id_herramienta,
@@ -322,5 +320,64 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       // }, 2000);
     });
   }
+  crearBlog(){
+    if(this.tipoBlog === 'herramienta'){
+      const blog: any ={
+        id_usuario: 1,
+        detalle: this.detalleBlog,
+        tipo :'herramienta'
+      }
+      const nuevoBlog : BlogHerramienta ={
+        id_herramienta: this.herramientaSeleccionadaBlog,
+        blogs: blog
+      }
+      console.log(nuevoBlog)
+      this.postService.crearBlogHerramienta(nuevoBlog).subscribe(res => {
+        if (res.Status === 'ok'){
+          this.alertM = true;
+          this.estadoM = 'success';
+          this.mensajeAlertM = 'Blog creado correctamente';
+          setTimeout(() => {
+            this.detalleBlog = '';
+            this.modalService.dismissAll()
+            this.ngOnInit()
+          }, 2000);
+        }
+        console.log(res)
+      }, err => {
+        this.alertM = true;
+        this.estadoM = 'danger';
+        this.mensajeAlertM = JSON.stringify(err);
+        console.log(err)
+      });
+    } else{
+    const blog: any ={
+      id_usuario: 1,
+      detalle: this.detalleBlog,
+      tipo :'espacioFisico'
+    }
+    const nuevoBlog : any ={
+      id_espacioFisico: this.idEspacioFisico,
+      blogs: blog
+    }
+    this.postService.crearBlogEspacio(nuevoBlog).subscribe(res => {
+      if (res.Status === 'ok'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Blog creado correctamente';
+        setTimeout(() => {
+          this.modalService.dismissAll()
+          this.ngOnInit()
+        }, 2000);
+      }
+      console.log(res)
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err.error.error);
+    });
+    }
+  }
 
 }
+//VER BLOGS EN ESPACIO FISICO

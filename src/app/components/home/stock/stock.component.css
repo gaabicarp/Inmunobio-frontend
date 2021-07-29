@@ -11,3 +11,23 @@
     display: flex;
     justify-content: space-around;
 }
+@media screen and (max-width: 360px){
+    .search-container{
+        width: 100%;
+        height: auto;
+        display: block;
+        align-items: center;
+    }
+    button{
+        width: 100%;
+    }
+    .table{
+        width: 80%;
+        margin: auto;
+        text-align: center;
+        justify-content: space-around;
+        margin-left:0px;
+    }
+
+}
+      

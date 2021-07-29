@@ -19,31 +19,32 @@
                         <div class="ms-auto p-2 bd-highlight">
                             <button class="btn btn-outline-secondary" style="cursor: pointer" (click)=open(asociarP) ><i class="bi bi-link text-secondary"></i> Asociar Proyecto</button>
                         </div>
-                      </div>                 
-                    <div class="rounded pb-5 d-flex align-items-center justify-content-around">
-                      <div class="mx-5">
-                        <h4 class="text-secondary text-staatliches mb-0">Ubicación</h4>
-                        <p class="mb-0">{{espacioFisico?.nombre}}</p>  
                       </div>
-                      <div class="barra"></div>
-                      <div class="mx-5">
-                        <h4 class="text-secondary text-staatliches mb-0">Estante</h4>
-                        <p class="mb-0">{{jaula?.estante}}</p>
-                      </div>
-                      <div class="barra"></div>
-                      <div class="mx-5">
-                        <h4 class="text-secondary text-staatliches mb-0">Rack</h4>
-                        <p class="mb-0">{{jaula?.rack}}</p>
-                      </div>
-                      <div class="barra"></div>
-                      <div class="mx-5">
-                        <h4 class="text-secondary text-staatliches mb-0">Tipo</h4>
-                        <p class="mb-0">{{jaula?.tipo}}</p>  
-                      </div>
+                      <div class="ubicacion">
+                        <div class="fila">
+                          <div class="">
+                            <h4 class="text-secondary text-staatliches ">Ubicación</h4>
+                            <p class="mb-0">{{espacioFisico?.nombre}}</p>  
+                          </div>
+                          <div class="">
+                            <h4 class="text-secondary text-staatliches ">Tipo</h4>
+                            <p class="mb-0">{{jaula?.tipo}}</p>  
+                          </div>
+                        </div>
+                        <div class="fila">
+                          <div class="">
+                            <h4 class="text-secondary text-staatliches ">Estante</h4>
+                            <p class="mb-0">{{jaula?.estante}}</p>
+                          </div>
+                          <div class="">
+                            <h4 class="text-secondary text-staatliches ">Rack</h4>
+                            <p class="mb-0">{{jaula?.rack}}</p>
+                          </div>
+                        </div>
                     </div>
-                  </div>
+                    </div>
               <div class="d-flex bd-highlight">
-                <div class="p-2 flex-grow-1 bd-highlight"><button type="button" class="btn btn-outline-danger" (click)=eliminarJaula()>Eliminar Jaula</button></div>
+                <div class="p-2 flex-grow-1 bd-highlight"><button type="button" class="btn btn-outline-danger" (click)=open(eliminarJaulaModal)>Eliminar Jaula</button></div>
                 <div class="p-2 bd-highlight"><button class="btn btn-outline-primary" style="cursor: pointer" routerLink='editar-jaula'><i class="bi bi-pencil text-primary"></i> Editar</button></div>
               </div>
               <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
@@ -55,7 +56,7 @@
             <a ngbNavLink>Animales</a>
             <ng-template ngbNavContent>
 
-                <div class="table-responsive m-4">
+                <div class="table-responsive">
                     <table class="table  table-hover">
                         <thead>
                             <tr class="text-secondary text-staatliches card-header">
@@ -63,7 +64,7 @@
                               <th scope="col">Especie</th>
                               <th scope="col">Cepa</th>
                               <th scope="col">Sexo</th>
-                              <th><a class="link-primary" style="cursor: pointer" routerLink='alta-animal'><i class="bi bi-plus-square"> Agregar</i></a></th>
+                              <th><a class="link-primary" style="cursor: pointer" routerLink='alta-animal'> + Agregar</a></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -73,7 +74,8 @@
                                 <th scope="col">{{animal.cepa}}</th>
                                 <th scope="col">{{animal.sexo}}</th>
                                 <th><div class="mr-4">
-                                    <a class="text-danger" role="button" (click)=eliminar(animal.id_fuenteExperimental)>
+                                    <a class="text-danger" role="button"  (click)=eliminarModalAnimal(animal.id_fuenteExperimental,eliminarAnimalModal)>
+                                      <!-- (click)=eliminar(animal.id_fuenteExperimental) -->
                                       <i class="bi bi-trash"></i>
                                     </a>
                                   </div></th>
@@ -92,38 +94,43 @@
           <li [ngbNavItem]="3">
             <a ngbNavLink>Blogs</a>
             <ng-template ngbNavContent>
-                <div class="row m-2">
-                  <div class="col-3 d-flex justify-content-center">
-                    <button class="btn btn-outline-success m-2" (click)="open(blog)">Nueva Entrada</button>
+                <div class="busqueda">
+                  <div class="form-group my-2">
+                    <button class="btn btn-outline-success" (click)="open(blog)">Nueva Entrada</button>
                   </div>
                   <div class="barra m-2" *ngIf='!experimento?.finalizado'></div>
-                    <div class="col-6 d-flex justify-content-around align-items-center">
-                      <div class="form-group m-2">
-                        <div class="d-flex">
+                    <div class="search-container">
+                      <div class="form-group my-2">
+                        <div class="input-group">
                           <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
                                  name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
-                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                          <div class="">
+                            <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                          </div>
                         </div>
                       </div>
-                      <div class="form-group m-2">
-                        <div class="d-flex">
+                      <div class="form-group my-2">
+                        <div class="input-group">
                           <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
                                  name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
-                            <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                          <div class="">
+                            <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                          </div>
                         </div>
                       </div>
                       <button class="btn btn-outline-secondary m-2"  (click)=Buscar() >Filtrar</button>
                     </div>
                 </div>
-                <div class="row m-2" >
+
+                <div class="" >
                   <ng-container *ngFor='let a of blogs;let i = index'  >
                       <ng-container *ngIf = 'i%2==0'>
-                        <div class=" row card-blog shadow rounded m-2">
-                          <div class="col-1 d-flex flex-column align-items-center">
+                        <div class="card-blog shadow rounded">
+                          <div class="fecha">
                             <i class="bi bi-journals m-2"></i>
                             <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
                           </div>
-                          <div class="col-11" >
+                          <div class="blog" >
                             <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
                             <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
                             <p>{{a.detalle}}</p>
@@ -131,13 +138,13 @@
                         </div>
                       </ng-container>
                       <ng-container *ngIf = 'i%2!=0'>
-                        <div class="row card-blog shadow rounded m-2">
-                          <div class="col-11" >
+                        <div class="card-blog shadow rounded">
+                          <div class="blog" >
                             <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
                             <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
                             <p>{{a.detalle}}</p>
                           </div>
-                          <div class="col-1 d-flex flex-column align-items-center">
+                          <div class="fecha">
                             <i class="bi bi-journals m-2"></i>
                             <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
                           </div>
@@ -153,19 +160,18 @@
         </ul>
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
 
-      <ng-template #asociarP let-modal >
-        <div class="modal-body mx-5" >
+      <ng-template #asociarP let-modal class="modal-dialog" >
+        <div class="modal-body" >
             <div class="modal-header">
                 <h4 class="modal-title" id="modal-basic-title">Asociar Proyecto</h4>
                 <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body mx-5">
-                <div class="row">
-                    <div class="col-8 form-group" >
+            <div class="modal-body ">
+                <div class="body">
                     <form [formGroup]="formProyecto">
-                        <div class="m-3">
+                        <div class="m-2">
                             <label for="tipo" class="form-label">Seleccione Proyecto</label>
                           <select class="form-control" aria-label=".form-select-lg example" formControlName='id_proyecto'>
                             <option value="0">Sin Asignar</option>
@@ -178,8 +184,7 @@
                           </div>
                         </div>
                     </form>
-                    </div>
-                    <div class="col d-flex justify-content-center align-items-center">
+                    <div class="imagenModal col d-flex justify-content-center align-items-center w-50">
                       <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
                     </div>
                 </div>
@@ -197,13 +202,13 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body mx-5">
-          <div class="row">
-            <div class="col-8 form-group">
+        <div class="modal-body">
+          <div class="body">
+            <div class="">
               <label for="tipo" class="form-label">Escriba una publicacion</label>
               <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" [(ngModel)]='detalleBlog'></textarea>
             </div>
-            <div class="col d-flex justify-content-center align-items-center">
+            <div class="imagenModal">
               <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
             </div>
           </div>
@@ -215,5 +220,53 @@
         </div>
         <div class="modal-footer">
             <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlog()'>Crear</button>
+        </div>
+      </ng-template>
+
+      <ng-template #eliminarJaulaModal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Eliminar</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="row">
+            <div class="col-8 form-group d-flex m-2 align-items-center">
+              <i class="bi bi-exclamation-triangle m-2" style="font-size: 2em;"></i>
+              <label for="tipo" class="form-label m-4">¿Está seguro que desea eliminar la jaula de forma permanente?</label>
+            </div>
+          </div>
+          <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+            {{mensajeAlert}}
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline-primary btn-lg mr-3" (click)= eliminarJaula()>Si</button>
+            <button class="btn btn-outline-primary btn-lg mr-3" (click)="modal.dismiss('Cross click')">No</button>
+        </div>
+      </ng-template>
+
+      <ng-template #eliminarAnimalModal let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Eliminar</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="row">
+            <div class="col-8 form-group d-flex m-2 align-items-center">
+              <i class="bi bi-exclamation-triangle m-2" style="font-size: 2em;"></i>
+              <label for="tipo" class="form-label m-4">¿Está seguro que desea eliminar el animal de forma permanente?</label>
+            </div>
+          </div>
+          <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
+            {{mensajeAlert}}
+          </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline-primary btn-lg mr-3" (click)= eliminarAnimal()>Si</button>
+            <button class="btn btn-outline-primary btn-lg mr-3" (click)="modal.dismiss('Cross click')">No</button>
         </div>
       </ng-template>

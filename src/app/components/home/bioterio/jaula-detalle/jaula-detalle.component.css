@@ -1,9 +1,14 @@
 .search-container{
-    width: 100%;
-    padding: 0.7em;
+    width: 70%;
+    height: auto;
     margin: auto;
     display: flex;
     justify-content: space-around;
+}
+.form-group{
+    margin: 2px;
+    display: flex;
+    width: auto;
 }
 .table{
     width: 90%;
@@ -13,11 +18,17 @@
     font-weight: bold;
 }
 .card-blog{
-    width: 100%;
-    margin: auto;
+    width: 90%;
+    margin: 1em;
+    margin-left: 0px;
     vertical-align: auto;
     align-items: center;
     background-color: rgba(93, 155, 209, 0.082);
+    display: flex;
+}
+.blog{
+    width: 100%;
+    margin-left: 5px;
 }
 .barra{
     border: none;
@@ -26,11 +37,86 @@
     height: 40px;
     width: 2px;
 }
-
-.search-container .form-control{
-    width: 32%;
+.ubicacion{
+    display: flex;
+    flex: row;
+    text-align: center;
 }
-
-.input-group{
-    width: 32%;
+.fila{
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em;
+    width: 100%;
+    justify-content: space-around;
+    text-align: center;
+}
+select{
+    width: 400px;
+}
+.table-responsive{
+    margin: 2em;
+}
+.busqueda{
+    display: flex;
+    flex-direction: row;
+    margin: 1em; 
+}
+.fecha{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding:0.7em;
+}
+.body{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+textarea{
+    width: 200% ;
+}
+.row{
+    justify-content: space-around;
+    align-items: center;
+}
+@media screen and (max-width: 360px){
+    .fila{
+        display: flex;
+        flex-direction: row;
+        margin: 0.5em;
+        width: 100%;
+        justify-content: space-around;
+        text-align: center;
+    }
+    .ubicacion, .busqueda{
+        display: block;
+    }
+    label,input,select{
+        width: 100%;
+    }
+    .imagenModal, .barra{
+        display: none !important;
+    }
+    .modal-dialog{
+        width: 50%;
+        height: 50%;
+    }
+    .table-responsive{
+        margin:0px;
+    }
+    .search-container{
+        width: 100%;
+        height: auto;
+        display: block;
+        align-items: center;
+    }
+    .btn{
+        width: 100%;
+    }
+    label,textarea{
+        width:auto;
+        margin: 0px;
+    }
 }
