@@ -192,7 +192,7 @@
 
       <div *ngFor="let a of herramientasFiltradas | filter: filterPost2 ;let i = index" (click)=Herramienta(a,herramienta)>
           <div class="card-herramienta card shadow rounded list-group-item-action">
-            <div class="datos">
+            <div class="d-flex">
               <div class="d-flex">
                 <h4 class="card-title ">{{a.nombre}}</h4>
                   <a class="text-primary mx-4" role="button" routerLink='nueva-herramienta/{{a.id_herramienta}}' >

@@ -51,9 +51,8 @@
 }
     /* Card Blogs */
 .card-blog{
-    width: 100%;
+    width: 95%;
     margin: 1em;
-    margin-left: 0px;
     vertical-align: auto;
     align-items: center;
     background-color: rgba(93, 155, 209, 0.082);
@@ -86,7 +85,7 @@ textarea{
     margin: 0.5em;
     margin-left: 15%;
     padding: 1em;
-    justify-content:space-around;
+    justify-content:space-between;
 }
 .nuevo-blog{
     width: 150px;
@@ -149,6 +148,9 @@ textarea{
     }
     .imagenModal{
         display: none;
+    }
+    .card-blog{
+        margin-left: 7px;
     }
       
 }

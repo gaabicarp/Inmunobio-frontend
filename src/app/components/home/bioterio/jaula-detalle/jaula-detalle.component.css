@@ -18,9 +18,8 @@
     font-weight: bold;
 }
 .card-blog{
-    width: 90%;
+    width: 95%;
     margin: 1em;
-    margin-left: 0px;
     vertical-align: auto;
     align-items: center;
     background-color: rgba(93, 155, 209, 0.082);
@@ -118,5 +117,8 @@ textarea{
     label,textarea{
         width:auto;
         margin: 0px;
+    }
+    .card-blog{
+        margin-left: 7px;
     }
 }
