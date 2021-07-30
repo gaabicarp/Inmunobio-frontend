@@ -1,48 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Subscription, VirtualTimeScheduler } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import { EspacioFisico } from 'src/app/models/EspacioFisico.model';
 import { Jaula } from 'src/app/models/jaula.model';
 import { Animal } from 'src/app/models/animal.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { Proyecto } from 'src/app/models/proyectos.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BlogBuscadoJaula, BlogJaula, BlogsJaula } from 'src/app/models/blogs.model';
-import { NgbTypeaheadWindow } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
+import { BlogBuscadoJaula, BlogJaula, Blogs, BlogsJaula } from 'src/app/models/blogs.model';
+
 
 @Component({
   selector: 'app-jaula-detalle',
   templateUrl: './jaula-detalle.component.html',
   styleUrls: ['./jaula-detalle.component.css']
 })
-export class JaulaDetalleComponent implements OnInit {
+export class JaulaDetalleComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   idJaula!: number;
   jaula: Jaula;
   espacioFisico: EspacioFisico;
-  mensajeAlert: string;
-  estado: string;
-  alert: boolean;
+
+  // animales:Animal[];
   animales=[];
+  idAnimal_eliminar:number;
+
   proyectos: Proyecto[];
   miProyecto:Proyecto;
+  idProyecto_asociar:number;
+
   fecHoy=new Date(Date.now());
   fecDesde:any;
   fecHasta:any;
-  fecHastaReal:any;
-  formFecha!:FormGroup;
-  formProyecto!:FormGroup;
-  blogs: BlogsJaula;
+  blogs: BlogsJaula[];
+  detalleBlog: string;
 
-  proyecto:any;
   mensajeAlertM: string;
   estadoM: string;
   alertM: boolean;
-  detalleBlog:string;
-  id:number;
-
+  mensajeAlert: string;
+  estado: string;
+  alert: boolean;
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -53,6 +52,8 @@ export class JaulaDetalleComponent implements OnInit {
 
   ngOnInit(): void {
     this.alert = false;
+    this.alertM = false;
+    this.detalleBlog ='';
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.subscription.add(this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res => {
       console.log(res)
@@ -62,6 +63,12 @@ export class JaulaDetalleComponent implements OnInit {
       this.subscription.add(this.getService.obtenerEspacioFisico(this.jaula.id_espacioFisico).subscribe(res =>{
         this.espacioFisico = res;
       }))
+      if(this.jaula.id_proyecto != 0){
+      this.subscription.add(this.getService.obtenerProyectosPorId(this.jaula.id_proyecto).subscribe(res =>{
+        this.miProyecto = res
+        console.log(res)
+      }))
+      }
     },500);
     this.subscription.add(this.getService.obtenerAnimalesPorJaula(this.idJaula).subscribe(res => {
       if(!res.Status){
@@ -69,19 +76,13 @@ export class JaulaDetalleComponent implements OnInit {
       }
       console.log(res)
     }))
-    this.subscription.add(this.getService.obtenerProyectos().subscribe(res => {
+    this.subscription.add( this.getService.obtenerProyectos().subscribe(res => {
       this.proyectos = res.filter(proyecto => !proyecto.finalizado );
       console.log(res)
     }))
-    //MEJORAR
-    setTimeout(() => {
-      this.miProyecto = this.proyectos.find(proyecto => proyecto.id_proyecto === this.jaula.id_proyecto)
-      console.log(this.miProyecto)
-    }, 1000);
-
+    //Blogs
     const dia = (this.fecHoy).getDate() + 1;
     this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)
-    console.log(this.fecHasta)
     this.fecHasta = this.fecHasta.toDateString();
     const blog : BlogBuscadoJaula = {
           id_jaula: this.idJaula,
@@ -91,34 +92,19 @@ export class JaulaDetalleComponent implements OnInit {
     console.log(blog)
     this.subscription.add(this.postService.obtenerBlogJaula(blog).subscribe(res =>{
       console.log(res)
-      if(!res.Status){
-        this.blogs = res;
-      }
+      this.blogs = res;
     }))
-
-    this.formFecha = new FormGroup({
-      fecDesde: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      fecHasta: new FormControl('', [Validators.required, Validators.maxLength(20)])
-    })
-    this.formProyecto = new FormGroup({
-      id_proyecto : new FormControl('', [Validators.required, ]) })
   }
+
   open(content): void {
     this.modalService.open(content, { centered: true, size: 'lg' });
   }
   
   asociar(){
-    this.getService.obtenerProyectosPorId(this.formProyecto.value.id_proyecto).subscribe(res =>{
-      this.proyecto = res;
-    })
-    setTimeout(() => {
-      console.log(this.proyecto)
     const datos: any = {
       id_jaula : this.idJaula,
-      id_proyecto : parseInt(this.formProyecto.value.id_proyecto),
-      nombre_proyecto: this.proyecto.nombre
+      id_proyecto : this.idProyecto_asociar
     }
-    console.log(datos)
     this.subscription.add(this.postService.asignarJaulaProyecto(datos).subscribe(res => {
       console.log(res)
       if (res.status === 'Se asignó la jaula al proyecto'){
@@ -134,14 +120,9 @@ export class JaulaDetalleComponent implements OnInit {
         this.alertM = true;
         this.estadoM = 'danger';
         this.mensajeAlertM = JSON.stringify(err.error.error);
-        setTimeout(() => {
-          this.modalService.dismissAll()
-          this.ngOnInit()
-        }, 2000);
+        console.log(err)
     }))
-    }, 500);
   }
-
   eliminarJaula(){
   this.subscription.add(this.postService.eliminarJaula(this.idJaula).subscribe(res =>{
       if (res.Status === 'Ok'){
@@ -166,9 +147,9 @@ export class JaulaDetalleComponent implements OnInit {
   }
   Buscar(){
     this.fecDesde =  new Date(this.fecDesde.year,(this.fecDesde.month -1)  ,this.fecDesde.day)
-    this.fecHastaReal =   new Date(this.fecHasta.year,(this.fecHasta.month -1) ,this.fecHasta.day)
-    const diaMas1 = (this.fecHastaReal).getDate();
-    this.fecHasta = new Date(this.fecHastaReal.getFullYear(),this.fecHastaReal.getMonth(), diaMas1)
+    const fechaHasta = new Date(this.fecHasta.year,(this.fecHasta.month -1) ,this.fecHasta.day)
+    const diaMas1 = (fechaHasta).getDate() + 2;
+    this.fecHasta = new Date(fechaHasta.getFullYear(),fechaHasta.getMonth(), diaMas1)
     this.fecDesde = this.fecDesde.toDateString();
     this.fecHasta = this.fecHasta.toDateString();
     const blog : BlogBuscadoJaula = {
@@ -176,7 +157,6 @@ export class JaulaDetalleComponent implements OnInit {
       fechaDesde: this.fecDesde,
       fechaHasta: this.fecHasta
     }
-    console.log(blog)
     setTimeout(() => {
       this.subscription.add(this.postService.obtenerBlogJaula(blog).subscribe(res =>{
         this.blogs = res;
@@ -185,7 +165,7 @@ export class JaulaDetalleComponent implements OnInit {
   }
 
   crearBlog(): void{
-    const Blog: any={
+    const Blog: Blogs={
       id_usuario: 1,
       detalle: this.detalleBlog,
       tipo: 'Jaula'
@@ -194,13 +174,13 @@ export class JaulaDetalleComponent implements OnInit {
       id_jaula: this.idJaula,
       blogs: Blog
     }
-    console.log(nuevoBlog)
-    this.postService.nuevoBlogJaula(nuevoBlog).subscribe(res => {
+    this.subscription.add( this.postService.nuevoBlogJaula(nuevoBlog).subscribe(res => {
       if (res.Status === 'Ok'){
         this.alertM = true;
         this.estadoM = 'success';
         this.mensajeAlertM = 'Blog creado correctamente';
         setTimeout(() => {
+          this.alertM = false;
           this.modalService.dismissAll()
           this.ngOnInit()
         }, 2000);
@@ -215,12 +195,12 @@ export class JaulaDetalleComponent implements OnInit {
         this.modalService.dismissAll()
         this.ngOnInit()
       }, 2000);
-    });
+    }));
   }
 
   eliminarAnimal(){
-    this.subscription.add(this.postService.eliminarAnimal(this.id).subscribe(res =>{
-      if (res.Status === "Se dio de baja el animal con id "+ this.id){
+    this.subscription.add(this.postService.eliminarAnimal(this.idAnimal_eliminar).subscribe(res =>{
+      if (res.Status === "Se dio de baja el animal con id "+ this.idAnimal_eliminar){
         this.alert = true;
         this.estado = 'success';
         this.mensajeAlert = 'Animal eliminado correctamente';
@@ -228,7 +208,7 @@ export class JaulaDetalleComponent implements OnInit {
           this.animales = [];
           this.modalService.dismissAll()
           this.ngOnInit()
-        }, 1000);
+        }, 2000);
       }
       console.log(res)
     }, err => {
@@ -239,8 +219,12 @@ export class JaulaDetalleComponent implements OnInit {
     }))
   }
   eliminarModalAnimal(id:number,content){
-    this.id= id;
+    this.idAnimal_eliminar = id;
     this.open(content)
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
 

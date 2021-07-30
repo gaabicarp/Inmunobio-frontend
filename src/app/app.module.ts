@@ -29,7 +29,6 @@ import { NuevoUsuarioComponent } from './components/home/configuracion/usuarios/
 import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
 import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/editar-jaula/editar-jaula.component';
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
-import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
 import { GrupotrabajoComponent } from './components/home/configuracion/grupotrabajo/grupotrabajo.component';
 import { NuevoGrupoComponent } from './components/home/configuracion/grupotrabajo/nuevo-grupo/nuevo-grupo.component';
 import { NuevoExperimentoComponent } from './components/home/proyectos/nuevo-experimento/nuevo-experimento.component';
@@ -40,8 +39,6 @@ import { NuevoEspacioComponent } from './components/home/configuracion/espacio-f
 import { FinalizarProyectoComponent } from './components/home/proyectos/detalle-proyecto/finalizar-proyecto/finalizar-proyecto.component';
 import { FinalizarExperimentoComponent } from './components/home/proyectos/detalle-experimentos/finalizar-experimento/finalizar-experimento.component';
 import { GrupoExperimentalComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
-import { NuevoBlogEspacioComponent } from './components/home/stock/nuevo-blog-espacio/nuevo-blog-espacio.component';
-import { BlogsEspacioFisicoComponent } from './components/home/stock/blogs-espacio-fisico/blogs-espacio-fisico.component';
 import { FilterPipe } from './pipe/filter.pipe';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { FilterStatePipe } from './pipe/filter-state.pipe';
@@ -76,7 +73,6 @@ import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle
     JaulaDetalleComponent,
     EditarJaulaComponent,
     AltaAnimalComponent,
-    EntradaBlogComponent,
     GrupotrabajoComponent,
     NuevoGrupoComponent,
     NuevoExperimentoComponent,
@@ -87,8 +83,6 @@ import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle
     FinalizarProyectoComponent,
     FinalizarExperimentoComponent,
     GrupoExperimentalComponent,
-    NuevoBlogEspacioComponent,
-    BlogsEspacioFisicoComponent,
     FilterPipe,
     FilterStatePipe,
     ToastComponent,

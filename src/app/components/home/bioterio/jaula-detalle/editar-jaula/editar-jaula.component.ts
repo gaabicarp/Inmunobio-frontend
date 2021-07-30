@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Jaula } from 'src/app/models/jaula.model';
@@ -6,17 +6,19 @@ import { Proyecto } from 'src/app/models/proyectos.model';
 import { EspacioFisico } from 'src/app/models/EspacioFisico.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-editar-jaula',
   templateUrl: './editar-jaula.component.html',
   styleUrls: ['./editar-jaula.component.css']
 })
-export class EditarJaulaComponent implements OnInit {
+export class EditarJaulaComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
+
   idJaula:number;
   jaula:Jaula;
-  espaciosFisicos: EspacioFisico;
-  proyectos: Proyecto[];
+  espaciosFisicos: EspacioFisico[];
   formJaula!: FormGroup;
   mensajeAlert: string;
   estado: string;
@@ -32,19 +34,15 @@ export class EditarJaulaComponent implements OnInit {
   ngOnInit(): void {
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     if (!isNaN(this.idJaula)){
-      this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res =>{
+      this.subscription.add( this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res =>{
         this.jaula = res;
         console.log(res)
-      })
+      }));
     }
-    this.getService.obtenerEspaciosFisicos().subscribe(res => {
+    this.subscription.add( this.getService.obtenerEspaciosFisicos().subscribe(res => {
       this.espaciosFisicos = res;
       console.log(res);
-    });
-    this.getService.obtenerProyectos().subscribe(res => {
-      this.proyectos = res.filter(proyecto => !proyecto.finalizado );
-      console.log(res)
-    });
+    }));
     this.formJaula = new FormGroup({
       codigo: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       rack: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -78,20 +76,23 @@ export class EditarJaulaComponent implements OnInit {
     }
     if (!isNaN(this.idJaula)){
       jaula.id_jaula = this.idJaula
-      this.postService.editarJaula(jaula).subscribe(res => {
+      this.subscription.add( this.postService.editarJaula(jaula).subscribe(res => {
         console.log(res);
         if (res.status === 'Jaula modificada'){
           this.alert = true;
           this.estado = 'success';
           this.mensajeAlert = 'La información fue editada correctamente';
+          setTimeout(() => {
+            this.router.navigate(['/home/bioterio/'+ this.idJaula]);
+          }, 1500);
         }
       }, err => {
         this.alert = true;
         this.estado = 'danger';
         this.mensajeAlert = JSON.stringify(err.error.error);
-      });
+      }));
     } else {
-      this.postService.crearJaula(jaula).subscribe(res => {
+      this.subscription.add( this.postService.crearJaula(jaula).subscribe(res => {
         console.log(res);
         if (res.status === 'Jaula creada.'){
           this.alert = true;
@@ -105,8 +106,10 @@ export class EditarJaulaComponent implements OnInit {
         this.alert = true;
         this.estado = 'danger';
         this.mensajeAlert = JSON.stringify(err.error.error);
-      });
+      }));
     }
   }
-
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

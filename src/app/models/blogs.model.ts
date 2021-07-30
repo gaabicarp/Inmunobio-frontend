@@ -16,7 +16,7 @@ export class Blogs{
     detalle: string;
     tipo: string;
 }
-export class BlogsBuscados{
+export class BlogsBuscadosEspFisico{
     id_espacioFisico: number;
     fechaDesde: any;
     fechaHasta:any;
@@ -39,4 +39,11 @@ export class BlogBuscadoJaula{
     id_jaula:number;
     fechaDesde: any;
     fechaHasta:any;
+}
+export class BlogBuscados{
+    detalle: string;
+    fecha: any;
+    id_blog: number;
+    id_usuario: number;
+    tipo: string;
 }

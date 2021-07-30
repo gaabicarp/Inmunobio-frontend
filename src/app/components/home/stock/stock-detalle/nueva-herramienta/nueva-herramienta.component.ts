@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Herramienta } from 'src/app/models/herramientas.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
@@ -10,33 +11,32 @@ import { PostService } from 'src/app/services/post.service';
   templateUrl: './nueva-herramienta.component.html',
   styleUrls: ['./nueva-herramienta.component.css']
 })
-export class NuevaHerramientaComponent implements OnInit {
-
+export class NuevaHerramientaComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
   formHerramienta!: FormGroup;
   estado: string;
   mensajeAlert: string;
-  alert: boolean;
+  alert: boolean = false;
   idEspacioFisico:number;
   idHerramienta:number;
-  herramienta:any;
+  herramienta:Herramienta;
   editar=false ;
-
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
     private postService: PostService
   ) { }
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     this.idHerramienta = parseInt(this.activatedRouter.snapshot.paramMap.get('idHerramienta'), 10);
     this.alert = false;
     if (!isNaN(this.idHerramienta)){
-      this.getService.obtenerHerramienta(this.idHerramienta).subscribe(res =>{
+      this.subscription.add( this.getService.obtenerHerramienta(this.idHerramienta).subscribe(res =>{
         this.herramienta = res;
         console.log(res)
-      })
+      }));
       this.editar =true;
     }
     this.formHerramienta = new FormGroup({
@@ -61,7 +61,7 @@ export class NuevaHerramientaComponent implements OnInit {
     if (!isNaN(this.idHerramienta) ){
       herramienta.id_espacioFisico  = this.idEspacioFisico;
       herramienta.id_herramienta = this.idHerramienta;
-      this.postService.editarHerramienta(herramienta).subscribe(res => {
+      this.subscription.add( this.postService.editarHerramienta(herramienta).subscribe(res => {
         if (res.Status === 'ok'){
           this.alert = true;
           this.estado = 'success';
@@ -75,9 +75,9 @@ export class NuevaHerramientaComponent implements OnInit {
         this.alert = true;
         this.estado = 'danger';
         this.mensajeAlert = JSON.stringify(err.error.error);
-      });
+      }));
     } else {
-      this.postService.crearHerramienta(herramienta).subscribe(res => {
+      this.subscription.add( this.postService.crearHerramienta(herramienta).subscribe(res => {
         if (res.Status === 'ok'){
           this.alert = true;
           this.estado = 'success';
@@ -91,8 +91,10 @@ export class NuevaHerramientaComponent implements OnInit {
         this.alert = true;
         this.estado = 'danger';
         this.mensajeAlert = JSON.stringify(err.error.error);
-      });
+      }));
     }
   }
-
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

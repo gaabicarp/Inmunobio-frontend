@@ -12,7 +12,7 @@ import { Producto } from 'src/app/models/producto.model';
 })
 export class ProductosComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-  productos : Producto;
+  productos : Producto[]=[];
   distribuidoras : Distribuidora;
 
   productoSeleccionado: Producto;

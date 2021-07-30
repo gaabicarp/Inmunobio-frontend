@@ -85,9 +85,6 @@
                     <div class="alert alert-danger text-center" role="alert" *ngIf='animales.length == 0'>
                         No hay animales en la Jaula
                       </div> 
-                      <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-                        {{mensajeAlert}}
-                      </div>
                   </div>         
             </ng-template>
           </li>
@@ -170,23 +167,21 @@
             </div>
             <div class="modal-body ">
                 <div class="body">
-                    <form [formGroup]="formProyecto">
                         <div class="m-2">
                             <label for="tipo" class="form-label">Seleccione Proyecto</label>
-                          <select class="form-control" aria-label=".form-select-lg example" formControlName='id_proyecto'>
+                          <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]='idProyecto_asociar'>
                             <option value="0">Sin Asignar</option>
                             <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
                           </select>
                         </div>
-                        <div class="d-flex bd-highlight alert alert-{{estadoM}} mt-3" role="alertM" *ngIf='alertM'>
-                          <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertM}}</div>
-                          <div class="p-2 bd-highlight">
-                          </div>
-                        </div>
-                    </form>
                     <div class="imagenModal col d-flex justify-content-center align-items-center w-50">
                       <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
                     </div>
+                </div>
+                <div class="d-flex bd-highlight alert alert-{{estadoM}} mt-3" role="alertM" *ngIf='alertM'>
+                  <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertM}}</div>
+                  <div class="p-2 bd-highlight">
+                  </div>
                 </div>
               </div>
         </div>
@@ -225,7 +220,7 @@
 
       <ng-template #eliminarJaulaModal let-modal>
         <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Eliminar</h4>
+          <h4 class="modal-title" id="modal-basic-title">Eliminar Jaula</h4>
           <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -6,10 +6,13 @@ import { Producto } from '../models/producto.model';
 import { timestamp } from 'rxjs/operators';
 import { Distribuidora } from '../models/distribuidora.model';
 import { Stock } from '../models/stock.model';
-import { BlogsBuscados } from '../models/blogs.model';
+
 import { Herramienta } from '../models/herramientas.model';
 import { Contenedor } from '../models/contenedores.model';
 import { Proyecto } from '../models/proyectos.model';
+import { EspacioFisico } from '../models/EspacioFisico.model';
+import { Jaula } from '../models/jaula.model';
+import { Animal } from '../models/animal.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,19 +40,19 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'distribuidora/' + id);
   }
 
-  obtenerProductos(): Observable<Producto>{
+  obtenerProductos(): Observable<Producto[]>{
     return this.http.get<any>(this.API_URL + 'getProductos');
   }
-  obtenerProductosPorId(id : number): Observable<any>{
+  obtenerProductosPorId(id : number): Observable<Producto>{
     return this.http.get<any>(this.API_URL + 'producto/' + id);
   }
 
   //Hay que poner -->  obtenerStock(id_grupo:number, id_espacio: number): Observable<any>{
   //  return this.http.get<any>(this.API_URL + 'obtenerStock/'+ id_grupo + '/'+ id_espacio);
-  obtenerStock(id_espacioFisico : number): Observable<any>{
+  obtenerStock(id_espacioFisico : number): Observable<Stock[]>{
     return this.http.get<any>(this.API_URL + 'obtenerStock/1/'+ id_espacioFisico);
   }
-  obtenerContenedores(): Observable<any>{
+  obtenerContenedores(): Observable<Contenedor[]>{
     return this.http.get<any>(this.API_URL + 'contenedores');
   }
 
@@ -60,15 +63,9 @@ export class GetService {
   obtenerHerramienta(id_herramienta: number): Observable<Herramienta>{
     return this.http.get<any>(this.API_URL + 'herramienta/'+ id_herramienta);
   }
-  obtenerHerramientas():Observable<any>{
+  obtenerHerramientas():Observable<Herramienta[]>{
     return this.http.get<any>(this.API_URL + 'herramientas');
   }
-
-  
-
-
-
-
 
   obtenerGruposExperimentales(): Observable<any>{
     return this.http.get<any>(this.API_URL + 'grupos');
@@ -93,7 +90,7 @@ export class GetService {
     return this.http.get<Proyecto[]>(this.API_URL + 'proyectos');
   }
 
-  obtenerProyectosPorId(id: number): Observable<Proyecto>{
+  obtenerProyectosPorId(id: number): Observable<any>{
     return this.http.get<Proyecto>(this.API_URL + `proyecto/${id}`);
   }
 
@@ -109,15 +106,15 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'obtenerUsuariosProyecto/' + idProyecto);
   }
 
-  obtenerEspaciosFisicos(): Observable<any>{
+  obtenerEspaciosFisicos(): Observable<EspacioFisico[]>{
     return this.http.get<any>(this.API_URL + 'espaciosFisicos');
   }
 
-  obtenerJaulas(): Observable<any> {
+  obtenerJaulas(): Observable<Jaula[]> {
     return this.http.get<any>(this.API_URL + 'jaulas');
   }
 
-  obtenerJaulasPorId(idJaula: number): Observable<any> {
+  obtenerJaulasPorId(idJaula: number): Observable<Jaula> {
     return this.http.get<any>(this.API_URL + 'jaula/' + idJaula);
   }
 
@@ -142,7 +139,7 @@ export class GetService {
     return this.http.get<any>(this.API_URL + `animales`);
   }
   
-  obtenerEspacioFisico(id:number): Observable<any>{
+  obtenerEspacioFisico(id:number): Observable<EspacioFisico>{
     return this.http.get<any>(this.API_URL + 'espacioFisico/'+ id);
   }
 }

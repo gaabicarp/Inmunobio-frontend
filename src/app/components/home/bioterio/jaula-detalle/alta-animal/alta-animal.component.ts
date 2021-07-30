@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GetService } from 'src/app/services/get.service';
+import { Subscription } from 'rxjs';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -9,7 +9,8 @@ import { PostService } from 'src/app/services/post.service';
   templateUrl: './alta-animal.component.html',
   styleUrls: ['./alta-animal.component.css']
 })
-export class AltaAnimalComponent implements OnInit {
+export class AltaAnimalComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
 
   formAnimal!: FormGroup;
   idJaula!: string;
@@ -20,7 +21,6 @@ export class AltaAnimalComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
-    private getService: GetService,
     private postService: PostService
   ) { }
 
@@ -37,7 +37,7 @@ export class AltaAnimalComponent implements OnInit {
     const animal = this.formAnimal.value;
     animal.id_jaula = this.idJaula;
     console.log(animal)
-    this.postService.crearAnimal(animal).subscribe(res => {
+    this.subscription.add( this.postService.crearAnimal(animal).subscribe(res => {
       if (res.Status === 'Se creó el nuevo animal.'){
         this.alert = true;
         this.estado = 'success';
@@ -52,7 +52,9 @@ export class AltaAnimalComponent implements OnInit {
       this.estado = 'danger';
       this.mensajeAlert = JSON.stringify(err);
       console.log(err)
-    })
+    }));
   }
-
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

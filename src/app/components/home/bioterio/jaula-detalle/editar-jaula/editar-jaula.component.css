@@ -16,10 +16,10 @@ form{
     flex-direction: row;
     justify-content: space-between;
     margin-right: 8em;
+    width: 100%;
 }
-.estante{
-    margin-left: 0.5em;
-    width: 50%;
+.imagen{
+    margin-right: 2.5em;
 }
 .primer-bloque{
     margin-left: 0px;
@@ -40,11 +40,9 @@ form{
     width: 100%;
     margin-right: 0px;
     }
-    label,input,option, .estante{
+    label,input,option{
         width: 100%;
     }
-    .estante{
-        margin-left: 0px;
-    }
+
       
 }

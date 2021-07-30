@@ -9,7 +9,7 @@ import { Contenedor } from 'src/app/models/contenedores.model';
   styleUrls: ['./contenedores.component.css']
 })
 export class ContenedoresComponent implements OnInit {
-  contenedores: Contenedor;
+  contenedores: Contenedor[]=[];
   proyectos = [];
 
   contenedorSeleccionado: any;

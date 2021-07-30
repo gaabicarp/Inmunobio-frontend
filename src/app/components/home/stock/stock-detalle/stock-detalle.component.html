@@ -339,7 +339,7 @@
             </div>
         </div>
         <div class="" >
-          <ng-container *ngFor='let a of blogs;let i = index'  >
+          <ng-container *ngFor='let a of blogsH;let i = index'  >
               <ng-container *ngIf = 'i%2==0'>
                 <div class="card-blog shadow rounded">
                   <div class="fecha">
@@ -395,8 +395,8 @@
         <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
       </div>
     </div>
-    <div class="d-flex bd-highlight alert alert-{{estadoM}} mt-3" role="alertM" *ngIf='alertM'>
-      <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertM}}</div>
+    <div class="d-flex bd-highlight alert alert-{{estadoModal}} mt-3" role="alertModal" *ngIf='alertModal'>
+      <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertModal}}</div>
       <div class="p-2 bd-highlight">
       </div>
     </div>
@@ -445,8 +445,8 @@
         </div>
       </div>
     </div>
-    <div class="d-flex bd-highlight alert alert-{{estadoM}} mt-3" role="alertM" *ngIf='alertM'>
-      <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertM}}</div>
+    <div class="d-flex bd-highlight alert alert-{{estadoModal}} mt-3" role="alertModal" *ngIf='alertModal'>
+      <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertMModal}}</div>
       <div class="p-2 bd-highlight">
       </div>
     </div>

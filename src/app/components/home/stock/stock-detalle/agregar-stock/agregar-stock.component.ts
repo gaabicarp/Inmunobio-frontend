@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { Producto } from 'src/app/models/producto.model'
-import { DatePipe } from '@angular/common';
 import { ProductoEdic, ProductoStock, Stock, StockEdicion } from 'src/app/models/stock.model';
 import { Contenedor } from 'src/app/models/contenedores.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-agregar-stock',
@@ -19,20 +19,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AgregarStockComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
-  productos: Producto;
-  contenedores: Contenedor;
+  productos: Producto[] = [];
+  contenedores: Contenedor[] = [];
   
   formStock!: FormGroup;
   step: number;
   estado: string;
   mensajeAlert: string;
-  alert: boolean;
+  alert: boolean =false;
 
   idEspacioFisico:number;
   idProd:number;
   idProdEnStock:number;
   idUbicacion:number;
-  stocks:any;
+  stocks:Stock[]=[];
   producto:any;
   prodEspecifico:any;
   editar = false;
@@ -41,7 +41,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
-    private postService: PostService,
+    private postService: PostService, 
     public datepipe: DatePipe
   ) { }
   ngOnDestroy(): void {

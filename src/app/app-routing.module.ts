@@ -18,7 +18,6 @@ import { BioterioComponent } from './components/home/bioterio/bioterio.component
 import { ConfiguracionComponent } from './components/home/configuracion/configuracion.component';
 import { UsuariosComponent } from './components/home/configuracion/usuarios/usuarios.component';
 import { NuevoUsuarioComponent } from './components/home/configuracion/usuarios/nuevo-usuario/nuevo-usuario.component';
-import { EntradaBlogComponent } from './components/home/bioterio/entrada-blog/entrada-blog.component';
 import { EditarJaulaComponent } from './components/home/bioterio/jaula-detalle/editar-jaula/editar-jaula.component';
 import { JaulaDetalleComponent } from './components/home/bioterio/jaula-detalle/jaula-detalle.component';
 import { AltaAnimalComponent } from './components/home/bioterio/jaula-detalle/alta-animal/alta-animal.component';
@@ -31,7 +30,7 @@ import { NuevoEspacioComponent } from './components/home/configuracion/espacio-f
 import { EspacioFisicoComponent } from './components/home/configuracion/espacio-fisico/espacio-fisico.component';
 import { FinalizarProyectoComponent } from './components/home/proyectos/detalle-proyecto/finalizar-proyecto/finalizar-proyecto.component';
 import { FinalizarExperimentoComponent } from './components/home/proyectos/detalle-experimentos/finalizar-experimento/finalizar-experimento.component';
-import {GrupoExperimentalComponent} from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
+import { GrupoExperimentalComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
 import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle/nueva-herramienta/nueva-herramienta.component';
 
 const routes: Routes = [

@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GetService } from 'src/app/services/get.service';
 import { Subscription } from 'rxjs';
+import { EspacioFisico } from 'src/app/models/EspacioFisico.model';
 
 @Component({
   selector: 'app-stock',
@@ -9,20 +10,22 @@ import { Subscription } from 'rxjs';
 })
 export class StockComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-  espacios = [];
-  cargando: boolean;
-  filterPost: string;
-  constructor(private getService: GetService) { }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+  espacios: EspacioFisico[] = [];
+  filterPost: string ;
+
+  constructor( 
+    private getService: GetService
+  ) { }
+
   ngOnInit(): void {
-    this.cargando = true;
     this.filterPost = '';
     this.subscription.add( this.getService.obtenerEspaciosFisicos().subscribe(res => {
-                            console.log(res)
-                            this.espacios = res; })
-    );
+      console.log(res)
+      this.espacios = res;
+    }));
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
   
 }
