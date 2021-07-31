@@ -105,6 +105,7 @@
             <div class="form-group my-2">
               <div class="input-group">
                   <select class="form-control" [(ngModel)]="tipo">
+                    <option value='opc1'>Tipo de Blog</option>
                     <option value='espacioFisico'>Espacio físico</option>
                     <option value='herramienta'>Herramienta</option>
                   </select>
@@ -116,6 +117,7 @@
             <div class="form-group my-2" *ngIf ="tipo === 'herramienta'">
               <div class="input-group">
                 <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionada">
+                  <option value='0' selected>Seleccione Herramienta</option>
                   <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
                 </select>
                 <div class="">
@@ -123,7 +125,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group my-2" *ngIf ="tipo === 'espacioFisico'">
+            <div class="form-group my-2" *ngIf ="tipo != 'herramienta'">
               <div class="input-group">
                 <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionada" disabled>
                   <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>

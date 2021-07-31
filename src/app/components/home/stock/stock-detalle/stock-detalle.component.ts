@@ -52,9 +52,9 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   idHerramienta_eliminar:number;
   content:any;
 
-  tipo = 'espacioFisico';
+  tipo = 'opc1';
   tipoBlog= 'espacioFisico';
-  herramientaSeleccionada:number;
+  herramientaSeleccionada:number = 0;
   herramientaSeleccionadaBlog:any;
   
   constructor(
