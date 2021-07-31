@@ -19,8 +19,14 @@ export class ProyectosComponent implements OnInit {
     this.filterPost = '';
     this.getService.obtenerProyectos().subscribe(res => {
       console.log(res);
-      this.proyectos = res;
-      this.cargando = false;
+      if (res){
+        // console.log(res);
+        this.proyectos = res;
+        this.cargando = false;
+      } else {
+        this.proyectos = [];
+        this.cargando = false;
+      }
     });
   }
 }
