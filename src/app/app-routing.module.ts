@@ -74,6 +74,7 @@ const routes: Routes = [
       {path: 'configuracion', component: ConfiguracionComponent},
       {path: 'configuracion/usuarios', component: UsuariosComponent},
       {path: 'configuracion/usuarios/nuevo-usuario', component: NuevoUsuarioComponent},
+      {path: 'configuracion/usuarios/editar-usuario/:id', component: NuevoUsuarioComponent},
       {path: 'configuracion/grupo-trabajo', component: GrupotrabajoComponent},
       {path: 'configuracion/grupo-trabajo/nuevo-grupo', component: NuevoGrupoComponent},
       {path: 'configuracion/espacio-fisico', component: EspacioFisicoComponent },

@@ -56,6 +56,10 @@ hr{
     transition: all 0.15s ease;
 }
 
+.navigation-item.active{
+    background-color: #033980;
+}
+
 .visually-hidden{
     position: absolute !important;
     height: 1px;

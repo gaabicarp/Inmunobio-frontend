@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-detalle-experimentos',
@@ -29,7 +30,8 @@ export class DetalleExperimentosComponent implements OnInit {
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
     private postService: PostService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public toastService: ToastServiceService
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +39,7 @@ export class DetalleExperimentosComponent implements OnInit {
     this.formGrupoExperimental = new FormGroup({
       tipo: new FormControl('', Validators.required),
       codigo: new FormControl('', Validators.required),
+      descripcion: new FormControl(''),
     });
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
@@ -72,7 +75,10 @@ export class DetalleExperimentosComponent implements OnInit {
     const grupoExperimental = this.formGrupoExperimental.value;
     grupoExperimental.id_experimento = this.idExperimento;
     this.postService.crearGrupoExperimental(grupoExperimental).subscribe(res => {
-      console.log(res);
+      this.toastService.show('Grupo Experimental creado', { classname: 'bg-success text-light', delay: 2000 });
+      this.modalService.dismissAll();
+    }, err => {
+      this.toastService.show('Problema al crear Grupo Experimental' + err, { classname: 'bg-danger text-light', delay: 2000 });
     });
   }
 

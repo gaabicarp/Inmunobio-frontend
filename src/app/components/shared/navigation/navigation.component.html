@@ -12,7 +12,8 @@
         </div>
         <ul>
             <li class="navigation-item"
-                routerLink="proyectos"
+            [ngClass]="{'' : MenuSel != 'proyectos','active' : MenuSel === 'proyectos'}"
+            (click)="navegar('proyectos')"
                 style="cursor: pointer;"
             >
                 <div class="item">
@@ -25,9 +26,9 @@
                 </div>
             </li>
             <li class="navigation-item"
-                (click)="navegar()"
+                [ngClass]="{'' : MenuSel != 'bioterio','active' : MenuSel === 'bioterio'}"
+                (click)="navegar('bioterio')"
                 style="cursor: pointer;"
-                routerLink ='bioterio'
             >
                 <div class="item">
                     <span class="nav-cion">
@@ -39,7 +40,8 @@
                 </div>
             </li>
             <li class="navigation-item"
-                routerLink="stock"
+            [ngClass]="{'' : MenuSel != 'stock','active' : MenuSel === 'stock'}"
+            (click)="navegar('stock')"
                 style="cursor: pointer;"
             >
                 <div class="item">
@@ -53,7 +55,7 @@
             </li>
             <hr>
             <li class="navigation-item"
-                (click)="navegar()"
+                (click)="navegar('')"
                 style="cursor: pointer;"
             >
                 <div class="item">
@@ -66,7 +68,8 @@
                 </div>
             </li>
             <li class="navigation-item"
-                routerLink="configuracion"
+            [ngClass]="{'' : MenuSel != 'configuracion','active' : MenuSel === 'configuracion'}"
+            (click)="navegar('configuracion')"
                 style="cursor: pointer;"
             >
                 <div class="item">
@@ -79,7 +82,7 @@
                 </div>
             </li>
             <li class="navigation-item"
-                (click)="navegar()"
+                (click)="salir()"
                 style="cursor: pointer;"
             >
                 <div class="item">

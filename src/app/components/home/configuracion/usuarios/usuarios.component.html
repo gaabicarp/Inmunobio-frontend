@@ -1,11 +1,17 @@
-<div *ngIf='step === 0'>
+
   <div class="m-4" routerLink="../" role="button">
       <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
+
   <div class="mx-4">
-      <div class="text-center my-4">
-          <h2>Usuarios</h2>
+    <div class="my-3">
+      <div class="d-flex align-items-center">
+        <h2 class="mb-0">Usuarios</h2>
+        <div class="ml-4">
+          <button class="btn btn-outline-primary" routerLink='nuevo-usuario'>Nuevo Usuario</button>
+        </div>
       </div>
+    </div>
 
       <div class="card rounded shadow p-4 mb-4">
           <table class="table table-hover">
@@ -35,7 +41,7 @@
                     </td>
                     <td class="d-flex">
                       <div class="mr-4">
-                        <a class="text-primary" role="button" (click)=editar(usuario)>
+                        <a class="text-primary" role="button" routerLink='editar-usuario/{{usuario.id_usuario}}'>
                           <i class="bi bi-pencil"></i>
                         </a>
                       </div>
@@ -48,16 +54,18 @@
                   </tr>
                 </tbody>
           </table>
+          <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshUsers()">
+            </ngb-pagination>
+          
+            <!-- <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshUsers()">
+              <option [ngValue]="2">2 items per page</option>
+              <option [ngValue]="4">4 items per page</option>
+              <option [ngValue]="6">6 items per page</option>
+            </select> -->
+          </div>
       </div>
-      <button class="btn btn-primary" (click)=crear()>Crear Usuario</button>
   </div>
-</div>
 
-<div *ngIf='step === 1'>
-  <app-nuevo-usuario
-  [element]='usuarioSeleccionado'
-  [modo]='modo'
-  (volviendo)='onVolviendo($event)'
-  >
-</app-nuevo-usuario>
-</div>
+
+  <app-toast></app-toast>

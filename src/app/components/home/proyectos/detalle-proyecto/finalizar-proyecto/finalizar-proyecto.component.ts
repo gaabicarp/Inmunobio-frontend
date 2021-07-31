@@ -12,11 +12,8 @@ import { ToastServiceService } from '../../../../../services/toast-service.servi
 export class FinalizarProyectoComponent implements OnInit {
   obj = {
     conclusion: '',
-  }
+  };
   idProyecto!: number;
-  mensajeAlert: string;
-  estado!: string;
-  alert!: boolean;
   @Output() cerrar = new EventEmitter<any>();
 
   constructor(

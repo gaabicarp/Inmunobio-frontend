@@ -1,42 +1,44 @@
-<h3>Proyectos Asignados</h3>
-<div class="search-container row">
-    <div class="col-5">
-        <label for="usuario">Filtro por nombre</label>
-        <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por nombre de proyecto" [(ngModel)]='filterPost'>
+<div *ngIf='!cargando'>
+    <h3>Proyectos Asignados</h3>
+    <div class="search-container row">
+        <div class="col-5">
+            <label for="usuario">Filtro por nombre</label>
+            <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por nombre de proyecto" [(ngModel)]='filterPost'>
+        </div>
+        <div class="d-flex align-items-end">
+            <button class="btn btn-outline-primary" routerLink='nuevo-proyecto'>+Agregar</button>
+        </div>
     </div>
-    <div class="d-flex align-items-end">
-        <button class="btn btn-outline-primary" routerLink='nuevo-proyecto'>+Agregar</button>
-    </div>
-</div>
-<hr class="my-5">
-<div class="proyects-container" *ngIf='!cargando'>
-    <div *ngFor="let proyecto of proyectos | filter: filterPost" class="card my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='{{proyecto.id_proyecto}}'>
-        <div class="">
+    <hr class="my-5">
+    <div class="proyects-container">
+        <div *ngFor="let proyecto of proyectos | filter: filterPost" class="card my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='{{proyecto.id_proyecto}}'>
             <div class="">
-                <div class="card-body">
-                    <h5 class="card-title text-center">{{proyecto.nombre}} - {{proyecto.codigoProyecto}}</h5>
-                    <hr class="my-3 bg-{{proyecto.finalizado? 'danger' : 'success'}}">
-                    <p class="card-text text-center">{{proyecto.descripcion.substring(0,100)}}{{proyecto.descripcion.length > 100 ? '...' : ''}}</p>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div>
-                            <h6><i>Fecha de Inicio</i></h6>
-                            <p class="mb-0">{{proyecto.fechaInicio | date}}</p>
-                        </div>
-                        <div>
-                            <h6><i>Estado</i></h6>
-                            <p class="mb-0">{{proyecto.finalizado ? 'Finalizado' : 'Activo'}}</p>
+                <div class="">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{proyecto.nombre}} - {{proyecto.codigoProyecto}}</h5>
+                        <hr class="my-3 bg-{{proyecto.finalizado? 'danger' : 'success'}}">
+                        <p class="card-text text-center">{{proyecto.descripcion.substring(0,100)}}{{proyecto.descripcion.length > 100 ? '...' : ''}}</p>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div>
+                                <h6><i>Fecha de Inicio</i></h6>
+                                <p class="mb-0">{{proyecto.fechaInicio | date}}</p>
+                            </div>
+                            <div>
+                                <h6><i>Estado</i></h6>
+                                <p class="mb-0">{{proyecto.finalizado ? 'Finalizado' : 'Activo'}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div *ngIf='proyectos.length === 0' class="text-center">
-        <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
-        <h5>No hay proyectos asignados, cree uno para continuar</h5>
+        <div *ngIf='proyectos.length === 0' class="text-center">
+            <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+            <h5>No hay proyectos asignados, cree uno para continuar</h5>
+        </div>
     </div>
 </div>
-<div class="d-flex justify-content-center" *ngIf='cargando'>
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
     <div class="spinner-border text-primary" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>

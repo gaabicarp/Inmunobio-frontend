@@ -87,7 +87,7 @@ export class NuevoExperimentoComponent implements OnInit {
   }
 
   volver(): void{
-    this.router.navigateByUrl(this.modo === 'EDITAR' ? `home/proyectos/${this.idProyecto}` : `home/proyectos/${this.idProyecto}`);
+    this.router.navigateByUrl(this.modo === 'EDITAR' ? `home/proyectos/${this.idProyecto}/experimento/${this.idExperimento}` : `home/proyectos/${this.idProyecto}`);
   }
 
 }
