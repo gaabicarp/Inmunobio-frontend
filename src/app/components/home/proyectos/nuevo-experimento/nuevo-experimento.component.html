@@ -1,5 +1,5 @@
-<div class="m-4" routerLink="../" role="button">
-    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+<div class="m-4" role="button">
+    <h5 (click)='volver()'><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
 <div class="mx-4">
     <div class="my-4">
@@ -39,9 +39,11 @@
             
             <div class="d-flex flex-row justify-content-end">
                 <div class="mx-3">
-                    <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formExperimento.valid'>Crear Experimento</button>
+                    <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formExperimento.valid'>Guardar</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+<app-toast></app-toast>

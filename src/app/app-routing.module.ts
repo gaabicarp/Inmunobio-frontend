@@ -31,6 +31,8 @@ import { EspacioFisicoComponent } from './components/home/configuracion/espacio-
 import { FinalizarProyectoComponent } from './components/home/proyectos/detalle-proyecto/finalizar-proyecto/finalizar-proyecto.component';
 import { FinalizarExperimentoComponent } from './components/home/proyectos/detalle-experimentos/finalizar-experimento/finalizar-experimento.component';
 import { GrupoExperimentalComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
+import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
+import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detalle-experimentos/nuevo-blog-experimento/nuevo-blog-experimento.component';
 import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle/nueva-herramienta/nueva-herramienta.component';
 
 const routes: Routes = [
@@ -43,9 +45,13 @@ const routes: Routes = [
       {path: 'proyectos/editar-proyecto/:id', component: NuevoProyectoComponent},
       {path: 'proyectos/create', component: NuevoProyectoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
+      {path: 'proyectos/:id/nuevo-blog-proyecto', component: NuevoBlogProyectoComponent },
       {path: 'proyectos/:id/experimento/:idExperimento', component: DetalleExperimentosComponent},
+      {path: 'proyectos/:id/experimento/:idExperimento/nuevo-experimento', component: NuevoExperimentoComponent},
+      {path: 'proyectos/:id/experimento/:idExperimento/nuevo-blog-experimento', component: NuevoBlogExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento/finalizar-experimento', component: FinalizarExperimentoComponent},
       {path: 'proyectos/:id/experimento/:idExperimento/grupo-experimental/:idGrupo', component: GrupoExperimentalComponent},
+      {path: 'proyectos/:id/editar-experimento/:idExperimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id/nuevo-experimento', component: NuevoExperimentoComponent},
       {path: 'proyectos/:id', component: DetalleProyectoComponent},
       {path: 'proyectos/:id/finalizar-proyecto', component: FinalizarProyectoComponent},
@@ -58,18 +64,27 @@ const routes: Routes = [
       {path: 'configuracion', component: ConfiguracionComponent},
       {path: 'configuracion/usuarios', component: UsuariosComponent},
       {path: 'configuracion/usuarios/nuevo-usuario', component: NuevoUsuarioComponent},
+      {path: 'configuracion/usuarios/editar-usuario/:id', component: NuevoUsuarioComponent},
       {path: 'configuracion/grupo-trabajo', component: GrupotrabajoComponent},
       {path: 'configuracion/grupo-trabajo/nuevo-grupo', component: NuevoGrupoComponent},
       {path: 'configuracion/espacio-fisico', component: EspacioFisicoComponent },
       {path: 'configuracion/espacio-fisico/nuevo-espacio', component: NuevoEspacioComponent },
+      {path: 'configuracion/espacio-fisico/:idEspacio', component: NuevoEspacioComponent},
       {path: 'configuracion/productos', component: ProductosComponent },
+      {path: 'configuracion/productos/nuevo-producto', component: NuevoProductoComponent},
+      {path: 'configuracion/productos/:idProducto', component: NuevoProductoComponent},
       {path: 'configuracion/distribuidoras', component: DistribuidorasComponent},
+      {path: 'configuracion/disribuidoras/nueva-distribuidora', component: NuevaDistribuidoraComponent},
+      {path: 'configuracion/distribuidoras/:idDistribuidora', component:NuevaDistribuidoraComponent},
       {path: 'configuracion/contenedores', component: ContenedoresComponent},
+      {path: 'configuracion/contenedores/nuevo-contenedor', component: NuevoContenedorComponent},
+      {path: 'configuracion/contenedores/:idContenedor', component: NuevoContenedorComponent},
       {path: 'bioterio', component: BioterioComponent},
       {path: 'bioterio/editar-jaula', component: EditarJaulaComponent},
       {path: 'bioterio/:id', component: JaulaDetalleComponent},
       {path: 'bioterio/:id/editar-jaula', component: EditarJaulaComponent},
       {path: 'bioterio/:id/alta-animal', component: AltaAnimalComponent}
+
     ]},
   { path: 'login', component: LoginComponent},
   { path: '', pathMatch: 'full', redirectTo: 'login'}

@@ -20,6 +20,10 @@
 .title{
     margin: auto;
 }
+.col-11{
+    background-color: #4d758f59    ;
+    border-color: #4d758f ;
+}
 
 .barra{
     border: none;
@@ -33,14 +37,13 @@
     /* text-align: center; */
 }
 
-.experimento-container{
-    display: flex;
+.experimento-filtro-container{
     flex-wrap: wrap;
     flex-direction: row;
 }
 
 .card-experimento{
-    max-width: 25em;
+    max-width: 22em;
 }
 
 .form-group.hidden {
@@ -49,20 +52,27 @@
     border: none;
     padding: 0;
   }
-  .custom-day {
-    text-align: center;
-    padding: 0.185rem 0.25rem;
-    display: inline-block;
-    height: 2rem;
-    width: 2rem;
-  }
-  .custom-day.focused {
-    background-color: #e6e6e6;
-  }
-  .custom-day.range, .custom-day:hover {
-    background-color: rgb(2, 117, 216);
-    color: white;
-  }
-  .custom-day.faded {
-    background-color: rgba(2, 117, 216, 0.5);
-  }
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
+
+.experimentos-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: auto;
+}

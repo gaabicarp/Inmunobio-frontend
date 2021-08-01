@@ -4,7 +4,8 @@ export interface Contenedor{
     nombre: string;
     descripcion: string;
     temperatura: number;
-    proyecto: number;
+    id_proyecto: number;
+    id_espacioFisico: number;
     capacidad: number;
     fichaTecnica: string;
     disponible: boolean;

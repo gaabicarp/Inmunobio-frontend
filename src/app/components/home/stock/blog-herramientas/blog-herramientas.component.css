@@ -1,0 +1,19 @@
+.search-container{
+    width: 100%;
+    padding: 0.7em;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.search-container .form-control{
+    width: 32%;
+}
+
+.input-group{
+    width: 32%;
+}
+.col-11{
+    background-color: #4d758f59    ;
+    border-color: #4d758f ;
+}

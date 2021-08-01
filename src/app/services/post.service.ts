@@ -57,6 +57,10 @@ export class PostService {
     return this.http.post<any>(this.API_URL + 'nuevoExperimento', experimento);
   }
 
+  modificarExperimento(experimento: any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'modificarExperimento', experimento);
+  }
+
   crearDistribuidora(nuevaDistribuidora: Distribuidora): Observable<any>{
     return this.http.post<any>(this.API_URL + 'distribuidora', nuevaDistribuidora);
   }
@@ -77,6 +81,10 @@ export class PostService {
     return this.http.delete<any>(this.API_URL + 'producto/' + id);
   }
 
+  obtenerBlogExperimento(obj: any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'blogExperimento', obj);
+  }
+
   subirArchivo(file, id): Observable<string> {
     const formData = new FormData();
     formData.append('detallesTecnicos', file[0]);
@@ -89,6 +97,9 @@ export class PostService {
 
   editarEspacio(espacio: any): Observable<any> {
     return this.http.put<any>(this.API_URL + 'espacioFisico', espacio);
+  }
+  eliminarEspacioFisico(id:number):Observable<any> {
+    return this.http.delete<any>(this.API_URL + 'espacioFisico/' + id);
   }
 
   crearJaula(jaula: Jaula): Observable<any> {
@@ -114,14 +125,17 @@ export class PostService {
   crearContenedor(nuevoContenedor : Contenedor): Observable<any>{
     return this.http.post<any>(this.API_URL + 'nuevoContenedor', nuevoContenedor);
   }
-  editarContenedor(contenedor : Contenedor):Observable<any>{ // CREO QUE NO SE PUEDE MODIFICAR
-    return this.http.put<any>(this.API_URL + '', contenedor);
+  editarContenedor(contenedor : Contenedor):Observable<any>{ 
+    return this.http.put<any>(this.API_URL + 'modificarContenedor', contenedor);
+  }
+  eliminarContenedor(id:number): Observable<any>{
+    return this.http.delete<any>(this.API_URL + 'eliminarContenedor/'+id);
   }
 
   crearAnimal(animal: Animal): Observable<any> {
     return this.http.post<any>(this.API_URL + 'nuevoAnimal', animal);
   }
-
+  
   cerrarProyecto(obj: any): Observable<any> {
     return this.http.put<any>(this.API_URL + 'cerrarProyecto', obj);
   }
@@ -129,9 +143,17 @@ export class PostService {
   modificarProyecto(obj: any): Observable<any> {
     return this.http.put<any>(this.API_URL + 'modificarProyecto', obj);
   }
-
+  editarExperimento(experimento:any): Observable<any>{
+    return this.http.put<any>(this.API_URL + 'modificarExperimento', experimento);
+  }
   cerrarExperimento(obj: any): Observable<any> {
     return this.http.put<any>(this.API_URL + 'cerrarExperimento', obj);
+  }
+  obtenerBlogsExperimento(datos:any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'blogExperimento', datos);
+  }
+  crearBlogExperimento(nuevoBlog:any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'nuevoBlogExperimento', nuevoBlog);
   }
 
   crearGrupoExperimental(obj: any): Observable<any>{

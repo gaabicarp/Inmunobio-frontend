@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from 'src/app/services/post.service';
 import { GetService } from '../../../../services/get.service';
 import { Usuario } from '../../../../models/usuarios.model';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -11,37 +12,46 @@ import { Usuario } from '../../../../models/usuarios.model';
 export class UsuariosComponent implements OnInit {
 
   usuarios: Usuario[];
+  usuariosTodos: Usuario[];
   permisos = [];
 
   usuarioSeleccionado: Usuario;
   step: number;
   modo: string;
 
-  constructor(private getService: GetService, private postService: PostService) { }
+  page: number;
+  pageSize: number;
+  collectionSize: number;
+
+  constructor(
+    private getService: GetService,
+    private postService: PostService,
+    public toastService: ToastServiceService
+    ) { }
 
 
   ngOnInit(): void {
     this.step = 0;
+    this.page = 1;
+    this.pageSize = 10;
     this.getService.obtenerUsuarios().subscribe(res => {
+      this.usuariosTodos = res;
       this.usuarios = res;
+      this.collectionSize = res.length;
+      this.refreshUsers();
     });
-  }
-
-  editar(usuario: Usuario): void {
-    this.usuarioSeleccionado = usuario;
-    this.modo = 'EDITAR';
-    this.step = 1;
-  }
-
-  crear(): void{
-    this.modo = 'CREAR';
-    this.step = 1;
   }
 
   eliminar(usuario: Usuario): void{
     this.postService.eliminarUsuario(usuario.id_usuario).subscribe(res => {
-      console.log(res);
+      this.toastService.show('Usuario Eliminado', { classname: 'bg-danger text-light', delay: 2000 });
     });
+  }
+
+  refreshUsers(): void {
+    this.usuarios = this.usuariosTodos
+      .map((user, i) => ({id: i + 1, ...user}))
+      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 
   onVolviendo(e: number): void{

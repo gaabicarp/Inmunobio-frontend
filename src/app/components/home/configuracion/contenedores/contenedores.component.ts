@@ -11,14 +11,15 @@ import { Contenedor } from 'src/app/models/contenedores.model';
 export class ContenedoresComponent implements OnInit {
   contenedores: Contenedor[]=[];
   proyectos = [];
+  espacios = [];
+  estado: string;
+  mensajeAlert: string;
+  alert: boolean;
 
-  contenedorSeleccionado: any;
-  step: number;
-  modo: string;
   constructor(private getService: GetService, private postService: PostService) { }
 
   ngOnInit(): void {
-    this.step = 0;
+    this.alert = false;
     this.getService.obtenerContenedores().subscribe(res => {
       console.log(res)
       this.contenedores = res;
@@ -27,27 +28,26 @@ export class ContenedoresComponent implements OnInit {
       console.log(res)
       this.proyectos = res;
     });
+    this.getService.obtenerEspaciosFisicos().subscribe(res =>{
+      this.espacios = res;
+    })
   }
 
-  crear(){
-    this.modo = 'CREAR';
-    this.step = 1;
+  eliminar(id : number){
+    this.postService.eliminarContenedor(id).subscribe(res =>{
+      if (res.Status === 'Ok'){
+        this.alert = true;
+        this.estado = 'success';
+        this.mensajeAlert = 'Contenedor eliminado correctamente';
+        setTimeout(() => {
+          this.ngOnInit()
+        }, 2000);
+      }
+      console.log(res);
+    }, err => {
+      this.alert = true;
+      this.estado = 'danger';
+      this.mensajeAlert = JSON.stringify(err.error.error);
+    })
   }
-
-  editar(contenedor: any): void {
-    this.contenedorSeleccionado = contenedor;
-    this.modo = 'EDITAR';
-    this.step = 1;
-  }
-
-  // eliminar(distribuidora : any){
-  //   this.postService.eliminarDistribuidora(distribuidora.id_distribuidora).subscribe(res =>{
-  //     console.log(res);
-  //   })
-  // }
-
-  volver(){
-    this.step = 0;
-  }
-
 }

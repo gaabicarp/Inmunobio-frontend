@@ -1,157 +1,167 @@
-<div class="m-4" routerLink="../" role="button">
-    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-</div>
-
-<div class="mx-4">
-  <div class="my-3">
-    <div class="d-flex align-items-center">
-      <h2 class="mb-0">{{proyecto?.nombre}} - {{proyecto?.codigoProyecto}}</h2>
-      <div class="ml-4" *ngIf='!proyecto?.finalizado'>
-        <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='../editar-proyecto/{{proyecto?.id_proyecto}}'><i class="bi bi-pencil text-primary"></i> Editar</button>
-        <button class="btn btn-outline-danger ml-4" (click)="open(finalizarProyecto)">Finalizar Proyecto</button>
+<div *ngIf='!cargando'>
+  <div class="m-4" routerLink="../" role="button">
+      <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+  </div>
+  
+  <div class="mx-4">
+    <div class="my-3">
+      <div class="d-flex align-items-center">
+        <h2 class="mb-0">{{proyecto?.nombre}} - {{proyecto?.codigoProyecto}}</h2>
+        <div class="ml-4" *ngIf='!proyecto?.finalizado'>
+          <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='../editar-proyecto/{{proyecto?.id_proyecto}}'><i class="bi bi-pencil text-primary"></i> Editar</button>
+          <button class="btn btn-outline-danger ml-4" (click)="open(finalizarProyecto)">Finalizar Proyecto</button>
+        </div>
       </div>
+      <span class="text-danger" *ngIf='proyecto?.finalizado'>Proyecto cerrado</span>
     </div>
-    <span class="text-danger" *ngIf='proyecto?.finalizado'>Proyecto cerrado</span>
+  </div>
+  
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs mx-4">
+      <li [ngbNavItem]="1">
+        <a ngbNavLink>Detalles</a>
+        <ng-template ngbNavContent>
+          <div class="mx-4">
+            <div class="p-4">
+              <h4 class="text-secondary text-staatliches mb-0">Descripcion del proyecto</h4>
+              <p>{{proyecto?.descripcion}}</p>
+              <h4 class="text-secondary text-staatliches mb-0">Conclusion del proyecto</h4>
+              <p class="text-danger"><i>{{proyecto?.conclusion ? proyecto?.conclusion : 'Proyecto Sin Finalizar'}}</i></p>
+              <h4 class="text-secondary text-staatliches mb-0">Participantes</h4>
+              <span *ngFor='let usuario of usuariosProyecto'>{{usuario.nombre}} - </span>
+            </div>
+            <div class="rounded py-5 d-flex align-items-center justify-content-around">
+              <div class="mx-5">
+                <h4 class="text-secondary text-staatliches mb-0">Fecha de Inicio</h4>
+                <p class="mb-0">{{proyecto?.fechaInicio | date}}</p>
+              </div>
+              <div class="barra"></div>
+              <div class="mx-5">
+                <h4 class="text-secondary text-staatliches mb-0">Fecha de Finalizacion</h4>
+                <p class="mb-0 {{proyecto?.fechaFinal ? 'text-danger' : ''}}">{{proyecto?.fechaFinal ? (proyecto?.fechaFinal | date) : 'Sin finalizar'}}</p>
+              </div>
+              <div class="barra"></div>
+              <div class="mx-5">
+                <h4 class="text-secondary text-staatliches mb-0">Jef@ de proyecto</h4>
+                <p class="mb-0">{{jefeProyecto?.nombre}}</p>  
+              </div>
+              <div class="barra"></div>
+              <div class="mx-5">
+                <h4 class="text-secondary text-staatliches mb-0">Financiacion Inicial</h4>
+                <p class="mb-0">${{proyecto?.montoInicial}}</p>  
+              </div>
+            </div>
+            <div class="d-flex justify-content-center">
+            </div>
+          </div>
+          <div class="mx-5">
+            <div class="d-flex align-items-center">
+              <h4 class="text-secondary text-staatliches mb-0">Experimentos</h4>
+              <div class="ml-4">
+                <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='nuevo-experimento' *ngIf='!proyecto?.finalizado'>+ Nuevo</button>
+              </div>
+            </div>
+            <div class="experimento-filtro-container">
+              <div class="d-flex justify-content-around align-items-center my-4" *ngIf='experimentos.length != 0'>
+                <div>
+                  <label for="usuario">Filtro por nombre</label>
+                  <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por nombre de proyecto" [(ngModel)]='filterPostName'>
+                </div>
+                <div>
+                  <label for="usuario">Filtro por nombre</label>
+                  <select class="form-control"  id='usuario' aria-label="Default select example" [(ngModel)]='filterPostActive'> 
+                    <option selected hidden value="-1">Seleccione director/a de Proyecto</option>
+                    <option value="false">Activo</option>
+                    <option value="true">Finalizado</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="experimentos-container">
+              <div *ngFor="let experimento of experimentos | filter: filterPostName | filterState: filterPostActive" class="card card-experimento my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='experimento/{{experimento.id_experimento}}' >
+                <div class="" >
+                  <div class="card-body">
+                    <h5 class="card-title text-center">{{experimento.codigo}}</h5>
+                    <hr class="my-3 bg-{{experimento.finalizado? 'danger' : 'success'}}">
+                    <p class="card-text text-center">{{experimento.objetivos.substring(0,100)}}{{experimento.objetivos.length > 100 ? '...' : ''}}</p>
+                    <div class="d-flex flex-row justify-content-between">
+                      <div>
+                          <h6><i>Fecha de Inicio</i></h6>
+                          <p class="mb-0">{{experimento.fechaInicio | date}}</p>
+                      </div>
+                      <div>
+                          <h6><i>Estado</i></h6>
+                          <p class="mb-0">{{experimento.finalizado ? 'Finalizado' : 'Activo'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+      <li [ngbNavItem]="2">
+        <a ngbNavLink>Blog</a>
+        <ng-template ngbNavContent>
+          <div class="m-4">
+            <div class="">
+              <form class="row">
+                <div class="col-6 d-flex justify-content-around align-items-center">
+                  <div class="form-group mb-0">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="Fecha Desde"
+                             name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group mb-0">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="Fecha Hasta"
+                             name="dp" [(ngModel)]="model2" ngbDatepicker #b="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary calendar" (click)="b.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline-secondary">Filtrar</button>
+                </div>
+                
+              </form>
+            </div>
+            
+            <div class="p-4 d-flex flex-column">
+              <ngb-alert [dismissible]="false" class="w-75">
+                <div class="row">
+                  <div class="col-1 d-flex flex-column justify-content-center align-items-center">
+                    <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
+                      <i class="bi bi-arrow-left-right"></i>
+                    </div>
+                    <p class="text-center mb-0">20/03/19</p>
+                    <p>20:24hs</p>
+                  </div>
+                  <div class="col">
+                    <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
+                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
+                    <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
+                  </div>
+                </div>
+              </ngb-alert>
+          
+              
+            </div>
+          </div>
+        </ng-template>
+      </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+  <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
   </div>
 </div>
-<ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs mx-4">
-    <li [ngbNavItem]="1">
-      <a ngbNavLink>Detalles</a>
-      <ng-template ngbNavContent>
-        <div class="mx-4">
-          <div class="p-4">
-            <h4 class="text-secondary text-staatliches mb-0">Descripcion del proyecto</h4>
-            <p>{{proyecto?.descripcion}}</p>
-            <h4 class="text-secondary text-staatliches mb-0">Conclusion del proyecto</h4>
-            <p class="text-danger"><i>{{proyecto?.conclusion ? proyecto?.conclusion : 'Proyecto Sin Finalizar'}}</i></p>
-          </div>
-          <div class="rounded pb-5 d-flex align-items-center justify-content-around">
-            <div class="mx-5">
-              <h4 class="text-secondary text-staatliches mb-0">Participantes</h4>
-              <p *ngFor='let usuario of usuariosProyecto' class="mb-0">{{usuario.nombre}}</p>  
-            </div>
-            <div class="barra"></div>
-            <div class="mx-5">
-              <h4 class="text-secondary text-staatliches mb-0">Fecha de Inicio</h4>
-              <p class="mb-0">{{proyecto?.fechaInicio | date}}</p>
-            </div>
-            <div class="barra"></div>
-            <div class="mx-5">
-              <h4 class="text-secondary text-staatliches mb-0">Fecha de Finalizacion</h4>
-              <p class="mb-0 {{proyecto?.fechaFinal ? 'text-danger' : ''}}">{{proyecto?.fechaFinal ? (proyecto?.fechaFinal | date) : 'Sin finalizar'}}</p>
-            </div>
-            <div class="barra"></div>
-            <div class="mx-5">
-              <h4 class="text-secondary text-staatliches mb-0">Jef@ de proyecto</h4>
-              <p class="mb-0">{{jefeProyecto?.nombre}}</p>  
-            </div>
-            <div class="barra"></div>
-            <div class="mx-5">
-              <h4 class="text-secondary text-staatliches mb-0">Financiacion Inicial</h4>
-              <p class="mb-0">${{proyecto?.montoInicial}}</p>  
-            </div>
-          </div>
-          <div class="d-flex justify-content-center">
-            <!-- <button class="btn btn-danger text-center" routerLink='finalizar-proyecto'>Finalizar Proyecto</button> -->
-          </div>
-        </div>
-        <div class="m-4">
-          <div class="d-flex align-items-center">
-            <h4 class="text-secondary text-staatliches mb-0">Experimentos</h4>
-            <div class="ml-4">
-              <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='nuevo-experimento' *ngIf='!proyecto?.finalizado'>+ Nuevo</button>
-            </div>
-          </div>
-          <div class="experimento-container">
-            <div *ngFor="let experimento of experimentos" class="card card-experimento my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='experimento/{{experimento.id_experimento}}' >
-                  <div class="">
-                        <div class="card-body">
-                            <h5 class="card-title text-center">{{experimento.codigo}}</h5>
-                            <hr class="my-3 bg-{{experimento.finalizado? 'danger' : 'success'}}">
-                            <p class="card-text text-center">{{experimento.objetivos.substring(0,100)}}{{experimento.objetivos.length > 100 ? '...' : ''}}</p>
-                            <div class="d-flex flex-row justify-content-between">
-                                <div>
-                                    <h6><i>Fecha de Inicio</i></h6>
-                                    <p class="mb-0">{{experimento.fechaInicio | date}}</p>
-                                </div>
-                                <div>
-                                    <h6><i>Estado</i></h6>
-                                    <p class="mb-0">{{experimento.finalizado ? 'Finalizado' : 'Activo'}}</p>
-                                </div>
-                            </div>
-                        </div>
-                  </div>
-              </div>
-              <div class="my-3" *ngIf='experimentos.length === 0'>
-                <p class="text-danger"><i>No hay experimentos creados</i></p>
-              </div>
-            </div>
-        </div>
-      </ng-template>
-    </li>
-    <li [ngbNavItem]="2">
-      <a ngbNavLink>Entradas de Blog</a>
-      <ng-template ngbNavContent>
-        <div class="m-4">
-          <div class="">
-            <form class="row">
-              <!-- <div class="col-3 d-flex justify-content-center" *ngIf='!proyecto?.finalizado'>
-                <button class="btn btn-outline-success" (click)="open(blog)">Nueva Entrada</button>
-              </div> -->
-              <!-- <div class="barra" *ngIf='!proyecto?.finalizado'></div> -->
-              <div class="col-6 d-flex justify-content-around align-items-center">
-                <div class="form-group mb-0">
-                  <div class="input-group">
-                    <input class="form-control" placeholder="Fecha Desde"
-                           name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group mb-0">
-                  <div class="input-group">
-                    <input class="form-control" placeholder="Fecha Hasta"
-                           name="dp" [(ngModel)]="model2" ngbDatepicker #d="ngbDatepicker">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                    </div>
-                  </div>
-                </div>
-                <button class="btn btn-outline-secondary">Filtrar</button>
-              </div>
-              
-            </form>
-          </div>
-          
-          <div class="p-4 d-flex flex-column">
-            <ngb-alert [dismissible]="false" class="w-75">
-              <div class="row">
-                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                  <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                    <i class="bi bi-arrow-left-right"></i>
-                  </div>
-                  <p class="text-center mb-0">20/03/19</p>
-                  <p>20:24hs</p>
-                </div>
-                <div class="col">
-                  <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
-                  <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                  <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
-                </div>
-              </div>
-            </ngb-alert>
-        
-            <!-- <button class="btn btn-outline-primary text-center">Ver mas</button> -->
-          </div>
-        </div>
-      </ng-template>
-    </li>
-  </ul>
-
-
-<div [ngbNavOutlet]="nav" class="mt-2"></div>
-
 
 <ng-template #finalizarProyecto let-modal>
   <div class="modal-header">
@@ -163,30 +173,6 @@
   <div class="modal-body">
     <app-finalizar-proyecto (cerrar)="modal.dismiss()"></app-finalizar-proyecto>
   </div>
-  <!-- <div class="modal-footer">
-      <button class="btn btn-primary mr-3"(propagar)="procesaPropagar($event)">Agregar</button>
-  </div> -->
 </ng-template>
 
-<!-- 
-<ng-template #blog let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Crear Publicacion</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body mx-5">
-    <div class="row">
-      <div class="col-8 d-flex justify-content-center align-items-center">
-        <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6"></textarea>
-      </div>
-      <div class="col d-flex justify-content-center align-items-center">
-        <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
-      </div>
-    </div>
-  </div>
-  <div class="modal-footer">
-      <button class="btn btn-outline-primary btn-lg mr-3">Crear</button>
-  </div>
-</ng-template> -->
+             

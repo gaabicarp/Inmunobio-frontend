@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-detalle-experimentos',
@@ -11,6 +12,7 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./detalle-experimentos.component.css']
 })
 export class DetalleExperimentosComponent implements OnInit {
+  
   idProyecto!: number;
   idExperimento!: number;
   proyecto: any;
@@ -19,12 +21,17 @@ export class DetalleExperimentosComponent implements OnInit {
   formGrupoExperimental: FormGroup;
   agregarGrupo: boolean;
   detalleExperimento: string;
+  fechaHoy: any;
+  fechaDesde: any;
+  fechaHasta: any;
+  blogs = [];
 
   constructor(
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
     private postService: PostService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public toastService: ToastServiceService
   ) { }
 
   ngOnInit(): void {
@@ -32,29 +39,47 @@ export class DetalleExperimentosComponent implements OnInit {
     this.formGrupoExperimental = new FormGroup({
       tipo: new FormControl('', Validators.required),
       codigo: new FormControl('', Validators.required),
+      descripcion: new FormControl(''),
     });
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
     this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.proyecto = res;
     });
     this.getService.obtenerExperimentoPorId(this.idExperimento).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.experimento = res;
     });
     this.getService.obtenerGruposExperimentalesPorExperimento(this.idExperimento).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       res === null ? this.gruposExperimentales = [] : this.gruposExperimentales = res;
+    });
+
+    this.fechaDesde = new Date();
+    this.fechaDesde.setDate(this.fechaDesde.getDate() - 3);
+    // this.fechaDesde = this.fechaDesde.toDateString();
+    this.fechaHasta = new Date();
+
+    this.postService.obtenerBlogExperimento({
+      id_experimento: this.idExperimento,
+      fechaDesde: this.fechaDesde.toDateString(),
+      fechaHasta: this.fechaHasta.toDateString()
+    }).subscribe(res => {
+      console.log(res);
+      this.blogs = res;
     });
   }
 
   crearGrupoExperimental(): void {
-    let grupoExperimental = this.formGrupoExperimental.value;
+    const grupoExperimental = this.formGrupoExperimental.value;
     grupoExperimental.id_experimento = this.idExperimento;
     this.postService.crearGrupoExperimental(grupoExperimental).subscribe(res => {
-      console.log(res);
-    })
+      this.toastService.show('Grupo Experimental creado', { classname: 'bg-success text-light', delay: 2000 });
+      this.modalService.dismissAll();
+    }, err => {
+      this.toastService.show('Problema al crear Grupo Experimental' + err, { classname: 'bg-danger text-light', delay: 2000 });
+    });
   }
 
   open(content): void {
@@ -62,30 +87,40 @@ export class DetalleExperimentosComponent implements OnInit {
   }
 
   crearBlog(): void{
-    const Blog: any={
+    const Blog: any = {
       id_usuario: 1,
       detalle: this.detalleExperimento,
       tipo: 'Experimento'
-    }
-    const nuevoBlog : any ={
+    };
+    const nuevoBlog: any = {
       id_proyecto: this.idProyecto,
       id: this.idExperimento,
       blogs: Blog
-    }
-    console.log(nuevoBlog)
-    this.postService.crearBlogProyecto(nuevoBlog).subscribe(res =>{
-      console.log(res)
+    };
+    // console.log(nuevoBlog)
+    this.postService.crearBlogProyecto(nuevoBlog).subscribe(res => {
       if (res.Status === 'ok'){
         // this.alert = true;
         // this.estado = 'success';
         // this.mensajeAlert = 'Blog creado correctamente';
       }
     }, err => {
-      console.log(err)
+      // console.log(err)
       // this.alert = true;
       // this.estado = 'danger';
       // this.mensajeAlert = JSON.stringify(err.error.error);
-    })
+    });
+  }
+
+  filtrarBlogs(): void{
+    this.postService.obtenerBlogExperimento({
+      id_experimento: this.idExperimento,
+      fechaDesde: new Date(this.fechaDesde.year, this.fechaDesde.month - 1, this.fechaDesde.day).toDateString(),
+      fechaHasta: new Date(this.fechaHasta.year, this.fechaHasta.month - 1, this.fechaHasta.day).toDateString()
+    }).subscribe(res => {
+      console.log(res);
+      this.blogs = res;
+    });
   }
 
 }

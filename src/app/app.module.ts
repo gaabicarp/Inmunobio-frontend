@@ -45,6 +45,9 @@ import { FilterStatePipe } from './pipe/filter-state.pipe';
 import { ToastComponent } from './components/shared/toast/toast.component';
 import { FilterCodigosPipe } from './pipe/filter-codigos.pipe';
 import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle/nueva-herramienta/nueva-herramienta.component';
+import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
+import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detalle-experimentos/nuevo-blog-experimento/nuevo-blog-experimento.component';
+
 
 
 @NgModule({
@@ -87,7 +90,9 @@ import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle
     FilterStatePipe,
     ToastComponent,
     FilterCodigosPipe,
-    NuevaHerramientaComponent
+    NuevaHerramientaComponent,
+    NuevoBlogProyectoComponent,
+    NuevoBlogExperimentoComponent
 
   ],
   imports: [

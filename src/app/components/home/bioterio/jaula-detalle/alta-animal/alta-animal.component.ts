@@ -12,8 +12,8 @@ import { PostService } from 'src/app/services/post.service';
 export class AltaAnimalComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
+  idJaula:number;
   formAnimal!: FormGroup;
-  idJaula!: string;
   mensajeAlert: string;
   estado: string;
   alert: boolean;
@@ -25,7 +25,7 @@ export class AltaAnimalComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.idJaula = this.activatedRouter.snapshot.paramMap.get('id');
+    this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.formAnimal = new FormGroup({
       especie: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       cepa: new FormControl('', [Validators.required, Validators.maxLength(50)]),
