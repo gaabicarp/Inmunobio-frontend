@@ -8,7 +8,7 @@ import { map, startWith } from 'rxjs/operators';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { ActivatedRoute } from '@angular/router';
-import { BlogBuscadoProyecto } from 'src/app/models/blogs.model';
+
 
 @Component({
   selector: 'app-detalle-proyecto',
@@ -53,8 +53,9 @@ export class DetalleProyectoComponent implements OnInit {
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
       console.log(res)
+      console.log(res.idDirectorProyecto.id)
       this.proyecto = res;
-      this.traerDirector(res.idDirectorProyecto);
+      this.traerDirector(res.idDirectorProyecto.id);
       this.traerUsuarios(res.participantes);
     });
     this.getService.obtenerExperimentos(this.idProyecto).subscribe(res => {
