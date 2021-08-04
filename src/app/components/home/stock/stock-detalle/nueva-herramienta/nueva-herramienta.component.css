@@ -6,6 +6,12 @@ form{
 textarea{
     height: 200px;
 }
+.alert{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
+}
 @media screen and (max-width: 360px){
     button{
         width: 100%;

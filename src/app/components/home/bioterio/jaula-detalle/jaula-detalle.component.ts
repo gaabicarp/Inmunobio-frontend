@@ -36,12 +36,10 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   blogs: BlogsJaula[];
   detalleBlog: string;
 
-  mensajeAlertM: string;
-  estadoM: string;
-  alertM: boolean;
+  alertM: any;
   mensajeAlert: string;
-  estado: string;
-  alert: boolean;
+  alert: any;
+  cargando: boolean;
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -53,11 +51,13 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.alert = false;
     this.alertM = false;
+    this.cargando = true;
     this.detalleBlog ='';
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.subscription.add(this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res => {
       console.log(res)
       this.jaula = res;
+      this.cargando = false;
     }))
     setTimeout(() => {
       this.subscription.add(this.getService.obtenerEspacioFisico(this.jaula.id_espacioFisico).subscribe(res =>{
@@ -108,26 +108,23 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
     this.subscription.add(this.postService.asignarJaulaProyecto(datos).subscribe(res => {
       console.log(res)
       if (res.status === 'Se asignó la jaula al proyecto'){
-        this.alertM = true;
-        this.estadoM = 'success';
-        this.mensajeAlertM = 'Jaula asociada correctamente';
+        this.alertM = 'ok';
+        this.mensajeAlert = 'Jaula asociada correctamente';
         setTimeout(() => {
           this.modalService.dismissAll()
           this.ngOnInit()
         }, 2000);
       }
       } , err => {
-        this.alertM = true;
-        this.estadoM = 'danger';
-        this.mensajeAlertM = JSON.stringify(err.error.error);
+        this.alertM = 'error';
+        this.mensajeAlert = JSON.stringify(err.error.error);
         console.log(err)
     }))
   }
   eliminarJaula(){
   this.subscription.add(this.postService.eliminarJaula(this.idJaula).subscribe(res =>{
       if (res.Status === 'Ok'){
-        this.alert = true;
-        this.estado = 'success';
+        this.alert = 'ok';
         this.mensajeAlert = 'Jaula eliminada correctamente';
         setTimeout(() => {
           this.modalService.dismissAll()
@@ -136,8 +133,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
       }
       console.log(res)
     }, err => {
-      this.alert = true;
-      this.estado = 'danger';
+      this.alert = 'error';
       this.mensajeAlert ='La jaula debe estar vacía para poder darla de baja';
       setTimeout(() => {
         this.modalService.dismissAll()
@@ -176,9 +172,8 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
     }
     this.subscription.add( this.postService.nuevoBlogJaula(nuevoBlog).subscribe(res => {
       if (res.Status === 'Ok'){
-        this.alertM = true;
-        this.estadoM = 'success';
-        this.mensajeAlertM = 'Blog creado correctamente';
+        this.alertM = 'ok';
+        this.mensajeAlert = 'Blog creado correctamente';
         setTimeout(() => {
           this.alertM = false;
           this.modalService.dismissAll()
@@ -187,9 +182,8 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
       }
       console.log(res)
     }, err => {
-      this.alertM = true;
-      this.estadoM = 'danger';
-      this.mensajeAlertM = JSON.stringify(err);
+      this.alertM = 'error';
+      this.mensajeAlert = JSON.stringify(err);
       console.log(err)
       setTimeout(() => {
         this.modalService.dismissAll()
@@ -201,19 +195,17 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   eliminarAnimal(){
     this.subscription.add(this.postService.eliminarAnimal(this.idAnimal_eliminar).subscribe(res =>{
       if (res.Status === "Se dio de baja el animal con id "+ this.idAnimal_eliminar){
-        this.alert = true;
-        this.estado = 'success';
+        this.alert = 'ok';
         this.mensajeAlert = 'Animal eliminado correctamente';
         setTimeout(() => {
           this.animales = [];
           this.modalService.dismissAll()
           this.ngOnInit()
-        }, 2000);
+        }, 1500);
       }
       console.log(res)
     }, err => {
-      this.alert = true;
-      this.estado = 'danger';
+      this.alert = 'error';
       this.mensajeAlert = JSON.stringify(err);
       console.log(err)
     }))

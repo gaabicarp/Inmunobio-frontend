@@ -1,3 +1,4 @@
+<div *ngIf='!cargando'>
 <div class="text-black ml-3 mt-3" *ngIf='editar === false' routerLink="../" role="button" style="position: relative;">
   <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
@@ -16,7 +17,7 @@
         <div class="m-3">
             <label  for="producto" class="form-label">Producto</label>
             <select    *ngIf='editar === false' class="form-control" aria-label=".form-select-lg example" id="producto" formControlName="producto">
-              <option *ngFor='let producto of productos' value="{{producto?.id_producto}}">{{producto?.nombre}}</option>
+              <option *ngFor='let producto of productos' value="{{producto?.id_producto}}">{{producto?.nombre}} - Unidad de agrupación: {{producto?.unidadAgrupacion}}</option>
             </select>
             <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{producto?.nombre}}" aria-label="unidad" disabled>
 
@@ -34,7 +35,10 @@
         <div class=" m-3">
             <label  for="codigoContenedor" class="form-label">Contenedor</label>
             <select class="form-control" aria-label=".form-select-lg example" id="contenedor" formControlName="contenedor">
-              <option *ngFor='let contenedor of contenedores' value="{{contenedor?.id_contenedor}}">{{contenedor?.nombre}}</option>
+              <!-- <option *ngFor='let contenedor of contenedores' value="{{contenedor?.id_contenedor}}">{{contenedor?.nombre}}</option> -->
+              <option *ngFor='let contenedor of contenedoresEspecificos' value="{{contenedor?.id_contenedor}}">{{contenedor?.nombre}}</option>
+              <option *ngIf='contenedoresEspecificos?.length === 0'>No hay contenedores asociados a este espacio fisico</option>
+
             </select>
         </div>
         <div class="m-3">
@@ -51,9 +55,19 @@
                 <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formStock.valid">Guardar</button>
             </div>
         </div>
-        <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-          <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
+        <div *ngIf='alert === "ok"' class="alert" style="color: rgb(9, 78, 9);">
+          <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
+          <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
+        </div>
+        <div *ngIf='alert === "error"' class="alert" style='color: darkred;'>
+          <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
+          <h5 style='color: darkred;' class="my-1">{{mensajeAlert}}</h5>
         </div>
     </form>
 </div>
-
+</div>
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+  <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+  </div>
+</div>

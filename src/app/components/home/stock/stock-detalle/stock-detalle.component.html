@@ -1,11 +1,10 @@
-<div>
+<div *ngIf='!cargando'>
   <div class="text-black ml-3 mt-3" routerLink="../" role="button" style="position: relative;">
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
   <div class="text-center m-3">
     <h2 class='text-staatliches title'>{{espacioFisico?.nombre}}</h2>
   </div>
-</div>
 
 <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
   <li [ngbNavItem]="1" >
@@ -66,8 +65,9 @@
       </ng-container>
       </div>    
     </div>
-    <div class="alert alert-danger m-2" role="alert" *ngIf='stocks?.length === 0'>
-      No hay stock disponible
+    <div *ngIf='stocks?.length === 0' class="text-center" style='color: darkred;'>
+      <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+      <h5 style='color: darkred;'>No stock disponible</h5>
     </div>
     </ng-template>
   </li>
@@ -171,8 +171,9 @@
         </ng-container>
     </ng-container>
 </div>
-    <div class="alert alert-danger m-2" role="alert" *ngIf='blogs?.length === 0'>
-      No hay blogs existentes
+    <div *ngIf='blogs?.length === 0' class="text-center" style='color: darkred;'>
+      <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+      <h5 style='color: darkred;'>No hay blogs existentes</h5>
     </div>
     </ng-template>
   </li>
@@ -207,13 +208,21 @@
             </div>
       </div>
       </div>
-      <div class="alert alert-danger m-2" role="alert" *ngIf='herramientasFiltradas?.length === 0'>
-        No hay herramientas disponibles
+      <div *ngIf='herramientasFiltradas?.length === 0' class="text-center" style='color: darkred;'>
+        <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+        <h5 style='color: darkred;'>No hay herramientas creadas, cree una para continuar</h5>
       </div>
   </ng-template>
   </li>
 </ul>
 <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>
+
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+  <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
 
 <ng-template #eliminar let-modal>
   <div class="modal-header">
@@ -273,17 +282,14 @@
       <div class="alert alert-warning m-3" role="alert">
         <p>Hay {{prodEspecifico?.unidad}} unidades disponibles</p>
       </div>
-      <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-        <div class="p-2 flex-grow-1 bd-highlight">
-          <h6>ERROR - La cantidad solicitada no se encuentra en stock </h6>
-          <p>Hay {{prodEspecifico?.unidad}} unidades disponibles</p></div>
-        <div class="p-2 bd-highlight">
-        </div>
+      <div *ngIf='alert === "errorConsumido"' class="alert" style='color: darkred;'>
+        <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
+        <h5 style='color: darkred;' class="my-1">ERROR - La cantidad solicitada no se encuentra en stock </h5>
+        <p class="d-block">Hay {{prodEspecifico?.unidad}} unidades disponibles</p>
       </div>
-      <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alertOK" *ngIf='alertOK'>
-        <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertOK}}</div>
-        <div class="p-2 bd-highlight">
-        </div>
+      <div *ngIf='alert === "okConsumido"' class="alert" style="color: rgb(9, 78, 9);">
+        <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
+        <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
       </div>
     </div>
   </div>
@@ -337,7 +343,7 @@
                   </div>
                 </div>
               </div>
-              <button class="btn btn-outline-secondary button-filtrarBlogHerramienta"  (click)=Buscar() >Filtrar</button>
+              <button class="btn btn-outline-secondary button-filtrarBlogHerramienta"  (click)=BuscarBlogH() >Filtrar</button>
             </div>
         </div>
         <div class="" >
@@ -371,8 +377,9 @@
           </ng-container>
       </div>
       </div>
-    <div class="alert alert-danger" role="alert" *ngIf='blogsH?.length === 0'>
-      No hay blogs existentes
+    <div *ngIf='blogsH?.length === 0' class="text-center" style='color: darkred;'>
+      <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+      <h5 style='color: darkred;'>No hay blogs existentes</h5>
     </div>
     </div>
   </div>
@@ -397,10 +404,13 @@
         <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
       </div>
     </div>
-    <div class="d-flex bd-highlight alert alert-{{estadoModal}} mt-3" role="alertModal" *ngIf='alertModal'>
-      <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertModal}}</div>
-      <div class="p-2 bd-highlight">
-      </div>
+    <div *ngIf='alert === "okModal"' class="alert" style="color: rgb(9, 78, 9);">
+      <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
+      <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
+    </div>
+    <div *ngIf='alert === "errorModal"' class="alert" style='color: darkred;'>
+      <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
+      <h5 style='color: darkred;' class="my-1">{{mensajeAlert}}</h5>
     </div>
   </div>
   <div class="modal-footer">
@@ -447,11 +457,15 @@
         </div>
       </div>
     </div>
-    <div class="d-flex bd-highlight alert alert-{{estadoModal}} mt-3" role="alertModal" *ngIf='alertModal'>
-      <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlertMModal}}</div>
-      <div class="p-2 bd-highlight">
-      </div>
+    <div *ngIf='alert === "okModal"' class="alert" style="color: rgb(9, 78, 9);">
+      <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
+      <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
     </div>
+    <div *ngIf='alert === "errorModal"' class="alert" style='color: darkred;'>
+      <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
+      <h5 style='color: darkred;' class="my-1">{{mensajeAlert}}</h5>
+    </div>
+
   </div>
   <div class="modal-footer">
       <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlog()'>Crear</button>

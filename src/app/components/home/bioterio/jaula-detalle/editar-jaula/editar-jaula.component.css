@@ -25,6 +25,12 @@ form{
     margin-left: 0px;
     width: 70%;
 }
+.alert{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
+}
 @media screen and (max-width: 360px){
    form{
        padding: 0.5em;

@@ -21,13 +21,15 @@
 .datos-internos{
     display: flex;
     flex-direction: column;
-    width: 150x;
+    width: auto;
     align-items: flex-start;
+    margin-right: 2em;
 }
 .datos{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
                             /* BLOGS */
     /* Busqueda Blogs */
@@ -96,7 +98,12 @@ textarea{
     height: 38px;
     margin-top: 0.5em;
 }
-
+.alert{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
+}
 @media screen and (max-width: 360px){
     .search-container, .filtro-fecha-blogs, .fechas, .tipo-blogs{
         width: 100%;
@@ -130,6 +137,8 @@ textarea{
         display: flex;
         flex-direction: row;
         justify-content: space-around;
+        padding-left: 0px;
+        padding-right: 0px;
     }
     .close{
         margin:3px;

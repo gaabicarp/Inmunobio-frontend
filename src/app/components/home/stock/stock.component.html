@@ -1,4 +1,4 @@
-<div class="mx-4">        
+<div class="mx-4" *ngIf='!cargando'>        
     <div class="text-center m-4">
       <h2>Seleccione espacio físico</h2>
     </div>
@@ -39,7 +39,13 @@
     </tbody>
     </table>
   </div>
-      <div class="alert alert-danger" role="alert" *ngIf='espacios?.length === 0'>
-        No hay espacios fisicos disponibles
+      <div *ngIf='espacios?.length === 0' class="text-center" style='color: darkred;'>
+        <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+        <h5 style='color: darkred;'>No hay espacios fisicos disponibles</h5>
       </div>
+</div>
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+  <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+  </div>
 </div>

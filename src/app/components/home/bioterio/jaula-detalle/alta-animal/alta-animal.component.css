@@ -19,6 +19,12 @@ i{
     align-items: center;
     justify-content: space-around;
 }
+.alert{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
+}
 
 @media screen and (max-width: 360px){
    form{

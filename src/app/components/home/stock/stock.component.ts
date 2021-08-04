@@ -12,16 +12,24 @@ export class StockComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   espacios: EspacioFisico[] = [];
   filterPost: string ;
+  cargando:boolean;
 
   constructor( 
     private getService: GetService
   ) { }
 
   ngOnInit(): void {
+    this.cargando = true;
     this.filterPost = '';
     this.subscription.add( this.getService.obtenerEspaciosFisicos().subscribe(res => {
       console.log(res)
-      this.espacios = res;
+      if (res){
+        this.espacios = res;
+        this.cargando = false;
+      } else{
+        this.espacios =[];
+        this.cargando= false;
+      }
     }));
   }
   ngOnDestroy(): void {

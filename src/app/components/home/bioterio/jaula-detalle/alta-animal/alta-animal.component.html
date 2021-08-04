@@ -1,3 +1,4 @@
+<div>
 <div class="m-4" routerLink="../" role="button">
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
@@ -13,7 +14,7 @@
         </div> 
         <div class="fila">
             <label  class="form-label">Cepa</label>
-                    <input type="" class="form-control" formControlName='cepa'>
+                    <input type="" class="form-control" formControlName="cepa">
         </div>
         <div class="fila">
             <label  class="form-label">Sexo</label>
@@ -26,7 +27,6 @@
                 </div>
         </div>
     </div>
-    
       <div class="imagen mx-4">
         <div class="text-center">
             <i class="bi bi-plus-square" style="font-size: 8em;"></i>
@@ -37,7 +37,13 @@
       <button type="submit" class="btn btn-success btn-lg" [disabled]="!formAnimal.valid">Guardar</button>
     </div>
   </form>
-    <div class="alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-      {{mensajeAlert}}
+    <div *ngif="alert === 'ok'" class="alert" style="color: rgb(9, 78, 9);">
+      <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
+      <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
     </div>
+    <div *ngif="alert === 'error'" class="alert" style="color: darkred;">
+      <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
+      <h5 style="color: darkred;" class="my-1">{{mensajeAlert}}</h5>
+    </div>
+</div>
 </div>

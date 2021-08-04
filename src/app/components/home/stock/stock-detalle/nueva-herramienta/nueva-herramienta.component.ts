@@ -14,9 +14,9 @@ import { PostService } from 'src/app/services/post.service';
 export class NuevaHerramientaComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   formHerramienta!: FormGroup;
-  estado: string;
+  cargando: boolean;
   mensajeAlert: string;
-  alert: boolean = false;
+  alert: any ;
   idEspacioFisico:number;
   idHerramienta:number;
   herramienta:Herramienta;
@@ -29,16 +29,20 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.alert = false;
+    this.cargando = true;
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     this.idHerramienta = parseInt(this.activatedRouter.snapshot.paramMap.get('idHerramienta'), 10);
     this.alert = false;
     if (!isNaN(this.idHerramienta)){
       this.subscription.add( this.getService.obtenerHerramienta(this.idHerramienta).subscribe(res =>{
         this.herramienta = res;
+        this.cargando = false;
         console.log(res)
       }));
       this.editar =true;
     }
+    this.cargando = false;
     this.formHerramienta = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       detalle: new FormControl('', [Validators.maxLength(100)])
@@ -63,8 +67,7 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
       herramienta.id_herramienta = this.idHerramienta;
       this.subscription.add( this.postService.editarHerramienta(herramienta).subscribe(res => {
         if (res.Status === 'ok'){
-          this.alert = true;
-          this.estado = 'success';
+          this.alert ='ok';
           this.mensajeAlert = 'La información fue editada correctamente';
           setTimeout(() => {
             this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
@@ -72,15 +75,13 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
         }
         console.log(res);
       }, err => {
-        this.alert = true;
-        this.estado = 'danger';
+        this.alert = 'error';
         this.mensajeAlert = JSON.stringify(err.error.error);
       }));
     } else {
       this.subscription.add( this.postService.crearHerramienta(herramienta).subscribe(res => {
         if (res.Status === 'ok'){
-          this.alert = true;
-          this.estado = 'success';
+          this.alert = 'ok';
           this.mensajeAlert = 'Herramienta creada correctamente';
           setTimeout(() => {
             this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
@@ -88,8 +89,7 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
         }
         console.log(res);
       }, err => {
-        this.alert = true;
-        this.estado = 'danger';
+        this.alert = 'error';
         this.mensajeAlert = JSON.stringify(err.error.error);
       }));
     }

@@ -1,5 +1,6 @@
+<div *ngIf='!cargando'>
 <h2 class="m-5 text-center">Bioterio</h2>
-<div class="mx-4" >
+<div class="mx-4"  >
   <ul ngbNav #nav="ngbNav" class="nav-tabs nav-fill">
       <li [ngbNavItem]="1">
         <a ngbNavLink>Jaulas</a>
@@ -16,7 +17,7 @@
             </div>
         </div>
         <hr class="my-3">
-        <div class="jaula-container" *ngIf='!cargando'>
+        <div class="jaula-container">
             <div *ngFor="let jaula of jaulas| filterCodigos: filterPost" class="card shadow rounded list-group-item-action" routerLink='{{jaula.id_jaula}}'>
                 <div class="">
                     <div class="">
@@ -36,12 +37,10 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center" *ngIf='cargando'>
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+        <div *ngIf='jaulas.length === 0' class="text-center" style='color: darkred;'>
+          <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+          <h5 style='color: darkred;'>No hay jaulas creadas, cree una para continuar</h5>
         </div>
-        
         </ng-template>
       </li>
       <li [ngbNavItem]="2">
@@ -98,16 +97,22 @@
                 </ng-container>
             </ng-container>
         </div>
-        <div class="alert alert-danger" role="alert" *ngIf='blogs?.length === 0'>
-          No hay blogs existentes
+        <div *ngIf='blogs?.length === 0' class="text-center" style='color: darkred;'>
+          <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+          <h5 style='color: darkred;'>No hay blogs existentes</h5>
         </div>
         </ng-template>
       </li>
       
     </ul>
     <div [ngbNavOutlet]="nav" class="mt-2"></div>
-  </div> 
-
+  </div>
+</div> 
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
   
 
 

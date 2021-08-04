@@ -7,6 +7,7 @@ import { EspacioFisico } from 'src/app/models/EspacioFisico.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { Subscription } from 'rxjs';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-editar-jaula',
@@ -21,26 +22,31 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
   espaciosFisicos: EspacioFisico[];
   formJaula!: FormGroup;
   mensajeAlert: string;
-  estado: string;
-  alert: boolean;
+  alert: any;
+  cargando:boolean;
   
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
-    private postService: PostService
+    private postService: PostService,
+    public toastService: ToastServiceService
   ) { }
 
   ngOnInit(): void {
+    this.alert = false;
+    this.cargando = true;
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     if (!isNaN(this.idJaula)){
       this.subscription.add( this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res =>{
         this.jaula = res;
+        this.cargando = false;
         console.log(res)
       }));
     }
     this.subscription.add( this.getService.obtenerEspaciosFisicos().subscribe(res => {
       this.espaciosFisicos = res;
+      this.cargando = false;
       console.log(res);
     }));
     this.formJaula = new FormGroup({
@@ -79,36 +85,29 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
       this.subscription.add( this.postService.editarJaula(jaula).subscribe(res => {
         console.log(res);
         if (res.status === 'Jaula modificada'){
-          this.alert = true;
-          this.estado = 'success';
-          this.mensajeAlert = 'La información fue editada correctamente';
+          this.toastService.show('Informacion editada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
             this.router.navigate(['/home/bioterio/'+ this.idJaula]);
           }, 1500);
         }
       }, err => {
-        this.alert = true;
-        this.estado = 'danger';
-        this.mensajeAlert = JSON.stringify(err.error.error);
+        this.toastService.show('Problema al editar la información' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
       }));
     } else {
       this.subscription.add( this.postService.crearJaula(jaula).subscribe(res => {
         console.log(res);
         if (res.status === 'Jaula creada.'){
-          this.alert = true;
-          this.estado = 'success';
-          this.mensajeAlert = 'La jaula fue creada correctamente';
+          this.toastService.show('Jaula creada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
             this.router.navigate(['/home/bioterio']);
-          }, 1000);
+          }, 2000);
         }
       }, err => {
-        this.alert = true;
-        this.estado = 'danger';
-        this.mensajeAlert = JSON.stringify(err.error.error);
+        this.toastService.show('Problema al crear la jaula' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
       }));
     }
   }
+  
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

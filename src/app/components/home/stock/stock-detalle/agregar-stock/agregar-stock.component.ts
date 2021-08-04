@@ -21,12 +21,12 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
 
   productos: Producto[] = [];
   contenedores: Contenedor[] = [];
+  contenedoresEspecificos: Contenedor[]=[];
   
   formStock!: FormGroup;
-  step: number;
-  estado: string;
+
   mensajeAlert: string;
-  alert: boolean =false;
+  alert: any;
 
   idEspacioFisico:number;
   idProd:number;
@@ -36,6 +36,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
   producto:any;
   prodEspecifico:any;
   editar = false;
+  cargando: boolean;
  
   constructor(
     private router: Router,
@@ -49,7 +50,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.alert = false;
-
+    this.cargando = true;
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     this.idProd = parseInt(this.activatedRouter.snapshot.paramMap.get('idProducto'), 10);
     this.idProdEnStock = parseInt(this.activatedRouter.snapshot.paramMap.get('idProductoEnStock'), 10);
@@ -58,7 +59,8 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
     console.log(this.idUbicacion)
     if (!isNaN(this.idProd)){
       this.getService.obtenerStock(this.idEspacioFisico).subscribe(res =>{
-        this.stocks = res;
+          this.stocks = res;
+          this.cargando = false;
         console.log(res)
       })
       this.editar = true;
@@ -72,12 +74,17 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
     }
     this.subscription.add( this.getService.obtenerProductos().subscribe(res => {
                             console.log(res)
-                            this.productos = res; })
+                            this.productos = res;
+                             })
     );
     this.subscription.add( this.getService.obtenerContenedores().subscribe(res => {
                             console.log(res)
                             this.contenedores = res; })
     );
+    setTimeout(() => {
+      this.contenedoresEspecificos = this.contenedores.filter( contenedor => contenedor.id_espacioFisico == this.idEspacioFisico);
+      this.cargando = false;
+    }, 500);
     this.formStock = new FormGroup({
       producto: new FormControl('', [Validators.required, Validators.maxLength(30)]),
       lote: new FormControl('', [Validators.maxLength(50)]),
@@ -128,9 +135,8 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
         producto: prod
       }
     this.postService.editarStock(edicion).subscribe(res => {
-      if (res.Status === 'ok'){
-        this.alert = true;
-        this.estado = 'success';
+      if (res.Status === 'Se modifico el stock'){
+        this.alert = 'ok';
         this.mensajeAlert = 'Información editada correctamente';
         setTimeout(() => {
           this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
@@ -138,25 +144,21 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
       }
       console.log(res);
     }, err => {
-      this.alert = true;
-      this.estado = 'danger';
+      this.alert = 'error';
       this.mensajeAlert = JSON.stringify(err.error.error);
     });
     } else {
         this.postService.agregarStock(stock).subscribe(res => {
-          if (res.Status === 'ok'){
-            this.alert = true;
-            this.estado = 'success';
+          if (res.Status === 'Se creo el producto en stock.'){
+            this.alert = 'ok';
             this.mensajeAlert = 'Producto en stock agregado correctamente';
             setTimeout(() => {
               this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
             }, 2000);
-            
           }
           console.log(res);
         }, err => {
-          this.alert = true;
-          this.estado = 'danger';
+          this.alert = 'error';
           this.mensajeAlert = JSON.stringify(err.error.error);
           console.log(err)
         });

@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+    justify-content: space-around;
+}
+textarea{
+    width: 30em;
+}
+@media screen and (max-width: 360px){
+    textarea{
+        width: 15em;
+    }
+    .imagen{
+        display: none;
+    }
+}

@@ -3,6 +3,12 @@ form{
     margin: 3em;
     padding-top: 0px;
 }
+.alert{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: center;
+}
 @media screen and (max-width: 360px){
     button{
         width: 100%;

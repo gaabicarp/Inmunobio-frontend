@@ -31,8 +31,13 @@ export class BioterioComponent implements OnInit, OnDestroy {
     this.filterPost = '';
     this.subscription.add(this.getService.obtenerJaulas().subscribe(res => {
       console.log(res);
+      if(res){
       this.jaulas = res;
       this.cargando = false;
+      } else {
+        this.jaulas = [];
+        this.cargando = false;
+      }
     }));
     const dia = (this.fecHoy).getDate() + 1;
     this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)

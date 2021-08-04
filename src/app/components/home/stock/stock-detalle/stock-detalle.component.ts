@@ -32,15 +32,10 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   filterPost: string;
   filterPost2: string;
 
-  estado: string;
+
   mensajeAlert: string;
-  alert: boolean;
-  estadoOK: string;
-  mensajeAlertOK: string;
-  alertOK: boolean;
-  estadoModal: string;
-  mensajeAlertModal: string;
-  alertModal: boolean;
+  alert: any;
+  cargando:boolean;
 
   a:any;
   j:any;
@@ -54,7 +49,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
 
   tipo = 'opc1';
   tipoBlog= 'espacioFisico';
-  herramientaSeleccionada:number = 0;
+  herramientaSeleccionada:number ;
   herramientaSeleccionadaBlog:any;
   
   constructor(
@@ -66,16 +61,23 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.alert = false;
-    this.alertOK = false;
-    this.alertModal = false;
+    this.cargando = true;
     this.filterPost ='';
     this.filterPost2 ='';
+    this.mensajeAlert='';
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     console.log(this.idEspacioFisico);
     //STOCK
     this.subscription.add( this.getService.obtenerStock(this.idEspacioFisico).subscribe(res => {
       console.log(res)
-      this.stocks = res; })
+      if(res){
+        this.stocks = res;
+        this.cargando = false;
+      } else {
+        this.stocks = [];
+        this.cargando = false;
+      }
+       })
     );
     this.subscription.add( this.getService.obtenerEspacioFisico(this.idEspacioFisico).subscribe(res => {
       console.log(res)
@@ -156,9 +158,8 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     const id_productoEnStock= this.a
     const id_productos = this.j
     this.subscription.add( this.postService.eliminarStock(id_productoEnStock, id_productos).subscribe(res =>{
-      if (res.Status === 'ok'){
-        this.alert = true;
-        this.estado = 'success';
+      if (res.Status === 'Se borró el producto en stock.'){
+        this.alert = 'ok'
         this.mensajeAlert = 'Stock eliminado correctamente';
         setTimeout(() => {
           this.modalService.dismissAll()
@@ -167,8 +168,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       }
       console.log(res); 
     }, err => {
-      this.alert = true;
-      this.estado = 'danger';
+      this.alert = 'error';
       this.mensajeAlert = JSON.stringify(err.error.error);;
     }));
   }
@@ -230,19 +230,18 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
         id_productos: this.prodEspecifico.id_productos
       }
       this.subscription.add(this.postService.consumirStock(consumir).subscribe(res =>{
-        if (res.Status === 'ok'){
-          this.alertOK = true;
-          this.estado = 'success';
-          this.mensajeAlertOK = 'Stock consumido correctamente';
+        if (res.Status === 'Se modificaron las unidades del producto en stock.'){
+          this.alert = 'okConsumido';
+          this.mensajeAlert = 'Stock consumido correctamente';
           setTimeout(() => {
             this.modalService.dismissAll()
+            this.cantidad = 0;
             this.ngOnInit()
           }, 2000);
         }
         console.log(res)
       }, err => {
-        this.alert = true;
-        this.estado = 'danger';
+        this.alert = 'errorConsumido';
         this.mensajeAlert = 'ERROR - La cantidad solicitada no se encuentra en stock';
       }));
     }, 500);
@@ -255,8 +254,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     console.log(this.idHerramienta_eliminar)
     this.subscription.add(this.postService.eliminarHerramienta(this.idHerramienta_eliminar).subscribe(res =>{
       if (res.Status === 'ok'){
-        this.alert = true;
-        this.estado = 'success';
+        this.alert = 'ok';
         this.mensajeAlert = 'Herramienta eliminada correctamente';
         setTimeout(() => {
           this.modalService.dismissAll()
@@ -265,8 +263,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       }
       console.log(res);
     }, err => {
-      this.alert = true;
-      this.estado = 'danger';
+      this.alert = 'error';
       this.mensajeAlert = JSON.stringify(err.error.error);;
     }));
   }
@@ -283,9 +280,8 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     console.log(nuevoBlog)
     this.subscription.add(this.postService.crearBlogHerramienta(nuevoBlog).subscribe(res => {
       if (res.Status === 'ok'){
-        this.alertModal = true;
-        this.estadoModal = 'success';
-        this.mensajeAlertModal = 'Blog creado correctamente';
+        this.alert = 'okModal';
+        this.mensajeAlert = 'Blog creado correctamente';
         setTimeout(() => {
           this.detalleBlog = ''
           this.modalService.dismissAll()
@@ -297,9 +293,8 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       }
       console.log(res)
     }, err => {
-      this.alertModal = true;
-      this.estadoModal = 'danger';
-      this.mensajeAlertModal = JSON.stringify(err);
+      this.alert = 'errorModal';
+      this.mensajeAlert = JSON.stringify(err);
       console.log(err)
     }));
   }
@@ -317,9 +312,8 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       console.log(nuevoBlog)
       this.subscription.add( this.postService.crearBlogHerramienta(nuevoBlog).subscribe(res => {
         if (res.Status === 'ok'){
-          this.alertModal = true;
-          this.estadoModal = 'success';
-          this.mensajeAlertModal = 'Blog creado correctamente';
+          this.alert = 'okModal';
+          this.mensajeAlert = 'Blog creado correctamente';
           setTimeout(() => {
             this.detalleBlog = '';
             this.modalService.dismissAll()
@@ -328,9 +322,8 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
         }
         console.log(res)
       }, err => {
-        this.alertModal = true;
-        this.estadoModal = 'danger';
-        this.mensajeAlertModal = JSON.stringify(err);
+        this.alert = 'errorModal';
+        this.mensajeAlert = JSON.stringify(err);
         console.log(err)
       }));
     } else{
@@ -345,18 +338,17 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     }
     this.subscription.add( this.postService.crearBlogEspacio(nuevoBlog).subscribe(res => {
       if (res.Status === 'ok'){
-        this.alert = true;
-        this.estado = 'success';
+        this.alert = 'okModal';
         this.mensajeAlert = 'Blog creado correctamente';
         setTimeout(() => {
+          this.detalleBlog = '';
           this.modalService.dismissAll()
           this.ngOnInit()
         }, 2000);
       }
       console.log(res)
     }, err => {
-      this.alert = true;
-      this.estado = 'danger';
+      this.alert = 'errorModal';
       this.mensajeAlert = JSON.stringify(err.error.error);
     }));
     }

@@ -15,8 +15,7 @@ export class AltaAnimalComponent implements OnInit, OnDestroy {
   idJaula:number;
   formAnimal!: FormGroup;
   mensajeAlert: string;
-  estado: string;
-  alert: boolean;
+  alert: any;
 
   constructor(
     private router: Router,
@@ -25,6 +24,7 @@ export class AltaAnimalComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.alert = false;
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.formAnimal = new FormGroup({
       especie: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -39,8 +39,7 @@ export class AltaAnimalComponent implements OnInit, OnDestroy {
     console.log(animal)
     this.subscription.add( this.postService.crearAnimal(animal).subscribe(res => {
       if (res.Status === 'Se creó el nuevo animal.'){
-        this.alert = true;
-        this.estado = 'success';
+        this.alert = 'ok';
         this.mensajeAlert = 'Animal creado correctamente';
         setTimeout(() => {
           this.router.navigate(['/home/bioterio/'+ this.idJaula]);
@@ -48,8 +47,7 @@ export class AltaAnimalComponent implements OnInit, OnDestroy {
       }
       console.log(res)
     }, err => {
-      this.alert = true;
-      this.estado = 'danger';
+      this.alert = 'error';
       this.mensajeAlert = JSON.stringify(err);
       console.log(err)
     }));

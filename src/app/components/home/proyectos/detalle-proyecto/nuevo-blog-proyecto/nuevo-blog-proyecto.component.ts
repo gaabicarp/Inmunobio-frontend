@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from 'src/app/services/post.service';
 import { GetService } from 'src/app/services/get.service';
-import { BlogProyecto, Blogs } from 'src/app/models/blogs.model';
+import {  Blogs } from 'src/app/models/blogs.model';
 import { Jaula } from 'src/app/models/jaula.model';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
@@ -52,18 +52,18 @@ export class NuevoBlogProyectoComponent implements OnInit {
       blogs: Blog
     }
     console.log(nuevoBlog)
-    this.postService.nuevoBlogProyecto(nuevoBlog).subscribe(res =>{
-      console.log(res)
-      if (res.Status === 'ok'){
-        this.alert = true;
-        this.estado = 'success';
-        this.mensajeAlert = 'Blog creado correctamente';
-      }
-    }, err => {
-      this.alert = true;
-      this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.error);
-    })
+    // this.postService.nuevoBlogProyecto(nuevoBlog).subscribe(res =>{
+    //   console.log(res)
+    //   if (res.Status === 'ok'){
+    //     this.alert = true;
+    //     this.estado = 'success';
+    //     this.mensajeAlert = 'Blog creado correctamente';
+    //   }
+    // }, err => {
+    //   this.alert = true;
+    //   this.estado = 'danger';
+    //   this.mensajeAlert = JSON.stringify(err.error.error);
+    // })
   }
  
 }

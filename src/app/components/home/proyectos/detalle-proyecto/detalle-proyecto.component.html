@@ -3,70 +3,70 @@
       <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
   
-  <div class="mx-4">
-    <div class="my-3">
-      <div class="d-flex align-items-center">
-        <h2 class="mb-0">{{proyecto?.nombre}} - {{proyecto?.codigoProyecto}}</h2>
-        <div class="ml-4" *ngIf='!proyecto?.finalizado'>
+  <div class="encabezado">
+      <div class="titulo">
+        <h2 class="">{{proyecto?.nombre}} - {{proyecto?.codigoProyecto}}</h2>
+        <div class="editar-finalizar" *ngIf='!proyecto?.finalizado'>
           <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='../editar-proyecto/{{proyecto?.id_proyecto}}'><i class="bi bi-pencil text-primary"></i> Editar</button>
-          <button class="btn btn-outline-danger ml-4" (click)="open(finalizarProyecto)">Finalizar Proyecto</button>
+          <button class="btn btn-outline-danger finalizar" (click)="open(finalizarProyecto)">Finalizar Proyecto</button>
         </div>
       </div>
       <span class="text-danger" *ngIf='proyecto?.finalizado'>Proyecto cerrado</span>
-    </div>
   </div>
   
   <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs mx-4">
       <li [ngbNavItem]="1">
         <a ngbNavLink>Detalles</a>
         <ng-template ngbNavContent>
-          <div class="mx-4">
-            <div class="p-4">
+          <div class="detalles">
+            <div class="">
               <h4 class="text-secondary text-staatliches mb-0">Descripcion del proyecto</h4>
               <p>{{proyecto?.descripcion}}</p>
               <h4 class="text-secondary text-staatliches mb-0">Conclusion del proyecto</h4>
               <p class="text-danger"><i>{{proyecto?.conclusion ? proyecto?.conclusion : 'Proyecto Sin Finalizar'}}</i></p>
               <h4 class="text-secondary text-staatliches mb-0">Participantes</h4>
-              <span *ngFor='let usuario of usuariosProyecto'>{{usuario.nombre}} - </span>
+              <span *ngFor='let usuario of usuariosProyecto' class="mb-2">{{usuario.nombre}} - </span>
+              <p *ngIf='usuariosProyecto?.length === 0' class="text-danger">No hay participantes en el proyecto</p>
             </div>
-            <div class="rounded py-5 d-flex align-items-center justify-content-around">
-              <div class="mx-5">
-                <h4 class="text-secondary text-staatliches mb-0">Fecha de Inicio</h4>
-                <p class="mb-0">{{proyecto?.fechaInicio | date}}</p>
+            <div class="info">
+              <div class="fila"> 
+                <div class="">
+                  <h4 class="text-secondary text-staatliches ">Fecha de Inicio</h4>
+                  <p class="mb-0">{{proyecto?.fechaInicio | date}}</p>
+                </div>
+                <div class="barra"></div>
+                <div class="">
+                  <h4 class="text-secondary text-staatliches ">Fecha de Finalizacion</h4>
+                  <p class="mb-0 {{proyecto?.fechaFinal ? 'text-danger' : ''}}">{{proyecto?.fechaFinal ? (proyecto?.fechaFinal | date) : 'Sin finalizar'}}</p>
+                </div>
               </div>
-              <div class="barra"></div>
-              <div class="mx-5">
-                <h4 class="text-secondary text-staatliches mb-0">Fecha de Finalizacion</h4>
-                <p class="mb-0 {{proyecto?.fechaFinal ? 'text-danger' : ''}}">{{proyecto?.fechaFinal ? (proyecto?.fechaFinal | date) : 'Sin finalizar'}}</p>
-              </div>
-              <div class="barra"></div>
-              <div class="mx-5">
-                <h4 class="text-secondary text-staatliches mb-0">Jef@ de proyecto</h4>
-                <p class="mb-0">{{jefeProyecto?.nombre}}</p>  
-              </div>
-              <div class="barra"></div>
-              <div class="mx-5">
-                <h4 class="text-secondary text-staatliches mb-0">Financiacion Inicial</h4>
-                <p class="mb-0">${{proyecto?.montoInicial}}</p>  
+              <div class="fila">
+                <div class="barra"></div>
+                <div class="">
+                  <h4 class="text-secondary text-staatliches ">Jef@ de proyecto</h4>
+                  <p class="mb-0">{{jefeProyecto?.nombre}}</p>  
+                </div>
+                <div class="barra"></div>
+                <div class="">
+                  <h4 class="text-secondary text-staatliches ">Financiacion Inicial</h4>
+                  <p class="mb-0">${{proyecto?.montoInicial}}</p>  
+                </div>
               </div>
             </div>
-            <div class="d-flex justify-content-center">
-            </div>
-          </div>
-          <div class="mx-5">
-            <div class="d-flex align-items-center">
+          
+          <div class="experimentos">
+            <div class="d-flex align-items-center mb-3 mt-3">
               <h4 class="text-secondary text-staatliches mb-0">Experimentos</h4>
               <div class="ml-4">
                 <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='nuevo-experimento' *ngIf='!proyecto?.finalizado'>+ Nuevo</button>
               </div>
             </div>
-            <div class="experimento-filtro-container">
-              <div class="d-flex justify-content-around align-items-center my-4" *ngIf='experimentos.length != 0'>
-                <div>
+            <div class="experimento-filtro-container" *ngIf='experimentos.length != 0'>
+                <div class="filtro">
                   <label for="usuario">Filtro por nombre</label>
                   <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por nombre de proyecto" [(ngModel)]='filterPostName'>
                 </div>
-                <div>
+                <div class="filtro">
                   <label for="usuario">Filtro por nombre</label>
                   <select class="form-control"  id='usuario' aria-label="Default select example" [(ngModel)]='filterPostActive'> 
                     <option selected hidden value="-1">Seleccione director/a de Proyecto</option>
@@ -74,10 +74,9 @@
                     <option value="true">Finalizado</option>
                   </select>
                 </div>
-              </div>
             </div>
             <div class="experimentos-container">
-              <div *ngFor="let experimento of experimentos | filter: filterPostName | filterState: filterPostActive" class="card card-experimento my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='experimento/{{experimento.id_experimento}}' >
+              <div *ngFor="let experimento of experimentos | filter: filterPostName | filterState: filterPostActive" class="card card-experimento shadow rounded list-group-item-action" routerLink='experimento/{{experimento.id_experimento}}' >
                 <div class="" >
                   <div class="card-body">
                     <h5 class="card-title text-center">{{experimento.codigo}}</h5>
@@ -98,60 +97,105 @@
               </div>
             </div>
           </div>
+        </div>
         </ng-template>
       </li>
       <li [ngbNavItem]="2">
         <a ngbNavLink>Blog</a>
         <ng-template ngbNavContent>
-          <div class="m-4">
-            <div class="">
-              <form class="row">
-                <div class="col-6 d-flex justify-content-around align-items-center">
-                  <div class="form-group mb-0">
-                    <div class="input-group">
-                      <input class="form-control" placeholder="Fecha Desde"
-                             name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group mb-0">
-                    <div class="input-group">
-                      <input class="form-control" placeholder="Fecha Hasta"
-                             name="dp" [(ngModel)]="model2" ngbDatepicker #b="ngbDatepicker">
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-secondary calendar" (click)="b.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="btn btn-outline-secondary">Filtrar</button>
-                </div>
-                
-              </form>
+          <div class="busqueda">
+            <div class="form-group my-2">
+              <button class="btn btn-outline-success boton" (click)="open(blog)">Nueva Entrada</button>
             </div>
-            
-            <div class="p-4 d-flex flex-column">
-              <ngb-alert [dismissible]="false" class="w-75">
-                <div class="row">
-                  <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                    <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                      <i class="bi bi-arrow-left-right"></i>
+            <div class="barra-blogs m-2" ></div>
+              <div class="search-container-blog">
+                <div class="form-group my-2">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
+                           name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
+                    <div class="">
+                      <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                     </div>
-                    <p class="text-center mb-0">20/03/19</p>
-                    <p>20:24hs</p>
-                  </div>
-                  <div class="col">
-                    <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
-                    <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                    <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
                   </div>
                 </div>
-              </ngb-alert>
-          
-              
-            </div>
+                <div class="form-group my-2">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
+                           name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
+                    <div class="">
+                      <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-outline-secondary filtro-blogs"  (click)=Buscar() >Filtrar</button>
+              </div>
           </div>
+          <div class="" >
+            <ng-container>
+                <ng-container>
+                  <div class="card-blog shadow rounded">
+                    <div class="fecha">
+                      <i class="bi bi-journals m-2"></i>
+                      <h6 class="card-title text-center">fecha</h6>
+                    </div>
+                    <div class="blog" >
+                      <h5 class="card-title card-header">Experimento CodExp - Blog N° NBlog</h5>
+                      <p class="mb-1"><i>  usuario : nombre usuario</i></p>
+                      <p>detalle del blogggggg</p>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container>
+                  <div class="card-blog shadow rounded">
+                    <div class="blog" >
+                      <div class="blog" >
+                        <h5 class="card-title card-header">Experimento CodExp - Blog N° NBlog</h5>
+                        <p class="mb-1"><i>  usuario : nombre usuario</i></p>
+                        <p>detalle del blogggggg</p>
+                      </div>
+                    </div>
+                    <div class="fecha">
+                      <i class="bi bi-journals m-2"></i>
+                      <h6 class="card-title text-center">fechaaaa</h6>
+                    </div>
+                  </div>
+                </ng-container>
+            </ng-container>
+        </div>
+          <!-- <div class="" >
+            <ng-container *ngFor='let a of blogs;let i = index'  >
+                <ng-container *ngIf = 'i%2==0'>
+                  <div class="card-blog shadow rounded">
+                    <div class="fecha">
+                      <i class="bi bi-journals m-2"></i>
+                      <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                    </div>
+                    <div class="blog" >
+                      <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
+                      <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                      <p>{{a.detalle}}</p>
+                    </div>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf = 'i%2!=0'>
+                  <div class="card-blog shadow rounded">
+                    <div class="blog" >
+                      <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
+                      <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                      <p>{{a.detalle}}</p>
+                    </div>
+                    <div class="fecha">
+                      <i class="bi bi-journals m-2"></i>
+                      <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                    </div>
+                  </div>
+                </ng-container>
+            </ng-container>
+        </div> -->
+        <div *ngIf='blogs?.length === 0' class="text-center" style='color: darkred;'>
+          <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+          <h5 style='color: darkred;'>No hay blogs existentes</h5>
+        </div>
         </ng-template>
       </li>
   </ul>

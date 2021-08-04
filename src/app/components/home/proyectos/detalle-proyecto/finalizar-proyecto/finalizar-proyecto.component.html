@@ -1,17 +1,17 @@
-<div class="mx-4">
-    <div class="p-4 mb-4">
+<div class="">
+    <div class="">
         <form>
-            <div class="row">
-                <div class="col-9">
-                    <div class="mb-3 row">
-                        <div class="col">
+            <div class="container">
+                <div class="conclusion">
+                    <div class="mb-3">
+                        <div class="">
                             <label  class="form-label">Conclusion</label>
                             <textarea class="form-control" name='conclusion' aria-label="With textarea" rows="5" [(ngModel)]="obj.conclusion"></textarea>
                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                         </div>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="imagen">
                     <div class="text-center">
                         <i class="bi bi-inboxes-fill" style="font-size: 8em;"></i>
                         <!-- <i class="bi bi-folder-plus" ></i> -->
@@ -20,9 +20,9 @@
 
             </div>
             <div class="d-flex flex-row justify-content-center">
-                <div class="mx-3">
-                    <button class="btn btn-outline-danger btn-lg mr-4" (click)='finalizarProyecto()'>Finalizar Proyecto</button>
-                    <button class="btn btn-outline-secondary btn-lg" (click)='cerrarModal()'>Cancelar</button>
+                <div class="">
+                    <button class="btn btn-outline-danger btn-lg " (click)='finalizarProyecto()'>Finalizar Proyecto</button>
+                    <button class="btn btn-outline-secondary btn-lg ml-2" (click)='cerrarModal()'>Cancelar</button>
                 </div>
             </div>
         </form>
