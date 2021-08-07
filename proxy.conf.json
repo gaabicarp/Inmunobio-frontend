@@ -1,8 +1,0 @@
-{
-    "/app/*": {
-        "target": "http://10.1.74.195:8080",
-        "secure": false,
-        "changeOrigin" : true,
-        "logLevel": "debug"
-    }
-}
