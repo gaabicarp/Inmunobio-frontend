@@ -9,13 +9,14 @@ import { Stock } from '../models/stock.model';
 import { BlogsBuscados } from '../models/blogs.model';
 import { Herramienta } from '../models/herramientas.model';
 import { Contenedor } from '../models/contenedores.model';
+import { URL } from './Config'
 
 @Injectable({
   providedIn: 'root'
 })
 export class GetService {
-  private API_URL = 'http://10.1.74.195:8080/api/v1/';
-
+  private API_URL = URL;
+  //private API_URL = 'http://localhost:8080/api/v1/';
   constructor(private http: HttpClient ) { }
 
   obtenerUsuarios(): Observable<Usuario[]>{

@@ -64,11 +64,13 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Inmunobio:build"
+            "browserTarget": "Inmunobio:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Inmunobio:build:production"
+              "browserTarget": "Inmunobio:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             }
           }
         },
