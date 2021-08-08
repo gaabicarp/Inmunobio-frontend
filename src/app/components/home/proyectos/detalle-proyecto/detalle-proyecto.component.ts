@@ -30,11 +30,11 @@ export class DetalleProyectoComponent implements OnInit {
   active = 1;
   filterPostName: string;
   filterPostActive: number;
-  fecHoy: Date;
-  fecHasta: Date | string;
+  fecHoy=new Date(Date.now());
+  fecDesde:any;
+  fecHasta:any;
+  tipo:string = 'opc1';
   blogs = [];
-  formFecha: FormGroup;
-  fecDesde: Date | string;
   cargando: boolean;
   fecHastaReal: Date;
 
@@ -64,23 +64,21 @@ export class DetalleProyectoComponent implements OnInit {
       this.experimentoFiltro = res;
       this.cargando = false;
     });
-    // const dia = (this.fecHoy).getDate() + 1;
-    // this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)
-    // this.fecHasta = this.fecHasta.toDateString();
-    // const blog : BlogBuscadoProyecto = {
-    //       id_proyecto: this.idProyecto,
-    //       fechaDesde: 'Mon May 31 2021',
-    //       fechaHasta: this.fecHasta
-    //     }
-    // this.postService.obtenerBlogsProyecto(blog).subscribe(res =>{
-    //   console.log(res)
-    //   this.blogs = res;
-    // })
-    // this.formFecha = new FormGroup({
-    //   fecDesde: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-    //   fecHasta: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-    //   filtro: new FormControl()
-    // })
+    
+    const dia = (this.fecHoy).getDate() + 1;
+    this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)
+    this.fecHasta = this.fecHasta.toDateString();
+    const blog : any = {
+      id_proyecto: this.idProyecto,
+      fechaDesde: 'Mon May 31 2021',
+      fechaHasta: this.fecHasta
+    }
+    console.log(blog)
+    this.postService.obtenerBlogsProyecto(blog).subscribe(res =>{
+      console.log(res)
+      this.blogs = res;
+    })
+
   }
 
   traerDirector(id: number): void {
@@ -110,7 +108,37 @@ export class DetalleProyectoComponent implements OnInit {
   open(content): void {
     this.modalService.open(content, { centered: true, size: 'xl' });
   }
-
+  Buscar(){
+    this.fecDesde =  new Date(this.fecDesde.year,(this.fecDesde.month -1)  ,this.fecDesde.day)
+    const fechaHasta = new Date(this.fecHasta.year,(this.fecHasta.month -1) ,this.fecHasta.day)
+    console.log(this.fecDesde, fechaHasta)
+    const diaMas1 = (fechaHasta).getDate() + 2;
+    this.fecHasta = new Date(fechaHasta.getFullYear(),fechaHasta.getMonth(), diaMas1)
+    this.fecDesde = this.fecDesde.toDateString();
+    this.fecHasta = this.fecHasta.toDateString();
+    const blog : any = {
+      id_proyecto : this.idProyecto,
+      fechaDesde: this.fecDesde,
+      fechaHasta: this.fecHasta
+    }
+    this.postService.obtenerBlogsProyecto(blog).subscribe(res =>{
+          console.log(res)
+          this.blogs = res; })
+        if (this.tipo == 'Jaula'){
+          var filtrados= this.blogs.filter(blog => blog.tipo === 'Jaula')
+          setTimeout(() => {
+            this.blogs=filtrados;
+            console.log(this.blogs)
+          }, 1000);
+        } else if (this.tipo == 'Experimento'){
+          var filtrados= this.blogs.filter(blog => blog.tipo === 'Experimento')
+          setTimeout(() => {
+            this.blogs=filtrados;
+            console.log(this.blogs)
+          }, 1000);
+        } else if (this.tipo == 'Todos'){
+        }
+  }
   // Buscar(){
   //   this.fecDesde = new Date(this.formFecha.value.fecDesde);
   //   this.fecHastaReal= new Date(this.formFecha.value.fecHasta);

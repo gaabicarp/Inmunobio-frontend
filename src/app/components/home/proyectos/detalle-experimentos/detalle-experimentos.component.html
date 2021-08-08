@@ -2,25 +2,24 @@
   <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
 
-
-
-<div class="mx-4">
-  <div class="my-3">
-    <div class="d-flex align-items-center">
-      <h2 class="mb-0">Experimento - {{experimento?.codigo}}</h2>
-      <div class="ml-4" *ngIf='!experimento?.finalizado'>
+  <div class="encabezado">
+    <div class="titulo">
+      <h2 class="">Experimento - {{experimento?.codigo}}</h2>
+      <div class="editar-finalizar" *ngIf='!experimento?.finalizado'>
         <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='../../editar-experimento/{{idExperimento}}'><i class="bi bi-pencil text-primary"></i> Editar</button>
-        <button class="btn btn-outline-danger ml-4" (click)="open(finalizarExperimento)">Finalizar Experimento</button>
+        <button class="btn btn-outline-danger finalizar" (click)="open(finalizarExperimento)">Finalizar Experimento</button>
       </div>
     </div>
+    <span class="text-danger" *ngIf='experimento?.finalizado'>Experimento cerrado</span>
   </div>
 
-    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs mx-4">
         <li [ngbNavItem]="1">
             <a ngbNavLink>Detalles</a>
             <ng-template ngbNavContent>
-              <div class="mx-4">
-                <div class="p-4">
+              <div class="detalles">
+
+                <div class="">
                   <h4 class="text-secondary text-staatliches mb-0">Objetivo del Experimento</h4>
                   <p>{{experimento?.objetivos}}</p>
                   <h4 class="text-secondary text-staatliches mb-0">Resultados del Experimento</h4>
@@ -28,32 +27,43 @@
                   <h4 class="text-secondary text-staatliches mb-0">Conclusiones del Experimento</h4>
                   <p class="text-danger"><i>{{experimento?.conclusiones ? experimento?.conclusiones : 'Experimento Sin Finalizar'}}</i></p>
                 </div>
-                <div class="rounded p-5 d-flex align-items-center justify-content-around">
-                  <div class="mx-5">
-                    <h4 class="text-secondary text-staatliches mb-0">Fecha de Inicio</h4>
-                    <p class="mb-0">{{experimento?.fechaInicio | date}}</p>
+
+                <div class="info">
+                  <div class="fila">
+                    <div class="">
+                      <h4 class="text-secondary text-staatliches mb-0">Fecha de Inicio</h4>
+                      <p class="mb-0">{{experimento?.fechaInicio | date}}</p>
+                    </div>
+                    <div class="barra"></div>
+                    <div class="">
+                      <h4 class="text-secondary text-staatliches mb-0">Fecha de Finalizacion</h4>
+                      <p class="mb-0 {{proyecto?.fechaFinal ? 'text-danger' : ''}}">{{experimento?.fechaFinal ? (experimento?.fechaFinal | date) : 'Sin finalizar'}}</p>
+                    </div>
                   </div>
                   <div class="barra"></div>
-                  <div class="mx-5">
-                    <h4 class="text-secondary text-staatliches mb-0">Fecha de Finalizacion</h4>
-                    <p class="mb-0 {{proyecto?.fechaFinal ? 'text-danger' : ''}}">{{experimento?.fechaFinal ? (experimento?.fechaFinal | date) : 'Sin finalizar'}}</p>
-                  </div>
-                  <div class="barra"></div>
-                  <div class="mx-5">
-                    <h4 class="text-secondary text-staatliches mb-0">Metodologia de Trabajo</h4>
-                    <a href='{{experimento?.metodologia}}' target="_blank" class="mb-0">{{experimento?.metodologia}}</a>  
+                  <div class="fila metodologia">
+                    <div class="justify-content-start">
+                      <h4 class="text-secondary text-staatliches mb-0">Metodologia de Trabajo</h4>
+                      <a href='{{experimento?.metodologia}}' target="_blank" class="mb-0">{{experimento?.metodologia}}</a>  
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="mx-5">
-                <div class="d-flex align-items-center">
+              <div class="grupos-experimentales">
+                <div class="d-flex align-items-center mb-3 mt-3">
                   <h4 class="text-secondary text-staatliches mb-0">Grupos Experimentales</h4>
                   <div class="ml-4">
-                    <button class="btn btn-outline-primary" style="cursor: pointer" (click)="open(GrupoExperimental)">+ Nuevo</button>
+                    <button class="btn btn-outline-primary" style="cursor: pointer" (click)="open(GrupoExperimental)">+Nuevo</button>
                   </div>
                 </div>
-                <div class="cards-container">
-                  <div *ngFor="let grupo of gruposExperimentales" class="card card-experimento my-3 mx-4 p-4 shadow rounded list-group-item-action" routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
+                <div class="grupo-filtro-container" *ngIf='gruposExperimentales.length != 0'>
+                  <div class="filtro">
+                    <label for="usuario">Filtro por codigo</label>
+                    <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por codigo de grupo experimental" [(ngModel)]='filterPost'>
+                  </div>
+              </div>
+                <div class="grupos-container">
+                  <div *ngFor="let grupo of gruposExperimentales " class="card card-grupo shadow rounded list-group-item-action" routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
+                    <!-- | filter: filterCodigos -->
                     <div class="">
                       <div class="card-body">
                           <h5 class="card-title text-center">{{grupo.codigo}}</h5>
@@ -77,80 +87,77 @@
                   <p class="text-danger"><i>No hay grupos experimentales creados</i></p>
                 </div>
               </div>
-
-                
-
-
+            </div>
             </ng-template>
         </li>
         <li [ngbNavItem]="2">
             <a ngbNavLink>Blog</a>
             <ng-template ngbNavContent>
-              <div class="m-4">
-                <div class="">
-                  <form class="row">
-                    <div class="col-3 d-flex justify-content-center" *ngIf='!experimento?.finalizado'>
-                      <button class="btn btn-outline-success" (click)="open(blog)">Nueva Entrada</button>
-                    </div>
-                    <div class="barra" *ngIf='!experimento?.finalizado'></div>
-                    <div class="col-6 d-flex justify-content-around align-items-center">
-                      <div class="form-group mb-0">
-                        <div class="input-group">
-                          <input class="form-control" placeholder="Fecha Desde"
-                                 name="dp" [(ngModel)]="fechaDesde" max="fechaHasta" ngbDatepicker #d="ngbDatepicker">
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group mb-0">
-                        <div class="input-group">
-                          <input class="form-control" placeholder="Fecha Hasta"
-                                 name="dp" [(ngModel)]="fechaHasta" ngbDatepicker min="fechaDesde" #b="ngbDatepicker">
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary calendar" (click)="b.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                          </div>
-                        </div>
-                      </div>
-                      <button class="btn btn-outline-secondary" (click)='filtrarBlogs()'>Filtrar</button>
-                    </div>
-                    
-                  </form>
+              <div class="busqueda">
+                <div class="form-group my-2">
+                  <button class="btn btn-outline-success boton" (click)="open(blog)">Nueva Entrada</button>
                 </div>
-                
-                <div class="p-4 d-flex flex-column">
-
-                  <div class="my-3" *ngIf='blogs.length === 0'>
-                    <p class="text-danger"><i>No hay blogs creados</i></p>
+                <div class="barra-blogs m-2" ></div>
+                  <div class="search-container-blog">
+                    <div class="form-group my-2">
+                      <div class="input-group">
+                        <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
+                               name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
+                        <div class="">
+                          <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group my-2">
+                      <div class="input-group">
+                        <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
+                               name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
+                        <div class="">
+                          <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn btn-outline-secondary filtro-blogs"  (click)=filtrarBlogs() >Filtrar</button>
                   </div>
-
-                  <ngb-alert [dismissible]="false" class="w-75" *ngFor='let blog of blogs'>
-                    <div class="row" >
-                      <div class="col-3 d-flex flex-column justify-content-center align-items-center">
-                        <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                          <i class="bi bi-arrow-left-right"></i>
-                        </div>
-                        <p class="text-center mb-0">{{blog.fecha | date:'short' }}</p>
-                      </div>
-                      <div class="col-9">
-                        <strong>{{blog.tipo}} - {{blog?.codigoExperimento}}</strong> 
-                        <p class="mb-0"><i>{{blog.id_usuario}}</i></p>
-                        <p>{{blog.detalle}}</p>
-                      </div>
-                    </div>
-                  </ngb-alert>
-              
-                  <!-- <button class="btn btn-outline-primary text-center">Ver mas</button> -->
-                </div>
               </div>
-              <div class="alert alert-danger text-center" role="alert" *ngIf='blogs.length === 0 '>
-                No existen blogs
-              </div> 
+              <div class="" >
+                <ng-container *ngFor='let a of blogs;let i = index'  >
+                    <ng-container *ngIf = 'i%2==0'>
+                      <div class="card-blog shadow rounded">
+                        <div class="fecha">
+                          <i class="bi bi-journals m-2"></i>
+                          <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                        </div>
+                        <div class="blog" >
+                          <h5 class="card-title card-header">Experimento {{a.codigoExperimento}} - Blog N° {{a.id_blog}}</h5>
+                          <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                          <p>{{a.detalle}}</p>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf = 'i%2!=0'>
+                      <div class="card-blog shadow rounded">
+                        <div class="blog" >
+                          <h5 class="card-title card-header">Experimento {{a.codigoExperimento}} - Blog N° {{a.id_blog}}</h5>
+                          <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                          <p>{{a.detalle}}</p>
+                        </div>
+                        <div class="fecha">
+                          <i class="bi bi-journals m-2"></i>
+                          <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                        </div>
+                      </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+            <div *ngIf='blogs?.length === 0' class="text-center" style='color: darkred;'>
+              <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+              <h5 style='color: darkred;'>No hay blogs existentes</h5>
+            </div>
             </ng-template>
         </li>
     </ul>
     <div [ngbNavOutlet]="nav" class="mt-2"></div>
-</div>
 
 <ng-template #GrupoExperimental let-modal>
   <div class="modal-header">
@@ -159,61 +166,71 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body mx-5">
-    <div class="row">
-      <form [formGroup]='formGrupoExperimental' class="col-8">
-        <div class="form-group">
-          <label for="otro" class="form-label">Codigo de grupo experimental</label>
-          <input type="text" class="form-control" id="otro" formControlName='codigo'>
+  <div class="modal-body">
+    <div class="">
+      <form [formGroup]='formGrupoExperimental' class="d-flex">
+        <div class="informacion">
+          <div class="">
+            <label for="otro" class="form-label">Codigo de grupo experimental</label>
+            <input type="text" class="form-control" id="otro" formControlName='codigo'>
+          </div>
+          <div class="">
+            <label for="tipo" class="form-label">Tipo</label>
+            <select class="form-control"  id='tipo' aria-label="Default select example" formControlName='tipo'>
+                    <option value="animal">Animal</option>
+                    <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="">
+            <label for="tipo" class="form-label">Descripcion</label>
+            <textarea class="form-control descripcion-grupo" id='descripcion' aria-label="With textarea" rows="6" formControlName='descripcion'></textarea>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="tipo" class="form-label">Tipo</label>
-          <select class="form-control"  id='tipo' aria-label="Default select example" formControlName='tipo'>
-                  <option value="animal">Animal</option>
-                  <option value="otro">Otro</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="tipo" class="form-label">Descripcion</label>
-          <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" formControlName='descripcion'></textarea>
+        <div class="imagenModalGrupos">
+          <i class="bi bi-diagram-3" style="font-size: 8em;"></i>
         </div>
       </form>
-      <div class="col-4 d-flex justify-content-center align-items-center">
-        <i class="bi bi-diagram-3" style="font-size: 8em;"></i>
-      </div>
     </div>
   </div>
   <div class="modal-footer">
-      <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearGrupoExperimental()'>Crear</button>
+      <button class="btn btn-outline-primary btn-lg mr-3 boton-grande" (click)='crearGrupoExperimental()'>Crear</button>
   </div>
 </ng-template>
 
 <ng-template #blog let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Crear Publicacion</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body mx-5">
-    <div class="row">
-      <div class="col-8 form-group">
-        <label for="tipo" class="form-label">Escriba una publicacion</label>
-        <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" [(ngModel)]='detalleExperimento'></textarea>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Crear Publicacion</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="body">
+        <div class="">
+          <label for="tipo" class="form-label">Escriba una publicacion</label>
+          <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" [(ngModel)]='detalleBlog'></textarea>
+        </div>
+        <div class="imagenModal">
+          <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
+        </div>
       </div>
-      <div class="col d-flex justify-content-center align-items-center">
-        <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
+      <div *ngIf='alertM === "ok"' class="alert" style="color: rgb(9, 78, 9);">
+        <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
+        <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
+      </div>
+      <div *ngIf='alertM === "error"' class="alert" style='color: darkred;'>
+        <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
+        <h5 style='color: darkred;' class="my-1">{{mensajeAlert}}</h5>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-      <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlog()'>Crear</button>
-  </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-lg boton-grande" (click)='crearBlog()'>Crear</button>
+    </div>
 </ng-template>
 
 <ng-template #finalizarExperimento let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Finalizar Proyecto</h4>
+    <h4 class="modal-title" id="modal-basic-title">Finalizar Experimento</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>

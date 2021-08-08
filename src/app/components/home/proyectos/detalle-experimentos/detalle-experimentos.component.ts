@@ -20,11 +20,16 @@ export class DetalleExperimentosComponent implements OnInit {
   gruposExperimentales = [];
   formGrupoExperimental: FormGroup;
   agregarGrupo: boolean;
-  detalleExperimento: string;
+  detalleBlog: string;
   fechaHoy: any;
   fechaDesde: any;
   fechaHasta: any;
   blogs = [];
+  filterPost:string;
+
+  fecHoy=new Date(Date.now());
+  fecDesde:any;
+  fecHasta:any;
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -35,6 +40,7 @@ export class DetalleExperimentosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.filterPost = '';
     this.agregarGrupo = false;
     this.formGrupoExperimental = new FormGroup({
       tipo: new FormControl('', Validators.required),
@@ -54,6 +60,7 @@ export class DetalleExperimentosComponent implements OnInit {
     this.getService.obtenerGruposExperimentalesPorExperimento(this.idExperimento).subscribe(res => {
       // console.log(res);
       res === null ? this.gruposExperimentales = [] : this.gruposExperimentales = res;
+      console.log(this.gruposExperimentales)
     });
 
     this.fechaDesde = new Date();
@@ -83,13 +90,13 @@ export class DetalleExperimentosComponent implements OnInit {
   }
 
   open(content): void {
-    this.modalService.open(content, { centered: true, size: 'xl' });
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
   crearBlog(): void{
     const Blog: any = {
       id_usuario: 1,
-      detalle: this.detalleExperimento,
+      detalle: this.detalleBlog,
       tipo: 'Experimento'
     };
     const nuevoBlog: any = {
@@ -105,7 +112,7 @@ export class DetalleExperimentosComponent implements OnInit {
         // this.mensajeAlert = 'Blog creado correctamente';
       }
     }, err => {
-      // console.log(err)
+      console.log(err)
       // this.alert = true;
       // this.estado = 'danger';
       // this.mensajeAlert = JSON.stringify(err.error.error);
@@ -113,14 +120,30 @@ export class DetalleExperimentosComponent implements OnInit {
   }
 
   filtrarBlogs(): void{
-    this.postService.obtenerBlogExperimento({
-      id_experimento: this.idExperimento,
-      fechaDesde: new Date(this.fechaDesde.year, this.fechaDesde.month - 1, this.fechaDesde.day).toDateString(),
-      fechaHasta: new Date(this.fechaHasta.year, this.fechaHasta.month - 1, this.fechaHasta.day).toDateString()
-    }).subscribe(res => {
-      console.log(res);
+    // this.postService.obtenerBlogExperimento({
+    //   id_experimento: this.idExperimento,
+    //   fechaDesde: new Date(this.fechaDesde.year, this.fechaDesde.month - 1, this.fechaDesde.day).toDateString(),
+    //   fechaHasta: new Date(this.fechaHasta.year, this.fechaHasta.month - 1, this.fechaHasta.day).toDateString()
+    // }).subscribe(res => {
+    //   console.log(res);
+    //   this.blogs = res;
+    // });
+    this.fecDesde =  new Date(this.fecDesde.year,(this.fecDesde.month -1)  ,this.fecDesde.day)
+    const fechaHasta = new Date(this.fecHasta.year,(this.fecHasta.month -1) ,this.fecHasta.day)
+    console.log(this.fecDesde, fechaHasta)
+    const diaMas1 = (fechaHasta).getDate() + 2;
+    this.fecHasta = new Date(fechaHasta.getFullYear(),fechaHasta.getMonth(), diaMas1)
+    this.fecDesde = this.fecDesde.toDateString();
+    this.fecHasta = this.fecHasta.toDateString();
+    const blog : any = {
+      id_experimento : this.idExperimento,
+      fechaDesde: this.fecDesde,
+      fechaHasta: this.fecHasta
+    }
+    this.postService.obtenerBlogExperimento(blog).subscribe( res =>{
       this.blogs = res;
-    });
+      console.log(res)
+    })
   }
 
 }

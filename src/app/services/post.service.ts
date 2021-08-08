@@ -219,4 +219,7 @@ export class PostService {
   eliminarAnimal(id_animal: number): Observable<any>{
     return this.http.put<any>(this.API_URL + 'bajaAnimal/' + id_animal, id_animal);
   }
+  obtenerBlogsProyecto(blog: any): Observable<any>{
+    return this.http.post<any>(this.API_URL +'blogsProyecto',blog);
+  }
 }

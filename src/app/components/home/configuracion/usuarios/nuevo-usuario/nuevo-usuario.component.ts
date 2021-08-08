@@ -95,6 +95,7 @@ export class NuevoUsuarioComponent implements OnInit {
         }
       }, err => {
         this.toastService.show('Problema al crear usuario' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        console.log(err)
       });
     } else {
       usuario.id_usuario = this.usuario.id_usuario;

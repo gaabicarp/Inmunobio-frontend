@@ -104,10 +104,6 @@
         <a ngbNavLink>Blog</a>
         <ng-template ngbNavContent>
           <div class="busqueda">
-            <div class="form-group my-2">
-              <button class="btn btn-outline-success boton" (click)="open(blog)">Nueva Entrada</button>
-            </div>
-            <div class="barra-blogs m-2" ></div>
               <div class="search-container-blog">
                 <div class="form-group my-2">
                   <div class="input-group">
@@ -127,42 +123,23 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-group my-2">
+                  <div class="input-group">
+                      <select class="form-control" [(ngModel)]="tipo">
+                        <option value='opc1'>Tipo de Blog</option>
+                        <option value='Jaula'>Jaula</option>
+                        <option value='Experimento'>Experimento</option>
+                        <option value='Todos'>Todos</option>
+                      </select>
+                    <div class="">
+                      <button class="btn btn-outline-secondary" type="button">Blog</button>
+                    </div>
+                  </div>
+                </div>
                 <button class="btn btn-outline-secondary filtro-blogs"  (click)=Buscar() >Filtrar</button>
               </div>
           </div>
           <div class="" >
-            <ng-container>
-                <ng-container>
-                  <div class="card-blog shadow rounded">
-                    <div class="fecha">
-                      <i class="bi bi-journals m-2"></i>
-                      <h6 class="card-title text-center">fecha</h6>
-                    </div>
-                    <div class="blog" >
-                      <h5 class="card-title card-header">Experimento CodExp - Blog N° NBlog</h5>
-                      <p class="mb-1"><i>  usuario : nombre usuario</i></p>
-                      <p>detalle del blogggggg</p>
-                    </div>
-                  </div>
-                </ng-container>
-                <ng-container>
-                  <div class="card-blog shadow rounded">
-                    <div class="blog" >
-                      <div class="blog" >
-                        <h5 class="card-title card-header">Experimento CodExp - Blog N° NBlog</h5>
-                        <p class="mb-1"><i>  usuario : nombre usuario</i></p>
-                        <p>detalle del blogggggg</p>
-                      </div>
-                    </div>
-                    <div class="fecha">
-                      <i class="bi bi-journals m-2"></i>
-                      <h6 class="card-title text-center">fechaaaa</h6>
-                    </div>
-                  </div>
-                </ng-container>
-            </ng-container>
-        </div>
-          <!-- <div class="" >
             <ng-container *ngFor='let a of blogs;let i = index'  >
                 <ng-container *ngIf = 'i%2==0'>
                   <div class="card-blog shadow rounded">
@@ -171,7 +148,8 @@
                       <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
                     </div>
                     <div class="blog" >
-                      <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
+                      <h5 class="card-title card-header" *ngIf='a.tipo === "Experimento"'>Experimento {{a.codigoExperimento}} - Blog N° {{a.id_blog}}</h5>
+                      <h5 class="card-title card-header" *ngIf='a.tipo === "Jaula"'>Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
                       <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
                       <p>{{a.detalle}}</p>
                     </div>
@@ -180,7 +158,8 @@
                 <ng-container *ngIf = 'i%2!=0'>
                   <div class="card-blog shadow rounded">
                     <div class="blog" >
-                      <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
+                      <h5 class="card-title card-header" *ngIf='a.tipo === "Experimento"'>Experimento {{a.codigoExperimento}} - Blog N° {{a.id_blog}}</h5>
+                      <h5 class="card-title card-header" *ngIf='a.tipo === "Jaula"'>Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
                       <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
                       <p>{{a.detalle}}</p>
                     </div>
@@ -191,7 +170,7 @@
                   </div>
                 </ng-container>
             </ng-container>
-        </div> -->
+        </div>
         <div *ngIf='blogs?.length === 0' class="text-center" style='color: darkred;'>
           <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
           <h5 style='color: darkred;'>No hay blogs existentes</h5>
@@ -219,4 +198,3 @@
   </div>
 </ng-template>
 
-             

@@ -36,6 +36,7 @@ export class GrupoExperimentalComponent implements OnInit {
     this.getService.obtenerGruposExperimentalesPorId(this.idGrupo).subscribe(res => {
       console.log(res);
       this.grupoExperimental = res;
+      console.log(this.grupoExperimental)
       if (this.grupoExperimental.tipo){
 
       }
