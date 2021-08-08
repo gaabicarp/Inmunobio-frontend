@@ -60,7 +60,8 @@ export class PostService {
   }
 
   crearDistribuidora(nuevaDistribuidora: Distribuidora): Observable<any> {
-    return this.http.post<any>(this.API_URL + 'distribuidora', nuevaDistribuidora);
+    const header = new HttpHeaders({ 'Access-Control-Allow-Origin': '*' })
+    return this.http.post<any>(this.API_URL + 'distribuidora', nuevaDistribuidora, { headers: header });
   }
   editarDistribuidora(distribuidora: Distribuidora): Observable<any> {
     return this.http.put<any>(this.API_URL + 'distribuidora', distribuidora);
