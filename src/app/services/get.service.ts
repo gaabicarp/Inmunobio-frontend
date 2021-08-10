@@ -82,8 +82,13 @@ export class GetService {
   obtenerMuestras(): Observable<any>{
     return this.http.get<any>(this.API_URL + 'muestras');
   }
+
   obtenerGrupos(): Observable<any>{
     return this.http .get<any>(this.API_URL + 'gruposDeTrabajo');
+  }
+
+  obtenerGrupoTrabajoPorId(idGrupo: number): Observable<any>{
+    return this.http .get<any>(this.API_URL + `grupoDeTrabajo/${idGrupo}`);
   }
 
   obtenerProyectos(): Observable<Proyecto[]>{

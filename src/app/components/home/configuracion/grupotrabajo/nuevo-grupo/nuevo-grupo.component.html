@@ -2,11 +2,11 @@
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
 <div class="mx-4">
-    <div class="text-center my-4">
+    <div class="my-3">
         <h2>Nuevo Grupo de trabajo</h2>
     </div>
 
-    <div class="card rounded shadow p-4 mb-4">
+    <div class="p-4 mb-4">
         <form [formGroup]="formGrupo" (ngSubmit)="crearGrupo()">
             <div class="row">
                 <div class="col-9">
@@ -29,7 +29,16 @@
                 </div>
 
             </div>
-            <div class="mx-4">
+            <div>
+                <label for="usuarios" class="form-label">Usuarios</label>
+                <angular2-multiselect
+                    [data]="itemList" 
+                    [(ngModel)]="selectedItems" 
+                    [settings]="settings"                 
+                    formControlName="usuarios">
+                </angular2-multiselect>
+            </div>
+            <!-- <div class="mx-4">
                 <div class="row justify-content-between">
                     <div class="col-5">
                         <h5 class="text-center">Usuarios Disponibles</h5>
@@ -62,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="d-flex flex-row justify-content-end mt-3">
                 <div class="mx-3">
                     <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formGrupo.valid'>Crear Proyecto</button>

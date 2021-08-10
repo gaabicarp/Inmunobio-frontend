@@ -14,14 +14,16 @@ export class GrupotrabajoComponent implements OnInit {
   grupoSeleccionado: any;
   step: number;
   modo: string;
+  cargando: boolean;
 
   constructor(private getService: GetService, private postService: PostService) { }
 
 
   ngOnInit(): void {
-    this.step = 0;
+    this.cargando = true;
     this.getService.obtenerGrupos().subscribe(res => {
       console.log(res);
+      this.cargando = false;
       this.gruposTrabajo = res;
     });
   }

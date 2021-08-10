@@ -67,6 +67,7 @@ const routes: Routes = [
       {path: 'configuracion/usuarios/editar-usuario/:id', component: NuevoUsuarioComponent},
       {path: 'configuracion/grupo-trabajo', component: GrupotrabajoComponent},
       {path: 'configuracion/grupo-trabajo/nuevo-grupo', component: NuevoGrupoComponent},
+      {path: 'configuracion/grupo-trabajo/editar-grupo/:id', component: NuevoGrupoComponent},
       {path: 'configuracion/espacio-fisico', component: EspacioFisicoComponent },
       {path: 'configuracion/espacio-fisico/nuevo-espacio', component: NuevoEspacioComponent },
       {path: 'configuracion/espacio-fisico/:idEspacio', component: NuevoEspacioComponent},

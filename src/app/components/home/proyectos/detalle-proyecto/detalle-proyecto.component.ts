@@ -55,9 +55,8 @@ export class DetalleProyectoComponent implements OnInit {
       console.log(res)
       console.log(res.idDirectorProyecto.id)
       this.proyecto = res;
-      this.traerDirector(res.idDirectorProyecto.id);
-      this.traerUsuarios(res.participantes);
     });
+
     this.getService.obtenerExperimentos(this.idProyecto).subscribe(res => {
       console.log(res);
       this.experimentos = res;
@@ -79,20 +78,6 @@ export class DetalleProyectoComponent implements OnInit {
       this.blogs = res;
     })
 
-  }
-
-  traerDirector(id: number): void {
-    this.getService.obtenerUsuariosPorId(id).subscribe(res => {
-      this.jefeProyecto = res;
-    });
-  }
-
-  traerUsuarios(usuarios: Array<number>): void {
-    this.proyecto.participantes.map(id => {
-      this.getService.obtenerUsuariosPorId(id).subscribe(res => {
-        this.usuariosProyecto.push(res);
-      });
-    });
   }
 
   irA(id: number): void {

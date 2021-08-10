@@ -17,6 +17,7 @@ export class NuevoUsuarioComponent implements OnInit {
   idUsuario: number;
   formUsuario!: FormGroup;
   permisos = [];
+  cargando: boolean;
 
 
   itemList: any = [];
@@ -32,6 +33,7 @@ export class NuevoUsuarioComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.cargando = true;
     window.location.href.includes('editar') ? this.modo = 'EDITAR' : this.modo = 'CREAR';
 
     this.getService.obtenerPermisos().subscribe((res: any) => {
@@ -64,6 +66,7 @@ export class NuevoUsuarioComponent implements OnInit {
       this.getService.obtenerUsuariosPorId(this.idUsuario).subscribe(res => {
         console.log(res);
         this.usuario = res;
+        this.cargando = false;
 
         this.formUsuario.patchValue({
           nombre: this.usuario.nombre,
@@ -74,6 +77,8 @@ export class NuevoUsuarioComponent implements OnInit {
           nivel: this.usuario.permisos
         });
       });
+    } else {
+      this.cargando = false;
     }
   }
 
