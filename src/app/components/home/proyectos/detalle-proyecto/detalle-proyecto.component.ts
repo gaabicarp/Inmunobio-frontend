@@ -54,15 +54,15 @@ export class DetalleProyectoComponent implements OnInit {
     this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
       console.log(res)
       this.proyecto = res;
-      this.traerDirector(res.idDirectorProyecto);
-      this.traerUsuarios(res.participantes);
     });
+
     this.getService.obtenerExperimentos(this.idProyecto).subscribe(res => {
       console.log(res);
       this.experimentos = res;
       this.experimentoFiltro = res;
       this.cargando = false;
     });
+
     // const dia = (this.fecHoy).getDate() + 1;
     // this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)
     // this.fecHasta = this.fecHasta.toDateString();
@@ -80,20 +80,6 @@ export class DetalleProyectoComponent implements OnInit {
     //   fecHasta: new FormControl('', [Validators.required, Validators.maxLength(20)]),
     //   filtro: new FormControl()
     // })
-  }
-
-  traerDirector(id: number): void {
-    this.getService.obtenerUsuariosPorId(id).subscribe(res => {
-      this.jefeProyecto = res;
-    });
-  }
-
-  traerUsuarios(usuarios: Array<number>): void {
-    this.proyecto.participantes.map(id => {
-      this.getService.obtenerUsuariosPorId(id).subscribe(res => {
-        this.usuariosProyecto.push(res);
-      });
-    });
   }
 
   irA(id: number): void {

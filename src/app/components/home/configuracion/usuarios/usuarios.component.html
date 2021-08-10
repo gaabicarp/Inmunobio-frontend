@@ -1,4 +1,4 @@
-
+<div *ngIf='!cargando'>
   <div class="m-4" routerLink="../" role="button">
       <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
@@ -13,59 +13,65 @@
       </div>
     </div>
 
-      <div class="card rounded shadow p-4 mb-4">
-          <table class="table table-hover">
-              <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Telefono</th>
-                    <th scope="col">Direccion</th>
-                    <th scope="col">Grupo de trabajo</th>
-                    <th scope="col">Nivel de acceso</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor='let usuario of usuarios; let i = index'>
-                    <th scope="row">{{i + 1}}</th>
-                    <td>{{usuario.nombre}}</td>
-                    <td>{{usuario.email}}</td>
-                    <td>{{usuario.telefono}}</td>
-                    <td>{{usuario.direccion}}</td>
-                    <td>{{usuario.id_grupoDeTrabajo ? usuario.id_grupoDeTrabajo : 'Sin Grupo'}}</td>
-                      
-                    <td>
-                      <span *ngFor='let permiso of usuario.permisos'>{{permiso.descripcion}} - </span>
-                    </td>
-                    <td class="d-flex">
-                      <div class="mr-4">
-                        <a class="text-primary" role="button" routerLink='editar-usuario/{{usuario.id_usuario}}'>
-                          <i class="bi bi-pencil"></i>
-                        </a>
-                      </div>
-                      <div>
-                        <a class="text-danger" role="button" (click)=eliminar(usuario)>
-                          <i class="bi bi-trash"></i>
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-          </table>
-          <div class="d-flex justify-content-between p-2">
-            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshUsers()">
-            </ngb-pagination>
-          
-            <!-- <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshUsers()">
-              <option [ngValue]="2">2 items per page</option>
-              <option [ngValue]="4">4 items per page</option>
-              <option [ngValue]="6">6 items per page</option>
-            </select> -->
-          </div>
-      </div>
+    <div class="p-4 mb-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Telefono</th>
+                  <th scope="col">Direccion</th>
+                  <th scope="col">Grupo de trabajo</th>
+                  <th scope="col">Nivel de acceso</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor='let usuario of usuarios; let i = index'>
+                  <th scope="row">{{i + 1}}</th>
+                  <td>{{usuario.nombre}}</td>
+                  <td>{{usuario.email}}</td>
+                  <td>{{usuario.telefono}}</td>
+                  <td>{{usuario.direccion}}</td>
+                  <td>{{usuario.id_grupoDeTrabajo ? usuario.id_grupoDeTrabajo : 'Sin Grupo'}}</td>
+                    
+                  <td>
+                    <span *ngFor='let permiso of usuario.permisos'>{{permiso.descripcion}} - </span>
+                  </td>
+                  <td class="d-flex">
+                    <div class="mr-4">
+                      <a class="text-primary" role="button" routerLink='editar-usuario/{{usuario.id}}'>
+                        <i class="bi bi-pencil"></i>
+                      </a>
+                    </div>
+                    <div>
+                      <a class="text-danger" role="button" (click)=eliminar(usuario)>
+                        <i class="bi bi-trash"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshUsers()">
+          </ngb-pagination>
+        
+          <!-- <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshUsers()">
+            <option [ngValue]="2">2 items per page</option>
+            <option [ngValue]="4">4 items per page</option>
+            <option [ngValue]="6">6 items per page</option>
+          </select> -->
+        </div>
+    </div>
   </div>
+</div>
 
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+  <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
 
   <app-toast></app-toast>

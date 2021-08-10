@@ -27,7 +27,7 @@
               <h4 class="text-secondary text-staatliches mb-0">Conclusion del proyecto</h4>
               <p class="text-danger"><i>{{proyecto?.conclusion ? proyecto?.conclusion : 'Proyecto Sin Finalizar'}}</i></p>
               <h4 class="text-secondary text-staatliches mb-0">Participantes</h4>
-              <span *ngFor='let usuario of usuariosProyecto'>{{usuario.nombre}} - </span>
+              <span *ngFor='let usuario of proyecto.participantes'>{{usuario.nombre}} - </span>
             </div>
             <div class="rounded py-5 d-flex align-items-center justify-content-around">
               <div class="mx-5">
@@ -42,7 +42,7 @@
               <div class="barra"></div>
               <div class="mx-5">
                 <h4 class="text-secondary text-staatliches mb-0">Jef@ de proyecto</h4>
-                <p class="mb-0">{{jefeProyecto?.nombre}}</p>  
+                <p class="mb-0">{{proyecto.idDirectorProyecto?.nombre}}</p>  
               </div>
               <div class="barra"></div>
               <div class="mx-5">

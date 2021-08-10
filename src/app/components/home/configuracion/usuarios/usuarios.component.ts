@@ -14,10 +14,9 @@ export class UsuariosComponent implements OnInit {
   usuarios: Usuario[];
   usuariosTodos: Usuario[];
   permisos = [];
+  cargando: boolean;
 
   usuarioSeleccionado: Usuario;
-  step: number;
-  modo: string;
 
   page: number;
   pageSize: number;
@@ -31,10 +30,11 @@ export class UsuariosComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.step = 0;
+    this.cargando = true;
     this.page = 1;
     this.pageSize = 10;
     this.getService.obtenerUsuarios().subscribe(res => {
+      this.cargando = false;
       this.usuariosTodos = res;
       this.usuarios = res;
       this.collectionSize = res.length;
@@ -52,10 +52,6 @@ export class UsuariosComponent implements OnInit {
     this.usuarios = this.usuariosTodos
       .map((user, i) => ({id: i + 1, ...user}))
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
-  }
-
-  onVolviendo(e: number): void{
-    this.step = e;
   }
 
 }
