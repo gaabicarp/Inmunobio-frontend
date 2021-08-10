@@ -8,6 +8,7 @@ import { ProductoEdic, ProductoStock, Stock, StockEdicion } from 'src/app/models
 import { Contenedor } from 'src/app/models/contenedores.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-agregar-stock',
@@ -25,9 +26,6 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
   
   formStock!: FormGroup;
 
-  mensajeAlert: string;
-  alert: any;
-
   idEspacioFisico:number;
   idProd:number;
   idProdEnStock:number;
@@ -43,13 +41,13 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
     private postService: PostService, 
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    public toastService: ToastServiceService
   ) { }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
   ngOnInit(): void {
-    this.alert = false;
     this.cargando = true;
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     this.idProd = parseInt(this.activatedRouter.snapshot.paramMap.get('idProducto'), 10);
@@ -136,31 +134,36 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
       }
     this.postService.editarStock(edicion).subscribe(res => {
       if (res.Status === 'Se modifico el stock'){
-        this.alert = 'ok';
-        this.mensajeAlert = 'Información editada correctamente';
+        this.toastService.show('Información editada ', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
+          this.toastService.removeAll()
           this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
         }, 2000);
       }
       console.log(res);
     }, err => {
-      this.alert = 'error';
-      this.mensajeAlert = JSON.stringify(err.error.error);
+      this.toastService.show('Problema al editar la información '+ err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
+      console.log(err)
+      setTimeout(() => {
+        this.toastService.removeAll()
+      }, 3000);
     });
     } else {
         this.postService.agregarStock(stock).subscribe(res => {
           if (res.Status === 'Se creo el producto en stock.'){
-            this.alert = 'ok';
-            this.mensajeAlert = 'Producto en stock agregado correctamente';
+            this.toastService.show('Producto en stock agregado correctamente ', { classname: 'bg-success text-light', delay: 2000 });
             setTimeout(() => {
+              this.toastService.removeAll()
               this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
             }, 2000);
           }
           console.log(res);
         }, err => {
-          this.alert = 'error';
-          this.mensajeAlert = JSON.stringify(err.error.error);
+          this.toastService.show( 'Problema al agregar producto en stock '+err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
           console.log(err)
+          setTimeout(() => {
+            this.toastService.removeAll()
+          }, 3000);
         });
     }
   }

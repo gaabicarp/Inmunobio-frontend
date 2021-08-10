@@ -25,14 +25,6 @@
                 <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formHerramienta.valid">Guardar</button>
             </div>
         </div>
-        <div *ngIf='alert === "ok"' class="alert" style="color: rgb(9, 78, 9);">
-            <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
-            <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
-          </div>
-        <div *ngIf='alert === "error"' class="alert" style='color: darkred;'>
-            <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
-            <h5 style='color: darkred;' class="my-1">{{mensajeAlert}}</h5>
-          </div>
     </form>
   </div>
   </div>
@@ -42,3 +34,5 @@
         <span class="visually-hidden">Loading...</span>
     </div>
   </div>
+
+<app-toast></app-toast>

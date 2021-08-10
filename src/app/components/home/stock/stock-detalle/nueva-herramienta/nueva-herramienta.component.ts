@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Herramienta } from 'src/app/models/herramientas.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-nueva-herramienta',
@@ -15,8 +16,6 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   formHerramienta!: FormGroup;
   cargando: boolean;
-  mensajeAlert: string;
-  alert: any ;
   idEspacioFisico:number;
   idHerramienta:number;
   herramienta:Herramienta;
@@ -25,15 +24,14 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
-    private postService: PostService
+    private postService: PostService,
+    public toastService: ToastServiceService
   ) { }
 
   ngOnInit(): void {
-    this.alert = false;
     this.cargando = true;
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     this.idHerramienta = parseInt(this.activatedRouter.snapshot.paramMap.get('idHerramienta'), 10);
-    this.alert = false;
     if (!isNaN(this.idHerramienta)){
       this.subscription.add( this.getService.obtenerHerramienta(this.idHerramienta).subscribe(res =>{
         this.herramienta = res;
@@ -67,30 +65,36 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
       herramienta.id_herramienta = this.idHerramienta;
       this.subscription.add( this.postService.editarHerramienta(herramienta).subscribe(res => {
         if (res.Status === 'ok'){
-          this.alert ='ok';
-          this.mensajeAlert = 'La información fue editada correctamente';
+          this.toastService.show('Información editada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
           }, 1000);
         }
         console.log(res);
       }, err => {
-        this.alert = 'error';
-        this.mensajeAlert = JSON.stringify(err.error.error);
+        this.toastService.show( 'Problema al editar la información '+err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
+        console.log(err)
+        setTimeout(() => {
+          this.toastService.removeAll()
+        }, 3000);
+
       }));
     } else {
       this.subscription.add( this.postService.crearHerramienta(herramienta).subscribe(res => {
         if (res.Status === 'ok'){
-          this.alert = 'ok';
-          this.mensajeAlert = 'Herramienta creada correctamente';
+          this.toastService.show('Herramienta creada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
-          }, 1000);
+          }, 2000);
         }
         console.log(res);
       }, err => {
-        this.alert = 'error';
-        this.mensajeAlert = JSON.stringify(err.error.error);
+        this.toastService.show('Problema al crear la herramienta '+ err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
+        setTimeout(() => {
+          this.toastService.removeAll()
+        }, 3000);
       }));
     }
   }

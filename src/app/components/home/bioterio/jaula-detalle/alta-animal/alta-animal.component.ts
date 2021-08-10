@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PostService } from 'src/app/services/post.service';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-alta-animal',
@@ -14,17 +15,15 @@ export class AltaAnimalComponent implements OnInit, OnDestroy {
 
   idJaula:number;
   formAnimal!: FormGroup;
-  mensajeAlert: string;
-  alert: any;
 
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
-    private postService: PostService
+    private postService: PostService,
+    public toastService: ToastServiceService
   ) { }
 
   ngOnInit(): void {
-    this.alert = false;
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.formAnimal = new FormGroup({
       especie: new FormControl('', [Validators.required, Validators.maxLength(20)]),
@@ -39,16 +38,15 @@ export class AltaAnimalComponent implements OnInit, OnDestroy {
     console.log(animal)
     this.subscription.add( this.postService.crearAnimal(animal).subscribe(res => {
       if (res.Status === 'Se creó el nuevo animal.'){
-        this.alert = 'ok';
-        this.mensajeAlert = 'Animal creado correctamente';
+        this.toastService.show('Animal creado', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
+          this.toastService.removeAll()
           this.router.navigate(['/home/bioterio/'+ this.idJaula]);
         }, 2000);
       }
       console.log(res)
     }, err => {
-      this.alert = 'error';
-      this.mensajeAlert = JSON.stringify(err);
+      this.toastService.show('Problema crear el animal ' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
       console.log(err)
     }));
   }

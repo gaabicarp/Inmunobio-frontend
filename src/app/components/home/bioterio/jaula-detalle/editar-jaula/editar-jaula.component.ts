@@ -21,8 +21,6 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
   jaula:Jaula;
   espaciosFisicos: EspacioFisico[];
   formJaula!: FormGroup;
-  mensajeAlert: string;
-  alert: any;
   cargando:boolean;
   
   constructor(
@@ -34,7 +32,6 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.alert = false;
     this.cargando = true;
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     if (!isNaN(this.idJaula)){
@@ -87,6 +84,7 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
         if (res.status === 'Jaula modificada'){
           this.toastService.show('Informacion editada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.router.navigate(['/home/bioterio/'+ this.idJaula]);
           }, 1500);
         }
@@ -99,6 +97,7 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
         if (res.status === 'Jaula creada.'){
           this.toastService.show('Jaula creada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.router.navigate(['/home/bioterio']);
           }, 2000);
         }

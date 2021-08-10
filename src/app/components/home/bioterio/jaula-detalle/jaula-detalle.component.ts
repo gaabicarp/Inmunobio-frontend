@@ -9,6 +9,7 @@ import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { Proyecto } from 'src/app/models/proyectos.model';
 import { BlogBuscadoJaula, BlogJaula, Blogs, BlogsJaula } from 'src/app/models/blogs.model';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 
 @Component({
@@ -36,21 +37,17 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   blogs: BlogsJaula[];
   detalleBlog: string;
 
-  alertM: any;
-  mensajeAlert: string;
-  alert: any;
   cargando: boolean;
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
     private postService: PostService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public toastService: ToastServiceService
   ) { }
 
   ngOnInit(): void {
-    this.alert = false;
-    this.alertM = false;
     this.cargando = true;
     this.detalleBlog ='';
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
@@ -107,38 +104,41 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
     }
     this.subscription.add(this.postService.asignarJaulaProyecto(datos).subscribe(res => {
       console.log(res)
-      if (res.status === 'Se asignó la jaula al proyecto'){
-        this.alertM = 'ok';
-        this.mensajeAlert = 'Jaula asociada correctamente';
+      if (res.status === 'Se asignó la jaula al proyecto.'){
+        this.toastService.show('Jaula asociada', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
+          this.toastService.removeAll()
           this.modalService.dismissAll()
           this.ngOnInit()
         }, 2000);
       }
       } , err => {
-        this.alertM = 'error';
-        this.mensajeAlert = JSON.stringify(err.error.error);
+        this.toastService.show('Problema al asociar jaula' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
         console.log(err)
+        setTimeout(() => {
+          this.modalService.dismissAll()
+          this.toastService.removeAll()
+        }, 4000);
     }))
   }
   eliminarJaula(){
   this.subscription.add(this.postService.eliminarJaula(this.idJaula).subscribe(res =>{
-      if (res.Status === 'Ok'){
-        this.alert = 'ok';
-        this.mensajeAlert = 'Jaula eliminada correctamente';
+      if (res.Status === 'Se dió de baja la jaula.'){
+        this.toastService.show('Jaula eliminada', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
+          this.toastService.removeAll()
           this.modalService.dismissAll()
           this.router.navigate(['/home/bioterio']);
         }, 1000);
       }
       console.log(res)
     }, err => {
-      this.alert = 'error';
-      this.mensajeAlert ='La jaula debe estar vacía para poder darla de baja';
+      this.toastService.show( err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
+      console.log(err)
       setTimeout(() => {
         this.modalService.dismissAll()
-        this.ngOnInit()
-      }, 2000);
+        this.toastService.removeAll()
+      }, 4000);
     }))
   }
   Buscar(){
@@ -171,43 +171,44 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
       blogs: Blog
     }
     this.subscription.add( this.postService.nuevoBlogJaula(nuevoBlog).subscribe(res => {
-      if (res.Status === 'Ok'){
-        this.alertM = 'ok';
-        this.mensajeAlert = 'Blog creado correctamente';
+      if (res.Status === 'Se creó el blog de jaula.'){
+        this.toastService.show('Blog creado', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
-          this.alertM = false;
+          this.toastService.removeAll()
           this.modalService.dismissAll()
           this.ngOnInit()
         }, 2000);
       }
       console.log(res)
     }, err => {
-      this.alertM = 'error';
-      this.mensajeAlert = JSON.stringify(err);
+      this.toastService.show('Problema al crear el blog' + err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
       console.log(err)
       setTimeout(() => {
+        this.toastService.removeAll()
         this.modalService.dismissAll()
-        this.ngOnInit()
-      }, 2000);
+      }, 4000);
     }));
   }
 
   eliminarAnimal(){
     this.subscription.add(this.postService.eliminarAnimal(this.idAnimal_eliminar).subscribe(res =>{
       if (res.Status === "Se dio de baja el animal con id "+ this.idAnimal_eliminar){
-        this.alert = 'ok';
-        this.mensajeAlert = 'Animal eliminado correctamente';
+        this.toastService.show('Animal eliminado', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
           this.animales = [];
+          this.toastService.removeAll()
           this.modalService.dismissAll()
           this.ngOnInit()
         }, 1500);
       }
       console.log(res)
     }, err => {
-      this.alert = 'error';
-      this.mensajeAlert = JSON.stringify(err);
+      this.toastService.show('Problema al eliminar el animal ' + err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
       console.log(err)
+      setTimeout(() => {
+        this.toastService.removeAll()
+        this.modalService.dismissAll()
+      }, 4000);
     }))
   }
   eliminarModalAnimal(id:number,content){

@@ -67,7 +67,7 @@
     </div>
     <div *ngIf='stocks?.length === 0' class="text-center" style='color: darkred;'>
       <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
-      <h5 style='color: darkred;'>No stock disponible</h5>
+      <h5 style='color: darkred;'>No hay stock disponible</h5>
     </div>
     </ng-template>
   </li>
@@ -240,8 +240,8 @@
     </div>
   </div>
   <div class="modal-footer">
-      <button class="btn btn-outline-primary btn-lg mr-3" (click)=eliminarStockModal()>Si</button>
-      <button class="btn btn-outline-primary btn-lg mr-3" (click)="modal.dismiss('Cross click')">No</button>
+    <button class="btn btn-outline-secondary btn-lg mr-3" (click)="modal.dismiss('Cross click')">Cancelar</button>
+    <button class="btn btn-outline-danger btn-lg mr-3" (click)=eliminarStockModal()>Eliminar</button>
   </div>
 </ng-template>
 
@@ -261,8 +261,8 @@
     </div>
   </div>
   <div class="modal-footer">
-      <button class="btn btn-outline-primary btn-lg mr-3" (click)= eliminarH()>Si</button>
-      <button class="btn btn-outline-primary btn-lg mr-3" (click)="modal.dismiss('Cross click')">No</button>
+    <button class="btn btn-outline-secondary btn-lg mr-3" (click)="modal.dismiss('Cross click')">Cancelar</button>
+    <button class="btn btn-outline-danger btn-lg mr-3" (click)= eliminarH()>Eliminar</button>
   </div>
 </ng-template>
 
@@ -281,15 +281,6 @@
       </div>
       <div class="alert alert-warning m-3" role="alert">
         <p>Hay {{prodEspecifico?.unidad}} unidades disponibles</p>
-      </div>
-      <div *ngIf='alert === "errorConsumido"' class="alert" style='color: darkred;'>
-        <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
-        <h5 style='color: darkred;' class="my-1">ERROR - La cantidad solicitada no se encuentra en stock </h5>
-        <p class="d-block">Hay {{prodEspecifico?.unidad}} unidades disponibles</p>
-      </div>
-      <div *ngIf='alert === "okConsumido"' class="alert" style="color: rgb(9, 78, 9);">
-        <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
-        <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
       </div>
     </div>
   </div>
@@ -404,14 +395,6 @@
         <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
       </div>
     </div>
-    <div *ngIf='alert === "okModal"' class="alert" style="color: rgb(9, 78, 9);">
-      <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
-      <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
-    </div>
-    <div *ngIf='alert === "errorModal"' class="alert" style='color: darkred;'>
-      <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
-      <h5 style='color: darkred;' class="my-1">{{mensajeAlert}}</h5>
-    </div>
   </div>
   <div class="modal-footer">
       <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlogHerramienta()'>Crear</button>
@@ -457,18 +440,10 @@
         </div>
       </div>
     </div>
-    <div *ngIf='alert === "okModal"' class="alert" style="color: rgb(9, 78, 9);">
-      <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
-      <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
-    </div>
-    <div *ngIf='alert === "errorModal"' class="alert" style='color: darkred;'>
-      <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
-      <h5 style='color: darkred;' class="my-1">{{mensajeAlert}}</h5>
-    </div>
-
   </div>
   <div class="modal-footer">
       <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlog()'>Crear</button>
   </div>
 </ng-template>
 
+<app-toast></app-toast>

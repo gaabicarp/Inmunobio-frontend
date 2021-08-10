@@ -13,5 +13,8 @@ export class ToastServiceService {
   remove(toast) {
     this.toasts = this.toasts.filter(t => t !== toast);
   }
+  removeAll(){
+    this.toasts = [];
+  }
   
 }
