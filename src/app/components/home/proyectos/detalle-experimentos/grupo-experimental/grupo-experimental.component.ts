@@ -69,10 +69,10 @@ export class GrupoExperimentalComponent implements OnInit {
       descripcion: new FormControl(''),
       contenedor: new FormControl('')
     });
-    // this.getService.obtenerAnimalesPorProyectos(this.idProyecto).subscribe(res => {
-    //   console.log(res);
-    //   res.Status ? this.animalesProyecto = [] : this.animalesProyecto = res;
-    // });
+    this.getService.obtenerAnimalesPorProyectos(this.idProyecto).subscribe(res => {
+      console.log(res);
+      res.Status ? this.animalesProyecto = [] : this.animalesProyecto = res;
+    });
     this.getService.obtenerJaulasPorProyecto(this.idProyecto).subscribe(res =>{
       this.jaulasProy = res;
       console.log(res)
@@ -93,7 +93,6 @@ export class GrupoExperimentalComponent implements OnInit {
   }
 
   crearFuente(): void{
-  
       const idAnimal = this.formFuenteExperimental.value.animal
       this.getService.obtenerAnimalxId(idAnimal).subscribe( res =>{
         this.animal = res;
@@ -110,13 +109,19 @@ export class GrupoExperimentalComponent implements OnInit {
         cepa: this.animal.cepa,
         tipo : this.animal.tipo,
         id_jaula: this.animal.id_jaula,
+        baja: this.animal.baja,
         descripcion: this.formFuenteExperimental.value.descripcion
       }
       const fuenteExperimental ={
         id_grupoExperimental : this.idGrupo,
+        id_experimento: this.idExperimento,
+        tipo: this.grupoExperimental.tipo,
+        codigo: this.grupoExperimental.codigo,
+        parent:0,
         fuentesExperimentales : [this.fuente]
       }
       console.log(fuenteExperimental)
+
       this.postService.crearFuenteExperimental(fuenteExperimental).subscribe(res => {
         console.log(res)
       })
