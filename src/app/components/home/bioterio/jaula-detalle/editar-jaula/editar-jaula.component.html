@@ -6,23 +6,23 @@
   
   <div class="">
   <form [formGroup]="formJaula" (ngSubmit)="crearJaula()">
-    <div class="filaMayor">
-      <div class="primer-bloque">
-        <div class="fila">
+    <div class="form-primer_fila">
+      <div class="form-primer_fila-primer_bloque">
+        <div class="form-fila">
           <label  class="form-label">Código</label>
           <input type="text" class="form-control" formControlName='codigo'>
         </div> 
         <div class="d-flex"> 
-        <div class="fila">
+        <div class="form-fila">
               <label  class="form-label">Rack</label>
               <input type="number" class="form-control" formControlName='rack'> 
         </div>
-        <div class="fila mx-1">
+        <div class="form-fila mx-1">
             <label  class="form-label">Estante</label>
             <input type="number" class="form-control" formControlName='estante'>
         </div>
         </div>
-        <div class="fila">
+        <div class="form-fila">
            <label  class="form-label">Capacidad</label>
           <input type="number" class="form-control" formControlName='capacidad'>
         </div>
@@ -53,14 +53,6 @@
     </div>
     <div class="text-center">
       <button type="submit" class="btn btn-success btn-lg" [disabled]="!formJaula.valid">Guardar</button>
-    </div>
-    <div *ngIf='alert === "ok"' class="alert" style="color: rgb(9, 78, 9);">
-      <i class="bi bi-shield-check mx-1" style="font-size: 2em"></i>
-      <h5 style="color: rgb(9, 78, 9);" class="my-1">{{mensajeAlert}}</h5>
-    </div>
-    <div *ngIf='alert === "error"' class="alert" style='color: darkred;'>
-      <i class="bi bi-shield-x mx-1" style="font-size: 2em"></i>
-      <h5 style='color: darkred;' class="my-1">{{mensajeAlert}}</h5>
     </div>
   </form>
   </div>

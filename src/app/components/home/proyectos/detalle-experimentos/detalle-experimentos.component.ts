@@ -81,11 +81,18 @@ export class DetalleExperimentosComponent implements OnInit {
   crearGrupoExperimental(): void {
     const grupoExperimental = this.formGrupoExperimental.value;
     grupoExperimental.id_experimento = this.idExperimento;
+    console.log(grupoExperimental)
     this.postService.crearGrupoExperimental(grupoExperimental).subscribe(res => {
       this.toastService.show('Grupo Experimental creado', { classname: 'bg-success text-light', delay: 2000 });
-      this.modalService.dismissAll();
+      setTimeout(() => {
+        this.toastService.removeAll()
+        this.modalService.dismissAll()
+        this.ngOnInit()
+      }, 2000);
+
     }, err => {
       this.toastService.show('Problema al crear Grupo Experimental' + err, { classname: 'bg-danger text-light', delay: 2000 });
+      console.log(err)
     });
   }
 

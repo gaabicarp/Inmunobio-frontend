@@ -56,18 +56,20 @@
                   </div>
                 </div>
                 <div class="grupo-filtro-container" *ngIf='gruposExperimentales.length != 0'>
-                  <div class="filtro">
-                    <label for="usuario">Filtro por codigo</label>
+                  <div class="filtro d-flex">
+                    <span class="input-group-text">
+                      <i class="bi bi-search"></i>
+                    </span>
                     <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por codigo de grupo experimental" [(ngModel)]='filterPost'>
                   </div>
               </div>
                 <div class="grupos-container">
-                  <div *ngFor="let grupo of gruposExperimentales " class="card card-grupo shadow rounded list-group-item-action" routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
+                  <div *ngFor="let grupo of gruposExperimentales" class="card card-grupo shadow rounded list-group-item-action" routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
                     <!-- | filter: filterCodigos -->
                     <div class="">
                       <div class="card-body">
-                          <h5 class="card-title text-center">{{grupo.codigo}}</h5>
-                          <hr class="my-3 bg-{{experimento.habilitado? 'danger' : 'success'}}">
+                          <h5 class="card-title text-center">{{grupo.codigo}} - {{grupo.tipo}}</h5>
+                          <hr class="my-3 bg-{{experimento?.habilitado? 'danger' : 'success'}}">
                           <p class="card-text text-center">{{grupo.descripcion?.substring(0,100)}}{{grupo.descripcion?.length > 100 ? '...' : ''}}</p>
                           <div class="d-flex flex-row justify-content-between">
                               <div>
@@ -177,8 +179,8 @@
           <div class="">
             <label for="tipo" class="form-label">Tipo</label>
             <select class="form-control"  id='tipo' aria-label="Default select example" formControlName='tipo'>
-                    <option value="animal">Animal</option>
-                    <option value="otro">Otro</option>
+                    <option value="Animal">Animal</option>
+                    <option value="Otro">Otro</option>
             </select>
           </div>
           <div class="">

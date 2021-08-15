@@ -127,6 +127,9 @@
   .filtro,label,input,select,.boton,textarea{
     width: 100%;
   }
+  .filtro{
+    margin-top: 1em;
+  }
   .search-container-blog{
     width: 100%;
     height: auto;

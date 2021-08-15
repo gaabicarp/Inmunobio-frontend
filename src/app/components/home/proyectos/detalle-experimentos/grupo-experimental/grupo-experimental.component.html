@@ -10,21 +10,21 @@
         <li [ngbNavItem]="1">
           <a ngbNavLink>Detalles</a>
           <ng-template ngbNavContent>
-            <div class="mx-4">
-              <div class="p-4">
-                <h4 class="text-secondary text-staatliches mb-0">Descripcion del Grupo</h4>
-                <p>{{grupoExperimental?.descripcion}}</p>
+            <div class="">
+              <div class="m-1 mt-4 mb-4">
+                <h4 class="text-secondary text-staatliches mb-0 ml-4">Descripcion del Grupo</h4>
+                <p class="ml-4">{{grupoExperimental?.descripcion}}</p>
               </div>
             </div>
-            <div class="m-4">
+            <div class="m-1">
               <div class="d-flex align-items-center">
-                <h4 class="text-secondary text-staatliches mb-0">Fuentes Experimentales</h4>
+                <h4 class="text-secondary text-staatliches mb-0 ml-4">Fuentes Experimentales</h4>
                 <div class="ml-4">
-                  <button class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuente)'>+ Nuevo</button>
+                  <button class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuente)'>+Nuevo</button>
                 </div>
               </div>
               <div class="cards-container">
-                <div *ngFor="let fuente of grupoExperimental?.fuentesExperimentales" class="card card-experimento my-3 mx-4 p-4 shadow rounded list-group-item-action">
+                <div *ngFor="let fuente of grupoExperimental?.fuentesExperimentales" class="card shadow rounded list-group-item-action" (click)='fuenteExpDetalle(fuente.id_fuenteExperimental, fuenteDetalle)'>
                       <div class="">
                             <div class="card-body">
                                 <h5 class="card-title text-center">{{fuente.codigo}}</h5>
@@ -49,18 +49,18 @@
                   </div>
                 </div>
             </div>
-            <div class="m-4">
+            <!-- <div class="m-1">
                 <div class="d-flex align-items-center">
-                  <h4 class="text-secondary text-staatliches mb-0">Muestras Asociadas</h4>
+                  <h4 class="text-secondary text-staatliches mb-0 ml-4">Muestras Asociadas</h4>
                   <div class="ml-4">
                     <button class="btn btn-outline-primary" style="cursor: pointer" (click)='open(muestra)'>+ Nuevo</button>
                   </div>
                 </div>
                 <div class="cards-container">
-                  <div *ngFor="let muestra of grupoExperimental?.muestras" class="card card-experimento my-3 mx-4 p-4 shadow rounded list-group-item-action">
+                  <div *ngFor="let muestra of muestras" class="card shadow rounded list-group-item-action">
                         <div class="">
                               <div class="card-body">
-                                  <h5 class="card-title text-center">{{muestra?.nombre}} - {{muestra.codigo}}</h5>
+                                  <h5 class="card-title text-center">{{muestra.codigo}}</h5>
                                   <hr class="my-3 bg-{{muestra.finalizado? 'danger' : 'success'}}">
                                   <p class="card-text text-center">{{muestra.descripcion.substring(0,100)}}{{muestra.descripcion.length > 100 ? '...' : ''}}</p>
                                   <div class="d-flex flex-row justify-content-between">
@@ -77,65 +77,86 @@
                         </div>
                     </div>
                   </div>
-              </div>
+              </div> -->
           </ng-template>
         </li>
         <li [ngbNavItem]="2">
           <a ngbNavLink>Entradas de Blog</a>
           <ng-template ngbNavContent>
-            <div class="m-4">
-              <div class="">
-                <form class="row">
-                  <!-- <div class="col-3 d-flex justify-content-center" *ngIf='!proyecto?.finalizado'>
-                    <button class="btn btn-outline-success" (click)="open(blog)">Nueva Entrada</button>
-                  </div> -->
-                  <!-- <div class="barra" *ngIf='!proyecto?.finalizado'></div> -->
-                  <div class="col-6 d-flex justify-content-around align-items-center">
-                    <div class="form-group mb-0">
-                      <div class="input-group">
-                        <input class="form-control" placeholder="Fecha Desde"
-                               name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group mb-0">
-                      <div class="input-group">
-                        <input class="form-control" placeholder="Fecha Hasta"
-                               name="dp" [(ngModel)]="model2" ngbDatepicker #d="ngbDatepicker">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                        </div>
-                      </div>
-                    </div>
-                    <button class="btn btn-outline-secondary">Filtrar</button>
-                  </div>
-                  
-                </form>
+            <div class="busqueda">
+              <div class="form-group my-2">
+                <button class="btn btn-outline-success boton" (click)="open(blog)">Nueva Entrada</button>
               </div>
-              
-              <div class="p-4 d-flex flex-column">
-                <ngb-alert [dismissible]="false" class="w-75">
-                  <div class="row">
-                    <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                      <div class="rounded-circle border border-dark d-flex justify-content-center align-items-center m-auto" style="width: 35px; height: 35px;">
-                        <i class="bi bi-arrow-left-right"></i>
+              <div class="barra-blogs m-2" ></div>
+                <div class="search-container-blog">
+                  <div class="form-group my-2">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
+                             name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
+                      <div class="">
+                        <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                       </div>
-                      <p class="text-center mb-0">20/03/19</p>
-                      <p>20:24hs</p>
-                    </div>
-                    <div class="col">
-                      <strong>Experimento AAA-123 - Cambio en Bioterio</strong> 
-                      <p class="mb-0"><i>Gabriel Jotallan</i></p>
-                      <p>El animal <strong>AAA-1111</strong> correspondiente a la jaula <strong>AAA-1111</strong> cambio a la jaula <strong>AAA-1111</strong></p>
                     </div>
                   </div>
-                </ngb-alert>
-            
-                <!-- <button class="btn btn-outline-primary text-center">Ver mas</button> -->
-              </div>
+                  <div class="form-group my-2">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
+                             name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
+                      <div class="">
+                        <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline-secondary filtro-blogs"  (click)=filtrarBlogs() >Filtrar</button>
+                </div>
             </div>
+            
+              <div class="card-blog shadow rounded">
+                <div class="fecha">
+                  <i class="bi bi-journals m-2"></i>
+                  <h6 class="card-title text-center">09/7/2021</h6>
+                </div>
+                <div class="blog" >
+                  <h5 class="card-title card-header">XXXXX - Blog N° 2321</h5>
+                  <p class="mb-1"><i>  usuario :2</i></p>
+                  <p>pruebaaaaaaaaaaaa</p>
+                </div>
+              </div>
+           
+            <!-- <div class="" >
+              <ng-container *ngFor='let a of blogs;let i = index'  >
+                  <ng-container *ngIf = 'i%2==0'>
+                    <div class="card-blog shadow rounded">
+                      <div class="fecha">
+                        <i class="bi bi-journals m-2"></i>
+                        <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                      </div>
+                      <div class="blog" >
+                        <h5 class="card-title card-header">Experimento {{a.codigoExperimento}} - Blog N° {{a.id_blog}}</h5>
+                        <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                        <p>{{a.detalle}}</p>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf = 'i%2!=0'>
+                    <div class="card-blog shadow rounded">
+                      <div class="blog" >
+                        <h5 class="card-title card-header">Experimento {{a.codigoExperimento}} - Blog N° {{a.id_blog}}</h5>
+                        <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                        <p>{{a.detalle}}</p>
+                      </div>
+                      <div class="fecha">
+                        <i class="bi bi-journals m-2"></i>
+                        <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                      </div>
+                    </div>
+                  </ng-container>
+              </ng-container>
+          </div> -->
+          <div *ngIf='blogs?.length === 0' class="text-center" style='color: darkred;'>
+            <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+            <h5 style='color: darkred;'>No hay blogs existentes</h5>
+          </div>
           </ng-template>
         </li>
       </ul>
@@ -323,19 +344,13 @@
       </button>
     </div>
     <div class="modal-body">
-        <div class="row">
-            <div class="col-8">
+        <div class="muestra">
+            <div class="detalle-muestra">
                 <form [formGroup]='formMuestra'>
-                    <div class='row'>
-                        <div class='col-6'>
-                            <label for="otro" class="form-label">Nombre Muestra</label>
-                            <input type="text" class="form-control" id="otro" formControlName='codigo'>
-                        </div>
-                        <div class="col-6">
+                        <div class="">
                             <label for="codigo" class="form-label">Codigo de muestra</label>
                             <input type="text" class="form-control" id="codigo" formControlName='codigo'>
                         </div>
-                    </div>
                     <div class=''>
                         <label for="animal" class="form-label">Seleccionar contenedor</label>
                         <select class="form-control"  id='animal' aria-label="Default select example" formControlName='contenedor'>
@@ -346,13 +361,13 @@
                     <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
               </form>
             </div>
-            <div class="col">
+            <div class="imagenModal mt-5">
                 <i class="bi bi-eyedropper" style="font-size: 8em;"></i>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary mr-3" (click)='crearMuestra()'>Agregar</button>
+        <button class="btn btn-primary boton" (click)='crearMuestra()'>Agregar</button>
     </div>
   </ng-template>
 
@@ -364,8 +379,9 @@
       </button>
     </div>
     <div class="modal-body">
-        <div class="row">
-            <div class="col-8"  *ngIf="animalesProyecto?.length > 0">
+        <div class="">
+            <div class=""  >
+              <!-- *ngIf="animalesProyecto?.length > 0" -->
                 <form [formGroup]='formFuenteExperimental'>
                     <div class=''>
                         <label for="codigo" class="form-label">Codigo de fuente experimental</label>
@@ -381,19 +397,66 @@
                     <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
               </form>
             </div>
-            <div class="col-8" *ngIf="animalesProyecto?.length == 0">
+            <!-- <div class="col-8" *ngIf="animalesProyecto?.length == 0">
                 <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
-                    <h4 class="text-center">No hay animales disponibles para crear nueva fuenta experimental</h4>
+                    <h4 class="text-center">No hay animales disponibles para crear nueva fuente experimental</h4>
                 </div>
             </div>
             <div class="col-4">
                 <i class="bi bi-eyedropper" style="font-size: 8em;"  *ngIf="animalesProyecto?.length > 0"></i>
                 <i class="bi bi-exclamation-circle-fill text-danger" style="font-size: 8em;"  *ngIf="animalesProyecto?.length == 0"></i>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary mr-3" (click)='crearFuente()' *ngIf="animalesProyecto?.length > 0">Agregar</button>
-        <button class="btn btn-primary mr-3" (click)="modal.dismiss('Cross click')" *ngIf="animalesProyecto?.length === 0">Aceptar</button>
+        <button class="btn btn-primary boton" (click)='crearFuente()' *ngIf="animalesProyecto?.length > 0">Agregar</button>
+        <button class="btn btn-primary boton" (click)="modal.dismiss('Cross click')" *ngIf="animalesProyecto?.length === 0">Aceptar</button>
     </div>
   </ng-template>
+
+  <ng-template #fuenteDetalle let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Fuente Experimental</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="d-flex mb-3">
+        <h3>Muestras Asociadas</h3>
+        <div class="ml-5">
+          <button class="btn btn-outline-primary" style="cursor: pointer" (click)='open(muestra)'>+Nuevo</button>
+        </div>
+      </div>
+        <div class="cards-container">
+          <div *ngFor="let muestra of muestrasFiltradas" class="card card-muestra m-2 p-2 shadow rounded">
+                <div class="">
+                      <div class="card-body">
+                          <h5 class="card-title text-center">{{muestra.codigo}}</h5>
+                          <hr class="my-3 bg-{{muestra.finalizado? 'danger' : 'success'}}">
+                          <p class="card-text text-center">{{muestra.descripcion.substring(0,100)}}{{muestra.descripcion.length > 100 ? '...' : ''}}</p>
+                          <div class="d-flex flex-row justify-content-between">
+                              <div>
+                                  <h6><i>Fecha Alta</i></h6>
+                                  <p class="mb-0">{{muestra.fecha | date}}</p>
+                              </div>
+                              <div>
+                                  <h6><i>Tipo</i></h6>
+                                  <p class="mb-0">{{muestra.tipo}}</p>
+                              </div>
+                          </div>
+                      </div>
+                </div>
+            </div>
+          </div>
+          <div *ngIf='muestrasFiltradas?.length === 0' class="text-center" style='color: darkred;'>
+            <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+            <h5 style='color: darkred;'>No hay muestras disponibles</h5>
+          </div>
+    </div>
+    <div class="modal-footer">
+        
+    </div>
+  </ng-template>
+
+  <app-toast></app-toast>

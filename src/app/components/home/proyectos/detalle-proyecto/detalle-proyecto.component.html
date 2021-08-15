@@ -25,7 +25,7 @@
               <h4 class="text-secondary text-staatliches mb-0">Conclusion del proyecto</h4>
               <p class="text-danger"><i>{{proyecto?.conclusion ? proyecto?.conclusion : 'Proyecto Sin Finalizar'}}</i></p>
               <h4 class="text-secondary text-staatliches mb-0">Participantes</h4>
-              <span *ngFor='let usuario of proyecto.participantes'>{{usuario.nombre}} - </span>
+              <span *ngFor='let usuario of proyecto?.participantes'>{{usuario?.nombre}} - </span>
             </div>
             <div class="info">
               <div class="fila"> 
@@ -43,7 +43,7 @@
                 <div class="barra"></div>
                 <div class="">
                   <h4 class="text-secondary text-staatliches ">Jef@ de proyecto</h4>
-                  <p class="mb-0">{{proyecto.idDirectorProyecto?.nombre}}</p>
+                  <p class="mb-0">{{proyecto?.idDirectorProyecto?.nombre}}</p>
                 </div>
                 <div class="barra"></div>
                 <div class="">
@@ -61,14 +61,18 @@
               </div>
             </div>
             <div class="experimento-filtro-container" *ngIf='experimentos.length != 0'>
-                <div class="filtro">
-                  <label for="usuario">Filtro por nombre</label>
+                <div class="filtro d-flex">
+                  <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                  </span>
                   <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por nombre de proyecto" [(ngModel)]='filterPostName'>
                 </div>
-                <div class="filtro">
-                  <label for="usuario">Filtro por nombre</label>
+                <div class="filtro d-flex">
+                  <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                  </span>
                   <select class="form-control"  id='usuario' aria-label="Default select example" [(ngModel)]='filterPostActive'> 
-                    <option selected hidden value="-1">Seleccione director/a de Proyecto</option>
+                    <option selected hidden value="-1">Seleccione estado del experimento</option>
                     <option value="false">Activo</option>
                     <option value="true">Finalizado</option>
                   </select>

@@ -60,8 +60,6 @@ export class NuevoGrupoComponent implements OnInit {
         return usuario.permisos.some(permiso => permiso.id_permiso === 3);
       });
 
-
-
       // if (this.modo === 'EDITAR'){
       //   this.formGrupo.patchValue({
       //     nombre: this.element.nombre,
@@ -119,9 +117,9 @@ export class NuevoGrupoComponent implements OnInit {
 
   crearGrupo(): void {
     const int = [];
-    this.usuariosAsignados.map(usuario => {
-      int.push(usuario.id_usuario);
-    });
+    // this.usuariosAsignados.map(usuario => {
+    //   int.push(usuario.id_usuario);
+    // });
     if (this.modo === 'CREAR'){
       const grupoTrabajo = {
         nombre: this.formGrupo.value.nombre,
@@ -133,7 +131,7 @@ export class NuevoGrupoComponent implements OnInit {
       });
     } else {
       const editarGrupo = {
-        id_grupoDeTrabajo: this.element.id_grupoDeTrabajo,
+        // id_grupoDeTrabajo: this.element.id_grupoDeTrabajo,
         integrantes: int
       };
 
@@ -142,7 +140,7 @@ export class NuevoGrupoComponent implements OnInit {
       });
 
       const editarJefe = {
-        id_grupoDeTrabajo: this.element.id_grupoDeTrabajo,
+        // id_grupoDeTrabajo: this.element.id_grupoDeTrabajo,
         jefeDeGrupo: JSON.parse(this.formGrupo.value.jefeGrupo)
       };
 
@@ -154,7 +152,7 @@ export class NuevoGrupoComponent implements OnInit {
   }
 
   volver(): void{
-    this.volviendo.emit(0);
+    // this.volviendo.emit(0);
   }
 
 }

@@ -8,18 +8,18 @@ h3{
     display: flex;
     justify-content: space-around;
 }
-.fecha{
+.fecha-blog{
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
     padding:0.7em;
 }
-.blog{
+.blog-detalle{
     width: 100%;
     margin-left: 5px;
 }
-.card{
+.card-jaula{
     width: 25%;
     margin: 5px;
     padding: 4px;
@@ -44,7 +44,7 @@ h3{
     flex-direction: row;
     justify-content: center;
 }
-.agregar-jaula{
+.search__btn-agregar{
     margin-left: 1em;
 }
 
@@ -63,11 +63,11 @@ h3{
         justify-content: center;
         margin: 2;
     }
-    .card{
+    .card-jaula{
         width:90%;
         align-items: center;
     }
-    .agregar-jaula{
+    .search__btn-agregar{
         margin-left: 0px;
     }
       

@@ -1,21 +1,34 @@
-.search-container{
-    width: 70%;
-    height: auto;
-    margin: auto;
+.ubicacion-jaula{
     display: flex;
+    flex: row;
+    text-align: center;
+}
+.ubicacion__fila{
+    display: flex;
+    flex-direction: row;
+    margin: 0.5em;
+    width: 100%;
     justify-content: space-around;
+    text-align: center;
 }
 .form-group{
     margin: 2px;
     display: flex;
     width: auto;
 }
-.table{
+.table-animales{
     width: 90%;
     height: auto;
-    margin: auto;
+    margin: 2em;
     text-align: center;
     font-weight: bold;
+}
+.search-container-blog{
+    width: 70%;
+    height: auto;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
 }
 .card-blog{
     width: 95%;
@@ -25,7 +38,7 @@
     background-color: rgba(93, 155, 209, 0.082);
     display: flex;
 }
-.blog{
+.blog-detalle{
     width: 100%;
     margin-left: 5px;
 }
@@ -36,38 +49,26 @@
     height: 40px;
     width: 2px;
 }
-.ubicacion{
-    display: flex;
-    flex: row;
-    text-align: center;
-}
-.fila{
-    display: flex;
-    flex-direction: row;
-    margin: 0.5em;
-    width: 100%;
-    justify-content: space-around;
-    text-align: center;
-}
 select{
     width: 400px;
 }
-.table-responsive{
-    margin: 2em;
-}
-.busqueda{
+.busqueda-blogs{
     display: flex;
     flex-direction: row;
     margin: 1em; 
 }
-.fecha{
+.fecha-blog{
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
     padding:0.7em;
 }
-.body{
+.col-11{
+    background-color: #4d758f59    ;
+    border-color: #4d758f ;
+}
+.body-asociar, .body-crear_blog{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -76,18 +77,12 @@ select{
 textarea{
     width: 200% ;
 }
-.row{
+.detalle-eliminar_jaula, .detalle-eliminar_animal{
     justify-content: space-around;
     align-items: center;
 }
-.alert{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: center;
-}
 @media screen and (max-width: 360px){
-    .fila{
+    .ubicacion__fila{
         display: flex;
         flex-direction: row;
         margin: 0.5em;
@@ -95,32 +90,29 @@ textarea{
         justify-content: space-around;
         text-align: center;
     }
-    .ubicacion, .busqueda{
+    .ubicacion-jaula, .busqueda-blogs{
         display: block;
     }
-    label,input,select{
+    label,input,select, .btn{
         width: 100%;
     }
     .imagenModal, .barra{
         display: none !important;
     }
-    .modal-dialog{
+    .modal-dialog-asociar{
         width: 50%;
         height: 50%;
     }
-    .table-responsive{
+    .table-animales{
         margin:0px;
     }
-    .search-container{
+    .search-container-blog{
         width: 100%;
         height: auto;
         display: block;
         align-items: center;
     }
-    .btn{
-        width: 100%;
-    }
-    label,textarea{
+    textarea{
         width:auto;
         margin: 0px;
     }
@@ -128,11 +120,4 @@ textarea{
         margin-left: 7px;
     }
 }
-.col-11{
-    background-color: #4d758f59    ;
-    border-color: #4d758f ;
-}
-.card{
-    width: auto;
-    margin: auto auto;
-}
+

@@ -13,12 +13,12 @@
                 <input type="text" class="form-control " id="usuario" name='filterPost' placeholder="Buscar por código de jaula" [(ngModel)]='filterPost'>
             </div>
             <div>
-              <button class="btn btn-outline-primary agregar-jaula my-2" routerLink='editar-jaula'>+Agregar</button>
+              <button class="btn btn-outline-primary search__btn-agregar my-2" routerLink='editar-jaula'>+Agregar</button>
             </div>
         </div>
         <hr class="my-3">
         <div class="jaula-container">
-            <div *ngFor="let jaula of jaulas| filterCodigos: filterPost" class="card shadow rounded list-group-item-action" routerLink='{{jaula.id_jaula}}'>
+            <div *ngFor="let jaula of jaulas| filterCodigos: filterPost" class="card-jaula shadow rounded list-group-item-action" routerLink='{{jaula.id_jaula}}'>
                 <div class="">
                     <div class="">
                         <div class="card-body">
@@ -71,11 +71,11 @@
             <ng-container *ngFor='let a of blogs;let i = index'  >
                 <ng-container *ngIf = 'i%2==0'>
                   <div class="card-blog shadow rounded">
-                    <div class="fecha">
+                    <div class="fecha-blog">
                       <i class="bi bi-journals m-2"></i>
                       <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
                     </div>
-                    <div class="blog" >
+                    <div class="blog-detalle" >
                       <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
                       <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
                       <p>{{a.detalle}}</p>

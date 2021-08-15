@@ -40,6 +40,8 @@ export class FinalizarExperimentoComponent implements OnInit {
       this.toastService.show('Experimento finalizado', { classname: 'bg-success text-light', delay: 2000 });
       setTimeout(() => {
         this.cerrarModal();
+        this.toastService.removeAll()
+        this.router.navigate(['/home/proyectos/' + this.idProyecto]);
       }, 2000);
       }, err => {
         this.toastService.show('Problema al finalizar experimento' + err, { classname: 'bg-danger text-light', delay: 2000 });

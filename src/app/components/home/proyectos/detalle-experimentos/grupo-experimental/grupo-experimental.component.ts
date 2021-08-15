@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-
+import { ToastServiceService } from 'src/app/services/toast-service.service';
+import { Fuente } from 'src/app/models/fuente.model'
 
 @Component({
   selector: 'app-grupo-experimental',
@@ -21,12 +22,24 @@ export class GrupoExperimentalComponent implements OnInit {
   formMuestra: FormGroup;
   contenedores = [];
   active = 1;
+  muestras:any;
+  muestrasFiltradas:any;
+  animal:any;
+  fuente:Fuente;
 
+  codigo:any;
+  descripcion:any;
+  codigoGrupoExperimental:any; 
+
+  jaulasProy:any;
+  idJaulas:any;
+  animales:any;
   constructor(
     private activatedRouter: ActivatedRoute,
     private postService: PostService,
     private getService: GetService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public toastService: ToastServiceService
   ) { }
 
   ngOnInit(): void {
@@ -36,14 +49,14 @@ export class GrupoExperimentalComponent implements OnInit {
     this.getService.obtenerGruposExperimentalesPorId(this.idGrupo).subscribe(res => {
       console.log(res);
       this.grupoExperimental = res;
-      console.log(this.grupoExperimental)
-      if (this.grupoExperimental.tipo){
-
-      }
     });
     this.getService.obtenerContenedoresPorProyecto(this.idProyecto).subscribe(res => {
       console.log(res);
       this.contenedores = res;
+    })
+    this.getService.obtenerMuestrasPorGrupo(this.idGrupo).subscribe(res => {
+      this.muestras = res;
+      console.log(res)
     })
     this.formFuenteExperimental = new FormGroup({
       tipo: new FormControl(''),
@@ -56,10 +69,22 @@ export class GrupoExperimentalComponent implements OnInit {
       descripcion: new FormControl(''),
       contenedor: new FormControl('')
     });
-    this.getService.obtenerAnimalesPorProyectos(this.idProyecto).subscribe(res => {
-      console.log(res);
-      res.Status ? this.animalesProyecto = [] : this.animalesProyecto = res;
-    });
+    // this.getService.obtenerAnimalesPorProyectos(this.idProyecto).subscribe(res => {
+    //   console.log(res);
+    //   res.Status ? this.animalesProyecto = [] : this.animalesProyecto = res;
+    // });
+    this.getService.obtenerJaulasPorProyecto(this.idProyecto).subscribe(res =>{
+      this.jaulasProy = res;
+      console.log(res)
+    })
+    setTimeout(() => {
+      this.idJaulas = this.jaulasProy[0].id_jaula
+      console.log(this.idJaulas)
+      this.getService.obtenerAnimalesPorJaula(this.idJaulas).subscribe(res =>{
+        this.animalesProyecto = res;
+        console.log(res)
+      })
+    }, 500);
   }
 
   open(content): void {
@@ -68,31 +93,73 @@ export class GrupoExperimentalComponent implements OnInit {
   }
 
   crearFuente(): void{
-    const animal = this.animalesProyecto.filter(animal=> animal.id_fuenteExperimental == this.formFuenteExperimental.value.animal)[0];
-    const obj = {
-      id_experimento: this.idExperimento,
-      parent: 0,
-      tipo: this.grupoExperimental.tipo,
-      id_grupoExperimental: this.idGrupo,
-      codigo: this.grupoExperimental.codigo,
-      fuentesExperimentales: [
-        {
-          codigoGrupoExperimental : this.grupoExperimental.codigo,
-          codigo : this.formFuenteExperimental.value.codigo,
-          cepa: animal.cepa,
-          id_fuenteExperimental: animal.id_fuenteExperimental,
-          descripcion: this.formFuenteExperimental.value.descripcion,
-          especie: animal.especie,
-          sexo: animal.sexo,
-          tipo: this.grupoExperimental.tipo,
-          id_jaula: animal.id_jaula
-        }
-      ]
-    }
-    console.log(obj);
-    this.postService.crearFuenteExperimental(obj).subscribe(res => {
-      console.log(res);
-    })
+  
+      const idAnimal = this.formFuenteExperimental.value.animal
+      this.getService.obtenerAnimalxId(idAnimal).subscribe( res =>{
+        this.animal = res;
+        console.log(res)
+      })
+      setTimeout(() => {
+      this.fuente={
+        id_fuenteExperimental: this.animal.id_fuenteExperimental,
+        id_proyecto: this.animal.id_proyecto,
+        codigo: this.formFuenteExperimental.value.codigo,
+        codigoGrupoExperimental: this.grupoExperimental.codigo,
+        especie: this.animal.especie,
+        sexo: this.animal.sexo,
+        cepa: this.animal.cepa,
+        tipo : this.animal.tipo,
+        id_jaula: this.animal.id_jaula,
+        descripcion: this.formFuenteExperimental.value.descripcion
+      }
+      const fuenteExperimental ={
+        id_grupoExperimental : this.idGrupo,
+        fuentesExperimentales : [this.fuente]
+      }
+      console.log(fuenteExperimental)
+      this.postService.crearFuenteExperimental(fuenteExperimental).subscribe(res => {
+        console.log(res)
+      })
+    }, 1000);
+
+
+
+    // const animal = this.animalesProyecto.filter(animal=> animal.id_fuenteExperimental == this.formFuenteExperimental.value.animal)[0];
+    // const obj = {
+    //   id_experimento: this.idExperimento,
+    //   parent: 0,
+    //   tipo: this.grupoExperimental.tipo,
+    //   id_grupoExperimental: this.idGrupo,
+    //   codigo: this.grupoExperimental.codigo,
+    //   fuentesExperimentales: [
+    //     {
+    //       codigoGrupoExperimental : this.grupoExperimental.codigo,
+    //       codigo : this.formFuenteExperimental.value.codigo,
+    //       cepa: animal.cepa,
+    //       id_fuenteExperimental: animal.id_fuenteExperimental,
+    //       descripcion: this.formFuenteExperimental.value.descripcion,
+    //       especie: animal.especie,
+    //       sexo: animal.sexo,
+    //       tipo: this.grupoExperimental.tipo,
+    //       id_jaula: animal.id_jaula
+    //     }
+    //   ]
+    // }
+    // console.log(obj);
+    // this.postService.crearFuenteExperimental(obj).subscribe(res => {
+    //   if (res.Status === 'Se crearon las fuentes experimentales'){
+    //     this.toastService.show('Fuente experimental creada', { classname: 'bg-success text-light', delay: 2000 });
+    //     setTimeout(() => {
+    //       this.toastService.removeAll()
+    //       this.modalService.dismissAll()
+    //       this.ngOnInit()
+    //     }, 2000);
+    //   }
+    //   console.log(res);
+    // }, err =>{
+    //   this.toastService.show('Problema crear la fuente experimental ' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+    //   console.log(err)
+    // })
   }
 
 
@@ -104,14 +171,32 @@ export class GrupoExperimentalComponent implements OnInit {
       codigo : this.formMuestra.value.codigo,
       descripcion : this.formMuestra.value.descripcion,
       tipo : this.grupoExperimental.tipo,
-      id_contenedor : this.formMuestra.value.contenedor
+      id_contenedor : parseInt(this.formMuestra.value.contenedor),
+      id_fuenteExperimental: 37
     }
+    console.log([obj])
     this.postService.crearMuestra([obj]).subscribe(res => {
-      console.log(res)
-      setTimeout(() => {
-        this.ngOnInit()
-      }, 500);
+      if (res.Status === 'ok'){
+        this.toastService.show('Muestra creada', { classname: 'bg-success text-light', delay: 2000 });
+        setTimeout(() => {
+          this.toastService.removeAll()
+          this.modalService.dismissAll()
+          this.ngOnInit()
+        }, 2000);
+      }
+      console.log(res);
+    }, err => {
+      this.toastService.show('Problema crear la muestra ' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+      console.log(err)
     })
   } 
+  fuenteExpDetalle(idFuente, content){
+    this.open(content)
+    console.log(idFuente)
+    this.getService.obtenerMuestrasPorIdFuente(idFuente).subscribe( res =>{
+      this.muestrasFiltradas = res;
+      console.log(res)
+    })
+  }
 
 }

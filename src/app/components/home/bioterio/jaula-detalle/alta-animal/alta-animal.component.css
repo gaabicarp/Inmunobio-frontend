@@ -1,3 +1,9 @@
+.form-primer_fila{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
 form{
     padding:4em;
     padding-top: 0px;
@@ -6,24 +12,12 @@ form{
 i{
     margin: auto;
 }
-.fila{
+.form-fila{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     margin: 0.5em;
     width: 100%;
-}
-.filaMayor{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-}
-.alert{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: center;
 }
 
 @media screen and (max-width: 360px){
@@ -35,7 +29,7 @@ i{
        display: none;
        visibility: hidden;
    }
-   .fila,.filaMayor{
+   .form-fila,.form-primer_fila{
     display: block;
     margin: 2px;
     width: 100%;

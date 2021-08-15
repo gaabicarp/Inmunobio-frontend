@@ -76,11 +76,14 @@ export class GetService {
   }
 
   obtenerGruposExperimentalesPorId(idGrupo: number): Observable<any>{
-    return this.http.get<any>(this.API_URL + `grupoExperimental/${idGrupo}`);
+    return this.http.get<any>(this.API_URL + 'grupoExperimental/'+ idGrupo);
   }
 
   obtenerMuestras(): Observable<any>{
     return this.http.get<any>(this.API_URL + 'muestras');
+  }
+  obtenerMuestrasPorGrupo(idGrupo:number):Observable<any>{
+    return this.http.get<any>(this.API_URL + 'grupoExperimental/'+idGrupo+'/muestras');
   }
 
   obtenerGrupos(): Observable<any>{
@@ -146,5 +149,14 @@ export class GetService {
   
   obtenerEspacioFisico(id:number): Observable<EspacioFisico>{
     return this.http.get<any>(this.API_URL + 'espacioFisico/'+ id);
+  }
+  obtenerMuestrasPorIdFuente(idFuente:number): Observable<any>{
+    return this.http.get<any>(this.API_URL + 'muestras/'+ idFuente);
+  }
+  obtenerFuenteExperimental(idFuente: number): Observable<any>{
+    return this.http.get<any>(this.API_URL + 'fuenteExperimental/'+ idFuente);
+  }
+  obtenerAnimalxId(idAnimal:number): Observable<any>{
+    return this.http.get<any>(this.API_URL + 'animal/'+ idAnimal);
   }
 }
