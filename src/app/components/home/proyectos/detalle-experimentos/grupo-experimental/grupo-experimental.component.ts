@@ -38,6 +38,8 @@ export class GrupoExperimentalComponent implements OnInit {
   jaulasProy:any;
   idJaulas:any;
   animales:any;
+
+  idFuente:number;
   constructor(
     private activatedRouter: ActivatedRoute,
     private postService: PostService,
@@ -57,10 +59,6 @@ export class GrupoExperimentalComponent implements OnInit {
     this.getService.obtenerContenedoresPorProyecto(this.idProyecto).subscribe(res => {
       console.log(res);
       this.contenedores = res;
-    })
-    this.getService.obtenerMuestrasPorGrupo(this.idGrupo).subscribe(res => {
-      this.muestras = res;
-      console.log(res)
     })
     this.formFuenteExperimentalAnimal = new FormGroup({
       tipo: new FormControl(''),
@@ -92,6 +90,7 @@ export class GrupoExperimentalComponent implements OnInit {
         console.log(res)
       })
     }, 500);
+
   }
 
   open(content): void {
@@ -127,6 +126,7 @@ export class GrupoExperimentalComponent implements OnInit {
         parent:0,
         fuentesExperimentales : [this.fuente]
       }
+      console.log(fuenteExperimental)
       this.postService.crearFuenteExperimental(fuenteExperimental).subscribe(res => {
         console.log(res)
         if (res.Status === 'Se crearon las fuentes experimentales') {
@@ -138,7 +138,12 @@ export class GrupoExperimentalComponent implements OnInit {
           }, 2000);
         }
       }, err => {
-        this.toastService.show('Problema al crear la fuente experimental' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        if(err.error.Error == "Los animales ya están en uso."){
+          this.toastService.show('Error - el animal ya está en uso', { classname: 'bg-danger text-light', delay: 2000 });
+        } else{
+          this.toastService.show('Error '+ err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
+        }
+        console.log(err)
       })
     }, 1000);
   }
@@ -186,11 +191,11 @@ export class GrupoExperimentalComponent implements OnInit {
       descripcion : this.formMuestra.value.descripcion,
       tipo : this.grupoExperimental.tipo,
       id_contenedor : parseInt(this.formMuestra.value.contenedor),
-      id_fuenteExperimental: 37
+      id_fuenteExperimental: this.idFuente
     }
     console.log([obj])
     this.postService.crearMuestra([obj]).subscribe(res => {
-      if (res.Status === 'ok'){
+      if (res.Status === 'Muestra creada'){
         this.toastService.show('Muestra creada', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
           this.toastService.removeAll()
@@ -207,6 +212,7 @@ export class GrupoExperimentalComponent implements OnInit {
   fuenteExpDetalle(idFuente, content){
     this.open(content)
     console.log(idFuente)
+    this.idFuente = idFuente;
     this.getService.obtenerMuestrasPorIdFuente(idFuente).subscribe( res =>{
       this.muestrasFiltradas = res;
       console.log(res)
