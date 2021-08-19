@@ -3,6 +3,8 @@ import { PostService } from '../../../../services/post.service';
 import { GetService } from '../../../../services/get.service';
 import { Subscription } from 'rxjs';
 import { Distribuidora } from '../../../../models/distribuidora.model';
+import { ASTWithSource } from '@angular/compiler';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-distribuidoras',
@@ -12,44 +14,37 @@ import { Distribuidora } from '../../../../models/distribuidora.model';
 export class DistribuidorasComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
-  distribuidoras : Distribuidora;
+  distribuidoras: Distribuidora;
+  cargando: boolean;
 
-  estado: string;
-  mensajeAlert: string;
-  alert: boolean;
-  constructor(private getService: GetService, private postService: PostService) { }
+  constructor(
+    private getService: GetService,
+    private postService: PostService,
+    public toastService: ToastServiceService
+  ) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.alert = false;
-    this.subscription.add( this.getService.obtenerDistribuidoras().subscribe(res => {
-                            console.log(res)
-                            this.distribuidoras = res;}) 
-    );
-    this.subscription.add( this.getService.obtenerDistribuidoras().subscribe(res => {
-                            console.log(res)
-                            this.distribuidoras = res; })
+    this.cargando = true;
+    this.subscription.add(
+      this.getService.obtenerDistribuidoras().subscribe(res => {
+        console.log(res);
+        this.distribuidoras = res;
+        this.cargando = false;
+      })
     );
   }
-  eliminar(distribuidora : Distribuidora){
+
+  eliminar(distribuidora: Distribuidora): void{
     this.postService.eliminarDistribuidora(distribuidora.id_distribuidora).subscribe(res =>{
       if (res.Status === 'ok'){
-        this.alert = true;
-        this.estado = 'success';
-        this.mensajeAlert = 'Distribuidora eliminada correctamente';
-        setTimeout(() => {
-          this.ngOnInit()
-        }, 2000);
+        this.toastService.show('Distribuidora Eliminada', { classname: 'bg-danger text-light', delay: 2000 });
       }
-      console.log(res);
-    }, err => {
-      this.alert = true;
-      this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.error);
-    })
+      // console.log(res);
+    });
   }
 
 }

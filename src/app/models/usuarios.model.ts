@@ -17,7 +17,7 @@ interface Permiso {
 }
 
 export class postUsuario {
-    id_usuario?: number;
+    id?: number;
     nombre: string;
     password: string;
     direccion: string;

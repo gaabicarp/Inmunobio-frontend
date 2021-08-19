@@ -1,43 +1,66 @@
-<div class="mx-4">
-    <div class="text-center my-4">
-        <h2>Datos de la Distribuidora</h2>
+<div *ngIf='!cargando'>
+    <div class="m-4" role="button">
+        <h5 (click)='volver()'><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
     </div>
-  <div class="card rounded shadow p-4 m-5">
-  <form [formGroup]="formDistribuidora" (ngSubmit)="crearDistribuidora()">
-        <div class="m-3">
-            <label  for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" formControlName="nombre">
-        </div> 
-        <div class="m-3">
-              <label for="contacto" class="form-label">Teléfono</label>
-              <input type="text" class="form-control" id="contacto" formControlName="contacto">
-        </div> 
-        <div class="m-3">
-              <label for="direccion" class="form-label">Dirección</label>
-              <input type="text" class="form-control" id="direccion" formControlName="direccion">
-        </div> 
-        <div class=" m-3">
-            <label  for="cuit" class="form-label">Cuit</label>
-            <input type="text" class="form-control" id="cuit" formControlName="cuit">
+    
+    <div class="mx-4">
+        <div class="my-3">
+            <h2 class="mb-0">{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Distribuidora</h2>
         </div>
-        <div class="m-3">
-                <label for="representante" class="form-label">Representante</label>
-                <input type="text" class="form-control" id="representante" formControlName="representante">
-        </div> 
-        <div class="d-flex flex-row justify-content-end">
-            <div class="mx-3 justify-content-start">
-                <button class="btn btn-secondary btn-lg" routerLink="../">Cancelar</button> 
+    
+        <div class="p-4 m-5">
+            <form [formGroup]="formDistribuidora" (ngSubmit)="crearDistribuidora()">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="m-3">
+                            <label  for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" formControlName="nombre" [attr.disabled]='disabledForm ? true : null'>
+                        </div> 
+                    </div>
+                    <div class="col-6">
+                        <div class="m-3">
+                            <label for="contacto" class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="contacto" formControlName="contacto" [attr.disabled]='disabledForm ? true : null'>
+                        </div> 
+                    </div>
+                    <div class="col-6">
+                        <div class="m-3">
+                              <label for="direccion" class="form-label">Dirección</label>
+                              <input type="text" class="form-control" id="direccion" formControlName="direccion" [attr.disabled]='disabledForm ? true : null'>
+                        </div> 
+                    </div>
+                    <div class="col-6">
+                        <div class=" m-3">
+                            <label  for="cuit" class="form-label">Cuit</label>
+                            <input type="text" class="form-control" id="cuit" formControlName="cuit" [attr.disabled]='disabledForm ? true : null'>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="m-3">
+                                <label for="representante" class="form-label">Representante</label>
+                                <input type="text" class="form-control" id="representante" formControlName="representante" [attr.disabled]='disabledForm ? true : null'>
+                        </div> 
+                    </div>
+                </div>
+            <div class="d-flex flex-row justify-content-end">
+                <div class="mx-3">
+                    <button class="btn btn-outline-primary btn-lg" type="submit" [disabled]="!formDistribuidora.valid" *ngIf='!disabledForm'>{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Distribuidora</button>
+                    <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Cargando...
+                      </button>
+                </div>
             </div>
-            <div class="mx-3">
-                <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formDistribuidora.valid">Guardar</button>
-            </div>
-        </div>
-        <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-            <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
-            <div class="p-2 bd-highlight">
-                <button class="btn btn-secondary btn-lg" routerLink="../">VOLVER</button>
-            </div>
-        </div>
-    </form>
-  </div>
+        </form>
+      </div>
+    </div>
 </div>
+
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+</div>
+
+
+<app-toast></app-toast>

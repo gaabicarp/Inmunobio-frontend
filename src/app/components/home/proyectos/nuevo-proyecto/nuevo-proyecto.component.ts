@@ -80,7 +80,7 @@ export class NuevoProyectoComponent implements OnInit {
         selectAllText: 'Seleccione Todos',
         unSelectAllText: 'Quitar Todos',
         classes: 'myclass custom-class',
-        primaryKey: 'id_usuario',
+        primaryKey: 'id',
         labelKey: 'nombre',
         enableSearchFilter: true,
         searchBy: ['nombre'],

@@ -41,7 +41,7 @@ export class GetService {
   }
 
   obtenerProductos(): Observable<Producto[]>{
-    return this.http.get<any>(this.API_URL + 'getProductos');
+    return this.http.get<Producto[]>(this.API_URL + 'getProductos');
   }
   obtenerProductosPorId(id : number): Observable<Producto>{
     return this.http.get<any>(this.API_URL + 'producto/' + id);
