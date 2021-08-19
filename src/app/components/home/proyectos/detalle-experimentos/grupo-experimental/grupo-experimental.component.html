@@ -6,10 +6,6 @@
         <h2 class="mb-0">Grupo experimental - {{grupoExperimental?.codigo}}</h2>
     </div>
 
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs mx-4">
-        <li [ngbNavItem]="1">
-          <a ngbNavLink>Detalles</a>
-          <ng-template ngbNavContent>
             <div class="">
               <div class="m-1 mt-4 mb-4">
                 <h4 class="text-secondary text-staatliches mb-0 ml-4">Descripcion del Grupo</h4>
@@ -78,91 +74,6 @@
                     </div>
                   </div>
               </div> -->
-          </ng-template>
-        </li>
-        <li [ngbNavItem]="2">
-          <a ngbNavLink>Entradas de Blog</a>
-          <ng-template ngbNavContent>
-            <div class="busqueda">
-              <div class="form-group my-2">
-                <button class="btn btn-outline-success boton" (click)="open(blog)">Nueva Entrada</button>
-              </div>
-              <div class="barra-blogs m-2" ></div>
-                <div class="search-container-blog">
-                  <div class="form-group my-2">
-                    <div class="input-group">
-                      <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
-                             name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
-                      <div class="">
-                        <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group my-2">
-                    <div class="input-group">
-                      <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
-                             name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
-                      <div class="">
-                        <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="btn btn-outline-secondary filtro-blogs"  (click)=filtrarBlogs() >Filtrar</button>
-                </div>
-            </div>
-            
-              <div class="card-blog shadow rounded">
-                <div class="fecha">
-                  <i class="bi bi-journals m-2"></i>
-                  <h6 class="card-title text-center">09/7/2021</h6>
-                </div>
-                <div class="blog" >
-                  <h5 class="card-title card-header">XXXXX - Blog N° 2321</h5>
-                  <p class="mb-1"><i>  usuario :2</i></p>
-                  <p>pruebaaaaaaaaaaaa</p>
-                </div>
-              </div>
-           
-            <!-- <div class="" >
-              <ng-container *ngFor='let a of blogs;let i = index'  >
-                  <ng-container *ngIf = 'i%2==0'>
-                    <div class="card-blog shadow rounded">
-                      <div class="fecha">
-                        <i class="bi bi-journals m-2"></i>
-                        <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
-                      </div>
-                      <div class="blog" >
-                        <h5 class="card-title card-header">Experimento {{a.codigoExperimento}} - Blog N° {{a.id_blog}}</h5>
-                        <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
-                        <p>{{a.detalle}}</p>
-                      </div>
-                    </div>
-                  </ng-container>
-                  <ng-container *ngIf = 'i%2!=0'>
-                    <div class="card-blog shadow rounded">
-                      <div class="blog" >
-                        <h5 class="card-title card-header">Experimento {{a.codigoExperimento}} - Blog N° {{a.id_blog}}</h5>
-                        <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
-                        <p>{{a.detalle}}</p>
-                      </div>
-                      <div class="fecha">
-                        <i class="bi bi-journals m-2"></i>
-                        <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
-                      </div>
-                    </div>
-                  </ng-container>
-              </ng-container>
-          </div> -->
-          <div *ngIf='blogs?.length === 0' class="text-center" style='color: darkred;'>
-            <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
-            <h5 style='color: darkred;'>No hay blogs existentes</h5>
-          </div>
-          </ng-template>
-        </li>
-      </ul>
-    
-    
-    <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>
 
 
@@ -390,7 +301,8 @@
                     <div class=''>
                         <label for="animal" class="form-label">Seleccionar animal</label>
                         <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
-                                <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
+                                <!-- <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option> -->
+                                <option *ngFor='let animal of animales' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
                         </select>
                     </div>
                     <label for="descripcion" class="form-label">Descripcion</label>
@@ -409,8 +321,10 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary boton" (click)='crearFuente()' *ngIf="animalesProyecto?.length > 0">Agregar</button>
-        <button class="btn btn-primary boton" (click)="modal.dismiss('Cross click')" *ngIf="animalesProyecto?.length === 0">Aceptar</button>
+        <button class="btn btn-primary boton" (click)='crearFuente()'>Agregar</button>
+        <!-- *ngIf="animalesProyecto?.length > 0" -->
+        <button class="btn btn-primary boton" (click)="modal.dismiss('Cross click')" >Aceptar</button>
+        <!-- *ngIf="animalesProyecto?.length === 0" -->
     </div>
   </ng-template>
 

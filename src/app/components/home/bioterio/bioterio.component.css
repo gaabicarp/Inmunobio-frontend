@@ -1,6 +1,9 @@
 h3{
     margin: 1.5em;
 }
+.title{
+    margin: 1em;
+}
 .search-container{
     width: 70%;
     height: auto;
@@ -69,6 +72,11 @@ h3{
     }
     .search__btn-agregar{
         margin-left: 0px;
+    }
+}
+@media screen and (max-width: 1024px){
+    .title{
+        margin:0.5em;
     }
       
 }

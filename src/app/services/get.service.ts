@@ -140,7 +140,7 @@ export class GetService {
   }
 
   obtenerAnimalesPorProyectos(idProyecto: number): Observable<any> {
-    return this.http.get<any>(this.API_URL + `proyecto/${idProyecto}/animales`);
+    return this.http.get<any>(this.API_URL + 'proyecto/'+ idProyecto +'/animales');
   }
 
   obtenerAnimales(): Observable<any> {

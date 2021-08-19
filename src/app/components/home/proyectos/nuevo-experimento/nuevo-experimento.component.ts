@@ -31,7 +31,7 @@ export class NuevoExperimentoComponent implements OnInit {
 
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     window.location.href.includes('editar') ? this.modo = 'EDITAR' : this.modo = 'CREAR';
-
+    console.log(this.modo)
     this.formExperimento = new FormGroup({
       codigo: new FormControl('', [Validators.required, Validators.maxLength(10)]),
       metodologia: new FormControl('', [Validators.required, Validators.maxLength(300)]),
@@ -62,9 +62,11 @@ export class NuevoExperimentoComponent implements OnInit {
 
     if (this.modo === 'CREAR'){
       this.postService.crearExperimento(experimento).subscribe(res => {
-        if (res.Status === 'ok') {
+        console.log(res)
+        if (res.Status === 'Se creó el experimento.') {
           this.toastService.show('Experimento Creado', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.volver();
           }, 2000);
         }
@@ -74,9 +76,11 @@ export class NuevoExperimentoComponent implements OnInit {
     } else {
       experimento.id_experimento = this.idExperimento;
       this.postService.modificarExperimento(experimento).subscribe(res => {
-        if (res.Status === 'ok') {
+        console.log(res)
+        if (res.Status === 'Se modificó el experimento.') {
           this.toastService.show('Experimento Editado', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.volver();
           }, 2000);
         }

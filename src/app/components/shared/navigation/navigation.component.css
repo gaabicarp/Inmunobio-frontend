@@ -1,3 +1,23 @@
 .logo-container{
     height: 10em;
 }
+nav{
+    background-color: #033980;
+}
+.main-navigation{
+    background-color:  #033980;
+}
+.navigation-container{
+    background-color: #033980;
+}
+
+@media screen and (max-width: 1024px){
+    .navigation-container{
+        width: 15em;
+    }
+    .mobile-menu-toggle-label{
+        margin: 0;
+        padding: 0;
+    }
+      
+}

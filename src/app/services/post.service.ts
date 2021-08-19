@@ -58,7 +58,7 @@ export class PostService {
   }
 
   modificarExperimento(experimento: any): Observable<any>{
-    return this.http.post<any>(this.API_URL + 'modificarExperimento', experimento);
+    return this.http.put<any>(this.API_URL + 'modificarExperimento', experimento);
   }
 
   crearDistribuidora(nuevaDistribuidora: Distribuidora): Observable<any>{

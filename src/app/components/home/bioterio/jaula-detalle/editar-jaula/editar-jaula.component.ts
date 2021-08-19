@@ -94,7 +94,7 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
     } else {
       this.subscription.add( this.postService.crearJaula(jaula).subscribe(res => {
         console.log(res);
-        if (res.status === 'Jaula creada.'){
+        if (res.Status === 'Jaula creada.'){
           this.toastService.show('Jaula creada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
             this.toastService.removeAll()

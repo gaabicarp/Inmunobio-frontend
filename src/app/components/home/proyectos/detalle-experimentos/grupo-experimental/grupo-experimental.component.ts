@@ -26,6 +26,8 @@ export class GrupoExperimentalComponent implements OnInit {
   muestrasFiltradas:any;
   animal:any;
   fuente:Fuente;
+  contenedoresProyecto: any;
+  contenedoress:any;
 
   codigo:any;
   descripcion:any;
@@ -73,15 +75,13 @@ export class GrupoExperimentalComponent implements OnInit {
       console.log(res);
       res.Status ? this.animalesProyecto = [] : this.animalesProyecto = res;
     });
-    this.getService.obtenerJaulasPorProyecto(this.idProyecto).subscribe(res =>{
-      this.jaulasProy = res;
+    this.getService.obtenerJaulasPorProyecto(this.idProyecto).subscribe( res =>{
       console.log(res)
+      this.jaulasProy = res
     })
     setTimeout(() => {
-      this.idJaulas = this.jaulasProy[0].id_jaula
-      console.log(this.idJaulas)
-      this.getService.obtenerAnimalesPorJaula(this.idJaulas).subscribe(res =>{
-        this.animalesProyecto = res;
+      this.getService.obtenerAnimalesPorJaula(this.jaulasProy[0].id_jaula).subscribe(res =>{
+        this.animales = res
         console.log(res)
       })
     }, 500);
@@ -96,7 +96,7 @@ export class GrupoExperimentalComponent implements OnInit {
       const idAnimal = this.formFuenteExperimental.value.animal
       this.getService.obtenerAnimalxId(idAnimal).subscribe( res =>{
         this.animal = res;
-        console.log(res)
+        // console.log(res)
       })
       setTimeout(() => {
       this.fuente={
@@ -120,10 +120,17 @@ export class GrupoExperimentalComponent implements OnInit {
         parent:0,
         fuentesExperimentales : [this.fuente]
       }
-      console.log(fuenteExperimental)
-
       this.postService.crearFuenteExperimental(fuenteExperimental).subscribe(res => {
         console.log(res)
+        if (res.Status === 'Se crearon las fuentes experimentales') {
+          this.toastService.show('Fuente Experimental creada', { classname: 'bg-success text-light', delay: 2000 });
+          setTimeout(() => {
+            this.toastService.removeAll()
+            this.ngOnInit()
+          }, 2000);
+        }
+      }, err => {
+        this.toastService.show('Problema al crear la fuente experimental' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
       })
     }, 1000);
 

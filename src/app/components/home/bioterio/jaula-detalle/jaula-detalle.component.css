@@ -81,6 +81,9 @@ textarea{
     justify-content: space-around;
     align-items: center;
 }
+.filtrar{
+    margin: 0.5em;
+}
 @media screen and (max-width: 360px){
     .ubicacion__fila{
         display: flex;
@@ -105,6 +108,7 @@ textarea{
     }
     .table-animales{
         margin:0px;
+        margin-left: 1em;
     }
     .search-container-blog{
         width: 100%;
@@ -118,6 +122,9 @@ textarea{
     }
     .card-blog{
         margin-left: 7px;
+    }
+    .filtrar{
+        margin-left: 0;
     }
 }
 
