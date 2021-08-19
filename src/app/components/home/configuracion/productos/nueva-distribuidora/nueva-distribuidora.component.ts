@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-nueva-distribuidora',
@@ -11,23 +12,29 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class NuevaDistribuidoraComponent implements OnInit {
 
-  idDistribuidora:number;
-  distribuidora:any;
-  formDistribuidora!: FormGroup;
-  estado: string;
-  mensajeAlert: string;
-  alert: boolean;
+  idDistribuidora: number;
+  distribuidora: any;
 
-  constructor(private getService: GetService, private postService: PostService, private activatedRouter: ActivatedRoute) { }
+  cargando: boolean;
+  disabledForm: boolean;
+
+  modo: string;
+
+  formDistribuidora!: FormGroup;
+
+  constructor(
+    private getService: GetService,
+    private postService: PostService,
+    private activatedRouter: ActivatedRoute,
+    public toastService: ToastServiceService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.alert = false;
-    this.idDistribuidora = parseInt(this.activatedRouter.snapshot.paramMap.get('idDistribuidora'), 10);
-    if (!isNaN(this.idDistribuidora)){
-    this.getService.obtenerDistribuidorasPorId(this.idDistribuidora).subscribe(res => {
-      this.distribuidora=res;
-    })
-    }
+    this.cargando = true;
+    window.location.href.includes('editar') ? this.modo = 'EDITAR' : this.modo = 'CREAR';
+
+
     this.formDistribuidora = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       contacto: new FormControl('', [Validators.required, Validators.maxLength(100)]),
@@ -35,8 +42,12 @@ export class NuevaDistribuidoraComponent implements OnInit {
       cuit: new FormControl('', [Validators.maxLength(11)]),
       representante: new FormControl('', [Validators.maxLength(50)])
     });
-    setTimeout(() => {
-      if (!isNaN(this.idDistribuidora)){
+
+    if (this.modo === 'EDITAR'){
+      this.idDistribuidora = parseInt(this.activatedRouter.snapshot.paramMap.get('idDistribuidora'), 10);
+      this.getService.obtenerDistribuidorasPorId(this.idDistribuidora).subscribe(res => {
+        this.distribuidora = res;
+
         this.formDistribuidora.patchValue({
           nombre: this.distribuidora.nombre,
           contacto: this.distribuidora.contacto,
@@ -44,13 +55,16 @@ export class NuevaDistribuidoraComponent implements OnInit {
           cuit: this.distribuidora.cuit,
           representante: this.distribuidora.representante
         });
-      }
-    }, 500);
-    
+        this.cargando = false;
+      });
+    } else {
+      this.cargando = false;
+    }
   }
 
   crearDistribuidora(): void{
-    const distribuidora : any = {
+    this.disabledForm = true;
+    const distribuidora: any = {
       nombre: this.formDistribuidora.value.nombre,
       contacto: this.formDistribuidora.value.contacto,
       direccion: this.formDistribuidora.value.direccion,
@@ -59,32 +73,35 @@ export class NuevaDistribuidoraComponent implements OnInit {
     };
     if (isNaN(this.idDistribuidora)){
       this.postService.crearDistribuidora(distribuidora).subscribe(res => {
-        if (res.Status === 'ok'){
-          this.alert = true;
-          this.estado = 'success';
-          this.mensajeAlert = 'La distribuidora fue creada correctamente';
+        if (res.Status){
+          this.toastService.show('Distribuidora Creada', { classname: 'bg-success text-light', delay: 2000 });
+          setTimeout(() => {
+            this.router.navigateByUrl('home/configuracion/distribuidoras');
+          }, 2000);
         }
         console.log(res);
       }, err => {
-        this.alert = true;
-        this.estado = 'danger';
-        this.mensajeAlert = JSON.stringify(err.error.error);
+        this.toastService.show('Error al crear' + err, { classname: 'bg-danger text-light', delay: 2000 });
+        this.disabledForm = false;
       });
     } else {
-      distribuidora.id_distribuidora = this.distribuidora.id_distribuidora
+      distribuidora.id_distribuidora = this.distribuidora.id_distribuidora;
       this.postService.editarDistribuidora(distribuidora).subscribe(res => {
-        if (res.Status === 'ok'){
-          this.alert = true;
-          this.estado = 'success';
-          this.mensajeAlert = 'La información fue editada correctamente';
+        if (res.Status){
+          this.toastService.show('Distribuidora Editada', { classname: 'bg-success text-light', delay: 2000 });
+          setTimeout(() => {
+            this.router.navigateByUrl('home/configuracion/distribuidoras');
+          }, 2000);
         }
         console.log(res);
       }, err => {
-        this.alert = true;
-        this.estado = 'danger';
-        this.mensajeAlert = JSON.stringify(err.error.error);
+        this.toastService.show('Error al editar' + err, { classname: 'bg-danger text-light', delay: 2000 });
+        this.disabledForm = false;
       });
     }
   }
-  
+
+  volver(): void {
+    this.router.navigateByUrl('home/configuracion/distribuidoras');
+  }
 }

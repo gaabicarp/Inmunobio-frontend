@@ -1,52 +1,61 @@
-<div class="mx-4">
-    <div class="text-center my-4">
-        <h2>Datos del Espacio Físico</h2>
+<div *ngIf='!cargando'>
+    <div class="m-4" role="button">
+        <h5 (click)='volver()'><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
     </div>
-
-    <div class="card rounded shadow p-4 mb-4">
-        <form [formGroup]="formEspacio" (ngSubmit)="crearEspacio()">
-            <div class="row">
-                <div class="col-6">
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" formControlName="nombre">
-                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-                    </div>
-                    <div class="mb-3">
-                        <label for="Piso" class="form-label">Piso</label>
-                        <input type="text" class="form-control" id="Piso" formControlName="piso">
-                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="mb-3">
-                        <label for="Sala" class="form-label">Sala</label>
-                        <input type="text" class="form-control" id="Sala" formControlName="sala">
-                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
-                    </div>
-                    <div class="mb-3">
+    <div class="mx-4">
+        <div class="my-3">
+            <h2 class="mb-0">{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Espacio Fisico</h2>
+        </div>
+    
+        <div class="p-4 m-5">
+            <form [formGroup]="formEspacio" (ngSubmit)="crearEspacio()">
+                <div class="row">
+                    <div class="col-6">
                         <div class="mb-3">
-                            <label for="Descripcion" class="form-label">Descripcion</label>
-                            <input type="text" class="form-control" id="Descripcion" formControlName="descripcion">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" formControlName="nombre" [attr.disabled]='disabledForm ? true : null'>
+                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                        </div>
+                        <div class="mb-3">
+                            <label for="Piso" class="form-label">Piso</label>
+                            <input type="text" class="form-control" id="Piso" formControlName="piso" [attr.disabled]='disabledForm ? true : null'>
                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="mb-3">
+                            <label for="Sala" class="form-label">Sala</label>
+                            <input type="text" class="form-control" id="Sala" formControlName="sala" [attr.disabled]='disabledForm ? true : null'>
+                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                        </div>
+                        <div class="mb-3">
+                            <div class="mb-3">
+                                <label for="Descripcion" class="form-label">Descripcion</label>
+                                <input type="text" class="form-control" id="Descripcion" formControlName="descripcion" [attr.disabled]='disabledForm ? true : null'>
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="d-flex flex-row justify-content-end">
-                <div class="mx-3 justify-content-start">
-                    <button class="btn btn-secondary btn-lg" routerLink="../">Cancelar</button> 
+                <div class="d-flex flex-row justify-content-end">
+                    <div class="mx-3">
+                        <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formEspacio.valid" *ngIf='!disabledForm'>{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Espacio Fisico</button>
+                        <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Cargando...
+                          </button>
+                    </div>
                 </div>
-                <div class="mx-3">
-                    <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formEspacio.valid">Guardar</button>
-                </div>
-            </div>
-            <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-                <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
-                <div class="p-2 bd-highlight">
-                    <button class="btn btn-secondary btn-lg" routerLink="../">VOLVER</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
+
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+</div>
+
+
+<app-toast></app-toast>

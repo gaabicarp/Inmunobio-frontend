@@ -20,7 +20,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   @Output() volviendo = new EventEmitter<number>();
 
   stocks: Stock;
-  productos: Producto;
+  productos: Producto[];
   contenedores= [];
   idEspacioFisico:number;
   espacioFisico:any;

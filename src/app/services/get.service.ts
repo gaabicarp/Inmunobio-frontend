@@ -37,8 +37,8 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'distribuidora/' + id);
   }
 
-  obtenerProductos(): Observable<Producto>{
-    return this.http.get<any>(this.API_URL + 'getProductos');
+  obtenerProductos(): Observable<Producto[]>{
+    return this.http.get<Producto[]>(this.API_URL + 'getProductos');
   }
   obtenerProductosPorId(id : number): Observable<any>{
     return this.http.get<any>(this.API_URL + 'producto/' + id);

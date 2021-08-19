@@ -4,6 +4,7 @@ import { GetService } from '../../../../services/get.service';
 import { Subscription } from 'rxjs';
 import { Distribuidora } from '../../../../models/distribuidora.model';
 import { Producto } from 'src/app/models/producto.model';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-productos',
@@ -12,48 +13,61 @@ import { Producto } from 'src/app/models/producto.model';
 })
 export class ProductosComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-  productos : Producto;
-  distribuidoras : Distribuidora;
+  productos: Producto[];
+  productosTodos: Producto[];
+  distribuidoras: Distribuidora;
 
-  estado: string;
-  mensajeAlert: string;
-  alert: boolean;
+  cargando: boolean;
 
-  constructor(private getService: GetService, private postService: PostService) { }
+  page: number;
+  pageSize: number;
+  collectionSize: number;
+
+  constructor(
+    private getService: GetService,
+    private postService: PostService,
+    public toastService: ToastServiceService,
+  ) { }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    this.alert = false;
+    this.cargando = true;
+    this.page = 1;
+    this.pageSize = 10;
     this.subscription.add( this.getService.obtenerProductos().subscribe(res => {
-                            console.log(res)
-                            this.productos = res; })
+                            console.log(res);
+                            this.cargando = false;
+                            this.productos = res;
+                            this.productosTodos = res;
+                            this.collectionSize = res.length;
+                            this.refreshUsers();
+                          })
     );
     this.subscription.add( this.getService.obtenerDistribuidoras().subscribe(res => {
                             console.log(res)
-                            this.distribuidoras = res; })
+                            this.distribuidoras = res;
+                          })
     );
   }
-  
- 
-  eliminar(producto : Producto){
-    this.postService.eliminarProducto(producto.id_producto).subscribe(res =>{
+
+  eliminar(producto: Producto): void{
+    this.postService.eliminarProducto(producto.id_producto).subscribe(res => {
       if (res.Status === 'ok'){
-        this.alert = true;
-        this.estado = 'success';
-        this.mensajeAlert = 'Producto eliminado correctamente';
-        setTimeout(() => {
-          this.ngOnInit()
-        }, 2000);
+        this.toastService.show('Producto Eliminado', { classname: 'bg-warning text-light', delay: 2000 });
       }
       console.log(res);
     }, err => {
-      this.alert = true;
-      this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.error);
-    })
+      this.toastService.show('Problema al eliminar producto', { classname: 'bg-danger text-light', delay: 2000 });
+    });
+  }
+
+  refreshUsers(): void {
+    this.productos = this.productosTodos
+      .map((user, i) => ({id: i + 1, ...user}))
+      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
 
 }

@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AgregarStockComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
-  productos: Producto;
+  productos: Producto[];
   contenedores: Contenedor;
   
   formStock!: FormGroup;

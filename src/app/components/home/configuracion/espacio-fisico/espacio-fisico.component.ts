@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-espacio-fisico',
@@ -11,32 +12,31 @@ export class EspacioFisicoComponent implements OnInit {
 
   espaciosFisicos = [];
   estado: string;
-  mensajeAlert: string;
-  alert: boolean;
-  constructor(private getService: GetService, private postService: PostService) { }
+  cargando: boolean;
+
+  constructor(
+    private getService: GetService,
+    private postService: PostService,
+    public toastService: ToastServiceService
+  ) { }
 
   ngOnInit(): void {
-    this.alert = false;
+    this.cargando = true;
+
     this.getService.obtenerEspaciosFisicos().subscribe(res => {
       console.log(res)
       this.espaciosFisicos = res;
+      this.cargando = false;
     });
   }
+
   eliminar(espacio: any): void{
     this.postService.eliminarEspacioFisico(espacio.id_espacioFisico).subscribe(res => {
-      if (res.Status === 'ok'){
-        this.alert = true;
-        this.estado = 'success';
-        this.mensajeAlert = 'Espacio fisico eliminado correctamente';
-        setTimeout(() => {
-          this.ngOnInit()
-        }, 2000);
+      // console.log(res)
+      if (res.Status){
+        this.toastService.show('Distribuidora Eliminada', { classname: 'bg-danger text-light', delay: 2000 });
       }
-      console.log(res);
-    }, err => {
-      this.alert = true;
-      this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.error);
+      // console.log(res);
     });
   }
 

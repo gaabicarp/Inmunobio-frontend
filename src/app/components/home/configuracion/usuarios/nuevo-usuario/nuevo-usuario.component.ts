@@ -17,12 +17,13 @@ export class NuevoUsuarioComponent implements OnInit {
   idUsuario: number;
   formUsuario!: FormGroup;
   permisos = [];
-  cargando: boolean;
 
+  cargando: boolean;
+  disabledForm: boolean;
 
   itemList: any = [];
   selectedItems = [];
-  settings = {};
+  settings: any;
 
   constructor(
     private getService: GetService,
@@ -50,6 +51,7 @@ export class NuevoUsuarioComponent implements OnInit {
       labelKey: 'descripcion',
       enableSearchFilter: true,
       searchBy: ['descripcion'],
+      disabled: false,
     };
 
     this.formUsuario = new FormGroup({
@@ -74,8 +76,11 @@ export class NuevoUsuarioComponent implements OnInit {
           password: this.usuario.password,
           direccion: this.usuario.direccion,
           telefono: this.usuario.telefono,
-          nivel: this.usuario.permisos
+          nivel: this.usuario.permisos.map(permiso => permiso.id_permiso)
         });
+        this.selectedItems = this.usuario.permisos.filter(permiso => permiso.id_permiso != 5);
+        // console.log(this.formUsuario.value.nivel);
+        // console.log(this.selectedItems);
       });
     } else {
       this.cargando = false;
@@ -83,6 +88,18 @@ export class NuevoUsuarioComponent implements OnInit {
   }
 
   crearUsuario(): void{
+    this.disabledForm = true;
+    this.settings = {
+      text: 'Seleccione permisos',
+      selectAllText: 'Seleccione Todos',
+      unSelectAllText: 'Quitar Todos',
+      classes: 'myclass custom-class',
+      primaryKey: 'id_permiso',
+      labelKey: 'descripcion',
+      enableSearchFilter: true,
+      searchBy: ['descripcion'],
+      disabled: true,
+    };
     const usuario: postUsuario = {
       nombre: this.formUsuario.value.nombre,
       password: this.formUsuario.value.password,
@@ -100,9 +117,10 @@ export class NuevoUsuarioComponent implements OnInit {
         }
       }, err => {
         this.toastService.show('Problema al crear usuario' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        this.clearForm();
       });
     } else {
-      usuario.id_usuario = this.usuario.id_usuario;
+      usuario.id = this.usuario.id;
       this.postService.editarUsuario(usuario).subscribe(res => {
         console.log(res);
         if (res.Status){
@@ -111,8 +129,24 @@ export class NuevoUsuarioComponent implements OnInit {
         }
       }, err => {
         this.toastService.show('Problema al editar usuario' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        this.clearForm();
       });
     }
+  }
+
+  clearForm(): void {
+    this.disabledForm = false;
+    this.settings = {
+      text: 'Seleccione permisos',
+      selectAllText: 'Seleccione Todos',
+      unSelectAllText: 'Quitar Todos',
+      classes: 'myclass custom-class',
+      primaryKey: 'id_permiso',
+      labelKey: 'descripcion',
+      enableSearchFilter: true,
+      searchBy: ['descripcion'],
+      disabled: false,
+    };
   }
 
   volver(): void{

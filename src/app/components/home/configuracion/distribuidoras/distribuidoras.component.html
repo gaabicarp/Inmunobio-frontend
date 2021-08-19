@@ -1,53 +1,63 @@
-
-    <div class="m-4" routerLink="../" role="button">
-        <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
-    </div>
-    <div class="mx-4">        
-        
-        <div class="text-center my-4">
-            <h2>Distribuidoras</h2>
+<div *ngIf='!cargando'>
+  <div class="m-4" routerLink="../" role="button">
+      <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+  </div>
+  <div class="mx-4">        
+    <div class="my-3">
+      <div class="d-flex align-items-center">
+        <h2 class="mb-0">Distribuidoras</h2>
+        <div class="ml-4">
+          <button class="btn btn-outline-primary" routerLink='nueva-distribuidora'>Nueva Distribuidora</button>
         </div>
-        <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-          <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
-        </div>
-        <div class="card rounded shadow p-4 mb-4">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Contacto</th>
-                    <th scope="col">Dirección</th>
-                    <th scope="col">Cuit</th>
-                    <th scope="col">Representante</th>
-                    <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor='let distribuidora of distribuidoras; let i = index'>
-                        <th scope="row">{{i + 1}}</th>
-                        <td>{{distribuidora.nombre}}</td>
-                        <td>{{distribuidora.contacto}}</td>
-                        <td>{{distribuidora.direccion}}</td>
-                        <td>{{distribuidora.cuit}}</td>
-                        <td>{{distribuidora.representante}}</td>
-                        <td class="d-flex">
-                            <div class="mr-4">
-                              <a class="text-primary" role="button" routerLink={{distribuidora.id_distribuidora}}>
-                                <i class="bi bi-pencil"></i>
-                              </a>
-                            </div>
-                            <div>
-                              <a class="text-danger" role="button" (click)=eliminar(distribuidora)>
-                                <i class="bi bi-trash"></i>
-                              </a>
-                            </div>
-                          </td>
-                        
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    <button class="btn btn-primary" routerLink=nueva-distribuidora>Nueva Distribuidora</button>
+      </div>
     </div>
 
+    
+    <div class="p-4 mb-4">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Contacto</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Cuit</th>
+                <th scope="col">Representante</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let distribuidora of distribuidoras; let i = index'>
+                    <th scope="row">{{i + 1}}</th>
+                    <td>{{distribuidora.nombre}}</td>
+                    <td>{{distribuidora.contacto}}</td>
+                    <td>{{distribuidora.direccion}}</td>
+                    <td>{{distribuidora.cuit}}</td>
+                    <td>{{distribuidora.representante}}</td>
+                    <td class="d-flex">
+                        <div class="mr-4">
+                          <a class="text-primary" role="button" routerLink='editar-distribuidora/{{distribuidora.id_distribuidora}}'>
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                        </div>
+                        <div>
+                          <a class="text-danger" role="button" (click)=eliminar(distribuidora)>
+                            <i class="bi bi-trash"></i>
+                          </a>
+                        </div>
+                      </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+  <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+  <app-toast></app-toast>

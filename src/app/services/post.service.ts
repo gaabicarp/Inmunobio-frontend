@@ -25,6 +25,7 @@ export class PostService {
   }
 
   editarUsuario(usuario: postUsuario): Observable<any>{
+    console.log(usuario);
     return this.http.put<any>(this.API_URL + 'usuario', usuario);
   }
 

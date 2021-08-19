@@ -1,62 +1,73 @@
-
-<div class="m-4" routerLink="../" role="button">
-    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+<div *ngIf='!cargando'>  
+  <div class="m-4" routerLink="../" role="button">
+      <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+  </div>
+  
+  <div class="m-4">
+    <div class="my-3">
+      <div class="d-flex align-items-center">
+        <h2>Productos</h2>
+        <div class="ml-4">
+          <button class="btn btn-outline-primary" routerLink='nuevo-producto'>Nuevo Producto</button>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 mb-4">
+      <table class="table table-hover text-center table-responsive">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Distribuidora</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Aka</th>
+            <th scope="col">Url</th>
+            <th scope="col">Unidad de agrupacion</th>
+            <th scope="col">Detalles Técnicos</th>
+            <th scope="col">Protocolo</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let producto of productos; let i = index'>
+            <th scope="row">{{i +1}}</th>
+            <td>{{producto.nombre}}</td>
+            <td>{{producto.marca}}</td>
+            <td>{{producto.nombreDistribuidora}}</td>
+            <td>{{producto.tipo}}</td>
+            <td>{{producto.aka}}</td>
+            <td>{{producto.url}}</td>
+            <td>{{producto.unidadAgrupacion}}</td>
+            <td>{{producto.detallesTecnicos}}</td>
+            <td>{{producto.protocolo}}</td>
+            <td class="d-flex">
+                <div class="mr-4">
+                  <a class="text-primary" role="button" routerLink='editar-productos/{{producto.id_producto}}'>
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                </div>
+                <div>
+                  <a class="text-danger" role="button" (click)=eliminar(producto)>
+                    <i class="bi bi-trash"></i>
+                  </a>
+                </div>
+              </td>      
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshUsers()">
+        </ngb-pagination>
+      </div>
+    </div>
+  <div>
 </div>
 
-<div class="text-center m-4">
-  <h2>Productos en el Sistema</h2>
-</div>
-<div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-  <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
-</div>
-<div class="card rounded shadow p-4 mb-4">
-<table class="table table-hover text-center table-responsive">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Marca</th>
-      <th scope="col">Distribuidora</th>
-      <th scope="col">Tipo</th>
-      <th scope="col">Aka</th>
-      <th scope="col">Url</th>
-      <th scope="col">Unidad de agrupacion</th>
-      <th scope="col">Detalles Técnicos</th>
-      <th scope="col">Protocolo</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor='let producto of productos; let i = index'>
-      <th scope="row">{{i +1}}</th>
-      <td>{{producto.nombre}}</td>
-      <td>{{producto.marca}}</td>
-      <td>{{producto.nombreDistribuidora}}</td>
-      <td>{{producto.tipo}}</td>
-      <td>{{producto.aka}}</td>
-      <td>{{producto.url}}</td>
-      <td>{{producto.unidadAgrupacion}}</td>
-      <td>{{producto.detallesTecnicos}}</td>
-      <td>{{producto.protocolo}}</td>
-      <td class="d-flex">
-          <div class="mr-4">
-            <a class="text-primary" role="button" routerLink={{producto.id_producto}}>
-              <i class="bi bi-pencil"></i>
-            </a>
-          </div>
-          <div>
-            <a class="text-danger" role="button" (click)=eliminar(producto)>
-              <i class="bi bi-trash"></i>
-            </a>
-          </div>
-        </td>
-      
-  </tr>
-  </tbody>
-</table>
-</div>
-<div>
-  <button type="button" class="btn btn-primary btn-lg" routerLink='nuevo-producto' >Nuevo Producto</button>
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+  <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
 </div>
 
-
+<app-toast></app-toast>

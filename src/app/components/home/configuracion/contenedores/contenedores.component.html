@@ -1,59 +1,67 @@
-    <div class="m-4" routerLink="../" role="button">
-        <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+<div *ngIf='!cargando'>
+  <div class="m-4" routerLink="../" role="button">
+    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+  </div>
+  <div class="m-4">
+    <div class="my-3">
+      <div class="d-flex align-items-center">
+        <h2>Contenedores</h2>
+        <div class="ml-4">
+          <button class="btn btn-outline-primary" routerLink='nuevo-contenedor'>Nuevo Contenedor</button>
+        </div>
+      </div>
     </div>
-    <div class="mx-4">        
-        
-        <div class="text-center my-4">
-            <h2>Contenedores</h2>
-        </div>
-        <div class="d-flex bd-highlight alert alert-{{estado}} mt-3" role="alert" *ngIf='alert'>
-          <div class="p-2 flex-grow-1 bd-highlight">{{mensajeAlert}}</div>
-        </div>
-        <div class="card rounded shadow p-4 mb-4">
-            <table class="table table-hover table-responsive text-center">
-                <thead>
-                    <tr>
-                    <th scope="col">Código</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Temperatura</th>
-                    <th scope="col">Capacidad</th>
-                    <th scope="col">Ficha Técnica</th>
-                    <th scope="col">Proyecto Asignado</th>
-                    <th scope="col">Espacio Físico</th>
-                    <th scope="col">Disponible</th>
-                    <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor='let contenedor of contenedores; let i = index'>
-                        <td>{{contenedor.codigo}}</td>
-                        <td>{{contenedor.nombre}}</td>
-                        <td>{{contenedor.descripcion}}</td>
-                        <td>{{contenedor.temperatura}}</td>
-                        <td>{{contenedor.capacidad}}</td>
-                        <td>{{contenedor.fichaTecnica}}</td>
-                        <td *ngIf='contenedor.nombreProyecto != 0'  >{{contenedor.nombreProyecto}}</td>
-                        <td *ngIf='contenedor.nombreProyecto === 0'>Sin Asignar</td>
-                        <td>{{contenedor.nombreEspFisico}}</td>
-                        <td>{{contenedor.disponible}}</td>
-                        <td class="d-flex">
-                            <div class="mr-4">
-                              <a class="text-primary" role="button" routerLink={{contenedor.id_contenedor}}>
-                                <i class="bi bi-pencil"></i>
-                              </a>
-                            </div>
-                            <div>
-                              <a class="text-danger" role="button" (click)=eliminar(contenedor.id_contenedor)>
-                                <i class="bi bi-trash"></i>
-                              </a>
-                            </div>
-                          </td>
-                        
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    <button class="btn btn-primary" routerLink='nuevo-contenedor'>Nuevo Contenedor</button>
-    </div>
+    <div class="p-4 mb-4">
+        <table class="table table-hover table-responsive text-center">
+            <thead>
+                <tr>
+                <th scope="col">Código</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Temperatura</th>
+                <th scope="col">Capacidad</th>
+                <th scope="col">Ficha Técnica</th>
+                <th scope="col">Proyecto Asignado</th>
+                <th scope="col">Espacio Físico</th>
+                <th scope="col">Disponible</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let contenedor of contenedores; let i = index'>
+                    <td>{{contenedor.codigo}}</td>
+                    <td>{{contenedor.nombre}}</td>
+                    <td>{{contenedor.descripcion}}</td>
+                    <td>{{contenedor.temperatura}}</td>
+                    <td>{{contenedor.capacidad}}</td>
+                    <td>{{contenedor.fichaTecnica}}</td>
+                    <td *ngIf='contenedor.nombreProyecto != 0'  >{{contenedor.nombreProyecto}}</td>
+                    <td *ngIf='contenedor.nombreProyecto === 0'>Sin Asignar</td>
+                    <td>{{contenedor.nombreEspFisico}}</td>
+                    <td>{{contenedor.disponible}}</td>
+                    <td class="d-flex">
+                        <div class="mr-4">
+                          <a class="text-primary" role="button" routerLink='editar-contenedor/{{contenedor.id_contenedor}}'>
+                            <i class="bi bi-pencil"></i>
+                          </a>
+                        </div>
+                        <div>
+                          <a class="text-danger" role="button" (click)=eliminar(contenedor.id_contenedor)>
+                            <i class="bi bi-trash"></i>
+                          </a>
+                        </div>
+                      </td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+  </div>
+</div>
 
+<div class="d-flex justify-content-center align-items-center h-100" *ngIf='cargando'>
+  <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+<app-toast></app-toast>

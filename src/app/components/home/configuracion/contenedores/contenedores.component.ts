@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../../../services/post.service';
 import { GetService } from '../../../../services/get.service';
 import { Contenedor } from 'src/app/models/contenedores.model';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-contenedores',
@@ -12,42 +13,37 @@ export class ContenedoresComponent implements OnInit {
   contenedores: Contenedor;
   proyectos = [];
   espacios = [];
-  estado: string;
-  mensajeAlert: string;
-  alert: boolean;
 
-  constructor(private getService: GetService, private postService: PostService) { }
+  cargando: boolean;
+
+  constructor(
+    private getService: GetService,
+    private postService: PostService,
+    public toastService: ToastServiceService
+  ) { }
 
   ngOnInit(): void {
-    this.alert = false;
-    this.getService.obtenerContenedores().subscribe(res => {
-      console.log(res)
-      this.contenedores = res;
-    });
+    this.cargando = true;
     this.getService.obtenerProyectos().subscribe(res => {
-      console.log(res)
+      // console.log(res)
       this.proyectos = res;
     });
     this.getService.obtenerEspaciosFisicos().subscribe(res =>{
       this.espacios = res;
-    })
+    });
+    this.getService.obtenerContenedores().subscribe(res => {
+      // console.log(res)
+      this.contenedores = res;
+      this.cargando = false;
+    });
   }
 
-  eliminar(id : number){
+  eliminar(id: number): void {
     this.postService.eliminarContenedor(id).subscribe(res =>{
       if (res.Status === 'Ok'){
-        this.alert = true;
-        this.estado = 'success';
-        this.mensajeAlert = 'Contenedor eliminado correctamente';
-        setTimeout(() => {
-          this.ngOnInit()
-        }, 2000);
+        this.toastService.show('Distribuidora Eliminada', { classname: 'bg-danger text-light', delay: 2000 });
       }
-      console.log(res);
-    }, err => {
-      this.alert = true;
-      this.estado = 'danger';
-      this.mensajeAlert = JSON.stringify(err.error.error);
-    })
+      // console.log(res);
+    });
   }
 }
