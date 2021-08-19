@@ -16,7 +16,8 @@
               <div class="d-flex align-items-center">
                 <h4 class="text-secondary text-staatliches mb-0 ml-4">Fuentes Experimentales</h4>
                 <div class="ml-4">
-                  <button class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuente)'>+Nuevo</button>
+                  <button  *ngIf='grupoExperimental?.tipo === "Otro" '  class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuenteOtro)'>+Nuevo</button>
+                  <button *ngIf='grupoExperimental?.tipo === "Animal" ' class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuenteAnimal)'>+Nuevo</button>
                 </div>
               </div>
               <div class="cards-container">
@@ -282,7 +283,7 @@
     </div>
   </ng-template>
 
-  <ng-template #fuente let-modal>
+  <ng-template #fuenteAnimal let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Nueva Fuente Experimental</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -293,7 +294,7 @@
         <div class="">
             <div class=""  >
               <!-- *ngIf="animalesProyecto?.length > 0" -->
-                <form [formGroup]='formFuenteExperimental'>
+                <form [formGroup]='formFuenteExperimentalAnimal'>
                     <div class=''>
                         <label for="codigo" class="form-label">Codigo de fuente experimental</label>
                         <input type="text" class="form-control" id="codigo" formControlName='codigo'>
@@ -321,12 +322,43 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary boton" (click)='crearFuente()'>Agregar</button>
+        <button class="btn btn-primary boton" (click)='crearFuenteAnimal()'>Agregar</button>
         <!-- *ngIf="animalesProyecto?.length > 0" -->
-        <button class="btn btn-primary boton" (click)="modal.dismiss('Cross click')" >Aceptar</button>
+        <button class="btn btn-primary boton" (click)="modal.dismiss('Cross click')" >Cancelar</button>
         <!-- *ngIf="animalesProyecto?.length === 0" -->
     </div>
   </ng-template>
+
+  <ng-template #fuenteOtro let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Nueva Fuente Experimental</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="">
+            <div class=""  >
+              <!-- *ngIf="animalesProyecto?.length > 0" -->
+                <form [formGroup]='formFuenteExperimentalOtro'>
+                    <div class=''>
+                        <label for="codigo" class="form-label">Codigo de fuente experimental</label>
+                        <input type="text" class="form-control" id="codigo" formControlName='codigo'>
+                    </div>
+                    <label for="descripcion" class="form-label">Descripcion</label>
+                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
+              </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary boton" (click)='crearFuenteOtro()'>Agregar</button>
+        <!-- *ngIf="animalesProyecto?.length > 0" -->
+        <button class="btn btn-primary boton" (click)="modal.dismiss('Cross click')" >Cancelar</button>
+        <!-- *ngIf="animalesProyecto?.length === 0" -->
+    </div>
+  </ng-template>
+
 
   <ng-template #fuenteDetalle let-modal>
     <div class="modal-header">
