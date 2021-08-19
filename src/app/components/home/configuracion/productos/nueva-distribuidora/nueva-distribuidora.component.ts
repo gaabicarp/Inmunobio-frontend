@@ -76,6 +76,7 @@ export class NuevaDistribuidoraComponent implements OnInit {
         if (res.Status){
           this.toastService.show('Distribuidora Creada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.router.navigateByUrl('home/configuracion/distribuidoras');
           }, 2000);
         }
@@ -90,6 +91,7 @@ export class NuevaDistribuidoraComponent implements OnInit {
         if (res.Status){
           this.toastService.show('Distribuidora Editada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.router.navigateByUrl('home/configuracion/distribuidoras');
           }, 2000);
         }

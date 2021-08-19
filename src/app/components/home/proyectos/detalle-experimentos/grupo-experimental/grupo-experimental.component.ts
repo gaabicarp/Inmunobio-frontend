@@ -90,7 +90,6 @@ export class GrupoExperimentalComponent implements OnInit {
         console.log(res)
       })
     }, 500);
-
   }
 
   open(content): void {
@@ -215,6 +214,9 @@ export class GrupoExperimentalComponent implements OnInit {
     this.idFuente = idFuente;
     this.getService.obtenerMuestrasPorIdFuente(idFuente).subscribe( res =>{
       this.muestrasFiltradas = res;
+      console.log(res)
+    })
+    this.getService.obtenerFuenteExperimental(this.idFuente).subscribe(res =>{
       console.log(res)
     })
   }

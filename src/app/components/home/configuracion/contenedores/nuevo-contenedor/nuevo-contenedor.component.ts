@@ -104,7 +104,10 @@ export class NuevoContenedorComponent implements OnInit {
         console.log(res);
         if (res.Status){
           this.toastService.show('Contenedor Creado', { classname: 'bg-success text-light', delay: 2000 });
-          setTimeout(() => { this.volver(); }, 2000);
+          setTimeout(() => { 
+            this.volver();
+            this.toastService.removeAll()
+          }, 2000);
         }
         // console.log(res);
       }, err => {
@@ -116,7 +119,10 @@ export class NuevoContenedorComponent implements OnInit {
       this.postService.editarContenedor(contenedor).subscribe(res => {
         if (res.Status){
           this.toastService.show('Contenedor Editado', { classname: 'bg-success text-light', delay: 2000 });
-          setTimeout(() => { this.volver(); }, 2000);
+          setTimeout(() => { 
+            this.volver();
+            this.toastService.removeAll() 
+          }, 2000);
         }
         console.log(res);
       }, err => {

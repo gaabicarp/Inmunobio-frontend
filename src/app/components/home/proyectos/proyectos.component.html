@@ -24,9 +24,9 @@
                         <div class="d-flex flex-row justify-content-between">
                             <div>
                                 <h6><i>Fecha de Inicio</i></h6>
-                                <p class="mb-0">{{proyecto.fechaInicio | date}}</p>
+                                <p class="mb-0">{{proyecto.fechaInicio | date:'dd/MM/yy'}}</p>
                             </div>
-                            <div>
+                            <div class="ml-2">
                                 <h6><i>Estado</i></h6>
                                 <p class="mb-0">{{proyecto.finalizado ? 'Finalizado' : 'Activo'}}</p>
                             </div>

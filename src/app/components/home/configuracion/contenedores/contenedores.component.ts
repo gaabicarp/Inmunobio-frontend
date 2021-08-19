@@ -42,6 +42,9 @@ export class ContenedoresComponent implements OnInit {
     this.postService.eliminarContenedor(id).subscribe(res =>{
       if (res.Status === 'Ok'){
         this.toastService.show('Distribuidora Eliminada', { classname: 'bg-danger text-light', delay: 2000 });
+        setTimeout(() => {
+          this.toastService.removeAll()
+        }, 2000);
       }
       // console.log(res);
     });

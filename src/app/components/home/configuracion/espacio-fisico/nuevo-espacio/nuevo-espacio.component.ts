@@ -62,7 +62,10 @@ export class NuevoEspacioComponent implements OnInit {
       this.postService.crearEspacio(espacioFisico).subscribe(res => {
         if (res.Status === 'ok'){
           this.toastService.show('Espacio Creado', { classname: 'bg-success text-light', delay: 2000 });
-          setTimeout(() => { this.volver()}, 2000);
+          setTimeout(() => { 
+            this.volver()
+            this.toastService.removeAll()
+          }, 2000);
         }
       }, err => {
         this.toastService.show('Error al crear' + err, { classname: 'bg-danger text-light', delay: 2000 });
@@ -73,7 +76,10 @@ export class NuevoEspacioComponent implements OnInit {
       this.postService.editarEspacio(espacioFisico).subscribe(res => {
         if (res.Status){
           this.toastService.show('Espacio Editado', { classname: 'bg-success text-light', delay: 2000 });
-          setTimeout(() => { this.volver()}, 2000);
+          setTimeout(() => { 
+            this.volver()
+            this.toastService.removeAll()
+          }, 2000);
         }
       }, err => {
         this.toastService.show('Error al editar' + err, { classname: 'bg-danger text-light', delay: 2000 });

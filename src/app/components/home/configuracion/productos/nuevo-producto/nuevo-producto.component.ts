@@ -96,6 +96,7 @@ export class NuevoProductoComponent implements OnInit {
           // console.log(res2);
           this.toastService.show('Producto Creado', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.router.navigateByUrl('home/configuracion/productos');
           }, 2000);
         });
@@ -110,6 +111,7 @@ export class NuevoProductoComponent implements OnInit {
         if (res.Status === 'ok'){
           this.toastService.show('Producto Editado', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.toastService.removeAll()
             this.router.navigateByUrl('home/configuracion/productos');
           }, 2000);
         }

@@ -8,53 +8,7 @@
     margin: 1em;
     padding: 1em;
   }
-/* BLOGS */
-.card-blog{
-    width: 95%;
-    margin: 1em;
-    vertical-align: auto;
-    align-items: center;
-    background-color: rgba(93, 155, 209, 0.082);
-    display: flex;
-  }
-  .fecha{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    flex-direction: column;
-    padding:0.7em;
-  }
-  .busqueda{
-    display: flex;
-    flex-direction: row;
-    margin: 1em; 
-  }
-  .search-container-blog{
-    width: 70%;
-    height: auto;
-    margin: auto;
-    display: flex;
-    justify-content: space-around;
-  }
-  .form-group{
-    margin: 2px;
-    display: flex;
-    width: auto;
-  }
-  .blog{
-    width: 100%;
-    margin-left: 5px;
-  }
-  .barra-blogs{
-    border: none;
-    border-left: 2px solid #999;
-    background-color: rgb(148, 148, 148);
-    height: 40px;
-    width: 2px;
-  }
-  .filtro-blogs{
-    margin: 7px;
-  }
+
   .muestra{
     display: flex;
     justify-content: space-around;
@@ -66,28 +20,21 @@
     max-width: 22em;
     width: 20em;
   }
-
+.ver-muestras{
+  font-style: italic;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
   @media screen and (max-width: 360px){
     .busqueda{
       display: block;
     }
-    .barra-blogs, .imagenModal{
+    .imagenModal{
       display: none;
     }
     label,input,select,.boton,textarea,.detalle-muestra{
-      width: 100%;
-    }
-    .search-container-blog{
-      width: 100%;
-      height: auto;
-      display: block;
-      align-items: center;
-    }
-    .card-blog{
-      margin-left: 7px;
-    }
-    .filtro-blogs{
-      margin: 0px;
       width: 100%;
     }
     .muestra{

@@ -57,6 +57,9 @@ export class ProductosComponent implements OnInit, OnDestroy {
     this.postService.eliminarProducto(producto.id_producto).subscribe(res => {
       if (res.Status === 'ok'){
         this.toastService.show('Producto Eliminado', { classname: 'bg-warning text-light', delay: 2000 });
+          setTimeout(() => {
+            this.toastService.removeAll()
+          }, 2000);
       }
       console.log(res);
     }, err => {

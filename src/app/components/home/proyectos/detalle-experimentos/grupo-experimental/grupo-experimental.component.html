@@ -27,7 +27,7 @@
                                 <h5 class="card-title text-center">{{fuente.codigo}}</h5>
                                 <hr class="my-3 bg-{{fuente.finalizado? 'danger' : 'success'}}">
                                 <p class="card-text text-center">{{fuente.descripcion}}{{fuente.descripcion}}</p>
-                                <div class="d-flex flex-row justify-content-between">
+                                <div *ngIf='grupoExperimental?.tipo === "Animal" ' class="d-flex flex-row justify-content-between">
                                     <div>
                                         <h6><i>Cepa</i></h6>
                                         <p class="mb-0">{{fuente.cepa}}</p>
@@ -41,6 +41,7 @@
                                         <p class="mb-0">{{fuente.sexo}}</p>
                                     </div>
                                 </div>
+                                <p class="ver-muestras">Ver Muestras</p>
                             </div>
                       </div>
                   </div>
@@ -384,7 +385,7 @@
                           <div class="d-flex flex-row justify-content-between">
                               <div>
                                   <h6><i>Fecha Alta</i></h6>
-                                  <p class="mb-0">{{muestra.fecha | date}}</p>
+                                  <p class="mb-0">{{muestra.fecha | date: 'dd/MM/yy'}}</p>
                               </div>
                               <div>
                                   <h6><i>Tipo</i></h6>

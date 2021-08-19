@@ -117,7 +117,10 @@ export class NuevoGrupoComponent implements OnInit {
     if (this.modo === 'CREAR'){
         this.postService.crearGrupoTrabajo(grupoTrabajo).subscribe(res => {
           this.toastService.show('Grupo Creado', { classname: 'bg-success text-light', delay: 2000 });
-          setTimeout(() => { this.volver(); }, 2000);
+          setTimeout(() => { 
+            this.volver(); 
+            this.toastService.removeAll()
+          }, 2000);
       }, err => {
           console.log(err)
           this.toastService.show('Problema al crear grupo' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
@@ -127,7 +130,10 @@ export class NuevoGrupoComponent implements OnInit {
       grupoTrabajo.id_grupoDeTrabajo = this.idGrupo;
       this.postService.editarGrupoTrabajo(grupoTrabajo).subscribe(res => {
         this.toastService.show('Grupo Editado', { classname: 'bg-success text-light', delay: 2000 });
-        setTimeout(() => { this.volver(); }, 2000);
+        setTimeout(() => { 
+          this.volver(); 
+          this.toastService.removeAll()
+        }, 2000);
       }, err => {
         console.log(err)
         this.toastService.show('Problema al editar grupo ' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });

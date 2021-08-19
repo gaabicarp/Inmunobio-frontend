@@ -44,7 +44,12 @@ export class UsuariosComponent implements OnInit {
 
   eliminar(usuario: Usuario): void{
     this.postService.eliminarUsuario(usuario.id_usuario).subscribe(res => {
-      this.toastService.show('Usuario Eliminado', { classname: 'bg-danger text-light', delay: 2000 });
+      if (res.Status){
+        this.toastService.show('Usuario Eliminado', { classname: 'bg-danger text-light', delay: 2000 });
+        setTimeout(() => {
+          this.toastService.removeAll()
+        }, 2000);
+      }
     });
   }
 

@@ -35,6 +35,9 @@ export class EspacioFisicoComponent implements OnInit {
       // console.log(res)
       if (res.Status){
         this.toastService.show('Distribuidora Eliminada', { classname: 'bg-danger text-light', delay: 2000 });
+        setTimeout(() => {
+          this.toastService.removeAll()
+        }, 2000);
       }
       // console.log(res);
     });

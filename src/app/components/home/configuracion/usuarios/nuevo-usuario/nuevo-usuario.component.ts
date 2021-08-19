@@ -113,7 +113,10 @@ export class NuevoUsuarioComponent implements OnInit {
       this.postService.crearUsuario(usuario).subscribe(res => {
         if (res.Status){
           this.toastService.show('Usuario Creado', { classname: 'bg-success text-light', delay: 2000 });
-          setTimeout(() => { this.volver(); }, 2000);
+          setTimeout(() => { 
+            this.volver(); 
+            this.toastService.removeAll()
+          }, 2000);
         }
       }, err => {
         this.toastService.show('Problema al crear usuario' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
@@ -125,7 +128,10 @@ export class NuevoUsuarioComponent implements OnInit {
         console.log(res);
         if (res.Status){
           this.toastService.show('Usuario Editado', { classname: 'bg-success text-light', delay: 2000 });
-          setTimeout(() => { this.volver(); }, 2000);
+          setTimeout(() => { 
+            this.volver();
+            this.toastService.removeAll()
+          }, 2000);
         }
       }, err => {
         this.toastService.show('Problema al editar usuario' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });

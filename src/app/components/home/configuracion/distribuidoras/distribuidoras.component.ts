@@ -42,6 +42,9 @@ export class DistribuidorasComponent implements OnInit, OnDestroy {
     this.postService.eliminarDistribuidora(distribuidora.id_distribuidora).subscribe(res =>{
       if (res.Status === 'ok'){
         this.toastService.show('Distribuidora Eliminada', { classname: 'bg-danger text-light', delay: 2000 });
+        setTimeout(() => {
+          this.toastService.removeAll()
+        }, 2000);
       }
       // console.log(res);
     });

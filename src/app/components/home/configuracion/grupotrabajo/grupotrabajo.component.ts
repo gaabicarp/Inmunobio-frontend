@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-grupotrabajo',
@@ -16,8 +17,10 @@ export class GrupotrabajoComponent implements OnInit {
   modo: string;
   cargando: boolean;
 
-  constructor(private getService: GetService, private postService: PostService) { }
-
+  constructor(
+    private getService: GetService, 
+    private postService: PostService,
+    public toastService: ToastServiceService) { }
 
   ngOnInit(): void {
     this.cargando = true;
@@ -40,7 +43,15 @@ export class GrupotrabajoComponent implements OnInit {
   }
 
   eliminarGrupo(grupo: any): void{
-    this.postService.eliminarGrupoTrabajo(grupo.id_grupoDeTrabajo);
+    this.postService.eliminarGrupoTrabajo(grupo.id_grupoDeTrabajo).subscribe(res =>{
+      if (res.Status){
+        this.toastService.show('Grupo Eliminado', { classname: 'bg-danger text-light', delay: 2000 });
+        setTimeout(() => {
+          this.toastService.removeAll()
+        }, 2000);
+      }
+      
+    })
   }
 
   onVolver(e: number): void{
