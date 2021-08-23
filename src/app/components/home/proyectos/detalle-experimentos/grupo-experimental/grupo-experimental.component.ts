@@ -79,16 +79,6 @@ export class GrupoExperimentalComponent implements OnInit {
       console.log(res);
       res.Status ? this.animalesProyecto = [] : this.animalesProyecto = res;
     });
-    this.getService.obtenerJaulasPorProyecto(this.idProyecto).subscribe( res =>{
-      console.log(res)
-      this.jaulasProy = res
-    })
-    setTimeout(() => {
-      this.getService.obtenerAnimalesPorJaula(this.jaulasProy[0].id_jaula).subscribe(res =>{
-        this.animales = res
-        console.log(res)
-      })
-    }, 500);
   }
 
   open(content): void {
