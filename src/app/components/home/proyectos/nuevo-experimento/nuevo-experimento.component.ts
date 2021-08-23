@@ -17,6 +17,7 @@ export class NuevoExperimentoComponent implements OnInit {
 
   cargando: boolean;
   modo: string;
+  disabledForm: boolean;
 
   constructor(
     private postService: PostService,
@@ -28,7 +29,6 @@ export class NuevoExperimentoComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargando = true;
-
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     window.location.href.includes('editar') ? this.modo = 'EDITAR' : this.modo = 'CREAR';
     console.log(this.modo)
@@ -37,7 +37,6 @@ export class NuevoExperimentoComponent implements OnInit {
       metodologia: new FormControl('', [Validators.required, Validators.maxLength(300)]),
       objetivos: new FormControl('', [Validators.required, Validators.maxLength(1000)]),
     });
-
     if (this.modo === 'EDITAR'){
       this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
       this.getService.obtenerExperimentoPorId(this.idExperimento).subscribe(res => {
@@ -53,13 +52,13 @@ export class NuevoExperimentoComponent implements OnInit {
   }
 
   crearExperimento(): void{
+    this.disabledForm = true;
     const experimento: any = {
       metodologia: this.formExperimento.value.metodologia,
       objetivos: this.formExperimento.value.objetivos,
       codigo: this.formExperimento.value.codigo,
       id_proyecto: this.idProyecto
     };
-
     if (this.modo === 'CREAR'){
       this.postService.crearExperimento(experimento).subscribe(res => {
         console.log(res)
@@ -67,11 +66,14 @@ export class NuevoExperimentoComponent implements OnInit {
           this.toastService.show('Experimento Creado', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
             this.toastService.removeAll()
+            this.disabledForm = false;
             this.volver();
           }, 2000);
         }
       }, err => {
         this.toastService.show('Problema al crear experimento' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        console.log(err)
+        this.disabledForm = false;
       });
     } else {
       experimento.id_experimento = this.idExperimento;
@@ -82,10 +84,13 @@ export class NuevoExperimentoComponent implements OnInit {
           setTimeout(() => {
             this.toastService.removeAll()
             this.volver();
+            this.disabledForm = false;
           }, 2000);
         }
       }, err => {
         this.toastService.show('Problema al editar experimento' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        console.log(err)
+        this.disabledForm = false;
       });
     }
   }

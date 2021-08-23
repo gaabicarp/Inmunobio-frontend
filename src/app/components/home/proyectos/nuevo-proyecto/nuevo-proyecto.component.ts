@@ -30,6 +30,7 @@ export class NuevoProyectoComponent implements OnInit {
   itemList: any = [];
   selectedItems = [];
   settings = {};
+  disabledForm: boolean;
 
   constructor(
     private getService: GetService,
@@ -129,6 +130,7 @@ export class NuevoProyectoComponent implements OnInit {
 
 
   crearProyecto(): void {
+    this.disabledForm = true;
     const int = [];
     this.selectedItems.map(usuario => {
       int.push(usuario.id_usuario);
@@ -147,10 +149,12 @@ export class NuevoProyectoComponent implements OnInit {
           console.log(res);
           this.toastService.show('Proyecto Creado', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.disabledForm = false;
             this.volver();
           }, 2000);
         }, err => {
           this.toastService.show('Problema al finalizar Proyecto' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+          this.disabledForm = false;
         });
     } else {
       // console.log(proyecto);
@@ -160,10 +164,12 @@ export class NuevoProyectoComponent implements OnInit {
           console.log(res);
           this.toastService.show('Proyecto Editado', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
+            this.disabledForm = false;
             this.volver();
           }, 2000);
         }, err => {
           this.toastService.show('Problema al editar Proyecto' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+          this.disabledForm =false;
       });
     }
   }

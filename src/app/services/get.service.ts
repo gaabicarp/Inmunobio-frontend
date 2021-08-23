@@ -85,6 +85,9 @@ export class GetService {
   obtenerMuestrasPorGrupo(idGrupo:number):Observable<any>{
     return this.http.get<any>(this.API_URL + 'grupoExperimental/'+idGrupo+'/muestras');
   }
+  obtenerMuestraxId(idMuestra: number):Observable<any>{
+    return this.http.get<any>(this.API_URL + 'muestra/'+idMuestra);
+  }
 
   obtenerGrupos(): Observable<any>{
     return this.http .get<any>(this.API_URL + 'gruposDeTrabajo');

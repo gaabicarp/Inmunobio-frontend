@@ -35,6 +35,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
   prodEspecifico:any;
   editar = false;
   cargando: boolean;
+  disabledForm: boolean;
  
   constructor(
     private router: Router,
@@ -106,6 +107,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
   }
 
   agregarStock(): void{
+    this.disabledForm = true;
     var fecha = this.formStock.value.fechaVencimiento;
     const productoEnStock : any = {
       lote: this.formStock.value.lote,
@@ -137,6 +139,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
         this.toastService.show('Información editada ', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
           this.toastService.removeAll()
+          this.disabledForm = false;
           this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
         }, 2000);
       }
@@ -146,6 +149,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
       console.log(err)
       setTimeout(() => {
         this.toastService.removeAll()
+        this.disabledForm = false;
       }, 3000);
     });
     } else {
@@ -154,6 +158,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
             this.toastService.show('Producto en stock agregado correctamente ', { classname: 'bg-success text-light', delay: 2000 });
             setTimeout(() => {
               this.toastService.removeAll()
+              this.disabledForm = false;
               this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
             }, 2000);
           }
@@ -163,6 +168,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
           console.log(err)
           setTimeout(() => {
             this.toastService.removeAll()
+            this.disabledForm = false;
           }, 3000);
         });
     }

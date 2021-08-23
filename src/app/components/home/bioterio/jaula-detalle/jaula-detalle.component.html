@@ -171,7 +171,7 @@
                 <div class="body-asociar">
                         <div class="m-2">
                             <label for="tipo" class="form-label">Seleccione Proyecto</label>
-                          <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]='idProyecto_asociar'>
+                          <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]='idProyecto_asociar' [attr.disabled]='disabledForm ? true : null'>
                             <option value="0">Sin Asignar</option>
                             <option *ngFor='let proyecto of proyectos' value="{{proyecto.id_proyecto}}">{{proyecto.nombre}}</option>
                           </select>
@@ -183,7 +183,11 @@
               </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-outline-primary btn-lg mr-3"  (click)=asociar()>Asociar</button>
+            <button class="btn btn-primary btn-lg mr-3"  (click)=asociar() *ngIf='!disabledForm'>Asociar</button>
+            <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Cargando...
+          </button>
         </div>
       </ng-template>
 
@@ -198,7 +202,7 @@
           <div class="body-crear_blog">
             <div class="">
               <label for="tipo" class="form-label">Escriba una publicacion</label>
-              <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" [(ngModel)]='detalleBlog'></textarea>
+              <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" placeholder="Escriba el detalle del Blog" [(ngModel)]='detalleBlog' [attr.disabled]='disabledForm ? true : null'></textarea>
             </div>
             <div class="imagenModal">
               <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
@@ -206,7 +210,11 @@
           </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-outline-primary btn-lg mr-3" (click)='crearBlog()'>Crear</button>
+            <button class="btn btn-primary btn-lg mr-3" (click)='crearBlog()' *ngIf='!disabledForm'>Crear</button>
+            <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Cargando...
+          </button>
         </div>
       </ng-template>
 
@@ -226,8 +234,12 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-outline-secondary btn-lg mr-3" (click)="modal.dismiss('Cross click')">Cancelar</button>
-          <button class="btn btn-outline-danger btn-lg mr-3" (click)= eliminarJaula()>Eliminar</button>
+          <button class="btn btn-secondary btn-lg mr-3" (click)="modal.dismiss('Cross click')">Cancelar</button>
+          <button class="btn btn-primary btn-lg mr-3" (click)= eliminarJaula() *ngIf='!disabledForm'>Eliminar</button>
+          <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+             Cargando...
+          </button>
         </div>
       </ng-template>
 
@@ -247,8 +259,12 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-outline-secondary btn-lg mr-3" (click)="modal.dismiss('Cross click')">Cancelar</button>
-          <button class="btn btn-outline-danger btn-lg mr-3" (click)= eliminarAnimal()>Eliminar</button>
+          <button class="btn btn-secondary btn-lg mr-3" (click)="modal.dismiss('Cross click')">Cancelar</button>
+          <button class="btn btn-primary btn-lg mr-3" (click)= eliminarAnimal() *ngIf='!disabledForm'>Eliminar</button>
+          <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+             Cargando...
+          </button>
         </div>
       </ng-template>
     

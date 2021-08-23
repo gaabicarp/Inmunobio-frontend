@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
@@ -22,25 +22,23 @@ export class GrupoExperimentalComponent implements OnInit {
   formFuenteExperimentalOtro: FormGroup;
   formMuestra: FormGroup;
   contenedores = [];
-  active = 1;
-  muestras:any;
   muestrasFiltradas:any;
   animal:any;
   fuente:Fuente;
   fuenteOtro:any;
-  contenedoresProyecto: any;
-  contenedoress:any;
-
-  codigo:any;
-  descripcion:any;
-  codigoGrupoExperimental:any; 
 
   jaulasProy:any;
   idJaulas:any;
   animales:any;
 
   idFuente:number;
+  idMuestra:number;
+  editar :any;
+  datosFuente:any;
+  disabledForm: boolean;
+
   constructor(
+    private router: Router,
     private activatedRouter: ActivatedRoute,
     private postService: PostService,
     private getService: GetService,
@@ -49,6 +47,7 @@ export class GrupoExperimentalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.editar=false;
     this.idGrupo = parseInt(this.activatedRouter.snapshot.paramMap.get('idGrupo'), 10);
     this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
@@ -62,9 +61,9 @@ export class GrupoExperimentalComponent implements OnInit {
     })
     this.formFuenteExperimentalAnimal = new FormGroup({
       tipo: new FormControl(''),
-      codigo: new FormControl(''),
-      animal: new FormControl(''),
-      descripcion: new FormControl('')
+      codigo: new FormControl('',Validators.required),
+      animal: new FormControl('0',Validators.required),
+      descripcion: new FormControl('',Validators.required)
     });
     this.formFuenteExperimentalOtro = new FormGroup({
       tipo: new FormControl(''),
@@ -73,8 +72,8 @@ export class GrupoExperimentalComponent implements OnInit {
     });
     this.formMuestra = new FormGroup({
       codigo: new FormControl(''),
-      descripcion: new FormControl(''),
-      contenedor: new FormControl('')
+      contenedor: new FormControl("0",Validators.required),
+      descripcion: new FormControl('')
     });
     this.getService.obtenerAnimalesPorProyectos(this.idProyecto).subscribe(res => {
       console.log(res);
@@ -93,15 +92,14 @@ export class GrupoExperimentalComponent implements OnInit {
   }
 
   open(content): void {
-    console.log(this.animalesProyecto)
     this.modalService.open(content, { centered: true, size: 'xl' });
   }
 
   crearFuenteAnimal(): void{
+    this.disabledForm = true;
       const idAnimal = this.formFuenteExperimentalAnimal.value.animal
       this.getService.obtenerAnimalxId(idAnimal).subscribe( res =>{
         this.animal = res;
-        // console.log(res)
       })
       setTimeout(() => {
       this.fuente={
@@ -133,21 +131,27 @@ export class GrupoExperimentalComponent implements OnInit {
           setTimeout(() => {
             this.toastService.removeAll()
             this.modalService.dismissAll()
+            this.disabledForm = false;
             this.ngOnInit()
           }, 2000);
         }
       }, err => {
         if(err.error.Error == "Los animales ya están en uso."){
           this.toastService.show('Error - el animal ya está en uso', { classname: 'bg-danger text-light', delay: 2000 });
+          this.disabledForm = false;
+          setTimeout(() => {
+            this.toastService.removeAll()
+          }, 3000);
         } else{
           this.toastService.show('Error '+ err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
+          console.log(err)
+          this.disabledForm = false;
         }
-        console.log(err)
       })
     }, 1000);
   }
   crearFuenteOtro(){
-      setTimeout(() => {
+    this.disabledForm = true;
       this.fuenteOtro={
         codigo: this.formFuenteExperimentalOtro.value.codigo,
         codigoGrupoExperimental: this.grupoExperimental.codigo,
@@ -169,20 +173,19 @@ export class GrupoExperimentalComponent implements OnInit {
           setTimeout(() => {
             this.toastService.removeAll()
             this.modalService.dismissAll()
+            this.disabledForm = false;
             this.ngOnInit()
           }, 2000);
         }
       }, err => {
         this.toastService.show('Problema al crear la fuente experimental' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
         console.log(err)
+        this.disabledForm = false;
       })
-    }, 1000);
-
   }
-
-
   crearMuestra(): void{
-    const obj = {
+    this.disabledForm = true;
+    const obj : any = {
       id_proyecto : this.idProyecto,
       id_experimento : this.idExperimento,
       id_grupoExperimental : this.idGrupo,
@@ -193,21 +196,44 @@ export class GrupoExperimentalComponent implements OnInit {
       id_fuenteExperimental: this.idFuente
     }
     console.log([obj])
-    this.postService.crearMuestra([obj]).subscribe(res => {
-      if (res.Status === 'Muestra creada'){
-        this.toastService.show('Muestra creada', { classname: 'bg-success text-light', delay: 2000 });
-        setTimeout(() => {
-          this.toastService.removeAll()
-          this.modalService.dismissAll()
-          this.ngOnInit()
-        }, 2000);
-      }
-      console.log(res);
-    }, err => {
-      this.toastService.show('Problema crear la muestra ' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
-      console.log(err)
-    })
-  } 
+    if(this.editar){
+      obj.id_muestra = this.idMuestra;
+      this.postService.editarMuestra(obj).subscribe(res =>{
+        if (res.Status === 'Se modificó la muestra'){
+          this.toastService.show('Muestra editada', { classname: 'bg-success text-light', delay: 2000 });
+          setTimeout(() => {
+            this.toastService.removeAll()
+            this.modalService.dismissAll()
+            this.disabledForm = false;
+            this.ngOnInit()
+          }, 2000);
+        }
+        console.log(res);
+      }, err => {
+        this.toastService.show('Problema editar la muestra ' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        console.log(err)
+        this.disabledForm = false;
+      })
+    } else {
+      this.postService.crearMuestra([obj]).subscribe(res => {
+        if (res.Status === 'Muestra creada'){
+          this.toastService.show('Muestra creada', { classname: 'bg-success text-light', delay: 2000 });
+          setTimeout(() => {
+            this.toastService.removeAll()
+            this.modalService.dismissAll()
+            this.disabledForm = false;
+            this.ngOnInit()
+          }, 2000);
+        }
+        console.log(res);
+      }, err => {
+        this.toastService.show('Problema crear la muestra ' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        console.log(err)
+        this.disabledForm = false;
+      })
+    } 
+  }
+
   fuenteExpDetalle(idFuente, content){
     this.open(content)
     console.log(idFuente)
@@ -218,7 +244,41 @@ export class GrupoExperimentalComponent implements OnInit {
     })
     this.getService.obtenerFuenteExperimental(this.idFuente).subscribe(res =>{
       console.log(res)
+      this.datosFuente = res;
+    })
+  }
+
+  muestraModal(content,muestra){
+    console.log(muestra)
+    this.idMuestra = muestra.id_muestra;
+    this.formMuestra.patchValue({
+      codigo: muestra.codigo,
+      contenedor: muestra.id_contenedor,
+      descripcion: muestra.descripcion
+    });
+    if(muestra == 0){
+      this.editar = false;
+    } else {
+      this.editar = true;
+    }
+    this.open(content)
+  }
+  eliminarGrupoExperimental(){
+    this.postService.eliminarGrupoExperimental(this.idGrupo).subscribe(res =>{
+      console.log(res)
+      if(res.Status == 'Se borró el grupo experimental y sus subgrupos.'){
+        this.toastService.show('Grupo Experimenal eliminado', { classname: 'bg-success text-light', delay: 2000 });
+        setTimeout(() => {
+          this.toastService.removeAll()
+          this.modalService.dismissAll()
+          this.router.navigate(['/home/proyectos/'+this.idProyecto+'/experimento/'+this.idExperimento]);
+        }, 2000);
+      }
+    }, err => {
+      this.toastService.show('Problema al eliminar el Grupo ' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+      console.log(err)
     })
   }
 
 }
+

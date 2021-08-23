@@ -28,13 +28,21 @@ h2{
 .codigo{
     margin-left: 1em;
 }
+.boton{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5em;
+}
 @media screen and (max-width: 360px){
     .imagen{
         display: none;
         visibility: hidden;
     }
-    .btn{
+    .boton,button{
         width: 100%;
+        display: block;
+        justify-content: center;
+        margin: 0;
     }
     .fila,.filaMayor,.primer-bloque{
         display: block;

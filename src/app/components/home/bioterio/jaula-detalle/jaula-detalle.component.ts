@@ -38,6 +38,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   detalleBlog: string;
 
   cargando: boolean;
+  disabledForm: boolean;
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -98,6 +99,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   }
   
   asociar(){
+    this.disabledForm = true;
     const datos: any = {
       id_jaula : this.idJaula,
       id_proyecto : this.idProyecto_asociar
@@ -109,25 +111,28 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.toastService.removeAll()
           this.modalService.dismissAll()
+          this.disabledForm =false;
           this.ngOnInit()
         }, 2000);
-      }
-      } , err => {
+      }} , err => {
         this.toastService.show('Problema al asociar jaula' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
         console.log(err)
         setTimeout(() => {
+          this.disabledForm = false;
           this.modalService.dismissAll()
           this.toastService.removeAll()
         }, 4000);
     }))
   }
   eliminarJaula(){
+    this.disabledForm = true;
   this.subscription.add(this.postService.eliminarJaula(this.idJaula).subscribe(res =>{
       if (res.Status === 'Se dió de baja la jaula.'){
         this.toastService.show('Jaula eliminada', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
           this.toastService.removeAll()
           this.modalService.dismissAll()
+          this.disabledForm = false;
           this.router.navigate(['/home/bioterio']);
         }, 1000);
       }
@@ -138,6 +143,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.modalService.dismissAll()
         this.toastService.removeAll()
+        this.disabledForm = false;
       }, 4000);
     }))
   }
@@ -161,6 +167,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   }
 
   crearBlog(): void{
+    this.disabledForm = true;
     const Blog: Blogs={
       id_usuario: 1,
       detalle: this.detalleBlog,
@@ -176,6 +183,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.toastService.removeAll()
           this.modalService.dismissAll()
+          this.disabledForm = false;
           this.ngOnInit()
         }, 2000);
       }
@@ -186,11 +194,13 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.toastService.removeAll()
         this.modalService.dismissAll()
+        this.disabledForm = false;
       }, 4000);
     }));
   }
 
   eliminarAnimal(){
+    this.disabledForm = true;
     this.subscription.add(this.postService.eliminarAnimal(this.idAnimal_eliminar).subscribe(res =>{
       if (res.Status === "Se dio de baja el animal con id "+ this.idAnimal_eliminar){
         this.toastService.show('Animal eliminado', { classname: 'bg-success text-light', delay: 2000 });
@@ -198,6 +208,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
           this.animales = [];
           this.toastService.removeAll()
           this.modalService.dismissAll()
+          this.disabledForm = false;
           this.ngOnInit()
         }, 1500);
       }
@@ -208,6 +219,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.toastService.removeAll()
         this.modalService.dismissAll()
+        this.disabledForm = false;
       }, 4000);
     }))
   }

@@ -227,4 +227,8 @@ export class PostService {
   obtenerBlogsProyecto(blog: any): Observable<any>{
     return this.http.post<any>(this.API_URL +'blogsProyecto',blog);
   }
+  eliminarGrupoExperimental(idGrupo:number): Observable<any>{
+    return this.http.delete<any>(this.API_URL +'borrarGrupoExperimental/'+idGrupo);
+
+  }
 }

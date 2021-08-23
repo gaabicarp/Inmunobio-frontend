@@ -14,15 +14,19 @@
      <form [formGroup]="formHerramienta" (ngSubmit)="nuevaHerramienta()">
         <div class="">
             <label  for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" formControlName="nombre">
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Ingrese el nombre de la herramienta" [attr.disabled]='disabledForm ? true : null'>
         </div> 
         <div class="">
               <label for="detalle" class="form-label">Detalle</label>
-              <textarea type="text" class="form-control" id="detalle" formControlName="detalle"></textarea>
+              <textarea type="text" class="form-control" id="detalle" formControlName="detalle" placeholder="Ingrese el detalle de la herramienta" [attr.disabled]='disabledForm ? true : null'></textarea>
         </div> 
         <div class="">
             <div class="my-4 text-center">
-                <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formHerramienta.valid">Guardar</button>
+                <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formHerramienta.valid" *ngIf='!disabledForm'>Guardar</button>
+                <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Cargando...
+              </button>
             </div>
         </div>
     </form>

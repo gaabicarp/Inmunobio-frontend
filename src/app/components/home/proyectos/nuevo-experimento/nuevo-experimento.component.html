@@ -13,19 +13,16 @@
                     <div class="metodologiaYCodigo">
                         <div class="fila">
                             <label for="metodologia" class="form-label">Metodologia</label>
-                            <input type="text" class="form-control" id="metodologia" formControlName='metodologia'>
-                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            <input type="text" class="form-control" id="metodologia" formControlName='metodologia' placeholder="Ingrese metodología del experimento" [attr.disabled]='disabledForm ? true : null'>
                         </div>
                         <div class="fila codigo">
                             <label for="codigo" class="form-label">Codigo de experimento</label>
-                            <input type="text" class="form-control" id="codigo" formControlName='codigo'>
-                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            <input type="text" class="form-control" id="codigo" formControlName='codigo' placeholder="Ingrese código del experimento" [attr.disabled]='disabledForm ? true : null'>
                         </div>
                     </div>
                     <div class="fila">
                         <label for="objetivos" class="form-label">Objetivos</label>
-                        <textarea class="form-control" id='objetivos' aria-label="With textarea" rows="4" formControlName='objetivos'></textarea>
-                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                        <textarea class="form-control" id='objetivos' aria-label="With textarea" rows="4" formControlName='objetivos' placeholder="Ingrese los objetivos del experimento" [attr.disabled]='disabledForm ? true : null'></textarea>
                     </div>
                 </div>
                 <div class="imagen">
@@ -35,9 +32,13 @@
                 </div>
             </div>
                 
-            <div class="mt-2 text-center">
+            <div class="boton">
                 <div class="">
-                    <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formExperimento.valid'>Guardar</button>
+                    <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formExperimento.valid' *ngIf='!disabledForm'>Guardar</button>
+                    <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Cargando...
+                    </button>
                 </div>
             </div>
         </form>

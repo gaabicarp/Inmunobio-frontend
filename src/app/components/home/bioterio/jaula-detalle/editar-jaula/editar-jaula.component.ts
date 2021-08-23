@@ -22,6 +22,7 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
   espaciosFisicos: EspacioFisico[];
   formJaula!: FormGroup;
   cargando:boolean;
+  disabledForm: boolean;
   
   constructor(
     private router: Router,
@@ -51,8 +52,8 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
       rack: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       estante: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       capacidad: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-      tipo: new FormControl('', [Validators.maxLength(100)]),
-      id_espacioFisico: new FormControl('', [Validators.required, Validators.maxLength(100)])
+      tipo: new FormControl('0', [Validators.maxLength(100)]),
+      id_espacioFisico: new FormControl('0', [Validators.required, Validators.maxLength(100)])
     });
     setTimeout(() => {
       if (!isNaN(this.idJaula)){
@@ -69,6 +70,7 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
   }
 
   crearJaula(): void{
+    this.disabledForm = true;
     const jaula : Jaula ={
       codigo: this.formJaula.value.codigo,
       rack : this.formJaula.value.rack,
@@ -85,11 +87,13 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
           this.toastService.show('Informacion editada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
             this.toastService.removeAll()
+            this.disabledForm = false;
             this.router.navigate(['/home/bioterio/'+ this.idJaula]);
           }, 1500);
         }
       }, err => {
         this.toastService.show('Problema al editar la información' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        this.disabledForm = false;
       }));
     } else {
       this.subscription.add( this.postService.crearJaula(jaula).subscribe(res => {
@@ -98,11 +102,13 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
           this.toastService.show('Jaula creada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
             this.toastService.removeAll()
+            this.disabledForm = false;
             this.router.navigate(['/home/bioterio']);
           }, 2000);
         }
       }, err => {
         this.toastService.show('Problema al crear la jaula' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+        this.disabledForm = false;
       }));
     }
   }

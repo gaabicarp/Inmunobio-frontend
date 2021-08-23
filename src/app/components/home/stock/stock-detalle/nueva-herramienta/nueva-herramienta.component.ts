@@ -20,6 +20,7 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
   idHerramienta:number;
   herramienta:Herramienta;
   editar=false ;
+  disabledForm: boolean;
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
@@ -55,6 +56,7 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
     }, 500);
   }
   nuevaHerramienta(){
+    this.disabledForm = true;
     const herramienta : Herramienta = {
       nombre: this.formHerramienta.value.nombre,
       detalle: this.formHerramienta.value.detalle,
@@ -64,10 +66,11 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
       herramienta.id_espacioFisico  = this.idEspacioFisico;
       herramienta.id_herramienta = this.idHerramienta;
       this.subscription.add( this.postService.editarHerramienta(herramienta).subscribe(res => {
-        if (res.Status === 'ok'){
+        if (res.Status === 'Se modifico la herramienta'){
           this.toastService.show('Información editada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
             this.toastService.removeAll()
+            this.disabledForm = false;
             this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
           }, 1000);
         }
@@ -77,15 +80,17 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
         console.log(err)
         setTimeout(() => {
           this.toastService.removeAll()
+          this.disabledForm = false;
         }, 3000);
 
       }));
     } else {
       this.subscription.add( this.postService.crearHerramienta(herramienta).subscribe(res => {
-        if (res.Status === 'ok'){
+        if (res.Status === 'Se creo la nueva herramienta'){
           this.toastService.show('Herramienta creada', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
             this.toastService.removeAll()
+            this.disabledForm = false;
             this.router.navigate(['/home/stock/'+ this.idEspacioFisico]);
           }, 2000);
         }
@@ -94,6 +99,7 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
         this.toastService.show('Problema al crear la herramienta '+ err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
         setTimeout(() => {
           this.toastService.removeAll()
+          this.disabledForm = false;
         }, 3000);
       }));
     }

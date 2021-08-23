@@ -30,6 +30,7 @@ export class DetalleExperimentosComponent implements OnInit {
   fecHoy=new Date(Date.now());
   fecDesde:any;
   fecHasta:any;
+  disabledForm: boolean;
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -43,7 +44,7 @@ export class DetalleExperimentosComponent implements OnInit {
     this.filterPost = '';
     this.agregarGrupo = false;
     this.formGrupoExperimental = new FormGroup({
-      tipo: new FormControl('', Validators.required),
+      tipo: new FormControl('0', Validators.required),
       codigo: new FormControl('', Validators.required),
       descripcion: new FormControl(''),
     });
@@ -79,6 +80,7 @@ export class DetalleExperimentosComponent implements OnInit {
   }
 
   crearGrupoExperimental(): void {
+    this.disabledForm = true;
     const grupoExperimental = this.formGrupoExperimental.value;
     grupoExperimental.id_experimento = this.idExperimento;
     console.log(grupoExperimental)
@@ -87,12 +89,14 @@ export class DetalleExperimentosComponent implements OnInit {
       setTimeout(() => {
         this.toastService.removeAll()
         this.modalService.dismissAll()
+        this.disabledForm = false;
         this.ngOnInit()
       }, 2000);
 
     }, err => {
       this.toastService.show('Problema al crear Grupo Experimental' + err, { classname: 'bg-danger text-light', delay: 2000 });
       console.log(err)
+      this.disabledForm = false;
     });
   }
 
@@ -101,6 +105,7 @@ export class DetalleExperimentosComponent implements OnInit {
   }
 
   crearBlog(): void{
+    this.disabledForm = true;
     const Blog: any = {
       id_usuario: 1,
       detalle: this.detalleBlog,
@@ -113,28 +118,23 @@ export class DetalleExperimentosComponent implements OnInit {
     };
     // console.log(nuevoBlog)
     this.postService.crearBlogProyecto(nuevoBlog).subscribe(res => {
-      if (res.Status === 'ok'){
-        // this.alert = true;
-        // this.estado = 'success';
-        // this.mensajeAlert = 'Blog creado correctamente';
+      console.log(res)
+      if (res.Status === 'Se creó el blog de proyecto.'){
+        this.toastService.show('Blog creado', { classname: 'bg-success text-light', delay: 2000 });
+          setTimeout(() => {
+            this.toastService.removeAll()
+            this.modalService.dismissAll()
+            this.disabledForm = false;
+            this.ngOnInit()
+          }, 2000);
       }
     }, err => {
       console.log(err)
-      // this.alert = true;
-      // this.estado = 'danger';
-      // this.mensajeAlert = JSON.stringify(err.error.error);
+      this.toastService.show('Problema al crear el blog', { classname: 'bg-danger text-light', delay: 2000 });
     });
   }
 
   filtrarBlogs(): void{
-    // this.postService.obtenerBlogExperimento({
-    //   id_experimento: this.idExperimento,
-    //   fechaDesde: new Date(this.fechaDesde.year, this.fechaDesde.month - 1, this.fechaDesde.day).toDateString(),
-    //   fechaHasta: new Date(this.fechaHasta.year, this.fechaHasta.month - 1, this.fechaHasta.day).toDateString()
-    // }).subscribe(res => {
-    //   console.log(res);
-    //   this.blogs = res;
-    // });
     this.fecDesde =  new Date(this.fecDesde.year,(this.fecDesde.month -1)  ,this.fecDesde.day)
     const fechaHasta = new Date(this.fecHasta.year,(this.fecHasta.month -1) ,this.fecHasta.day)
     console.log(this.fecDesde, fechaHasta)

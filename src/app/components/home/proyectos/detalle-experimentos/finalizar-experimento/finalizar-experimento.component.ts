@@ -16,6 +16,7 @@ export class FinalizarExperimentoComponent implements OnInit {
   };
   idExperimento!: number;
   idProyecto!: number;
+  disabledForm: boolean;
   @Output() cerrar = new EventEmitter<any>();
 
   constructor(
@@ -31,6 +32,7 @@ export class FinalizarExperimentoComponent implements OnInit {
   }
 
   finalizarExperimento(): void {
+    this.disabledForm = true;
     const obj = {
       id_experimento: this.idExperimento,
       conclusiones: this.obj.conclusion,
@@ -41,10 +43,14 @@ export class FinalizarExperimentoComponent implements OnInit {
       setTimeout(() => {
         this.cerrarModal();
         this.toastService.removeAll()
+        this.disabledForm = false;
         this.router.navigate(['/home/proyectos/' + this.idProyecto]);
       }, 2000);
       }, err => {
         this.toastService.show('Problema al finalizar experimento' + err, { classname: 'bg-danger text-light', delay: 2000 });
+        console.log(err)
+        this.disabledForm = false;
+
     });
   }
 

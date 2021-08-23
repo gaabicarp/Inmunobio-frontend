@@ -7,27 +7,24 @@
                     <div class="mb-3">
                         <div>
                             <label  class="form-label">Conclusion</label>
-                            <textarea class="form-control" name='conclusion' aria-label="With textarea" rows="5" [(ngModel)]="obj.conclusion"></textarea>
-                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            <textarea class="form-control" name='conclusion' aria-label="With textarea" rows="5" placeholder="Ingrese la conclusión del experimento" [(ngModel)]="obj.conclusion" [attr.disabled]='disabledForm ? true : null'></textarea>
                         </div>            
                     </div>
                     <div>
                         <label class="form-label">Resultados</label>
-                        <textarea class="form-control" name='conclusion' aria-label="With textarea" rows="5" [(ngModel)]="obj.resultados"></textarea>
-                        <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                        <textarea class="form-control" name='conclusion' aria-label="With textarea" rows="5" placeholder="Ingrese los resultados del experimento" [(ngModel)]="obj.resultados" [attr.disabled]='disabledForm ? true : null'></textarea>   
                     </div>
             </div>
             <div class="imagen">
                 <div class="text-center">
                     <i class="bi bi-inboxes-fill" style="font-size: 8em;"></i>
-                    <!-- <i class="bi bi-folder-plus" ></i> -->
                 </div>
             </div>
         </div>
             <div class="d-flex flex-row justify-content-center mt-3">
                 <div class="">
                     <button class="btn btn-outline-secondary btn-lg " (click)='cerrarModal()'>Cancelar</button>
-                    <button class="btn btn-outline-danger btn-lg ml-2" (click)='finalizarExperimento()'>Finalizar</button>
+                    <button class="btn btn-outline-danger btn-lg ml-2" (click)='finalizarExperimento()' *ngIf='!disabledForm'>Finalizar</button>
                 </div>
             </div>
         </form>

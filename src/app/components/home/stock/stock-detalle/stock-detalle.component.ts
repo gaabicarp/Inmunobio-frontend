@@ -45,6 +45,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   tipoBlog= 'espacioFisico';
   herramientaSeleccionada:number ;
   herramientaSeleccionadaBlog:any;
+  disabledForm: boolean;
   
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -148,6 +149,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   }
 
   eliminarStockModal(){
+    this.disabledForm = true;
     const id_productoEnStock= this.a
     const id_productos = this.j
     this.subscription.add( this.postService.eliminarStock(id_productoEnStock, id_productos).subscribe(res =>{
@@ -156,6 +158,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           this.toastService.removeAll()
           this.modalService.dismissAll()
+          this.disabledForm = false;
           this.ngOnInit()
         }, 1000);
       }
@@ -166,6 +169,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.modalService.dismissAll()
         this.toastService.removeAll()
+        this.disabledForm = false;
       }, 4000);
     }));
   }
@@ -219,6 +223,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     
   }
   consumirStockModal(){
+    this.disabledForm = true;
     const idProdEnStock = this.a.id_productoEnStock;
     setTimeout(() => {
       const consumir : Consumir ={
@@ -232,6 +237,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.toastService.removeAll()
             this.modalService.dismissAll()
+            this.disabledForm = false;
             this.cantidad = 0;
             this.ngOnInit()
           }, 2000);
@@ -242,6 +248,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
         console.log(err)
         setTimeout(() => {
           this.toastService.removeAll()
+          this.disabledForm = false;
         }, 3000);
       }));
     }, 500);
@@ -251,13 +258,15 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     this.idHerramienta_eliminar = id;
   }
   eliminarH(){
+    this.disabledForm = true;
     console.log(this.idHerramienta_eliminar)
     this.subscription.add(this.postService.eliminarHerramienta(this.idHerramienta_eliminar).subscribe(res =>{
-      if (res.Status === 'ok'){
+      if (res.Status === 'Se elimino la herramienta.'){
         this.toastService.show('Herramienta eliminada', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
           this.toastService.removeAll()
           this.modalService.dismissAll()
+          this.disabledForm = false;
           this.ngOnInit()
         }, 1000);
       }
@@ -267,11 +276,13 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       console.log(err)
       setTimeout(() => {
         this.toastService.removeAll()
+        this.disabledForm = false;
       }, 3000);
 
     }));
   }
   crearBlogHerramienta(){
+    this.disabledForm = true;
     const blog: Blogs ={
       id_usuario: 1,
       detalle: this.detalleBlog,
@@ -283,12 +294,13 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     }
     console.log(nuevoBlog)
     this.subscription.add(this.postService.crearBlogHerramienta(nuevoBlog).subscribe(res => {
-      if (res.Status === 'ok'){
+      if (res.Status === 'Se creo el blog de herramienta'){
         this.toastService.show('Blog creado', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
           this.detalleBlog = ''
           this.toastService.removeAll()
           this.modalService.dismissAll()
+          this.disabledForm = false;
           this.ngOnInit()
           setTimeout(() => {
             this.Herramienta(this.a,this.content)
@@ -301,11 +313,13 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       console.log(err)
       setTimeout(() => {
         this.toastService.removeAll()
+        this.disabledForm = false;
       }, 3000);
 
     }));
   }
   crearBlog(){
+    this.disabledForm = true;
     if(this.tipoBlog === 'herramienta'){
       const blog: Blogs ={
         id_usuario: 1,
@@ -318,12 +332,13 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       }
       console.log(nuevoBlog)
       this.subscription.add( this.postService.crearBlogHerramienta(nuevoBlog).subscribe(res => {
-        if (res.Status === 'ok'){
+        if (res.Status === 'Se creo el blog de herramienta'){
           this.toastService.show('Blog creado', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => {
             this.detalleBlog = '';
             this.toastService.removeAll()
             this.modalService.dismissAll()
+            this.disabledForm = false;
             this.ngOnInit()
           }, 2000);
         }
@@ -331,6 +346,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       }, err => {
         this.toastService.show( 'Problema al crear el blog '+err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
         console.log(err)
+        this.disabledForm = false;
       }));
     } else{
     const blog: Blogs ={
@@ -343,12 +359,13 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       blogs: blog
     }
     this.subscription.add( this.postService.crearBlogEspacio(nuevoBlog).subscribe(res => {
-      if (res.Status === 'ok'){
+      if (res.Status === 'Se creó blog de espacio físico.'){
         this.toastService.show('Blog creado', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
           this.detalleBlog = '';
           this.toastService.removeAll()
           this.modalService.dismissAll()
+          this.disabledForm = false;
           this.ngOnInit()
         }, 2000);
       }
@@ -358,6 +375,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       console.log(err)
       setTimeout(() => {
         this.toastService.removeAll()
+        this.disabledForm = false;
       }, 3000);
     }));
     }

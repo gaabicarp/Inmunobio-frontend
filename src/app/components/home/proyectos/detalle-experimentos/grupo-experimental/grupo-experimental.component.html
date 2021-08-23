@@ -1,26 +1,32 @@
 <div class="m-4" routerLink="../../" role="button">
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
 </div>
-<div class="mx-4">
-    <div class="my-3">
+<div class="m-2">
+    <div class="titulo">
         <h2 class="mb-0">Grupo experimental - {{grupoExperimental?.codigo}}</h2>
+        <div class="editar-eliminar">
+          <button class="btn btn-outline-primary" style="cursor: pointer" ><i class="bi bi-pencil text-primary"></i> Dividir Grupo</button>
+          <button class="btn btn-outline-danger eliminar" (click)='open(eliminarGrupo)'><i class="bi bi-trash text-danger"></i> Eliminar</button>
+        </div>
     </div>
-
-            <div class="">
-              <div class="m-1 mt-4 mb-4">
-                <h4 class="text-secondary text-staatliches mb-0 ml-4">Descripcion del Grupo</h4>
-                <p class="ml-4">{{grupoExperimental?.descripcion}}</p>
-              </div>
-            </div>
-            <div class="m-1">
-              <div class="d-flex align-items-center">
-                <h4 class="text-secondary text-staatliches mb-0 ml-4">Fuentes Experimentales</h4>
-                <div class="ml-4">
-                  <button  *ngIf='grupoExperimental?.tipo === "Otro" '  class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuenteOtro)'>+Nuevo</button>
-                  <button *ngIf='grupoExperimental?.tipo === "Animal" ' class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuenteAnimal)'>+Nuevo</button>
-                </div>
-              </div>
+    <div class="descripcion">
+      <h4 class="text-secondary text-staatliches">Descripcion del Grupo</h4>
+      <p class="">{{grupoExperimental?.descripcion}}</p>
+    </div>
+    <div class="fuentes">
+      <div class="d-flex align-items-center">
+        <h4 class="text-secondary text-staatliches ">Fuentes Experimentales</h4>
+        <div class="ml-4">
+          <button  *ngIf='grupoExperimental?.tipo === "Otro" '  class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuenteOtro)'>+Nuevo</button>
+          <button *ngIf='grupoExperimental?.tipo === "Animal" ' class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuenteAnimal)'>+Nuevo</button>
+        </div>
+      </div>
+      <div *ngIf='grupoExperimental?.fuentesExperimentales.length === 0' class="text-center">
+        <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+        <h5>No hay fuentes experimentales, cree una para continuar</h5>
+      </div>
               <div class="cards-container">
+              </div>
                 <div *ngFor="let fuente of grupoExperimental?.fuentesExperimentales" class="card shadow rounded list-group-item-action" (click)='fuenteExpDetalle(fuente.id_fuenteExperimental, fuenteDetalle)'>
                       <div class="">
                             <div class="card-body">
@@ -45,213 +51,12 @@
                             </div>
                       </div>
                   </div>
-                </div>
-            </div>
-            <!-- <div class="m-1">
-                <div class="d-flex align-items-center">
-                  <h4 class="text-secondary text-staatliches mb-0 ml-4">Muestras Asociadas</h4>
-                  <div class="ml-4">
-                    <button class="btn btn-outline-primary" style="cursor: pointer" (click)='open(muestra)'>+ Nuevo</button>
-                  </div>
-                </div>
-                <div class="cards-container">
-                  <div *ngFor="let muestra of muestras" class="card shadow rounded list-group-item-action">
-                        <div class="">
-                              <div class="card-body">
-                                  <h5 class="card-title text-center">{{muestra.codigo}}</h5>
-                                  <hr class="my-3 bg-{{muestra.finalizado? 'danger' : 'success'}}">
-                                  <p class="card-text text-center">{{muestra.descripcion.substring(0,100)}}{{muestra.descripcion.length > 100 ? '...' : ''}}</p>
-                                  <div class="d-flex flex-row justify-content-between">
-                                      <div>
-                                          <h6><i>Fecha Alta</i></h6>
-                                          <p class="mb-0">{{muestra.fecha | date}}</p>
-                                      </div>
-                                      <div>
-                                          <h6><i>Tipo</i></h6>
-                                          <p class="mb-0">{{muestra.tipo}}</p>
-                                      </div>
-                                  </div>
-                              </div>
-                        </div>
-                    </div>
-                  </div>
-              </div> -->
+              
 </div>
-
-
-    <!-- <h3>Fuentes Experimentales</h3>
-        <table class="table table-hover">
-          <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Codigo</th>
-            <th scope="col">Especie</th>
-            <th scope="col">Cepa</th>
-            <th scope="col">Sexo</th>
-            <th scope="col">Descripcion</th>
-            <td scope="col"><a class="link-primary" style="cursor: pointer" (click)="open(fuente)">+Agregar</a></td> -->
-            <!-- <td scope="col">
-                <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
-            </td> 
-          </tr>
-          </thead>
-          <tbody>-->
-            <!-- <tr *ngIf='agregarGrupo'>
-                <td colspan="2">
-                    <div class=''>
-                        <label for="codigo" class="form-label">Codigo de fuente experimental</label>
-                        <input type="text" class="form-control" id="codigo" formControlName='codigo'>
-                    </div>
-                </td>
-                <td colspan="2">
-                    <div class=''>
-                        <label for="animal" class="form-label">Seleccionar animal</label>
-                        <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
-                                <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
-                        </select>
-                    </div> 
-                    <div class=''>
-                        <label for="otro" class="form-label">Codigo de grupo experimental</label>
-                        <input type="text" class="form-control" id="otro" formControlName='codigo'>
-                    </div>
-                </td>
-                <td colspan='2' style="vertical-align: bottom;">
-                    <div class='agregar'>
-                        <button class="btn btn-primary mr-3" (click)='crearFuente()'>Agregar+</button>
-                        <button class="btn btn-danger" (click)='agregarGrupo = false'>Cancelar</button>
-                    </div>
-                </td>
-            </tr>
-            <tr *ngIf='agregarGrupo'>
-                <td colspan="6">
-                    <label for="descripcion" class="form-label">Descripcion</label>
-                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
-                </td>
-            </tr> 
-            <tr *ngFor='let fuente of grupoExperimental.fuentesExperimentales; let i = index'>
-                <th scope="row">{{ i + 1 }}</th> 
-                <td>
-                 {{fuente?.codigo}} 
-                </td>
-                <td>
-                 {{fuente?.especie}} 
-                </td>
-                <td>
-                 {{fuente?.cepa}} 
-                </td>
-                <td>
-                 {{fuente?.sexo}} 
-                </td>
-                <td colspan="2">
-                    {{fuente?.descripcion}} 
-                </td>
-            </tr>
-            <tr *ngIf='grupoExperimental?.fuentesExperimentales?.length === 0'>
-                <td colspan="6">Sin fuentes</td>
-            </tr>
-          </tbody>
-        </table>
-        <h3>Muestras</h3>
-        <table class="table table-hover">
-          <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Codigo</th>
-            <th scope="col">fecha</th>
-            <th scope="col">Descripcion</th>
-            <td scope="col"><a class="link-primary" style="cursor: pointer" (click)="open(muestra)">+Agregar</a></td>-->
-            <!-- <td scope="col">
-                <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
-            </td> 
-          </tr>
-          </thead>
-          <tbody>-->
-            <!-- <tr *ngIf='agregarGrupo'>
-                <td colspan="2">
-                    <div class=''>
-                        <label for="codigo" class="form-label">Codigo de fuente experimental</label>
-                        <input type="text" class="form-control" id="codigo" formControlName='codigo'>
-                    </div>
-                </td>
-                <td colspan="2">
-                    <div class=''>
-                        <label for="animal" class="form-label">Seleccionar animal</label>
-                        <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
-                                <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
-                        </select>
-                    </div> 
-                    <div class=''>
-                        <label for="otro" class="form-label">Codigo de grupo experimental</label>
-                        <input type="text" class="form-control" id="otro" formControlName='codigo'>
-                    </div>
-                </td>
-                <td colspan='2' style="vertical-align: bottom;">
-                    <div class='agregar'>
-                        <button class="btn btn-primary mr-3" (click)='crearFuente()'>Agregar+</button>
-                        <button class="btn btn-danger" (click)='agregarGrupo = false'>Cancelar</button>
-                    </div>
-                </td>
-            </tr>
-            <tr *ngIf='agregarGrupo'>
-                <td colspan="6">
-                    <label for="descripcion" class="form-label">Descripcion</label>
-                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
-                </td>
-            </tr> 
-            <tr *ngFor='let muestra of grupoExperimental.muestras; let i = index'>
-                <th scope="row">{{ i + 1 }}</th> 
-                <td>
-                 {{muestra?.codigo}} 
-                </td>
-                <td>
-                 {{muestra?.fecha}} 
-                </td>
-                <td colspan="2">
-                    {{muestra?.descripcion}} 
-                </td>
-            </tr>
-            <tr *ngIf='grupoExperimental?.muestras?.length === 0'>
-                <td colspan="6">Sin muestras</td>
-            </tr>
-          </tbody>
-        </table>
-</div>
-
-<ng-template #fuente let-modal>
+  <ng-template #DatosMuestra let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Agregar Fuente</h4>
-      <button type="button" class="close" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-        <form [formGroup]='formFuenteExperimental'>
-            <div class=''>
-                <label for="codigo" class="form-label">Codigo de fuente experimental</label>
-                <input type="text" class="form-control" id="codigo" formControlName='codigo'>
-            </div>
-            <div class=''>
-                <label for="animal" class="form-label">Seleccionar animal</label>
-                <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
-                        <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
-                </select>
-            </div>--> 
-            <!-- <div class=''>
-                <label for="otro" class="form-label">Codigo de grupo experimental</label>
-                <input type="text" class="form-control" id="otro" formControlName='codigo'>
-            </div> 
-            <label for="descripcion" class="form-label">Descripcion</label>
-            <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
-      </form>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary mr-3" (click)='crearFuente()'>Agregar</button>
-    </div>
-  </ng-template> -->
-
-  <ng-template #muestra let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Nueva Muestra</h4>
+      <h4 class="modal-title" id="modal-basic-title" *ngIf='editar'>Editar Muestra</h4>
+      <h4 class="modal-title" id="modal-basic-title" *ngIf='!editar'>Nueva Muestra</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -260,18 +65,20 @@
         <div class="muestra">
             <div class="detalle-muestra">
                 <form [formGroup]='formMuestra'>
-                        <div class="">
-                            <label for="codigo" class="form-label">Codigo de muestra</label>
-                            <input type="text" class="form-control" id="codigo" formControlName='codigo'>
-                        </div>
+                    <div class="">
+                        <label for="codigo" class="form-label">Codigo de muestra</label>
+                        <input type="text" class="form-control" id="codigo" formControlName='codigo' placeholder="Ingrese código de la muestra" [attr.disabled]='disabledForm ? true : null'>
+                    </div>
                     <div class=''>
-                        <label for="animal" class="form-label">Seleccionar contenedor</label>
-                        <select class="form-control"  id='animal' aria-label="Default select example" formControlName='contenedor'>
-                                <option *ngFor='let contenedor of contenedores' value="{{contenedor.id_contenedor}}">{{contenedor.nombre}} - {{contenedor.codigo}}</option>
-                        </select>
+                        <label for="contenedor" class="form-label">Seleccionar contenedor</label>
+                        <select class="form-select form-control"  id='contenedor' aria-label="Default select example" formControlName='contenedor' [attr.disabled]='disabledForm ? true : null'>
+                          <option value="0" disabled>Seleccione Contenedor</option>
+                          <option *ngFor='let contenedor of contenedores' value="{{contenedor.id_contenedor}}">{{contenedor.nombre}} - {{contenedor.codigo}}</option>
+                          
+                  </select>
                     </div> 
                     <label for="descripcion" class="form-label">Descripcion</label>
-                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
+                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion' placeholder="Ingrese la descripción de la muestra" [attr.disabled]='disabledForm ? true : null'></textarea>
               </form>
             </div>
             <div class="imagenModal mt-5">
@@ -280,7 +87,11 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary boton" (click)='crearMuestra()'>Agregar</button>
+        <button class="btn btn-primary boton" (click)='crearMuestra()'*ngIf='!disabledForm'>Agregar</button>
+        <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Cargando...
+        </button>
     </div>
   </ng-template>
 
@@ -293,40 +104,38 @@
     </div>
     <div class="modal-body">
         <div class="">
-            <div class=""  >
-              <!-- *ngIf="animalesProyecto?.length > 0" -->
+            <div class="" *ngIf="animales?.length > 0" >
                 <form [formGroup]='formFuenteExperimentalAnimal'>
                     <div class=''>
                         <label for="codigo" class="form-label">Codigo de fuente experimental</label>
-                        <input type="text" class="form-control" id="codigo" formControlName='codigo'>
+                        <input type="text" class="form-control" id="codigo" formControlName='codigo' placeholder="Ingrese código de la fuente experimental" [attr.disabled]='disabledForm ? true : null'>
                     </div>
                     <div class=''>
                         <label for="animal" class="form-label">Seleccionar animal</label>
-                        <select class="form-control"  id='animal' aria-label="Default select example" formControlName='animal'>
-                                <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
-                                <!-- <option *ngFor='let animal of animales' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option> -->
+                        <select class="form-select form-control" aria-label="Default select example" id='animal' formControlName='animal' [attr.disabled]='disabledForm ? true : null'>
+                                <option value =0 disabled>Seleccione animal</option>
+                                <!-- <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option> -->
+                                <option *ngFor='let animal of animales' value="{{animal.id_fuenteExperimental}}">{{animal.especie}} - {{animal.cepa}}</option>
                         </select>
                     </div>
                     <label for="descripcion" class="form-label">Descripcion</label>
-                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
+                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion' placeholder="Ingrese la descripción de la fuente experimental" [attr.disabled]='disabledForm ? true : null'></textarea>
               </form>
             </div>
-            <!-- <div class="col-8" *ngIf="animalesProyecto?.length == 0">
-                <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
-                    <h4 class="text-center">No hay animales disponibles para crear nueva fuente experimental</h4>
-                </div>
-            </div>
-            <div class="col-4">
-                <i class="bi bi-eyedropper" style="font-size: 8em;"  *ngIf="animalesProyecto?.length > 0"></i>
-                <i class="bi bi-exclamation-circle-fill text-danger" style="font-size: 8em;"  *ngIf="animalesProyecto?.length == 0"></i>
-            </div> -->
+            <div class="d-flex">
+              <div class="col-8" *ngIf="animales?.length == 0">
+                  <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                      <h4 class="text-center">No hay animales disponibles para crear nueva fuente experimental</h4>
+                  </div>
+              </div>
+              <div class="col-4">
+                  <i class="bi bi-exclamation-circle-fill text-danger" style="font-size: 6em;"  *ngIf="animales?.length == 0"></i>
+              </div>
+          </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary boton" (click)='crearFuenteAnimal()'>Agregar</button>
-        <!-- *ngIf="animalesProyecto?.length > 0" -->
-        <button class="btn btn-primary boton" (click)="modal.dismiss('Cross click')" >Cancelar</button>
-        <!-- *ngIf="animalesProyecto?.length === 0" -->
+        <button class="btn btn-primary boton" (click)='crearFuenteAnimal()'*ngIf="animalesProyecto?.length > 0" [attr.disabled]='disabledForm ? true : null' >Agregar</button>
     </div>
   </ng-template>
 
@@ -340,30 +149,29 @@
     <div class="modal-body">
         <div class="">
             <div class=""  >
-              <!-- *ngIf="animalesProyecto?.length > 0" -->
                 <form [formGroup]='formFuenteExperimentalOtro'>
                     <div class=''>
                         <label for="codigo" class="form-label">Codigo de fuente experimental</label>
-                        <input type="text" class="form-control" id="codigo" formControlName='codigo'>
+                        <input type="text" class="form-control" id="codigo" formControlName='codigo' placeholder="Ingrese código de la fuente experimental" [attr.disabled]='disabledForm ? true : null'>
                     </div>
                     <label for="descripcion" class="form-label">Descripcion</label>
-                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion'></textarea>
+                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion' placeholder="Ingrese código de la fuente experimental" [attr.disabled]='disabledForm ? true : null'></textarea>
               </form>
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary boton" (click)='crearFuenteOtro()'>Agregar</button>
-        <!-- *ngIf="animalesProyecto?.length > 0" -->
-        <button class="btn btn-primary boton" (click)="modal.dismiss('Cross click')" >Cancelar</button>
-        <!-- *ngIf="animalesProyecto?.length === 0" -->
+        <button class="btn btn-primary boton" (click)='crearFuenteOtro()' *ngIf='!disabledForm'>Agregar</button>
+        <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Cargando...
+        </button>
     </div>
   </ng-template>
 
-
   <ng-template #fuenteDetalle let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Fuente Experimental</h4>
+      <h4 class="modal-title" id="modal-basic-title">Fuente Experimental - {{datosFuente?.codigo}}</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -372,14 +180,19 @@
       <div class="d-flex mb-3">
         <h3>Muestras Asociadas</h3>
         <div class="ml-5">
-          <button class="btn btn-outline-primary" style="cursor: pointer" (click)='open(muestra)'>+Nuevo</button>
+          <button class="btn btn-outline-primary" style="cursor: pointer" (click)='muestraModal(DatosMuestra,0)'>+Nuevo</button>
         </div>
       </div>
         <div class="cards-container">
           <div *ngFor="let muestra of muestrasFiltradas" class="card card-muestra m-2 p-2 shadow rounded">
                 <div class="">
                       <div class="card-body">
-                          <h5 class="card-title text-center">{{muestra.codigo}}</h5>
+                        <div class="card-body-title">
+                          <h5 class="card-title">{{muestra.codigo}}</h5>
+                          <a class="text-primary editar" role="button" (click)='muestraModal(DatosMuestra, muestra)'>
+                            <i class="bi bi-pencil "></i>
+                          </a>
+                        </div>
                           <hr class="my-3 bg-{{muestra.finalizado? 'danger' : 'success'}}">
                           <p class="card-text text-center">{{muestra.descripcion.substring(0,100)}}{{muestra.descripcion.length > 100 ? '...' : ''}}</p>
                           <div class="d-flex flex-row justify-content-between">
@@ -401,9 +214,25 @@
             <h5 style='color: darkred;'>No hay muestras disponibles</h5>
           </div>
     </div>
+  </ng-template>
+
+  <ng-template #eliminarGrupo let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Eliminar Grupo Experimental</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body-eliminarGrupo">
+      <i class="bi bi-exclamation-triangle"></i>
+       <p class="ml-2">Está seguro que quiere eliminar el Grupo Experimental {{grupoExperimental?.codigo}} de forma permanente?</p>
+    </div>
     <div class="modal-footer">
-        
+        <button class="btn btn-primary boton" (click)='eliminarGrupoExperimental()'>Eliminar</button>
+        <button class="btn btn-secondary boton" (click)="modal.dismiss('Cross click')" >Cancelar</button>
     </div>
   </ng-template>
+
+
 
   <app-toast></app-toast>
