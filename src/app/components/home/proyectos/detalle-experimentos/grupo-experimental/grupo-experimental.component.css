@@ -28,13 +28,18 @@
     margin: 1em;
     padding: 1em;
   }
-
+  .fuentes{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
   .muestra{
     display: flex;
     justify-content: space-around;
   }
   .detalle-muestra{
     display: block;
+    width: 60%;
   }
   .card-muestra{
     max-width: 22em;
@@ -82,5 +87,9 @@
     .card{
       padding: 0.5em;
       margin: 0.5em;
+    }
+    .fuentes{
+      margin: 0;
+      justify-content: center;
     }
   }

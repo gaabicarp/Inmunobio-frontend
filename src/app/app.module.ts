@@ -47,6 +47,7 @@ import { FilterCodigosPipe } from './pipe/filter-codigos.pipe';
 import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle/nueva-herramienta/nueva-herramienta.component';
 import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
 import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detalle-experimentos/nuevo-blog-experimento/nuevo-blog-experimento.component';
+import { DividirGrupoComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/dividir-grupo/dividir-grupo.component';
 
 
 
@@ -92,7 +93,8 @@ import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detal
     FilterCodigosPipe,
     NuevaHerramientaComponent,
     NuevoBlogProyectoComponent,
-    NuevoBlogExperimentoComponent
+    NuevoBlogExperimentoComponent,
+    DividirGrupoComponent
 
   ],
   imports: [

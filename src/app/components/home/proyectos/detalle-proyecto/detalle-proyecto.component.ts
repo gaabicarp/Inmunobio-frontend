@@ -91,7 +91,7 @@ export class DetalleProyectoComponent implements OnInit {
   }
 
   open(content): void {
-    this.modalService.open(content, { centered: true, size: 'xl' });
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
   Buscar(){
     this.fecDesde =  new Date(this.fecDesde.year,(this.fecDesde.month -1)  ,this.fecDesde.day)

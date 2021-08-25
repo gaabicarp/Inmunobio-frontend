@@ -6,7 +6,7 @@
                     <div class="">
                         <div class="">
                             <label  class="form-label">Conclusion</label>
-                            <textarea class="form-control" name='conclusion' aria-label="With textarea" rows="5" [(ngModel)]="obj.conclusion"></textarea>
+                            <textarea class="form-control" name='conclusion' aria-label="With textarea" rows="5" [(ngModel)]="obj.conclusion" placeholder="Ingrese la conclusión del proyecto" [attr.disabled]='disabledForm ? true : null'></textarea>
                             <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                         </div>
                     </div>
@@ -19,10 +19,14 @@
                 </div>
 
             </div>
-            <div class="d-flex flex-row justify-content-center">
+            <div class="botones">
                 <div class="">
-                    <button class="btn btn-outline-danger btn-lg " (click)='finalizarProyecto()'>Finalizar Proyecto</button>
-                    <button class="btn btn-outline-secondary btn-lg ml-2" (click)='cerrarModal()'>Cancelar</button>
+                    <button class="btn btn-primary btn-lg " (click)='finalizarProyecto()' *ngIf='!disabledForm'>Finalizar Proyecto</button>
+                    <button class="btn btn-primary btn-lg boton" type="button" disabled *ngIf='disabledForm'>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Cargando...
+                    </button>
+                    <button class="btn btn-secondary btn-lg cancelar" (click)='cerrarModal()' *ngIf='!disabledForm'>Cancelar</button>
                 </div>
             </div>
         </form>

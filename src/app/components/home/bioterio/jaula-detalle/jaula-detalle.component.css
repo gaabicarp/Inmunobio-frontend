@@ -78,12 +78,24 @@ textarea{
     width: 200% ;
 }
 .detalle-eliminar_jaula, .detalle-eliminar_animal{
-    justify-content: space-around;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 .filtrar{
     margin: 0.5em;
 }
+.botones-informacion{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
+.botones{
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+}
+
 @media screen and (max-width: 360px){
     .ubicacion__fila{
         display: flex;
@@ -125,6 +137,16 @@ textarea{
     }
     .filtrar{
         margin-left: 0;
+    }
+    .body-asociar-detalle{
+        width: 100%;
+    }
+    .body-crear_blog-detalle{
+        width: 100%;
+        margin-left: 1em;
+    }
+    .textarea_nuevoBlog{
+        width: 90%;
     }
 }
 

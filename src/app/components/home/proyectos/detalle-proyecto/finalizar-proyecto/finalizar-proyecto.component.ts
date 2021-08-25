@@ -14,6 +14,7 @@ export class FinalizarProyectoComponent implements OnInit {
     conclusion: '',
   };
   idProyecto!: number;
+  disabledForm:boolean;
   @Output() cerrar = new EventEmitter<any>();
 
   constructor(
@@ -28,6 +29,7 @@ export class FinalizarProyectoComponent implements OnInit {
   }
 
   finalizarProyecto(): void{
+    this.disabledForm = true;
     const obj = {
       id_proyecto: this.idProyecto,
       conclusion: this.obj.conclusion
@@ -35,10 +37,13 @@ export class FinalizarProyectoComponent implements OnInit {
     this.postService.cerrarProyecto(obj).subscribe(res => {
         this.toastService.show('Proyecto finalizado', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
+          this.disabledForm = false;
           this.cerrarModal();
         }, 2000);
       }, err => {
         this.toastService.show('Problema al finalizar Proyecto', { classname: 'bg-danger text-light', delay: 2000 });
+        console.log(err)
+        this.disabledForm = false;
         // this.mensajeAlert = JSON.stringify(err.error.error);
     });
   }

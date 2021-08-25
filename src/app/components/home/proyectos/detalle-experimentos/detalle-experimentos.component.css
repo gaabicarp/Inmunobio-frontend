@@ -100,7 +100,7 @@
   .filtro-blogs{
     margin: 7px;
   }
-  .body{
+  .body-creacionBlog{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -168,6 +168,12 @@ textarea{
       width: 100%;
     }
     .boton-grande{
+      width: 100%;
+    }
+    .body-creacionBlog{
+      width: 100%;
+    }
+    .body-creacionBlog-detalle{
       width: 100%;
     }
   }

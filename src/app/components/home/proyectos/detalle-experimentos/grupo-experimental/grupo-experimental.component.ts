@@ -82,7 +82,7 @@ export class GrupoExperimentalComponent implements OnInit {
   }
 
   open(content): void {
-    this.modalService.open(content, { centered: true, size: 'xl' });
+    this.modalService.open(content, { centered: true, size: 'lg' });
   }
 
   crearFuenteAnimal(): void{
@@ -254,6 +254,7 @@ export class GrupoExperimentalComponent implements OnInit {
     this.open(content)
   }
   eliminarGrupoExperimental(){
+    this.disabledForm = true;
     this.postService.eliminarGrupoExperimental(this.idGrupo).subscribe(res =>{
       console.log(res)
       if(res.Status == 'Se borró el grupo experimental y sus subgrupos.'){
@@ -261,12 +262,14 @@ export class GrupoExperimentalComponent implements OnInit {
         setTimeout(() => {
           this.toastService.removeAll()
           this.modalService.dismissAll()
+          this.disabledForm = false;
           this.router.navigate(['/home/proyectos/'+this.idProyecto+'/experimento/'+this.idExperimento]);
         }, 2000);
       }
     }, err => {
       this.toastService.show('Problema al eliminar el Grupo ' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
       console.log(err)
+      this.disabledForm = false;
     })
   }
 

@@ -197,7 +197,7 @@
   </div>
   <div class="modal-footer">
       <button class="btn btn-outline-primary btn-lg mr-3 boton-grande" (click)='crearGrupoExperimental()' *ngIf='!disabledForm'>Crear</button>
-      <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+      <button class="btn btn-primary btn-lg boton-grande" type="button" disabled *ngIf='disabledForm'>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Cargando...
       </button>
@@ -212,8 +212,8 @@
       </button>
     </div>
     <div class="modal-body">
-      <div class="body">
-        <div class="">
+      <div class="body-creacionBlog">
+        <div class="body-creacionBlog-detalle">
           <label for="tipo" class="form-label">Escriba una publicacion</label>
           <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" placeholder="Escriba el detalle del Blog" [(ngModel)]='detalleBlog' [attr.disabled]='disabledForm ? true : null'></textarea>
         </div>
@@ -224,7 +224,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary btn-lg boton-grande" (click)='crearBlog()' *ngIf='!disabledForm'>Crear</button>
-        <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+        <button class="btn btn-primary btn-lg boton-grande" type="button" disabled *ngIf='disabledForm'>
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           Cargando...
         </button>

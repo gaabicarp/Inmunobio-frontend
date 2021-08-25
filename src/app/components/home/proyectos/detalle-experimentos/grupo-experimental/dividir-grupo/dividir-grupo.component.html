@@ -1,0 +1,38 @@
+<div class="text-black ml-3 mt-3" routerLink="../" role="button" style="position: relative;">
+    <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
+  </div>
+<div class="contenedor">
+    <div class="my-4">
+        <h2>Dividir Grupo Experimental - {{grupoExperimental?.codigo}}</h2>
+    </div>
+    <div class="formulario">
+        <form [formGroup]="formGrupo" (ngSubmit)="dividirGrupo()">
+            <div class="form__item">
+                <label for="codigo">Codigo del nuevo Grupo Experimental</label>
+                <input type="text" class="form-control" placeholder="Ingrese el código del nuevo grupo experimental" formControlName='codigo'>
+            </div>
+            <div class="form__item">     
+                <label for="nivel" class="form-label">Fuentes Experimentales</label>
+                <angular2-multiselect [data]="itemList" 
+                            [(ngModel)]="selectedItems" 
+                            [settings]="settings"                 
+                            formControlName="fuentes">
+                </angular2-multiselect>
+            </div>     
+        </form>
+        <div class="imagenModal">
+            <i class="bi bi-diagram-2" style="font-size: 8em;"></i>
+        </div>
+    </div>
+        <div class="boton">
+            <div class="">
+                <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formGrupo.valid' *ngIf='!disabledForm'>Guardar</button>
+                <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Cargando...
+                </button>
+            </div>
+        </div>
+</div>
+
+<app-toast></app-toast>

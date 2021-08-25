@@ -43,10 +43,12 @@
                         </div>
                     </div>
                     </div>
-              <div class="d-flex bd-highlight">
-                <div class="p-2 flex-grow-1 bd-highlight"><button type="button" class="btn btn-outline-danger" (click)=open(eliminarJaulaModal)><i class="bi bi-trash text-danger"></i> Eliminar Jaula</button></div>
-                <div class="p-2 bd-highlight"><button class="btn btn-outline-primary" style="cursor: pointer" routerLink='editar-jaula'><i class="bi bi-pencil text-primary"></i> Editar</button></div>
-              </div>
+              <div class="botones">
+                <div class="botones-informacion">
+                  <div class=""><button type="button" class="btn btn-outline-danger" (click)=open(eliminarJaulaModal)><i class="bi bi-trash text-danger"></i> Eliminar Jaula</button></div>
+                  <div class=""><button class="btn btn-outline-primary" style="cursor: pointer" routerLink='editar-jaula'><i class="bi bi-pencil text-primary"></i> Editar</button></div>
+                </div>
+            </div>
             </ng-template>
           </li>
           <li [ngbNavItem]="2">
@@ -69,7 +71,7 @@
                                 <th scope="col">{{animal.especie}}</th>
                                 <th scope="col">{{animal.cepa}}</th>
                                 <th scope="col">{{animal.sexo}}</th>
-                                <th><div class="mr-4">
+                                <th><div class="text-center">
                                     <a class="text-danger" role="button"  (click)=eliminarModalAnimal(animal.id_fuenteExperimental,eliminarAnimalModal)>
                                       <i class="bi bi-trash"></i>
                                     </a>
@@ -169,7 +171,7 @@
             </div>
             <div class="modal-body">
                 <div class="body-asociar">
-                        <div class="m-2">
+                        <div class="body-asociar-detalle">
                             <label for="tipo" class="form-label">Seleccione Proyecto</label>
                           <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]='idProyecto_asociar' [attr.disabled]='disabledForm ? true : null'>
                             <option value="0">Sin Asignar</option>
@@ -183,7 +185,7 @@
               </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary btn-lg mr-3"  (click)=asociar() *ngIf='!disabledForm'>Asociar</button>
+            <button class="btn btn-primary btn-lg"  (click)=asociar() *ngIf='!disabledForm'>Asociar Proyecto</button>
             <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               Cargando...
@@ -200,9 +202,9 @@
         </div>
         <div class="modal-body">
           <div class="body-crear_blog">
-            <div class="">
+            <div class="body-crear_blog-detalle">
               <label for="tipo" class="form-label">Escriba una publicacion</label>
-              <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" placeholder="Escriba el detalle del Blog" [(ngModel)]='detalleBlog' [attr.disabled]='disabledForm ? true : null'></textarea>
+              <textarea class="form-control textarea_nuevoBlog" id='descripcion' aria-label="With textarea" rows="6" placeholder="Escriba el detalle del Blog" [(ngModel)]='detalleBlog' [attr.disabled]='disabledForm ? true : null'></textarea>
             </div>
             <div class="imagenModal">
               <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
@@ -210,7 +212,7 @@
           </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary btn-lg mr-3" (click)='crearBlog()' *ngIf='!disabledForm'>Crear</button>
+            <button class="btn btn-primary btn-lg" (click)='crearBlog()' *ngIf='!disabledForm'>Crear Blog</button>
             <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               Cargando...
@@ -226,20 +228,18 @@
           </button>
         </div>
         <div class="modal-body ">
-          <div class="row detalle-eliminar_jaula">
-            <div class="col-8 form-group d-flex m-2 align-items-center">
+          <div class="detalle-eliminar_jaula">
               <i class="bi bi-exclamation-triangle m-2" style="font-size: 2em;"></i>
               <label for="tipo" class="form-label m-4">¿Está seguro que desea eliminar la jaula de forma permanente?</label>
-            </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary btn-lg mr-3" (click)="modal.dismiss('Cross click')">Cancelar</button>
-          <button class="btn btn-primary btn-lg mr-3" (click)= eliminarJaula() *ngIf='!disabledForm'>Eliminar</button>
+          <button class="btn btn-primary btn-lg" (click)= eliminarJaula() *ngIf='!disabledForm'>Eliminar</button>
           <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-             Cargando...
+            Cargando...
           </button>
+          <button class="btn btn-secondary btn-lg" (click)="modal.dismiss('Cross click')">Cancelar</button>
         </div>
       </ng-template>
 
@@ -251,16 +251,14 @@
           </button>
         </div>
         <div class="modal-body ">
-          <div class="row detalle-eliminar_animal">
-            <div class="col-8 form-group d-flex m-2 align-items-center">
+          <div class="detalle-eliminar_animal">
               <i class="bi bi-exclamation-triangle m-2" style="font-size: 2em;"></i>
               <label for="tipo" class="form-label m-4">¿Está seguro que desea eliminar el animal de forma permanente?</label>
-            </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-secondary btn-lg mr-3" (click)="modal.dismiss('Cross click')">Cancelar</button>
-          <button class="btn btn-primary btn-lg mr-3" (click)= eliminarAnimal() *ngIf='!disabledForm'>Eliminar</button>
+          <button class="btn btn-secondary btn-lg" (click)="modal.dismiss('Cross click')">Cancelar</button>
+          <button class="btn btn-primary btn-lg" (click)= eliminarAnimal() *ngIf='!disabledForm'>Eliminar</button>
           <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
              Cargando...

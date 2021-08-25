@@ -18,18 +18,34 @@
     padding: 0.5em;
     justify-content:space-around;
 }
-.datos-internos{
+.datos-internos-nombre,.datos-internos-detalle{
     display: flex;
     flex-direction: column;
     width: auto;
     align-items: flex-start;
     margin-right: 2em;
 }
+.datos-internos-detalle-stock{
+    display: flex;
+    width: 100%;
+}
+.datos-internos-detalle-ubicacion{
+    display: flex;
+}
+.datos-internos-detalle{
+    width: 70%;
+}
 .datos{
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
     padding-left: 0.5em;
     padding-right: 0.5em;
+}
+.modal-body-eliminarProducto,.modal-body-eliminarHerramienta{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
                             /* BLOGS */
     /* Busqueda Blogs */
@@ -71,6 +87,9 @@
     flex-direction: column;
     padding:0.7em;
 }
+.fechas,.tipo-blog{
+    width: 40%;
+}
 textarea{
     width: 500px;
 }
@@ -98,14 +117,12 @@ textarea{
     height: 38px;
     margin-top: 0.5em;
 }
-.alert{
+
+.modal-body-blogHerr{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: center;
 }
 @media screen and (max-width: 360px){
-    .search-container, .filtro-fecha-blogs, .fechas, .tipo-blogs{
+    .search-container, .filtro-fecha-blogs, .fechas, .tipo-blog{
         width: 100%;
         height: auto;
         display: block;
@@ -118,12 +135,15 @@ textarea{
         margin-top:0px;
     }
     .button-agregarstock,.button-nuevaHerramienta{
-        width: 100%;
-        margin-left: 0px;
-        margin-top: 5px;
+        width: 95%;
+        margin: 0.5em;
+    }
+    .input-group{
+        margin: 0.5em;
+        width: 95%;
     }
     .card-stock,.card-herramienta{
-        width: 100%;
+        width: 95%;
         height: 50%;
         margin: 0.5em;
         padding: 0.5em;
@@ -161,5 +181,24 @@ textarea{
     .card-blog{
         margin-left: 7px;
     }
-      
+    .datos-internos-nombre{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        margin-right: 2em;
+        margin-bottom: 1em;
+    }
+    .datos-internos-detalle{
+        width: 95%;
+        margin:0.5em;
+    }
+    .datos{
+        display: block;
+    }
+    .nombre-prod{
+        margin: 0;
+        padding: 0;
+    }
 }

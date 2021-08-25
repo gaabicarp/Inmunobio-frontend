@@ -229,6 +229,9 @@ export class PostService {
   }
   eliminarGrupoExperimental(idGrupo:number): Observable<any>{
     return this.http.delete<any>(this.API_URL +'borrarGrupoExperimental/'+idGrupo);
+  }
 
+  dividirGrupoExperimental(nuevoGrupo: any): Observable<any>{
+    return this.http.post<any>(this.API_URL +'dividirGrupoExperimental',nuevoGrupo);
   }
 }
