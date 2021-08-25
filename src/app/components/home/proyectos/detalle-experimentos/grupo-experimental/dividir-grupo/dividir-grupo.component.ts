@@ -77,11 +77,12 @@ export class DividirGrupoComponent implements OnInit {
       habilitado : 'true',
       muestras : [],
       fuentesExperimentales: this.formGrupo.value.fuentes,
-      parent:'3',
+      parent: this.grupoExperimental.id_grupoExperimental,
       tipo:this.grupoExperimental.tipo
     }
     console.log(NuevoGrupo)
     this.postService.dividirGrupoExperimental([NuevoGrupo]).subscribe(res =>{
+      console.log(res)
 
       if (res.Status){
         this.toastService.show('Grupo Experimental dividido', { classname: 'bg-success text-light', delay: 2000 });
@@ -91,7 +92,6 @@ export class DividirGrupoComponent implements OnInit {
           this.router.navigate(['/home/proyectos/'+ this.idProyecto +'/experimento/'+this.idExperimento]);
         }, 1000);
       }
-      console.log(res)
     }, err => {
       this.toastService.show('Problema al dividir el grupo experimental'+err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
       console.log(err)
