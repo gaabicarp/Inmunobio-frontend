@@ -9,6 +9,5 @@ export class Fuente{
     tipo : string;
     baja?:boolean;
     id_jaula: number;
-    descripcion: string;
 }
 

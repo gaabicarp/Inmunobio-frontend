@@ -62,8 +62,7 @@ export class GrupoExperimentalComponent implements OnInit {
     this.formFuenteExperimentalAnimal = new FormGroup({
       tipo: new FormControl(''),
       codigo: new FormControl('',Validators.required),
-      animal: new FormControl('0',Validators.required),
-      descripcion: new FormControl('',Validators.required)
+      animal: new FormControl('0',Validators.required)
     });
     this.formFuenteExperimentalOtro = new FormGroup({
       tipo: new FormControl(''),
@@ -92,7 +91,7 @@ export class GrupoExperimentalComponent implements OnInit {
         this.animal = res;
       })
       setTimeout(() => {
-      this.fuente={
+      this.fuente = {
         id_fuenteExperimental: this.animal.id_fuenteExperimental,
         id_proyecto: this.animal.id_proyecto,
         codigo: this.formFuenteExperimentalAnimal.value.codigo,
@@ -102,8 +101,7 @@ export class GrupoExperimentalComponent implements OnInit {
         cepa: this.animal.cepa,
         tipo : this.animal.tipo,
         id_jaula: this.animal.id_jaula,
-        baja: this.animal.baja,
-        descripcion: this.formFuenteExperimentalAnimal.value.descripcion
+        baja: this.animal.baja
       }
       const fuenteExperimental ={
         id_grupoExperimental : this.idGrupo,

@@ -118,8 +118,6 @@
                                 <option *ngFor='let animal of animalesProyecto' value="{{animal.id_fuenteExperimental}}"> Especie: {{animal.especie}} - Cepa: {{animal.cepa}}</option>
                         </select>
                     </div>
-                    <label for="descripcion" class="form-label">Descripcion</label>
-                    <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="4" formControlName='descripcion' placeholder="Ingrese la descripción de la fuente experimental" [attr.disabled]='disabledForm ? true : null'></textarea>
               </form>
             </div>
             <div class="d-flex">
