@@ -62,9 +62,20 @@
                     </span>
                     <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por codigo de grupo experimental" [(ngModel)]='filterPost'>
                   </div>
+                  <div class="filtro d-flex">
+                    <span class="input-group-text">
+                      <i class="bi bi-search"></i>
+                    </span>
+                    <select class="form-control"  id='usuario' aria-label="Default select example" [(ngModel)]='filterPostActive'> 
+                      <option selected hidden value="-1">Seleccione el tipo de grupo</option>
+                      <option value="-1">Todos</option>
+                      <option value="Animal">Animal</option>
+                      <option value="Otro">Otro</option>
+                    </select>
+                  </div>
               </div>
                 <div class="grupos-container">
-                  <div *ngFor="let grupo of gruposExperimentales" class="card card-grupo shadow rounded list-group-item-action" routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
+                  <div *ngFor="let grupo of gruposExperimentales | filterCodigos: filterPost | filterTipo: filterPostActive" class="card card-grupo shadow rounded list-group-item-action" routerLink='grupo-experimental/{{grupo.id_grupoExperimental}}'>
                     <!-- | filter: filterCodigos -->
                     <div class="">
                       <div class="card-body">

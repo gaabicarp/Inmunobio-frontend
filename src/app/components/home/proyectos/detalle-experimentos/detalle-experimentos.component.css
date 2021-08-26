@@ -37,10 +37,11 @@
 }
 .grupo-filtro-container{
     display: flex;
-    justify-content: left;
+    justify-content: space-around;
 }
 .filtro{
-    width: 40%;
+    width: 47%;
+    margin: 0.5em 0;
 }
 .grupos-container{
     display: flex;

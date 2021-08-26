@@ -26,6 +26,7 @@ export class DetalleExperimentosComponent implements OnInit {
   fechaHasta: any;
   blogs = [];
   filterPost:string;
+  filterPostActive: number;
 
   fecHoy=new Date(Date.now());
   fecDesde:any;
@@ -42,6 +43,7 @@ export class DetalleExperimentosComponent implements OnInit {
 
   ngOnInit(): void {
     this.filterPost = '';
+    this.filterPostActive = -1;
     this.agregarGrupo = false;
     this.formGrupoExperimental = new FormGroup({
       tipo: new FormControl('0', Validators.required),

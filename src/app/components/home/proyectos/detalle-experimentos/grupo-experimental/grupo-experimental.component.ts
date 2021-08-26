@@ -6,6 +6,7 @@ import { PostService } from 'src/app/services/post.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { ToastServiceService } from 'src/app/services/toast-service.service';
 import { Fuente } from 'src/app/models/fuente.model'
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-grupo-experimental',
@@ -36,6 +37,7 @@ export class GrupoExperimentalComponent implements OnInit {
   editar :any;
   datosFuente:any;
   disabledForm: boolean;
+  filterPost:string;
 
   constructor(
     private router: Router,
@@ -48,6 +50,7 @@ export class GrupoExperimentalComponent implements OnInit {
 
   ngOnInit(): void {
     this.editar=false;
+    this.filterPost = '';
     this.idGrupo = parseInt(this.activatedRouter.snapshot.paramMap.get('idGrupo'), 10);
     this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);

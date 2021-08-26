@@ -65,7 +65,7 @@
                   <span class="input-group-text">
                     <i class="bi bi-search"></i>
                   </span>
-                  <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por nombre de proyecto" [(ngModel)]='filterPostName'>
+                  <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por nombre del experimento" [(ngModel)]='filterPostName'>
                 </div>
                 <div class="filtro d-flex">
                   <span class="input-group-text">
@@ -73,6 +73,7 @@
                   </span>
                   <select class="form-control"  id='usuario' aria-label="Default select example" [(ngModel)]='filterPostActive'> 
                     <option selected hidden value="-1">Seleccione estado del experimento</option>
+                    <option value="-1">Todos</option>
                     <option value="false">Activo</option>
                     <option value="true">Finalizado</option>
                   </select>

@@ -21,8 +21,14 @@
           <button *ngIf='grupoExperimental?.tipo === "Animal" ' class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuenteAnimal)'>+Nuevo</button>
         </div>
       </div>
+        <div class="filtro" *ngIf='grupoExperimental?.fuentesExperimentales.length != 0'>
+          <span class="input-group-text">
+            <i class="bi bi-search"></i>
+          </span>
+          <input type="text" class="form-control" id="usuario" name='filterPost' placeholder="Buscar por codigo de fuente" [(ngModel)]='filterPost'>
+        </div>
       <div class="fuentes">
-                <div *ngFor="let fuente of grupoExperimental?.fuentesExperimentales" class="card shadow rounded list-group-item-action" (click)='fuenteExpDetalle(fuente.id_fuenteExperimental, fuenteDetalle)'>
+                <div *ngFor="let fuente of grupoExperimental?.fuentesExperimentales | filterCodigos: filterPost" class="card shadow rounded list-group-item-action" (click)='fuenteExpDetalle(fuente.id_fuenteExperimental, fuenteDetalle)'>
                       <div class="">
                             <div class="card-body">
                                 <h5 class="card-title text-center">{{fuente.codigo}}</h5>

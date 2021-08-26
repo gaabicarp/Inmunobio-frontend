@@ -63,6 +63,12 @@
 .mensaje-error__no-hay-fuentes{
   text-align: center;
 }
+.filtro{
+  display: flex;
+  width: 47%;
+  margin: 1em 0;
+  margin-left: 2.5em;
+}
   @media screen and (max-width: 360px){
     .titulo{
       display: block;
@@ -94,5 +100,9 @@
     .fuentes{
       margin: 0;
       justify-content: center;
+    }
+    .filtro{
+      width: 100%;
+      margin: 1em 0;
     }
   }
