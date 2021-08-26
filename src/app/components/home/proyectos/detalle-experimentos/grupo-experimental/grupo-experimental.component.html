@@ -13,17 +13,13 @@
       <h4 class="text-secondary text-staatliches">Descripcion del Grupo</h4>
       <p class="">{{grupoExperimental?.descripcion}}</p>
     </div>
-    <div class="fuentes">
+    <div class="fuentes-experimentales">
       <div class="d-flex align-items-center">
         <h4 class="text-secondary text-staatliches ">Fuentes Experimentales</h4>
         <div class="ml-4">
           <button  *ngIf='grupoExperimental?.tipo === "Otro" '  class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuenteOtro)'>+Nuevo</button>
           <button *ngIf='grupoExperimental?.tipo === "Animal" ' class="btn btn-outline-primary" style="cursor: pointer" (click)='open(fuenteAnimal)'>+Nuevo</button>
         </div>
-      </div>
-      <div *ngIf='grupoExperimental?.fuentesExperimentales.length === 0' class="text-center">
-        <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
-        <h5>No hay fuentes experimentales, cree una para continuar</h5>
       </div>
       <div class="fuentes">
                 <div *ngFor="let fuente of grupoExperimental?.fuentesExperimentales" class="card shadow rounded list-group-item-action" (click)='fuenteExpDetalle(fuente.id_fuenteExperimental, fuenteDetalle)'>
@@ -50,9 +46,14 @@
                             </div>
                       </div>
                   </div>
-        </div>
-              
+      </div>           
+    </div>
+    <div *ngIf='grupoExperimental?.fuentesExperimentales.length === 0' class="text-center">
+      <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+      <h5>No hay fuentes experimentales, cree una para continuar</h5>
+    </div>
 </div>
+
   <ng-template #DatosMuestra let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title" *ngIf='editar'>Editar Muestra</h4>

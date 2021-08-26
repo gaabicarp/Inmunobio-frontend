@@ -61,6 +61,7 @@ export class DetalleExperimentosComponent implements OnInit {
     this.getService.obtenerGruposExperimentalesPorExperimento(this.idExperimento).subscribe(res => {
       // console.log(res);
       res === null ? this.gruposExperimentales = [] : this.gruposExperimentales = res;
+      this.gruposExperimentales = this.gruposExperimentales.filter( grupo => grupo.habilitado)
       console.log(this.gruposExperimentales)
     });
 

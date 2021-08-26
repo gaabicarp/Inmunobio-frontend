@@ -72,14 +72,8 @@
                           <hr class="my-3 bg-{{experimento?.habilitado? 'danger' : 'success'}}">
                           <p class="card-text text-center">{{grupo.descripcion?.substring(0,100)}}{{grupo.descripcion?.length > 100 ? '...' : ''}}</p>
                           <div class="d-flex flex-row justify-content-between">
-                              <div>
-                                  <h6><i>Cantidad de Fuentes</i></h6>
-                                  <p class="mb-0">{{grupo.fuentesExperimentales.length}}</p>
-                              </div>
-                              <div>
-                                  <h6><i>Cantidad de Muestras</i></h6>
-                                  <p class="mb-0">{{grupo.muestras.length}}</p>
-                              </div>
+                              <h6><i>Cantidad de Fuentes</i></h6>
+                              <p class="mb-0">{{grupo.fuentesExperimentales.length}}</p>
                           </div>
                       </div>
                     </div>

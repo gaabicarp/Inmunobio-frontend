@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { ToastServiceService } from 'src/app/services/toast-service.service';
@@ -12,7 +13,7 @@ import { ToastServiceService } from 'src/app/services/toast-service.service';
 })
 export class DividirGrupoComponent implements OnInit {
   codigoNuevoGrupo:string;
-  fuentesExperimentales =[]
+  nuevosGrupos :any  =[]
   formGrupo:FormGroup;
 
   idGrupo:number;
@@ -29,6 +30,7 @@ export class DividirGrupoComponent implements OnInit {
     private activatedRouter: ActivatedRoute,
     private postService: PostService,
     private getService: GetService,
+    private modalService: NgbModal,
     public toastService: ToastServiceService
     ) {}
 
@@ -41,10 +43,12 @@ export class DividirGrupoComponent implements OnInit {
       console.log(res);
       this.grupoExperimental = res;
       this.itemList = this.grupoExperimental.fuentesExperimentales
+      console.log(this.itemList)
     });
     this.formGrupo = new FormGroup({
       codigo: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      fuentes: new FormControl([],  ),
+      descripcion: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      fuentes: new FormControl([],[Validators.required] ),
     });
     this.settings = {
       text: 'Seleccione fuentes experimentales',
@@ -58,7 +62,10 @@ export class DividirGrupoComponent implements OnInit {
       disabled: false,
     };
   }
-  dividirGrupo(){
+  open(content): void {
+    this.modalService.open(content, { centered: true, size: 'lg' });
+  }
+  guardarGrupo(){
     this.disabledForm = true;
     this.settings = {
       text: 'Seleccione fuentes experimentales',
@@ -73,6 +80,7 @@ export class DividirGrupoComponent implements OnInit {
     };
     const NuevoGrupo:any ={
       codigo: this.formGrupo.value.codigo,
+      descripcion: this.formGrupo.value.descripcion,
       id_experimento: this.idExperimento,
       habilitado : 'true',
       muestras : [],
@@ -80,8 +88,39 @@ export class DividirGrupoComponent implements OnInit {
       parent: this.grupoExperimental.id_grupoExperimental,
       tipo:this.grupoExperimental.tipo
     }
-    console.log(NuevoGrupo)
-    this.postService.dividirGrupoExperimental([NuevoGrupo]).subscribe(res =>{
+      this.nuevosGrupos.push(NuevoGrupo)
+      const fuentesSeleccionadas = this.formGrupo.value.fuentes
+      const posiciones = []
+      console.log(this.nuevosGrupos)
+      this.itemList = this.itemList.filter( fuente => { return !fuentesSeleccionadas.includes(fuente) })
+      console.log(this.itemList)
+      this.toastService.show('Grupo Experimental agregado', { classname: 'bg-success text-light', delay: 2000 });
+      setTimeout(() => {
+        this.settings = {
+          text: 'Seleccione fuentes experimentales',
+          selectAllText: 'Seleccione Todos',
+          unSelectAllText: 'Quitar Todos',
+          classes: 'myclass custom-class',
+          primaryKey: 'id_fuenteExperimental',
+          labelKey: 'codigo',
+          enableSearchFilter: true,
+          searchBy: ['codigo'],
+          disabled: false,
+        };
+        this.formGrupo = new FormGroup({
+          codigo: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+          descripcion: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+          fuentes: new FormControl([],  ),
+        });
+          this.selectedItems = [];
+          this.toastService.removeAll()
+          this.modalService.dismissAll()
+          this.disabledForm = false;
+      }, 1000);
+  }
+  dividirGrupo(){
+    this.disabledForm = true;
+    this.postService.dividirGrupoExperimental(this.nuevosGrupos).subscribe(res =>{
       console.log(res)
 
       if (res.Status){
