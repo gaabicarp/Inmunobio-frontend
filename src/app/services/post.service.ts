@@ -20,6 +20,11 @@ export class PostService {
 
   constructor(private http: HttpClient) { }
 
+
+  login(usuario: any): Observable<any>{
+    return this.http.post<any>(this.API_URL + 'login', usuario);
+  }
+
   crearUsuario(nuevoUsuario: postUsuario): Observable<any>{
     const header = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
     return this.http.post<any>(this.API_URL + 'usuario', nuevoUsuario, {headers: header});
