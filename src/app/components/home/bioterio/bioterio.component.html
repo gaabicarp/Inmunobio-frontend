@@ -84,12 +84,12 @@
                 </ng-container>
                 <ng-container *ngIf = 'i%2!=0'>
                   <div class="card-blog shadow rounded">
-                    <div class="blog" >
+                    <div class="blog-detalle" >
                       <h5 class="card-title card-header">Jaula {{a.codigoJaula}} - Blog N° {{a.id_blog}}</h5>
                       <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
                       <p>{{a.detalle}}</p>
                     </div>
-                    <div class="fecha">
+                    <div class="fecha-blog">
                       <i class="bi bi-journals m-2"></i>
                       <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
                     </div>

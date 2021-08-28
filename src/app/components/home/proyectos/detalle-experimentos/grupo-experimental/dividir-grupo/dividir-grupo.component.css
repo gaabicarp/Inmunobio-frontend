@@ -13,7 +13,7 @@ form{
     margin-top: 2em;
 }
 .form__item{
-    margin-top: 2em;
+    margin: 1em 0;
 }
 .card{
     max-width: 18em;
@@ -24,6 +24,12 @@ form{
     display: flex;
     flex-wrap: wrap;
 }
+.no-se-puede-dividir{
+    margin-top: 5em;
+}
+.dividir{
+    width: 6em;
+}
 @media screen and (max-width: 360px){
     .contenedor{
         margin: 0 2em;
@@ -32,7 +38,7 @@ form{
         width: 100%;
     }
     .form__item{
-        margin-top: 1em;
+        margin: 0.5em;
     }
     .imagenModal{
         display: none;
