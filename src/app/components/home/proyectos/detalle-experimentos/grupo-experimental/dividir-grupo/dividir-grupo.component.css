@@ -27,6 +27,9 @@ form{
 .no-se-puede-dividir{
     margin-top: 5em;
 }
+.dividir{
+    width: 6em;
+}
 @media screen and (max-width: 360px){
     .contenedor{
         margin: 0 2em;

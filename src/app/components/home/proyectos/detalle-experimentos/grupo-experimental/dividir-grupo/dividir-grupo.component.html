@@ -26,10 +26,10 @@
         </div>
       </div>
         <div class="text-center" *ngIf='!disabledForm'>
-          <button class="btn btn-primary" (click)=dividirGrupo() *ngIf='itemList.length === 0'>Dividir</button>
+          <button class="btn btn-primary dividir" (click)=dividirGrupo() *ngIf='itemList.length === 0'>Dividir</button>
         </div>
         <div *ngIf='itemList.length != 0' class="no-se-puede-dividir text-center">
-            <button class="btn btn-primary" disabled>Dividir</button>
+            <button class="btn btn-primary dividir" disabled>Dividir</button>
             <h5 class="m-2">No se puede dividir el Grupo, ya que hay fuentes sin Grupo asociado</h5>
             <h6 class="text-danger">Asocie todas las fuentes para continuar</h6>
         </div>
