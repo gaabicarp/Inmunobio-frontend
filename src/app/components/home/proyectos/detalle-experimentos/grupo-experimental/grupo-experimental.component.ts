@@ -177,7 +177,6 @@ export class GrupoExperimentalComponent implements OnInit {
       const fuenteExperimental ={
         id_grupoExperimental : this.idGrupo,
         id_experimento: this.idExperimento,
-        id_proyecto: this.idProyecto,
         tipo: this.grupoExperimental.tipo,
         codigo: this.grupoExperimental.codigo,
         parent:0,
