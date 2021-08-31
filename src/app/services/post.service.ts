@@ -239,4 +239,7 @@ export class PostService {
   dividirGrupoExperimental(nuevoGrupo: any): Observable<any>{
     return this.http.post<any>(this.API_URL +'dividirGrupoExperimental',nuevoGrupo);
   }
+  eliminarMuestra(idMuestra:number): Observable<any>{
+    return this.http.delete<any>(this.API_URL +'muestra/'+ idMuestra);
+  }
 }

@@ -4,6 +4,7 @@ import { BlogsJaula } from 'src/app/models/blogs.model';
 import { Jaula } from 'src/app/models/jaula.model';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 @Component({
   selector: 'app-bioterio',
@@ -23,7 +24,8 @@ export class BioterioComponent implements OnInit, OnDestroy {
 
   constructor(
     private getService: GetService,
-    private postService: PostService
+    private postService: PostService,
+    public toastService: ToastServiceService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class BioterioComponent implements OnInit, OnDestroy {
       this.cargando = false;
       } else {
         this.jaulas = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
         this.cargando = false;
       }
     }));
@@ -48,7 +51,13 @@ export class BioterioComponent implements OnInit, OnDestroy {
         }
     this.subscription.add(this.postService.obtenerTodosBlogsJaulas(blog).subscribe(res => {
       console.log(res)
-      this.blogs = res;
+      if(res){
+        this.blogs = res;
+      } else{
+        this.blogs=[]
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     }));
   }
 
@@ -67,7 +76,13 @@ export class BioterioComponent implements OnInit, OnDestroy {
     console.log(blog)
     this.subscription.add( this.postService.obtenerTodosBlogsJaulas(blog).subscribe(res =>{
       console.log(res)
-      this.blogs = res; }))
+      if(res){
+        this.blogs = res;
+      } else{
+        this.blogs=[]
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      } }))
   }
 
   ngOnDestroy(): void {

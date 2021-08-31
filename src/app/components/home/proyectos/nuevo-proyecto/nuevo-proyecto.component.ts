@@ -45,11 +45,18 @@ export class NuevoProyectoComponent implements OnInit {
     window.location.href.includes('editar') ? this.modo = 'EDITAR' : this.modo = 'CREAR';
 
     this.getService.obtenerUsuarios().subscribe(res => {
-      this.directoresProyecto = res.filter(usuario => {
-        return usuario.permisos.some(permiso => permiso.id_permiso === 4);
-      });
-      this.usuariosDisponibles = res;
-      this.itemList = res;
+      if (res){
+        this.directoresProyecto = res.filter(usuario => {
+          return usuario.permisos.some(permiso => permiso.id_permiso === 4);
+        });
+        this.usuariosDisponibles = res;
+        this.itemList = res;
+        this.cargando = false;
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
+      
     });
 
 
@@ -89,22 +96,28 @@ export class NuevoProyectoComponent implements OnInit {
       };
       this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
       this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
-        // console.log(res);
-        this.element = res;
-        this.formProyecto.patchValue({
-          nombre: this.element.nombre,
-          codigoProyecto: this.element.codigoProyecto,
-          montoInicial: this.element.montoInicial,
-          idDirectorProyecto: this.element.idDirectorProyecto,
-          descripcion: this.element.descripcion
-        });
-        this.getService.obtenerUsuarioPorProyecto(this.element.id_proyecto).subscribe(usuarios => {
-          this.selectedItems = usuarios.filter( usuario => res.participantes.indexOf(usuario.id_usuario) > -1);
+        if (res){
+            // console.log(res);
+            this.element = res;
+            this.formProyecto.patchValue({
+              nombre: this.element.nombre,
+              codigoProyecto: this.element.codigoProyecto,
+              montoInicial: this.element.montoInicial,
+              idDirectorProyecto: this.element.idDirectorProyecto,
+              descripcion: this.element.descripcion
+            });
+            this.getService.obtenerUsuarioPorProyecto(this.element.id_proyecto).subscribe(usuarios => {
+              this.selectedItems = usuarios.filter( usuario => res.participantes.indexOf(usuario.id_usuario) > -1);
+              this.cargando = false;
+            });
+            // console.log('asdasd')
+            this.itemList = this.usuariosDisponibles.filter(usuario => usuario.id_usuario != this.formProyecto.value.idDirectorProyecto);
           this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
         });
-        // console.log('asdasd')
-        this.itemList = this.usuariosDisponibles.filter(usuario => usuario.id_usuario != this.formProyecto.value.idDirectorProyecto);
-    });
    }
   }
 

@@ -45,11 +45,10 @@ import { FilterStatePipe } from './pipe/filter-state.pipe';
 import { ToastComponent } from './components/shared/toast/toast.component';
 import { FilterCodigosPipe } from './pipe/filter-codigos.pipe';
 import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle/nueva-herramienta/nueva-herramienta.component';
-import { NuevoBlogProyectoComponent } from './components/home/proyectos/detalle-proyecto/nuevo-blog-proyecto/nuevo-blog-proyecto.component';
-import { NuevoBlogExperimentoComponent } from './components/home/proyectos/detalle-experimentos/nuevo-blog-experimento/nuevo-blog-experimento.component';
 import { DividirGrupoComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/dividir-grupo/dividir-grupo.component';
 import { FilterTipoPipe } from './pipe/filter-tipo.pipe';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FilterFechavencimientoPipe } from './pipe/filter-fechavencimiento.pipe';
 
 
 
@@ -94,10 +93,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     ToastComponent,
     FilterCodigosPipe,
     NuevaHerramientaComponent,
-    NuevoBlogProyectoComponent,
-    NuevoBlogExperimentoComponent,
     DividirGrupoComponent,
-    FilterTipoPipe
+    FilterTipoPipe,
+    FilterFechavencimientoPipe
 
   ],
   imports: [

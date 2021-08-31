@@ -12,15 +12,15 @@
   </div>
 </div>
 <div class="">
-  <form [formGroup]="formStock" (ngSubmit)="agregarStock()">
+  <form [formGroup]="formStock">
         <div class="">
             <label  for="producto" class="form-label">Producto</label>
             <select *ngIf='editar === false' class="form-select form-control" aria-label=".form-select-lg example" id="producto" formControlName="producto" [attr.disabled]='disabledForm ? true : null'>
-              <option value="0">Seleccione el nombre del producto</option>
+              <option value="0" disabled>Seleccione el nombre del producto</option>
               <option *ngFor='let producto of productos' value="{{producto?.id_producto}}">{{producto?.nombre}} - Unidad de agrupación: {{producto?.unidadAgrupacion}}</option>
             </select>
             <select *ngIf='editar === true' class="form-select form-control" aria-label=".form-select-lg example" id="producto" formControlName="producto" disabled>
-              <option value="0">Seleccione el nombre del producto</option>
+              <option value="0" disabled>Seleccione el nombre del producto</option>
               <option *ngFor='let producto of productos' value="{{producto?.id_producto}}">{{producto?.nombre}} - Unidad de agrupación: {{producto?.unidadAgrupacion}}</option>
             </select>
         </div> 
@@ -38,9 +38,9 @@
             <label  for="codigoContenedor" class="form-label">Contenedor</label>
             <select class="form-select form-control" aria-label=".form-select-lg example" id="contenedor" formControlName="contenedor" [attr.disabled]='disabledForm ? true : null'>
               <!-- <option *ngFor='let contenedor of contenedores' value="{{contenedor?.id_contenedor}}">{{contenedor?.nombre}}</option> -->
-              <option value="0">Seleccione el contenedor</option>
-              <option *ngFor='let contenedor of contenedoresEspecificos' value="{{contenedor?.id_contenedor}}">{{contenedor?.nombre}}</option>
-              <option *ngIf='contenedoresEspecificos?.length === 0'>No hay contenedores asociados a este espacio fisico</option>
+              <option value="0" disabled>Seleccione el contenedor</option>
+              <option *ngFor='let contenedor of contenedores' value="{{contenedor?.id_contenedor}}">{{contenedor?.nombre}}</option>
+              <option *ngIf='contenedores?.length === 0'>No hay contenedores asociados a este espacio fisico</option>
             </select>
         </div>
         <div class="">
@@ -51,11 +51,15 @@
           <label for="fechaVencimiento" class="form-label">Fecha Vencimiento</label>
           <input  *ngIf='editar === true'class="form-control" type="text" placeholder="{{prodEspecifico?.fechaVencimiento | date: 'dd/MM/yy'}}" aria-label="fechaVencimiento" disabled>
           <input  *ngIf='editar === false' type="date" class="form-control" id="fechaVencimiento" formControlName="fechaVencimiento" [attr.disabled]='disabledForm ? true : null'>
-  </div> 
+        </div> 
+        <div *ngIf='editar === false' class="seguimiento">
+          <input class="form-check-input mr-4" type="checkbox" value="" id="seguimiento" name='seguimiento' [attr.disabled]='disabledForm ? true : null'>
+          <label for="">Quiere realizar seguimiento del vencimiento del producto?</label>
+        </div>
 </form>
 <div class="text-center">
   <div class="">
-        <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formStock.valid" *ngIf='!disabledForm'>Guardar</button>
+        <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formStock.valid" *ngIf='!disabledForm' (click)= agregarStock()>Guardar</button>
         <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           Cargando...

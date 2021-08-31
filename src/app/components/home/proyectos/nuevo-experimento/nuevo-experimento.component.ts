@@ -40,15 +40,19 @@ export class NuevoExperimentoComponent implements OnInit {
     if (this.modo === 'EDITAR'){
       this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
       this.getService.obtenerExperimentoPorId(this.idExperimento).subscribe(res => {
-        this.formExperimento.patchValue({
-          codigo: res.codigo,
-          metodologia: res.metodologia,
-          objetivos: res.objetivos
-        });
+        if (res){
+          this.formExperimento.patchValue({
+                  codigo: res.codigo,
+                  metodologia: res.metodologia,
+                  objetivos: res.objetivos
+                });
+          this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
       });
     }
-
-    this.cargando = false;
   }
 
   crearExperimento(): void{

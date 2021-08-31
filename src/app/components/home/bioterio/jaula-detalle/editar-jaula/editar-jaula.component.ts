@@ -37,14 +37,26 @@ export class EditarJaulaComponent implements OnInit, OnDestroy {
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     if (!isNaN(this.idJaula)){
       this.subscription.add( this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res =>{
-        this.jaula = res;
-        this.cargando = false;
         console.log(res)
+        if(res){
+          console.log(res);
+          this.jaula = res;
+          this.cargando = false;
+        } else{
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
       }));
     }
     this.subscription.add( this.getService.obtenerEspaciosFisicos().subscribe(res => {
-      this.espaciosFisicos = res;
-      this.cargando = false;
+      if(res){
+        console.log(res);
+        this.espaciosFisicos = res;
+        this.cargando = false;
+      } else{
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       console.log(res);
     }));
     this.formJaula = new FormGroup({

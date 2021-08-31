@@ -13,7 +13,8 @@ export interface Stock{
     id_espacioFisico: number;
     id_producto : number;
     id_productoEnStock?: number;
-    producto: ProductoStock
+    producto: ProductoStock;
+    seguimiento:boolean;
 }
 export class StockEdicion{
     id_productoEnStock : number;

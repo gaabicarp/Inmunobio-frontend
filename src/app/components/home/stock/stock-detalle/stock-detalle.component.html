@@ -11,19 +11,33 @@
     <a ngbNavLink >Stock</a>
     <ng-template ngbNavContent>
       <div class="search-container">
-        <div class="input-group">
-            <span class="input-group-text">
-                <i class="bi bi-search"></i>
-            </span>
-            <input type="text" class="form-control " id="usuario" name='filterPost' placeholder="Buscar por nombre" [(ngModel)]='filterPost'>
+        <div class="search_container--item vencimiento">
+          <span class="input-group-text">
+            <i class="bi bi-search"></i>
+          </span>
+          <select class="form-control"  id='filtroFechaVenc' [(ngModel)]='filtroFechaVenc' aria-label="Default select example"> 
+            <option value="-1" disabled>Seleccione estado de vencimiento</option>
+            <option value="0">Todos</option>
+            <option value="1">Próximos a vencer (3 meses)- con seguimiento</option>
+            <option value="2">Vencidos - con seguimiento</option>
+          </select>
         </div>
-        <div>
-          <button class="btn btn-outline-primary button-agregarstock" routerLink='agregar-stock'>Agregar Stock</button>
+        <div class="search_container--item">
+          <div class="input-group">
+              <span class="input-group-text">
+                  <i class="bi bi-search"></i>
+              </span>
+              <input type="text" class="form-control " id="usuario" name='filterPost' placeholder="Buscar por nombre" [(ngModel)]='filterPost'>
+          </div>
+          <div>
+            <button class="btn btn-outline-primary button-agregarstock" routerLink='agregar-stock'>Agregar Stock</button>
+          </div>
         </div>
-      </div>
+      
+    </div>
       <div class="">
         <div class="" *ngIf='!cargando'>
-          <ng-container *ngFor='let a of stocks | filter: filterPost ; let i = index'>
+          <ng-container *ngFor='let a of stocks | filter: filterPost | filterFechavencimiento: filtroFechaVenc ; let i = index'>
             <ng-container *ngFor='let stock of a.producto; let j = index'>
               <div class="card shadow card-stock">
               <div class="datos">
@@ -76,66 +90,56 @@
 
       <div class="busqueda">
         <div class="form-group ">
-          <button class="btn btn-outline-success nueva-entrada" (click)="open(blog,'lg')">Nueva Entrada</button>
+          <button class="btn btn-outline-success nueva-entrada" (click)="open(blog,'lg')">Nuevo Blog</button>
         </div>
           <div class="filtro-fecha-blogs">
-            <div class="fechas">
-            <div class="form-group my-2">
-              <div class="input-group">
+            <!-- <div class="fechas"> -->
+            <div class="filtro-fecha-blogs__item">
                 <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
                        name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
                 <div class="">
                   <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                 </div>
-              </div>
             </div>
-            <div class="form-group my-2">
-              <div class="input-group">
+            <div class="filtro-fecha-blogs__item">
                 <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
                        name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
                 <div class="">
                   <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                 </div>
-              </div>
             </div>
-          </div>
-          <div class="tipo-blog">
-            <div class="form-group my-2">
-              <div class="input-group">
-                  <select class="form-control" [(ngModel)]="tipo">
-                    <option value='opc1'>Tipo de Blog</option>
-                    <option value='espacioFisico'>Espacio físico</option>
-                    <option value='herramienta'>Herramienta</option>
+            <!-- </div> -->
+            <!-- <div class="tipo-blog"> -->
+              <div class="filtro-fecha-blogs__item">
+                    <select class="form-control" [(ngModel)]="tipo">
+                      <option value='opc1'>Tipo de Blog</option>
+                      <option value='espacioFisico'>Espacio físico</option>
+                      <option value='herramienta'>Herramienta</option>
+                    </select>
+                  <div class="">
+                    <button class="btn btn-outline-secondary" type="button">Blog</button>
+                  </div>
+              </div>
+              <div class="filtro-fecha-blogs__item" *ngIf ="tipo === 'herramienta'">
+                  <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionada">
+                    <option value='0' selected>Seleccione Herramienta</option>
+                    <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
                   </select>
-                <div class="">
-                  <button class="btn btn-outline-secondary" type="button">Blog</button>
-                </div>
+                  <div class="">
+                    <button class="btn btn-outline-secondary tools" type="button"><i class="bi bi-tools"></i></button>
+                  </div>
               </div>
-            </div>
-            <div class="form-group my-2" *ngIf ="tipo === 'herramienta'">
-              <div class="input-group">
-                <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionada">
-                  <option value='0' selected>Seleccione Herramienta</option>
-                  <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
-                </select>
-                <div class="">
-                  <button class="btn btn-outline-secondary tools" type="button"><i class="bi bi-tools"></i></button>
-                </div>
+              <div class="filtro-fecha-blogs__item" *ngIf ="tipo != 'herramienta'">
+                  <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionada" disabled>
+                    <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
+                  </select>
+                  <div class="">
+                    <button class="btn btn-outline-secondary tools" type="button"><i class="bi bi-tools"></i></button>
+                  </div>
               </div>
-            </div>
-            <div class="form-group my-2" *ngIf ="tipo != 'herramienta'">
-              <div class="input-group">
-                <select class="form-control" aria-label=".form-select-lg example" [(ngModel)]="herramientaSeleccionada" disabled>
-                  <option *ngFor='let herramienta of herramientasFiltradas' value="{{herramienta.id_herramienta}}">{{herramienta.nombre}}</option>
-                </select>
-                <div class="">
-                  <button class="btn btn-outline-secondary tools" type="button"><i class="bi bi-tools"></i></button>
-                </div>
-              </div>
-            </div>
+            <!-- </div> -->
           </div>
-            <button class="btn btn-outline-secondary filtro-blogs"  (click)=Buscar() >Filtrar</button>
-          </div>
+          <button class="btn btn-outline-secondary filtro-blogs"  (click)=Buscar() >Filtrar</button>
       </div>
   <div class="" >
     <ng-container *ngFor='let a of blogs;let i = index'  >
@@ -180,16 +184,18 @@
     <ng-template ngbNavContent>
 
       <div class="search-container">
-        <div class="input-group">
-            <span class="input-group-text">
-                <i class="bi bi-search"></i>
-            </span>
-            <input type="text" class="form-control" id="usuario" placeholder="Buscar por nombre" [(ngModel)]='filterPost2'>
+        <div class="search_container--item">
+          <div class="input-group">
+              <span class="input-group-text">
+                  <i class="bi bi-search"></i>
+              </span>
+              <input type="text" class="form-control" id="usuario" placeholder="Buscar por nombre" [(ngModel)]='filterPost2'>
+          </div>
+          <div>
+            <button class="btn btn-outline-primary button-nuevaHerramienta" routerLink=nueva-herramienta>Nueva Herramienta</button>
+          </div>
         </div>
-        <div>
-          <button class="btn btn-outline-primary button-nuevaHerramienta" routerLink=nueva-herramienta>Nueva Herramienta</button>
-        </div>
-    </div>
+      </div>
 
       <div *ngFor="let a of herramientasFiltradas | filter: filterPost2 ;let i = index" (click)=Herramienta(a,herramienta)>
           <div class="card-herramienta card shadow rounded list-group-item-action">
@@ -319,29 +325,25 @@
 
         <div class="busqueda">
           <div class="form-group ">
-            <button class="btn btn-outline-success nuevo-blog" (click)="open(blogHerramienta,'lg')">Nueva Entrada</button>
+            <button class="btn btn-outline-success nueva-entrada" (click)="open(blogHerramienta,'lg')">Nuevo Blog</button>
           </div>
             <div class="filtro-fecha-blogs">
-              <div class="form-group my-2">
-                <div class="input-group">
+              <div class="filtro-fecha-blogs__item herramientas">
                   <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
                          name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
                   <div class="">
                     <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                   </div>
-                </div>
               </div>
-              <div class="form-group my-2">
-                <div class="input-group">
+              <div class="filtro-fecha-blogs__item herramientas">
                   <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
                          name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
                   <div class="">
                     <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
                   </div>
-                </div>
               </div>
-              <button class="btn btn-outline-secondary button-filtrarBlogHerramienta"  (click)=BuscarBlogH() >Filtrar</button>
             </div>
+            <button class="btn btn-outline-secondary filtro-blogs"  (click)=BuscarBlogH() >Filtrar</button>
         </div>
         <div class="" >
           <ng-container *ngFor='let a of blogsH;let i = index'  >

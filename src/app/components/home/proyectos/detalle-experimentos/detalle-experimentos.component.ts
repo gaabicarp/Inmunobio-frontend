@@ -32,6 +32,7 @@ export class DetalleExperimentosComponent implements OnInit {
   fecDesde:any;
   fecHasta:any;
   disabledForm: boolean;
+  cargando:boolean;
 
   constructor(
     private activatedRouter: ActivatedRoute,
@@ -42,6 +43,7 @@ export class DetalleExperimentosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.cargando = true;
     this.filterPost = '';
     this.filterPostActive = -1;
     this.agregarGrupo = false;
@@ -53,18 +55,33 @@ export class DetalleExperimentosComponent implements OnInit {
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
     this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
-      // console.log(res);
-      this.proyecto = res;
+      if (res){
+        this.proyecto = res;
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
     this.getService.obtenerExperimentoPorId(this.idExperimento).subscribe(res => {
+      if (res){
+        this.experimento = res;  
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       // console.log(res);
-      this.experimento = res;
     });
     this.getService.obtenerGruposExperimentalesPorExperimento(this.idExperimento).subscribe(res => {
       // console.log(res);
-      res === null ? this.gruposExperimentales = [] : this.gruposExperimentales = res;
-      this.gruposExperimentales = this.gruposExperimentales.filter( grupo => grupo.habilitado)
-      console.log(this.gruposExperimentales)
+      if (res){
+        res === null ? this.gruposExperimentales = [] : this.gruposExperimentales = res;
+        this.gruposExperimentales = this.gruposExperimentales.filter( grupo => grupo.habilitado)
+        console.log(this.gruposExperimentales)
+        this.cargando = false;
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
 
     this.fechaDesde = new Date();
@@ -77,8 +94,15 @@ export class DetalleExperimentosComponent implements OnInit {
       fechaDesde: this.fechaDesde.toDateString(),
       fechaHasta: this.fechaHasta.toDateString()
     }).subscribe(res => {
+      if (res){
+        this.blogs = res;
+      } else {
+        this.blogs = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       console.log(res);
-      this.blogs = res;
+      
     });
   }
 

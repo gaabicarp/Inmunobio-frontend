@@ -64,7 +64,7 @@ export class GetService {
     return this.http.get<any>(this.API_URL + 'herramienta/'+ id_herramienta);
   }
   obtenerHerramientas():Observable<Herramienta[]>{
-    return this.http.get<any>(this.API_URL + 'herramientas');
+    return this.http.get<any>(this.API_URL + 'herramientas/');
   }
 
   obtenerGruposExperimentales(): Observable<any>{

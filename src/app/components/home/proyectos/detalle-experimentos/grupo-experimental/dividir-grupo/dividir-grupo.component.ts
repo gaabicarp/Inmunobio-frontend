@@ -21,6 +21,7 @@ export class DividirGrupoComponent implements OnInit {
   idProyecto:number;
   grupoExperimental:any;
   disabledForm: boolean;
+  cargando:boolean;
 
   itemList: any = [];
   selectedItems = [];
@@ -35,15 +36,21 @@ export class DividirGrupoComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+    this.cargando = true;
     this.idGrupo = parseInt(this.activatedRouter.snapshot.paramMap.get('idGrupo'), 10);
     this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     
     this.getService.obtenerGruposExperimentalesPorId(this.idGrupo).subscribe(res => {
+      if (res){
+        this.grupoExperimental = res;
+        this.itemList = this.grupoExperimental.fuentesExperimentales  
+        this.cargando = false;
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       console.log(res);
-      this.grupoExperimental = res;
-      this.itemList = this.grupoExperimental.fuentesExperimentales
-      console.log(this.itemList)
     });
     this.formGrupo = new FormGroup({
       codigo: new FormControl('', [Validators.required, Validators.maxLength(20)]),

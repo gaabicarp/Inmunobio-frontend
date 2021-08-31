@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ResolvedReflectiveFactory } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
@@ -10,6 +10,7 @@ import { PostService } from 'src/app/services/post.service';
 import { Proyecto } from 'src/app/models/proyectos.model';
 import { BlogBuscadoJaula, BlogJaula, Blogs, BlogsJaula } from 'src/app/models/blogs.model';
 import { ToastServiceService } from 'src/app/services/toast-service.service';
+import { ignoreElements } from 'rxjs/operators';
 
 
 @Component({
@@ -53,30 +54,57 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
     this.detalleBlog ='';
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.subscription.add(this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res => {
-      console.log(res)
-      this.jaula = res;
-      this.cargando = false;
+      if(res){
+        console.log(res);
+        this.jaula = res;
+      } else{
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     }))
     setTimeout(() => {
       this.subscription.add(this.getService.obtenerEspacioFisico(this.jaula.id_espacioFisico).subscribe(res =>{
-        this.espacioFisico = res;
+        if(res){
+          this.espacioFisico = res;
+        } else{
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
       }))
       if(this.jaula.id_proyecto != 0){
       this.subscription.add(this.getService.obtenerProyectosPorId(this.jaula.id_proyecto).subscribe(res =>{
-        this.miProyecto = res
+        if(res){
+          this.miProyecto = res
+          this.cargando = false;
+        } else{
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
         console.log(res)
       }))
       }
-    },500);
+
+    },1000);
     this.subscription.add(this.getService.obtenerAnimalesPorJaula(this.idJaula).subscribe(res => {
       if(!res.Status){
         this.animales = res;
+      } else{
+        this.animales=[];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
       }
       console.log(res)
     }))
     this.subscription.add( this.getService.obtenerProyectos().subscribe(res => {
+      if(res){
       this.proyectos = res.filter(proyecto => !proyecto.finalizado );
+    } else{
+      this.proyectos=[];
+      this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+      this.cargando = false;
+    }
       console.log(res)
+
     }))
     //Blogs
     const dia = (this.fecHoy).getDate() + 1;
@@ -89,8 +117,14 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
         } 
     console.log(blog)
     this.subscription.add(this.postService.obtenerBlogJaula(blog).subscribe(res =>{
-      console.log(res)
-      this.blogs = res;
+      if(res){
+        this.blogs = res;
+      } else{
+        this.blogs=[];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
+        console.log(res)
     }))
   }
 
@@ -161,8 +195,14 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
     }
     setTimeout(() => {
       this.subscription.add(this.postService.obtenerBlogJaula(blog).subscribe(res =>{
-        this.blogs = res;
-        console.log(res) }))
+        if(res){
+          this.blogs = res;
+        } else{
+          this.blogs=[];
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
+          console.log(res) }))
     }, 1000);
   }
 

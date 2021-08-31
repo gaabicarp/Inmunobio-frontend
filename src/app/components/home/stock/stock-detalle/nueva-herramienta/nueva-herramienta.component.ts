@@ -35,25 +35,26 @@ export class NuevaHerramientaComponent implements OnInit, OnDestroy {
     this.idHerramienta = parseInt(this.activatedRouter.snapshot.paramMap.get('idHerramienta'), 10);
     if (!isNaN(this.idHerramienta)){
       this.subscription.add( this.getService.obtenerHerramienta(this.idHerramienta).subscribe(res =>{
-        this.herramienta = res;
-        this.cargando = false;
+        if(res){
+          this.herramienta = res;
+        } else{
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
         console.log(res)
-      }));
-      this.editar =true;
-    }
-    this.cargando = false;
-    this.formHerramienta = new FormGroup({
-      nombre: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      detalle: new FormControl('', [Validators.maxLength(100)])
-    });
-    setTimeout(() => {
-      if (!isNaN(this.idHerramienta)) {
         this.formHerramienta.patchValue({
           nombre: this.herramienta.nombre,
           detalle: this.herramienta.detalle
         });
-      }
-    }, 500);
+        this.cargando = false;
+      }));
+      this.editar =true;
+    }
+    this.formHerramienta = new FormGroup({
+      nombre: new FormControl('', [Validators.required, Validators.maxLength(20)]),
+      detalle: new FormControl('', [Validators.maxLength(100)])
+    });
+    this.cargando = false;
   }
   nuevaHerramienta(){
     this.disabledForm = true;

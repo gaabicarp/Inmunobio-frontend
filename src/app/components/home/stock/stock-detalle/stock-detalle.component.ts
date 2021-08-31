@@ -24,6 +24,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
   espacioFisico:EspacioFisico;
   herramientas : Herramienta[] =[];
   herramientasFiltradas: Herramienta[] =[];
+  filtroFechaVenc:any;
   
   fecDesde:any;
   fecHasta:any;
@@ -59,6 +60,7 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     this.cargando = true;
     this.filterPost ='';
     this.filterPost2 ='';
+    this.filtroFechaVenc = '-1';
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     console.log(this.idEspacioFisico);
     //STOCK
@@ -74,12 +76,27 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
        })
     );
     this.subscription.add( this.getService.obtenerEspacioFisico(this.idEspacioFisico).subscribe(res => {
-      console.log(res)
-      this.espacioFisico = res; })
+      if(res){
+        this.espacioFisico = res; 
+        this.cargando = false;
+      } else{
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
+      console.log(res);
+    })
     );
     this.subscription.add( this.getService.obtenerProductos().subscribe(res => {
+      if(res){
+        this.productos = res ;
+        this.cargando = false;
+      } else{
+        this.productos= [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       console.log(res);
-      this.productos = res ; })
+       })
     );
     //BLOGS 
     const dia = (this.fecHoy).getDate() + 1;
@@ -92,21 +109,35 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
         } 
     console.log(blog)
     this.subscription.add(this.postService.obtenerBlogEspacioFisico(blog).subscribe(res =>{
+      if(res){
+        this.blogs = res;
+        this.cargando = false;
+      } else{
+        this.blogs = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       console.log(res);
-      this.blogs = res; })
+       })
     );
     //HERRAMIENTAS 
     this.subscription.add( this.getService.obtenerHerramientas().subscribe(res => {
+      if(res){
+        this.herramientas = res;
+        this.cargando = false;
+      } else{
+        this.herramientas = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       console.log(res)
-      this.herramientas = res; })
-    );
-   setTimeout(() => {
       const id = this.idEspacioFisico
-      this.herramientasFiltradas =  this.herramientas.filter(function(herramienta) {
+      this.herramientasFiltradas =  this.herramientas.filter(herramienta => {
         return herramienta.id_espacioFisico == id;
       });
       console.log(this.herramientasFiltradas)
-    }, 500);
+       })
+    );
   }
 
   open(content, size): void {
@@ -127,8 +158,16 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
         fechaHasta: this.fecHasta
       }
       this.subscription.add(this.postService.obtenerBlogHerramientas(blog).subscribe(res =>{
+        if(res){
+          this.blogs = res;
+          this.cargando = false;
+        } else{
+          this.blogs = [];
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
         console.log(res);
-        this.blogs = res; })
+      })
       );
     } else {
       const blog : BlogsBuscadosEspFisico = {
@@ -137,8 +176,16 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
         fechaHasta: this.fecHasta
       }
       this.subscription.add(this.postService.obtenerBlogEspacioFisico(blog).subscribe(res =>{
+        if(res){
+          this.blogs = res;
+          this.cargando = false;
+        } else{
+          this.blogs = [];
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
         console.log(res);
-        this.blogs = res; })
+       })
       );
     }
   }
@@ -187,8 +234,16 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     } 
   console.log(blog)
   this.subscription.add(this.postService.obtenerBlogHerramientas(blog).subscribe(res =>{
+    if(res){
+      this.blogsH = res;
+      this.cargando = false;
+    } else{
+      this.blogsH = [];
+      this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+      this.cargando = false;
+    }
     console.log(res);
-    this.blogsH = res; })
+   })
   );
   }
   BuscarBlogH(){
@@ -206,8 +261,16 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     }
     console.log(blog)
     this.subscription.add(this.postService.obtenerBlogHerramientas(blog).subscribe(res =>{
+      if(res){
+        this.blogsH = res;
+        this.cargando = false;
+      } else{
+        this.blogsH = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       console.log(res);
-      this.blogsH = res; })
+    })
     );
   }
   consumirP(a,j,content){

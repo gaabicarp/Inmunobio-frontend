@@ -8,6 +8,7 @@ import { map, startWith } from 'rxjs/operators';
 import { GetService } from 'src/app/services/get.service';
 import { PostService } from 'src/app/services/post.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 
 @Component({
@@ -43,7 +44,8 @@ export class DetalleProyectoComponent implements OnInit {
     private getService: GetService,
     private postService: PostService,
     private activatedRouter: ActivatedRoute,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    public toastService: ToastServiceService
   ) {}
 
   ngOnInit(): void {
@@ -52,16 +54,26 @@ export class DetalleProyectoComponent implements OnInit {
     this.filterPostName = '';
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
-      console.log(res)
-      console.log(res.idDirectorProyecto.id)
-      this.proyecto = res;
+      if (res){
+        this.proyecto = res;
+        console.log(res)
+        console.log(res.idDirectorProyecto.id)
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
+      
     });
 
     this.getService.obtenerExperimentos(this.idProyecto).subscribe(res => {
-      console.log(res);
-      this.experimentos = res;
-      this.experimentoFiltro = res;
-      this.cargando = false;
+      if (res){
+        console.log(res);
+        this.experimentos = res;
+        this.experimentoFiltro = res;
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
     
     const dia = (this.fecHoy).getDate() + 1;
@@ -74,10 +86,15 @@ export class DetalleProyectoComponent implements OnInit {
     }
     console.log(blog)
     this.postService.obtenerBlogsProyecto(blog).subscribe(res =>{
-      console.log(res)
-      this.blogs = res;
+      if (res){
+        this.blogs = res;
+        this.cargando = false;
+      } else {
+        this.blogs=[];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     })
-
   }
 
   irA(id: number): void {
@@ -107,8 +124,15 @@ export class DetalleProyectoComponent implements OnInit {
       fechaHasta: this.fecHasta
     }
     this.postService.obtenerBlogsProyecto(blog).subscribe(res =>{
-          console.log(res)
-          this.blogs = res; })
+      if (res){
+        console.log(res)
+        this.blogs = res;
+        this.cargando = false;
+      } else {
+        this.blogs = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }})
         if (this.tipo == 'Jaula'){
           var filtrados= this.blogs.filter(blog => blog.tipo === 'Jaula')
           setTimeout(() => {
@@ -124,34 +148,5 @@ export class DetalleProyectoComponent implements OnInit {
         } else if (this.tipo == 'Todos'){
         }
   }
-  // Buscar(){
-  //   this.fecDesde = new Date(this.formFecha.value.fecDesde);
-  //   this.fecHastaReal= new Date(this.formFecha.value.fecHasta);
-  //   const diaMas1 = (this.fecHastaReal).getDate() + 2;
-  //   this.fecHasta = new Date(this.fecHastaReal.getFullYear(),this.fecHastaReal.getMonth(), diaMas1)
-  //   this.fecDesde = this.fecDesde.toDateString();
-  //   this.fecHasta = this.fecHasta.toDateString();
-  //   const blog : BlogBuscadoProyecto = {
-  //     id_proyecto : this.idProyecto,
-  //     fechaDesde: this.fecDesde,
-  //     fechaHasta: this.fecHasta
-  //   }
-  //   this.postService.obtenerBlogsProyecto(blog).subscribe(res =>{
-  //     console.log(res)
-  //     this.blogs = res; })
-  //   if (this.formFecha.value.filtro == 'Jaula'){
-  //     var filtrados= this.blogs.filter(blog => blog.tipo === 'Jaula')
-  //     setTimeout(() => {
-  //       this.blogs=filtrados;
-  //       console.log(this.blogs)
-  //     }, 1000);
-  //   } else if (this.formFecha.value.filtro == 'Experimento'){
-  //     var filtrados= this.blogs.filter(blog => blog.tipo === 'Experimento')
-  //     setTimeout(() => {
-  //       this.blogs=filtrados;
-  //       console.log(this.blogs)
-  //     }, 1000);
-  //   }
-  // }
 
 }
