@@ -39,16 +39,28 @@ export class ProductosComponent implements OnInit, OnDestroy {
     this.pageSize = 10;
     this.subscription.add( this.getService.obtenerProductos().subscribe(res => {
                             console.log(res);
-                            this.cargando = false;
-                            this.productos = res;
-                            this.productosTodos = res;
-                            this.collectionSize = res.length;
-                            this.refreshUsers();
+                            if (res){
+                              this.cargando = false;
+                              this.productos = res;
+                              this.productosTodos = res;
+                              this.collectionSize = res.length;
+                              this.refreshUsers();
+                              this.cargando = false;
+                            } else {
+                              this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+                              this.cargando = false;
+                            }
                           })
     );
     this.subscription.add( this.getService.obtenerDistribuidoras().subscribe(res => {
                             console.log(res)
-                            this.distribuidoras = res;
+                            if (res){
+                              this.distribuidoras = res;
+                              this.cargando = false;
+                            } else {
+                              this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+                              this.cargando = false;
+                            }
                           })
     );
   }

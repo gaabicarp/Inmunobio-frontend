@@ -24,9 +24,15 @@ export class EspacioFisicoComponent implements OnInit {
     this.cargando = true;
 
     this.getService.obtenerEspaciosFisicos().subscribe(res => {
+      if (res){
+        this.espaciosFisicos = res;
+        this.cargando = false;
+      } else {
+        this.espaciosFisicos = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       console.log(res)
-      this.espaciosFisicos = res;
-      this.cargando = false;
     });
   }
 

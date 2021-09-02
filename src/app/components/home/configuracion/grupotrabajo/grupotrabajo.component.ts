@@ -25,9 +25,14 @@ export class GrupotrabajoComponent implements OnInit {
   ngOnInit(): void {
     this.cargando = true;
     this.getService.obtenerGrupos().subscribe(res => {
-      console.log(res);
-      this.cargando = false;
-      this.gruposTrabajo = res;
+      if (res){
+        this.gruposTrabajo = res;
+        this.cargando = false;
+      } else {
+        this.gruposTrabajo = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
   }
 

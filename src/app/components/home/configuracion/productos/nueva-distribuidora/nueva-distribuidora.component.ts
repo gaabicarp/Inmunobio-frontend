@@ -14,12 +14,9 @@ export class NuevaDistribuidoraComponent implements OnInit {
 
   idDistribuidora: number;
   distribuidora: any;
-
   cargando: boolean;
   disabledForm: boolean;
-
   modo: string;
-
   formDistribuidora!: FormGroup;
 
   constructor(
@@ -34,7 +31,6 @@ export class NuevaDistribuidoraComponent implements OnInit {
     this.cargando = true;
     window.location.href.includes('editar') ? this.modo = 'EDITAR' : this.modo = 'CREAR';
 
-
     this.formDistribuidora = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       contacto: new FormControl('', [Validators.required, Validators.maxLength(100)]),
@@ -46,16 +42,21 @@ export class NuevaDistribuidoraComponent implements OnInit {
     if (this.modo === 'EDITAR'){
       this.idDistribuidora = parseInt(this.activatedRouter.snapshot.paramMap.get('idDistribuidora'), 10);
       this.getService.obtenerDistribuidorasPorId(this.idDistribuidora).subscribe(res => {
-        this.distribuidora = res;
-
-        this.formDistribuidora.patchValue({
-          nombre: this.distribuidora.nombre,
-          contacto: this.distribuidora.contacto,
-          direccion: this.distribuidora.direccion,
-          cuit: this.distribuidora.cuit,
-          representante: this.distribuidora.representante
-        });
-        this.cargando = false;
+        if (res){
+          this.distribuidora = res;
+  
+          this.formDistribuidora.patchValue({
+            nombre: this.distribuidora.nombre,
+            contacto: this.distribuidora.contacto,
+            direccion: this.distribuidora.direccion,
+            cuit: this.distribuidora.cuit,
+            representante: this.distribuidora.representante
+          });
+          this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
       });
     } else {
       this.cargando = false;

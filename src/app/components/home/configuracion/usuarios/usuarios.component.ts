@@ -34,11 +34,16 @@ export class UsuariosComponent implements OnInit {
     this.page = 1;
     this.pageSize = 10;
     this.getService.obtenerUsuarios().subscribe(res => {
-      this.cargando = false;
-      this.usuariosTodos = res;
-      this.usuarios = res;
-      this.collectionSize = res.length;
-      this.refreshUsers();
+      if (res){
+        this.usuariosTodos = res;
+        this.usuarios = res;
+        this.collectionSize = res.length;
+        this.refreshUsers();
+        this.cargando = false;
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
   }
 

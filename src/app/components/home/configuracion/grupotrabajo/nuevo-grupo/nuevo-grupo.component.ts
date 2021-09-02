@@ -58,25 +58,35 @@ export class NuevoGrupoComponent implements OnInit {
     window.location.href.includes('editar') ? this.modo = 'EDITAR' : this.modo = 'CREAR';
 
     this.getService.obtenerUsuarios().subscribe(res => {
+      if (res){
+        this.itemList = res;
+        this.usuariosDisponibles = res;
+        this.jefesDeGrupo = res.filter(usuario => {
+          return usuario.permisos.some(permiso => permiso.id_permiso === 3);
+        });
+        this.cargando = false;
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
       console.log(res);
-      this.itemList = res;
-      this.usuariosDisponibles = res;
-      this.jefesDeGrupo = res.filter(usuario => {
-        return usuario.permisos.some(permiso => permiso.id_permiso === 3);
-      });
     });
 
     if ( this.modo === 'EDITAR'){
       this.idGrupo = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
       this.getService.obtenerGrupoTrabajoPorId(this.idGrupo).subscribe(res => {
-        console.log(res);
-        this.grupoTrabajo = res;
-        this.formGrupo.patchValue({
-          nombre: res.nombre,
-          jefeGrupo: res.jefeDeGrupo,
-          usuarios: res.integrantes
-        });
-        this.cargando = false;
+        if (res){
+          this.grupoTrabajo = res;
+          this.formGrupo.patchValue({
+            nombre: res.nombre,
+            jefeGrupo: res.jefeDeGrupo,
+            usuarios: res.integrantes
+          });
+          this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
       });
     } else {
       this.cargando = false;

@@ -26,22 +26,42 @@ export class ContenedoresComponent implements OnInit {
     this.cargando = true;
     this.getService.obtenerProyectos().subscribe(res => {
       // console.log(res)
-      this.proyectos = res;
+      if (res){
+        this.proyectos = res;
+        this.cargando = false;
+      } else {
+        this.proyectos = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
     this.getService.obtenerEspaciosFisicos().subscribe(res =>{
-      this.espacios = res;
+      if (res){
+        this.espacios = res;
+        this.cargando = false;
+      } else {
+        this.espacios = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
     this.getService.obtenerContenedores().subscribe(res => {
       // console.log(res)
-      this.contenedores = res;
-      this.cargando = false;
+      if (res){
+        this.contenedores = res;
+        this.cargando = false;
+      } else {
+        this.contenedores = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
   }
 
   eliminar(id: number): void {
     this.postService.eliminarContenedor(id).subscribe(res =>{
       if (res.Status === 'Ok'){
-        this.toastService.show('Distribuidora Eliminada', { classname: 'bg-danger text-light', delay: 2000 });
+        this.toastService.show('Contenedor Eliminado', { classname: 'bg-danger text-light', delay: 2000 });
         setTimeout(() => {
           this.toastService.removeAll()
         }, 2000);

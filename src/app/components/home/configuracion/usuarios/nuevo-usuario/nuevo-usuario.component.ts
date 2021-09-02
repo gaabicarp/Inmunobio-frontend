@@ -38,8 +38,14 @@ export class NuevoUsuarioComponent implements OnInit {
     window.location.href.includes('editar') ? this.modo = 'EDITAR' : this.modo = 'CREAR';
 
     this.getService.obtenerPermisos().subscribe((res: any) => {
-      this.permisos = res;
-      this.itemList = res.filter(permiso => permiso.id_permiso !== 5);
+      if (res){
+        this.permisos = res;
+        this.itemList = res.filter(permiso => permiso.id_permiso !== 5);
+        this.cargando = false;
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
 
     this.settings = {
@@ -66,19 +72,22 @@ export class NuevoUsuarioComponent implements OnInit {
     if (this.modo === 'EDITAR'){
       this.idUsuario = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
       this.getService.obtenerUsuariosPorId(this.idUsuario).subscribe(res => {
-        console.log(res);
-        this.usuario = res;
-        this.cargando = false;
-
-        this.formUsuario.patchValue({
-          nombre: this.usuario.nombre,
-          email: this.usuario.email,
-          password: this.usuario.password,
-          direccion: this.usuario.direccion,
-          telefono: this.usuario.telefono,
-          nivel: this.usuario.permisos.map(permiso => permiso.id_permiso)
-        });
-        this.selectedItems = this.usuario.permisos.filter(permiso => permiso.id_permiso != 5);
+        if (res){
+          this.usuario = res;
+          this.formUsuario.patchValue({
+            nombre: this.usuario.nombre,
+            email: this.usuario.email,
+            password: this.usuario.password,
+            direccion: this.usuario.direccion,
+            telefono: this.usuario.telefono,
+            nivel: this.usuario.permisos.map(permiso => permiso.id_permiso)
+          });
+          this.selectedItems = this.usuario.permisos.filter(permiso => permiso.id_permiso != 5);
+          this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
         // console.log(this.formUsuario.value.nivel);
         // console.log(this.selectedItems);
       });

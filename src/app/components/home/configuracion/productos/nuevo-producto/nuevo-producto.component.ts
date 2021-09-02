@@ -41,7 +41,13 @@ export class NuevoProductoComponent implements OnInit {
 
     this.getService.obtenerDistribuidoras().subscribe(res => {
       console.log(res);
-      this.distribuidoras = res;
+      if (res){
+        this.distribuidoras = res;
+        this.cargando = false;
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
 
     this.formProducto = new FormGroup({
@@ -58,18 +64,23 @@ export class NuevoProductoComponent implements OnInit {
     if (this.modo === 'EDITAR'){
       this.idProducto = parseInt(this.activatedRouter.snapshot.paramMap.get('idProducto'), 10);
       this.getService.obtenerProductosPorId(this.idProducto).subscribe(res => {
-        this.producto = res;
-        this.formProducto.patchValue({
-          nombre: this.producto.nombre,
-          marca: this.producto.marca,
-          distribuidora: this.producto.id_distribuidora,
-          tipo: this.producto.tipo,
-          aka: this.producto.aka,
-          url: this.producto.url,
-          unidadAgrupacion: this.producto.unidadAgrupacion,
-          protocolo: this.producto.protocolo
-        });
-        this.cargando = false;
+        if (res){
+          this.producto = res;
+          this.formProducto.patchValue({
+            nombre: this.producto.nombre,
+            marca: this.producto.marca,
+            distribuidora: this.producto.id_distribuidora,
+            tipo: this.producto.tipo,
+            aka: this.producto.aka,
+            url: this.producto.url,
+            unidadAgrupacion: this.producto.unidadAgrupacion,
+            protocolo: this.producto.protocolo
+          });
+          this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
       });
     } else {
       this.cargando = false;

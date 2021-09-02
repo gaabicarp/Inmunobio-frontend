@@ -36,10 +36,24 @@ export class NuevoContenedorComponent implements OnInit {
   ngOnInit(): void {
     this.cargando = true;
     this.getService.obtenerProyectos().subscribe(res => {
-      this.proyectos = res;
+      if (res){
+        this.proyectos = res;
+        this.cargando = false;
+      } else {
+        this.proyectos = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
     this.getService.obtenerEspaciosFisicos().subscribe(res =>{
-      this.espacios = res;
+      if (res){
+        this.espacios = res;
+        this.cargando = false;
+      } else {
+        this.espacios = [];
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
     });
 
     this.formContenedor = new FormGroup({
@@ -59,20 +73,25 @@ export class NuevoContenedorComponent implements OnInit {
     if (this.modo === 'EDITAR'){
       this.idContenedor = parseInt(this.activatedRouter.snapshot.paramMap.get('idContenedor'), 10);
       this.getService.obtenerContenedores().subscribe((res: any) => {
-        this.contenedor = res.find(contenedor => contenedor.id_contenedor === this.idContenedor);
-
-        this.formContenedor.patchValue({
-          codigo: this.contenedor.codigo,
-          nombre: this.contenedor.nombre,
-          descripcion: this.contenedor.descripcion,
-          temperatura: this.contenedor.temperatura,
-          proyecto: this.contenedor.id_proyecto,
-          espacioFisico :  this.contenedor.id_espacioFisico,
-          capacidad: this.contenedor.capacidad,
-          fichaTecnica: this.contenedor.fichaTecnica,
-          disponible: this.contenedor.disponible
-        });
-        this.cargando = false;
+        if (res){
+          this.contenedor = res.find(contenedor => contenedor.id_contenedor === this.idContenedor);
+  
+          this.formContenedor.patchValue({
+            codigo: this.contenedor.codigo,
+            nombre: this.contenedor.nombre,
+            descripcion: this.contenedor.descripcion,
+            temperatura: this.contenedor.temperatura,
+            proyecto: this.contenedor.id_proyecto,
+            espacioFisico :  this.contenedor.id_espacioFisico,
+            capacidad: this.contenedor.capacidad,
+            fichaTecnica: this.contenedor.fichaTecnica,
+            disponible: this.contenedor.disponible
+          });
+          this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
       });
     } else {
       this.cargando = false;

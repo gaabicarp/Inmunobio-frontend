@@ -41,14 +41,19 @@ export class NuevoEspacioComponent implements OnInit {
     if (this.modo === 'EDITAR'){
       this.idEspacio = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
       this.getService.obtenerEspacioFisico(this.idEspacio).subscribe(res => {
-        this.espacio = res;
-        this.formEspacio.patchValue({
-          nombre: this.espacio.nombre,
-          piso: this.espacio.piso,
-          sala: this.espacio.sala,
-          descripcion: this.espacio.descripcion
-        });
-        this.cargando = false;
+        if (res){
+          this.espacio = res;
+          this.formEspacio.patchValue({
+            nombre: this.espacio.nombre,
+            piso: this.espacio.piso,
+            sala: this.espacio.sala,
+            descripcion: this.espacio.descripcion
+          });
+          this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
       });
     } else {
       this.cargando = false;
@@ -68,21 +73,21 @@ export class NuevoEspacioComponent implements OnInit {
           }, 2000);
         }
       }, err => {
-        this.toastService.show('Error al crear' + err, { classname: 'bg-danger text-light', delay: 2000 });
+        this.toastService.show('Error al crear el espacio físico' + err, { classname: 'bg-danger text-light', delay: 2000 });
         this.disabledForm = false;
       });
     } else {
       espacioFisico.id_espacioFisico = this.espacio.id_espacioFisico;
       this.postService.editarEspacio(espacioFisico).subscribe(res => {
         if (res.Status){
-          this.toastService.show('Espacio Editado', { classname: 'bg-success text-light', delay: 2000 });
+          this.toastService.show('Espacio físico Editado', { classname: 'bg-success text-light', delay: 2000 });
           setTimeout(() => { 
             this.volver()
             this.toastService.removeAll()
           }, 2000);
         }
       }, err => {
-        this.toastService.show('Error al editar' + err, { classname: 'bg-danger text-light', delay: 2000 });
+        this.toastService.show('Error al editar la información' + err, { classname: 'bg-danger text-light', delay: 2000 });
         this.disabledForm = false;
       });
     }

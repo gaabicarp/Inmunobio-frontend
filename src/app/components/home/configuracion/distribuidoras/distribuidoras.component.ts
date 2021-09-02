@@ -31,9 +31,14 @@ export class DistribuidorasComponent implements OnInit, OnDestroy {
     this.cargando = true;
     this.subscription.add(
       this.getService.obtenerDistribuidoras().subscribe(res => {
+        if (res){
+          this.distribuidoras = res;
+          this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
         console.log(res);
-        this.distribuidoras = res;
-        this.cargando = false;
       })
     );
   }
