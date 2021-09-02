@@ -154,5 +154,6 @@ export class NuevoContenedorComponent implements OnInit {
   volver(): void{
     this.router.navigateByUrl('home/configuracion/contenedores');
   }
+  
 
 }

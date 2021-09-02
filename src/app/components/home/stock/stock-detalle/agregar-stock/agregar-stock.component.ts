@@ -63,7 +63,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
       contenedor: new FormControl('0', [Validators.maxLength(30)]),
       detalleUbicacion: new FormControl('', [Validators.maxLength(50)]),
       fechaVencimiento: new FormControl('', [Validators.maxLength(11)]),
-      seguimiento: new FormControl('')
+      seguimiento: new FormControl('',[Validators.required])
     });
     if (!isNaN(this.idProd)){
       this.getService.obtenerStock(this.idEspacioFisico).subscribe(res =>{
