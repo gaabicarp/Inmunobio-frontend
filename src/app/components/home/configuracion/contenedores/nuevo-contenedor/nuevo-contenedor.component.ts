@@ -61,10 +61,10 @@ export class NuevoContenedorComponent implements OnInit {
       nombre: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       descripcion: new FormControl('', [Validators.maxLength(100)]),
       temperatura : new FormControl('', [Validators.maxLength(10)]),
-      proyecto: new FormControl('0', [Validators.maxLength(50)]),
+      proyecto: new FormControl('-1', [Validators.maxLength(50)]),
       capacidad: new FormControl('', [Validators.maxLength(10)]),
       fichaTecnica: new FormControl('', [Validators.maxLength(100)]),
-      espacioFisico: new FormControl('', [Validators.maxLength(30)]),
+      espacioFisico: new FormControl('-1', [Validators.maxLength(30)]),
       disponible: new FormControl('', [Validators.maxLength(10)])
     });
 

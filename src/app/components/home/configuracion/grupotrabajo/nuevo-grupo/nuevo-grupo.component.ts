@@ -44,7 +44,7 @@ export class NuevoGrupoComponent implements OnInit {
     });
 
     this.settings = {
-      text: 'Seleccione Usuarios',
+      text: 'Seleccione usuarios pertenecientes al grupo',
       selectAllText: 'Seleccione Todos',
       unSelectAllText: 'Quitar Todos',
       classes: 'myclass custom-class',
@@ -105,7 +105,7 @@ export class NuevoGrupoComponent implements OnInit {
   crearGrupo(): void {
     this.disabledForm = true;
     this.settings = {
-      text: 'Seleccione Usuarios',
+      text: 'Seleccione usuarios pertenecientes al grupo',
       selectAllText: 'Seleccione Todos',
       unSelectAllText: 'Quitar Todos',
       classes: 'myclass custom-class',
@@ -188,7 +188,7 @@ export class NuevoGrupoComponent implements OnInit {
   clearForm(): void {
     this.disabledForm = false;
     this.settings = {
-      text: 'Seleccione Usuarios',
+      text: 'Seleccione usuarios pertenecientes al grupo',
       selectAllText: 'Seleccione Todos',
       unSelectAllText: 'Quitar Todos',
       classes: 'myclass custom-class',

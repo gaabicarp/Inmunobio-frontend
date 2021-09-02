@@ -13,53 +13,54 @@
           <div class="col-6">
             <div class="m-3">
               <label  for="nombre" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="nombre" formControlName="nombre" [attr.disabled]='disabledForm ? true : null'>
+              <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Ingrese el nombre del producto" [attr.disabled]='disabledForm ? true : null'>
             </div> 
             <div class="m-3">
               <label  for="marca" class="form-label">Marca</label>
-              <input type="text" class="form-control" id="marca" formControlName="marca" [attr.disabled]='disabledForm ? true : null'>
+              <input type="text" class="form-control" id="marca" formControlName="marca" placeholder="Ingrese la marca del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
           <div class="col-6">
             <div class=" m-3">
               <label  class="form-label" for="distribuidora">Distribuidora</label>
               <select class="form-control" aria-label=".form-select-lg example" id="distribuidora" formControlName="distribuidora" [attr.disabled]='disabledForm ? true : null'>
+                <option value="-1" disabled>Seleccione la distribuidora</option>
                 <option *ngFor='let distribuidora of distribuidoras' value="{{distribuidora.id_distribuidora}}">{{distribuidora.nombre}}</option>
               </select>
             </div>
             <div class="m-3">
               <label  for="tipo" class="form-label">Tipo</label>
-              <input type="text" class="form-control" id="tipo" formControlName="tipo" [attr.disabled]='disabledForm ? true : null'>
+              <input type="text" class="form-control" id="tipo" formControlName="tipo" placeholder="Ingrese el tipo del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
           <div class="col-6">
             <div class="m-3">
               <label  for="aka" class="form-label">Aka</label>
-              <input type="text" class="form-control" id="aka" formControlName="aka" [attr.disabled]='disabledForm ? true : null'>
+              <input type="text" class="form-control" id="aka" formControlName="aka" placeholder="Ingrese el aka del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
           <div class="col-6">
             <div class="m-3">
               <label  for="url" class="form-label">Url</label>
-              <input type="text" class="form-control" id="url" formControlName="url" [attr.disabled]='disabledForm ? true : null'>
+              <input type="text" class="form-control" id="url" formControlName="url" placeholder="Ingrese el URL del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
           <div class="col-6">
             <div class="m-3">
               <label  for="unidadAgrupacion" class="form-label">Unidad de Agrupación</label>
-              <input type="number" class="form-control" id="unidadAgrupacion" formControlName="unidadAgrupacion" [attr.disabled]='disabledForm ? true : null'>
+              <input type="number" class="form-control" id="unidadAgrupacion" formControlName="unidadAgrupacion" placeholder="Ingrese la unidad de agrupación del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
           <div class="col-6">
             <div class="m-3">
               <label  for="detallesTecnicos" class="form-label">Detalles Técnicos</label>
-              <input type="file" class="form-control" id="detallesTecnicos" (change)="onArchivoSeleccionado($event)" [attr.disabled]='disabledForm ? true : null'>
+              <input type="file" class="form-control" id="detallesTecnicos" (change)="onArchivoSeleccionado($event)" placeholder="Ingrese los detalles tecnicos del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
           <div class="col-12">
             <div class="m-3">
               <label  for="protocolo" class="form-label">Protocolo</label>
-              <input type="text" class="form-control" id="protocolo" formControlName="protocolo" [attr.disabled]='disabledForm ? true : null'>
+              <input type="text" class="form-control" id="protocolo" formControlName="protocolo" placeholder="Ingrese el protocolo del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
         </div>

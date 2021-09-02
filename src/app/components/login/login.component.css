@@ -39,7 +39,7 @@ button{
     background-color: #033980;
     border-color: #033980;
 }
-button:hover{
+.btn-login:hover{
     background-color:white;
     color:#033980;
 }

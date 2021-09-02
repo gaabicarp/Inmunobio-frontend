@@ -53,11 +53,11 @@ export class NuevoProductoComponent implements OnInit {
     this.formProducto = new FormGroup({
       nombre: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       marca: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      distribuidora: new FormControl('', [Validators.maxLength(50)]),
+      distribuidora: new FormControl('-1', [Validators.maxLength(50)]),
       tipo: new FormControl('', [Validators.maxLength(50)]),
       aka: new FormControl('', [Validators.maxLength(100)]),
       url: new FormControl('', [Validators.maxLength(100)]),
-      unidadAgrupacion: new FormControl('0', [Validators.maxLength(10)]),
+      unidadAgrupacion: new FormControl('', [Validators.maxLength(10)]),
       protocolo: new FormControl('', [Validators.maxLength(200)])
     });
 

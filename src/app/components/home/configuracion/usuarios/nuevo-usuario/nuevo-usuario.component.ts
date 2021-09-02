@@ -49,7 +49,7 @@ export class NuevoUsuarioComponent implements OnInit {
     });
 
     this.settings = {
-      text: 'Seleccione permisos',
+      text: 'Seleccione el/los permisos del usuario',
       selectAllText: 'Seleccione Todos',
       unSelectAllText: 'Quitar Todos',
       classes: 'myclass custom-class',
@@ -99,7 +99,7 @@ export class NuevoUsuarioComponent implements OnInit {
   crearUsuario(): void{
     this.disabledForm = true;
     this.settings = {
-      text: 'Seleccione permisos',
+      text: 'Seleccione el/los permisos del usuario',
       selectAllText: 'Seleccione Todos',
       unSelectAllText: 'Quitar Todos',
       classes: 'myclass custom-class',
