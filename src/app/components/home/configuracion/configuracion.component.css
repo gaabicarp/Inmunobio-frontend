@@ -1,3 +1,12 @@
 h3{
     margin: 1.5em;
 }
+h5{
+    margin-left: 0.5em;
+}
+@media screen and (max-width: 360px){
+    p{
+        width: 35%;
+        margin: 0.3em;
+    }
+}
