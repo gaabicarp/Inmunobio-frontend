@@ -35,6 +35,6 @@ export class NavigationComponent implements OnInit {
   }
 
   salir(): void{
-    console.log('asd');
+    this.router.navigate(['/login']);
   }
 }
