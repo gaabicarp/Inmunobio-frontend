@@ -21,12 +21,12 @@
                 </div>
             </div>
         </div>
-            <div class="d-flex flex-row justify-content-center mt-3">
-                <div class="">
-                    <button class="btn btn-outline-secondary btn-lg " (click)='cerrarModal()'>Cancelar</button>
-                    <button class="btn btn-outline-danger btn-lg ml-2" (click)='finalizarExperimento()' *ngIf='!disabledForm'>Finalizar</button>
-                </div>
+        <div class="container-buttons">
+            <div class="buttons">
+                    <button class="btn btn-secondary btn-lg " (click)='cerrarModal()'>Cancelar</button>
+                    <button class="btn btn-primary btn-lg" (click)='finalizarExperimento()' *ngIf='!disabledForm'>Finalizar</button>
             </div>
+        </div>
         </form>
     </div>
 </div>

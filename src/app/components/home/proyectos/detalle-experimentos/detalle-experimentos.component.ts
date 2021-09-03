@@ -143,7 +143,7 @@ export class DetalleExperimentosComponent implements OnInit {
       id: this.idExperimento,
       blogs: Blog
     };
-    // console.log(nuevoBlog)
+    console.log(nuevoBlog)
     this.postService.crearBlogProyecto(nuevoBlog).subscribe(res => {
       console.log(res)
       if (res.Status === 'Se creó el blog de proyecto.'){
@@ -152,6 +152,7 @@ export class DetalleExperimentosComponent implements OnInit {
             this.toastService.removeAll()
             this.modalService.dismissAll()
             this.disabledForm = false;
+            this.detalleBlog = '';
             this.ngOnInit()
           }, 2000);
       }

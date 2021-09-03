@@ -12,11 +12,33 @@ textarea{
     justify-content: space-around;
     margin-top: 5em;
 }
+.buttons{
+    /* d-flex flex-row justify-content-center mt-3 */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 2em;
+    width: 40%;
+}
+.container-buttons{
+    display: flex;
+    justify-content: center;
+}
 @media screen and (max-width: 360px){
     textarea{
         width: 15em;
     }
     .imagen{
         display: none;
+    }
+    .buttons{
+        /* d-flex flex-row justify-content-center mt-3 */
+        display: block;
+        margin-top: 2em;
+        width: 100%;
+    }
+    button{
+        width: 100%;
+        margin-top: 0.5em;
     }
 }

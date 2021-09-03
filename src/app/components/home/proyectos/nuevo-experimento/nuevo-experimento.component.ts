@@ -52,6 +52,8 @@ export class NuevoExperimentoComponent implements OnInit {
           this.cargando = false;
         }
       });
+    } else{
+      this.cargando = false;
     }
   }
 
