@@ -1,15 +1,31 @@
-.search-container{
+.table{
+    width: 90%;
+    margin: 2em;
+}
+th,td{
+    padding: 0.5em;
+}
+tr{
     width: 100%;
-    padding: 0.7em;
-    margin: auto;
+}
+.title{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    margin: 1em;
+    width: 40%;
 }
-
-.search-container .form-control{
-    width: 32%;
-}
-
-.input-group{
-    width: 32%;
+@media screen and (max-width: 360px){
+    .table{
+        width: 100%;
+        overflow-x: scroll;
+        margin: 0.2em;
+    }
+    .title{
+        display: block;
+        margin: 0.5em;
+        width: 100%;
+    }
+    button{
+        width: 90%;
+    }
 }

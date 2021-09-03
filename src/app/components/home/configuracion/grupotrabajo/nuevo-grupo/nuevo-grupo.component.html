@@ -2,49 +2,48 @@
     <div class="m-4" (click)='volver()' role="button">
         <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
     </div>
-    <div class="mx-4">
-        <div class="my-3">
+    <div class="contenido">
+        <div class="contenido__title">
             <h2>Nuevo Grupo de trabajo</h2>
         </div>
     
-        <div class="p-4 mb-4">
+        <div class="contenido__form">
             <form [formGroup]="formGrupo" (ngSubmit)="crearGrupo()">
-                <div class="row">
-                    <div class="col-9">
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre de Grupo</label>
-                            <input type="text" class="form-control" id="nombre" formControlName='nombre' placeholder="Ingrese el nombre del grupo de trabajo" [attr.disabled]='disabledForm ? true : null'>
-                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                <div class="">
+                    <div class="datos">
+                        <div class="contenido__form-item">
+                            <div class="item-datos">
+                                <label for="nombre" class="form-label">Nombre de Grupo</label>
+                                <input type="text" class="form-control" id="nombre" formControlName='nombre' placeholder="Ingrese el nombre del grupo de trabajo" [attr.disabled]='disabledForm ? true : null'>
+                                <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+                            </div>
+                            <div class="item-datos">
+                                <label for="jefeGrupo" class="form-label">Jefe de grupo</label>
+                                <select class="form-control"  id='jefeGrupo' aria-label="Default select example" formControlName="jefeGrupo" (change)="filtrarJefe()" [attr.disabled]='disabledForm ? true : null'>
+                                    <option selected hidden value="-1">Seleccione jefe/a de grupo</option>
+                                    <option *ngFor='let usuario of jefesDeGrupo' value="{{usuario.id}}">{{usuario.nombre}}</option>
+                                </select>
+                            </div>
                         </div>
-                        <div>
-                            <label for="jefeGrupo" class="form-label">Jefe de grupo</label>
-                            <select class="form-control"  id='jefeGrupo' aria-label="Default select example" formControlName="jefeGrupo" (change)="filtrarJefe()" [attr.disabled]='disabledForm ? true : null'>
-                                <option selected hidden value="-1">Seleccione jefe/a de grupo</option>
-                                <option *ngFor='let usuario of jefesDeGrupo' value="{{usuario.id}}">{{usuario.nombre}}</option>
-                            </select>
+                        <div class="img">
+                            <div class="icon-container">
+                                <i class="bi bi-people" style="font-size: 8em; margin: auto;"></i>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-3">
-                        <div class="icon-container">
-                            <i class="bi bi-people" style="font-size: 8em; margin: auto;"></i>
-                        </div>
-                    </div>
-    
-                </div>
-                <div>
-                    <label for="usuarios" class="form-label">Usuarios</label>
-                    <angular2-multiselect
+                    <div class="item-datos">
+                        <label for="usuarios" class="form-label">Usuarios</label>
+                        <angular2-multiselect
                         [data]="itemList" 
                         [(ngModel)]="selectedItems" 
                         [settings]="settings"                 
                         formControlName="usuarios"
                         [attr.disabled]='disabledForm ? true : null'>
-                    </angular2-multiselect>
-                </div>
-                <div class="d-flex flex-row justify-content-end mt-3">
-                    <div class="mx-3">
-                        <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formGrupo.valid'>Crear Grupo</button>
+                        </angular2-multiselect>
                     </div>
+                </div>
+                <div class="text-center">
+                        <button class="btn btn-primary btn-lg" type="submit" [disabled]='!formGrupo.valid'>Crear Grupo</button>
                 </div>
             </form>
         </div>

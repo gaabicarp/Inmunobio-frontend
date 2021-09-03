@@ -3,29 +3,27 @@
       <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
   
-  <div class="mx-4">
-    <div class="my-3">
-      <div class="d-flex align-items-center">
+  <div class="">
+    <div class="title">
         <h2 class="mb-0">Grupo de Trabajo</h2>
-        <div class="ml-4">
-          <button class="btn btn-outline-primary" routerLink='nuevo-grupo'>Nuevo grupo</button>
+        <div class="">
+          <button class="btn btn-outline-primary nuevo-grupo" routerLink='nuevo-grupo'>Nuevo grupo</button>
         </div>
-      </div>
     </div>
-    <div class="p-4 mb-4">
-      <table class="table table-hover">
+    <div class="">
+      <table class="table table-responsive table-hover">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Jefe de Grupo</th>
+            <th scope="col">Jefe</th>
             <th scope="col">Nro Integrantes</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor='let grupo of gruposTrabajo; let i = index'>
-            <th scope="row">{{i + 1}}</th>
+            <td scope="row">{{i + 1}}</td>
             <td>{{grupo.nombre}}</td>
             <td>{{grupo.jefeDeGrupo}}</td>
             <td>{{grupo.integrantes.length}}</td>

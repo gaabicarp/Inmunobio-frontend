@@ -3,75 +3,68 @@
     <h5><span><i class="bi bi-arrow-left"></i></span>VOLVER</h5>
   </div>
 
-  <div class="mx-4">
-    <div class="my-3">
+  <div class="contenido">
+    <div class="contenido__title">
       <h2 class="mb-0">{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Producto</h2>
     </div>
-    <div class="p-4 m-5">
+    <div class="contenido__form">
       <form [formGroup]="formProducto" (ngSubmit)="crearProducto()">
-        <div class="row">
-          <div class="col-6">
-            <div class="m-3">
+        <div class="contenido__form--datos">
+          <div class="contenido__form-item">
+            <div class="item-datos">
               <label  for="nombre" class="form-label">Nombre</label>
               <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Ingrese el nombre del producto" [attr.disabled]='disabledForm ? true : null'>
             </div> 
-            <div class="m-3">
+            <div class="item-datos">
               <label  for="marca" class="form-label">Marca</label>
               <input type="text" class="form-control" id="marca" formControlName="marca" placeholder="Ingrese la marca del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
-          <div class="col-6">
-            <div class=" m-3">
+          <div class="contenido__form-item">
+            <div class=" item-datos">
               <label  class="form-label" for="distribuidora">Distribuidora</label>
               <select class="form-control" aria-label=".form-select-lg example" id="distribuidora" formControlName="distribuidora" [attr.disabled]='disabledForm ? true : null'>
                 <option value="-1" disabled>Seleccione la distribuidora</option>
                 <option *ngFor='let distribuidora of distribuidoras' value="{{distribuidora.id_distribuidora}}">{{distribuidora.nombre}}</option>
               </select>
             </div>
-            <div class="m-3">
+            <div class="item-datos">
               <label  for="tipo" class="form-label">Tipo</label>
               <input type="text" class="form-control" id="tipo" formControlName="tipo" placeholder="Ingrese el tipo del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
-          <div class="col-6">
-            <div class="m-3">
+          <div class="contenido__form-item">
+            <div class="item-datos">
               <label  for="aka" class="form-label">Aka</label>
               <input type="text" class="form-control" id="aka" formControlName="aka" placeholder="Ingrese el aka del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
-          </div>
-          <div class="col-6">
-            <div class="m-3">
+            <div class="item-datos">
               <label  for="url" class="form-label">Url</label>
               <input type="text" class="form-control" id="url" formControlName="url" placeholder="Ingrese el URL del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
-          <div class="col-6">
-            <div class="m-3">
+          <div class="contenido__form-item">
+            <div class="item-datos">
               <label  for="unidadAgrupacion" class="form-label">Unidad de Agrupación</label>
               <input type="number" class="form-control" id="unidadAgrupacion" formControlName="unidadAgrupacion" placeholder="Ingrese la unidad de agrupación del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
-          </div>
-          <div class="col-6">
-            <div class="m-3">
+            <div class="item-datos">
               <label  for="detallesTecnicos" class="form-label">Detalles Técnicos</label>
               <input type="file" class="form-control" id="detallesTecnicos" (change)="onArchivoSeleccionado($event)" placeholder="Ingrese los detalles tecnicos del producto" [attr.disabled]='disabledForm ? true : null'>
             </div>
           </div>
-          <div class="col-12">
-            <div class="m-3">
+          <div class="item-datos1">
               <label  for="protocolo" class="form-label">Protocolo</label>
               <input type="text" class="form-control" id="protocolo" formControlName="protocolo" placeholder="Ingrese el protocolo del producto" [attr.disabled]='disabledForm ? true : null'>
-            </div>
           </div>
         </div>
-        <div class="d-flex flex-row justify-content-end">
-          <div class="mx-3">
+        <div class="content__buttons">
               <button class="btn btn-primary btn-lg" type="submit" [disabled]="!formProducto.valid" *ngIf='!disabledForm'>{{modo === 'EDITAR' ? 'Editar' : 'Crear' }} Producto</button>
               <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                 Cargando...
               </button>
-          </div>
+
       </div>
     </form>
   </div>

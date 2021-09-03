@@ -1,0 +1,33 @@
+.contenido__title{
+    margin: 2em;
+    padding: 1em;
+    margin-bottom: 0px;
+    padding-bottom: 0px ;
+}
+.contenido__form{
+    margin: 0 2em;
+    padding: 1em;
+}
+.content__buttons{
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 360px){
+    .contenido__title{
+        margin: 1em;
+        padding: 0px;
+        margin-bottom: 0px;
+    }
+    .contenido__form{
+        margin: 0 1em;
+        padding: 0px;
+    }
+    button{
+        width: 100%;
+        margin-bottom: 1em;
+    }
+    .content__buttons{
+        display: block;
+    }
+}
