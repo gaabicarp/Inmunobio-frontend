@@ -5,6 +5,7 @@ import {debounceTime} from 'rxjs/operators';
 import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { PostService } from 'src/app/services/post.service';
+import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,11 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
 
-  constructor(private router: Router, private postService: PostService) {
+  constructor(
+    private router: Router,
+    private postService: PostService,
+    private jwtService: JwtService
+    ) {
     this.loginForm = new FormGroup({
       usuario: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -53,7 +58,7 @@ export class LoginComponent implements OnInit {
         email: this.loginForm.controls.usuario.value,
         password: this.loginForm.controls.password.value
       }).subscribe(res => {
-          localStorage.setItem('token', res.token);
+          this.jwtService.login(res.token)
           setTimeout(() => {
             this.router.navigateByUrl('home/proyectos');
           }, 3000);

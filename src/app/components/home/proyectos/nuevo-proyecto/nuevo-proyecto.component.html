@@ -30,7 +30,7 @@
                             <label for="director" class="form-label">Director de Proyecto</label>
                             <select class="form-control"  id='director' aria-label="Default select example" formControlName="idDirectorProyecto" (change)="filtrarDirector()" [attr.disabled]='disabledForm ? true : null'> 
                                 <option selected hidden value="-1">Seleccione director/a de Proyecto</option>
-                                <option *ngFor='let usuario of directoresProyecto' value="{{usuario.id_usuario}}">{{usuario.nombre}}</option>
+                                <option *ngFor='let usuario of directoresProyecto' value="{{usuario.id}}">{{usuario.nombre}}</option>
                             </select>
                         </div>
                     </div>
@@ -47,7 +47,8 @@
             </div>
             <div class="mb-3">
                 <label for="descripcion" class="form-label">Usuarios Asignados</label>
-                <angular2-multiselect [data]="itemList" 
+                <angular2-multiselect 
+                    [data]="itemList" 
                     [(ngModel)]="selectedItems" 
                     [settings]="settings"                 
                     formControlName="usuarios"

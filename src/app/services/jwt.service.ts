@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +15,15 @@ export class JwtService {
 
   login(tk: string): void {
     localStorage.setItem('token', tk);
+    const helper = new JwtHelperService();
+    const decodedToken = helper.decodeToken(tk);
+    console.log(decodedToken);
+    localStorage.setItem('usuario', JSON.stringify(decodedToken));
     this.chageLoginStatusSubject.next(true);
   }
 
   logout(): void {
-    const user = localStorage.getItem('username');
     localStorage.clear();
-    if (user !== null && user !== '') {
-      localStorage.setItem('username', user);
-    }
     this.chageLoginStatusSubject.next(false);
     this.router.navigateByUrl('/login');
   }

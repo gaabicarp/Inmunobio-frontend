@@ -101,6 +101,10 @@ export class GetService {
     return this.http.get<Proyecto[]>(this.API_URL + 'proyectos');
   }
 
+  obtenerProyectoPorUsuario(idUsuario: number): Observable<Proyecto[]>{
+    return this.http.get<Proyecto[]>(this.API_URL + `proyectosDeUsuario/${idUsuario}`)
+  }
+
   obtenerProyectosPorId(id: number): Observable<any>{
     return this.http.get<Proyecto>(this.API_URL + `proyecto/${id}`);
   }

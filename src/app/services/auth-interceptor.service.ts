@@ -28,22 +28,6 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     token = localStorage.getItem('token');
 
-    // SIMULA EL TOKEN VENCIDO
-    /*
-    (async () => {
-      // Do something before delay
-      console.log('before delay');
-
-      await this.delay(20000);
-
-      // Do something after
-      console.log('after delay');
-      this.router.navigateByUrl('/login');
-      return;
-
-    })();
-    */
-
     let request = req;
 
     // SI EXISTE CONFIGURA HEADERS DE FUTURAS HTTP

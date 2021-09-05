@@ -54,7 +54,7 @@ export class DetalleExperimentosComponent implements OnInit {
     });
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
-    this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
+    this.getService.obtenerProyectos().subscribe(res => {
       if (res){
         this.proyecto = res;
       } else {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { JwtService } from 'src/app/services/jwt.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,7 +11,10 @@ export class NavigationComponent implements OnInit {
 
   MenuSel: string;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private jwtService: JwtService
+    ) { }
 
   ngOnInit(): void {
   }
@@ -35,6 +39,6 @@ export class NavigationComponent implements OnInit {
   }
 
   salir(): void{
-    this.router.navigate(['/login']);
+    this.jwtService.logout();
   }
 }

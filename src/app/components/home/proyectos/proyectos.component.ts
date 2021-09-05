@@ -19,8 +19,9 @@ export class ProyectosComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargando = true;
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
     this.filterPost = '';
-    this.getService.obtenerProyectos().subscribe(res => {
+    this.getService.obtenerProyectoPorUsuario(usuario.id).subscribe(res => {
       console.log(res);
       if (res){
         // console.log(res);

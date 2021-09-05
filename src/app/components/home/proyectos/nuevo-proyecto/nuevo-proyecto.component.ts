@@ -46,17 +46,17 @@ export class NuevoProyectoComponent implements OnInit {
 
     this.getService.obtenerUsuarios().subscribe(res => {
       if (res){
+        console.log(res)
         this.directoresProyecto = res.filter(usuario => {
           return usuario.permisos.some(permiso => permiso.id_permiso === 4);
         });
-        this.usuariosDisponibles = res;
         this.itemList = res;
+        this.usuariosDisponibles = res;
         this.cargando = false;
       } else {
         this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
         this.cargando = false;
       }
-      
     });
 
 
@@ -65,11 +65,11 @@ export class NuevoProyectoComponent implements OnInit {
       selectAllText: 'Seleccione Todos',
       unSelectAllText: 'Quitar Todos',
       classes: 'myclass custom-class',
-      primaryKey: 'id_usuario',
+      primaryKey: 'id',
       labelKey: 'nombre',
       enableSearchFilter: true,
       searchBy: ['nombre'],
-      disabled: true
+      disabled: false
     };
 
     this.formProyecto = new FormGroup({
@@ -83,17 +83,6 @@ export class NuevoProyectoComponent implements OnInit {
     this.cargando = false;
     if (this.modo === 'EDITAR'){
       this.cargando = true;
-      this.settings = {
-        text: 'Seleccione usuarios',
-        selectAllText: 'Seleccione Todos',
-        unSelectAllText: 'Quitar Todos',
-        classes: 'myclass custom-class',
-        primaryKey: 'id',
-        labelKey: 'nombre',
-        enableSearchFilter: true,
-        searchBy: ['nombre'],
-        disabled: false
-      };
       this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
       this.getService.obtenerProyectosPorId(this.idProyecto).subscribe(res => {
         if (res){
@@ -103,15 +92,17 @@ export class NuevoProyectoComponent implements OnInit {
               nombre: this.element.nombre,
               codigoProyecto: this.element.codigoProyecto,
               montoInicial: this.element.montoInicial,
-              idDirectorProyecto: this.element.idDirectorProyecto,
+              idDirectorProyecto: this.element.idDirectorProyecto.id,
               descripcion: this.element.descripcion
             });
             this.getService.obtenerUsuarioPorProyecto(this.element.id_proyecto).subscribe(usuarios => {
-              this.selectedItems = usuarios.filter( usuario => res.participantes.indexOf(usuario.id_usuario) > -1);
+              const participantes = res.participantes.map(user => user.id);
+              console.log(participantes)
+              this.selectedItems = usuarios.filter( usuario => participantes.indexOf(usuario.id) > -1);
               this.cargando = false;
             });
             // console.log('asdasd')
-            this.itemList = this.usuariosDisponibles.filter(usuario => usuario.id_usuario != this.formProyecto.value.idDirectorProyecto);
+            this.itemList = this.usuariosDisponibles.filter(usuario => usuario.id != this.formProyecto.value.idDirectorProyecto);
           this.cargando = false;
         } else {
           this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
@@ -123,22 +114,9 @@ export class NuevoProyectoComponent implements OnInit {
 
   filtrarDirector(): void {
     const directorSeleccionado = this.formProyecto.value.idDirectorProyecto;
-    if (directorSeleccionado != -1) {
-      this.settings = {
-        text: 'Seleccione usuarios',
-        selectAllText: 'Seleccione Todos',
-        unSelectAllText: 'Quitar Todos',
-        classes: 'myclass custom-class',
-        primaryKey: 'id_usuario',
-        labelKey: 'nombre',
-        enableSearchFilter: true,
-        searchBy: ['nombre'],
-        disabled: false
-      };
-    }
-    // console.log(directorSeleccionado)
-    this.itemList = this.usuariosDisponibles.filter(usuario => usuario.id_usuario != directorSeleccionado);
-    this.selectedItems = this.selectedItems.filter(usuario => usuario.id_usuario != directorSeleccionado);
+    console.log(directorSeleccionado)
+    this.itemList = this.usuariosDisponibles.filter(usuario => usuario.id != directorSeleccionado);
+    this.selectedItems = this.selectedItems.filter(usuario => usuario.id != directorSeleccionado);
   }
 
 
@@ -146,7 +124,7 @@ export class NuevoProyectoComponent implements OnInit {
     this.disabledForm = true;
     const int = [];
     this.selectedItems.map(usuario => {
-      int.push(usuario.id_usuario);
+      int.push(usuario.id);
     });
     const proyecto: any = {
       codigoProyecto: this.formProyecto.value.codigoProyecto,
@@ -166,7 +144,7 @@ export class NuevoProyectoComponent implements OnInit {
             this.volver();
           }, 2000);
         }, err => {
-          this.toastService.show('Problema al finalizar Proyecto' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
+          this.toastService.show('Problema al crear Proyecto' + err.error.error, { classname: 'bg-danger text-light', delay: 2000 });
           this.disabledForm = false;
         });
     } else {
