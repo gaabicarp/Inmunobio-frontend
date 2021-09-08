@@ -112,19 +112,22 @@ export class DetalleExperimentosComponent implements OnInit {
         this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
         this.cargando = false;
       }
-      console.log(res);
+      // console.log(res);
       
     });
-    this.getService.obtenerMuestrasxProyecto(this.idProyecto).subscribe(res =>{
-      console.log(res)
-      if(res){
-        const muestrasAsociadas = this.experimento.muestrasExternas.map(a => a.id_muestra)
-        this.itemList = res.filter( b => { return !muestrasAsociadas.includes(b.id_muestra)})
-      } else {
-        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
-        this.cargando = false;
-      }
-    })
+    setTimeout(() => {
+      this.getService.obtenerMuestrasxProyecto(this.idProyecto).subscribe(res =>{
+        console.log(res)
+        if(res){
+          const muestrasAsociadas = this.experimento.muestrasExternas.map(a => a.id_muestra)
+          this.itemList = res.filter( b => { return !muestrasAsociadas.includes(b.id_muestra)})
+          this.cargando = false;
+        } else {
+          this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+          this.cargando = false;
+        }
+      })
+    }, 500);
     this.settings = {
       text: 'Seleccione muestras a asociar',
       selectAllText: 'Seleccione Todos',
