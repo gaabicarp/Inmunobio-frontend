@@ -120,11 +120,11 @@
                       <p class="card-text text-center">{{muestra.descripcion}}</p>
                       <div class="d-flex flex-row justify-content-between">
                         <h6><i>Experimento</i></h6>
-                        <h6><i>Contenedor</i></h6>
+                        <h6><i>Ubicación</i></h6>
                       </div>
                       <div class="d-flex flex-row justify-content-between">
-                        <p class="mb-0 ml-4">{{muestra.id_experimento}}</p>
-                        <p class="mb-0 mr-4">{{muestra.id_contenedor}}</p>
+                        <p class="mb-0">{{muestra.codigoExperimento}}</p>
+                        <p class="mb-0">{{muestra.nombreContenedor}}</p>
                       </div>
                   </div>
                 </div>
@@ -299,7 +299,7 @@
       </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary btn-lg boton-grande" (click)='crearBlog()' *ngIf='!disabledForm'>Crear</button>
+        <button class="btn btn-primary btn-lg boton-grande" (click)='crearBlog()' *ngIf='!disabledForm'>Crear Blog</button>
         <button class="btn btn-primary btn-lg boton-grande" type="button" disabled *ngIf='disabledForm'>
           <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           Cargando...
