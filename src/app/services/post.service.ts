@@ -242,4 +242,7 @@ export class PostService {
   eliminarMuestra(idMuestra:number): Observable<any>{
     return this.http.delete<any>(this.API_URL +'muestra/'+ idMuestra);
   }
+  agregarMuestraExternaExperimento(datos:any): Observable<any>{
+    return this.http.put<any>(this.API_URL + 'agregarMuestrasExternasAlExperimento', datos);
+  }
 }

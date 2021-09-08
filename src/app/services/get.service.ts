@@ -166,4 +166,7 @@ export class GetService {
   obtenerAnimalxId(idAnimal:number): Observable<any>{
     return this.http.get<any>(this.API_URL + 'animal/'+ idAnimal);
   }
+  obtenerMuestrasxProyecto(idProyecto:number):Observable<any>{
+    return this.http.get<any>(this.API_URL + 'proyecto/'+ idProyecto +'/muestras');
+  }
 }

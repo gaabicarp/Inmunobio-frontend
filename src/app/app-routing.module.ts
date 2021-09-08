@@ -33,12 +33,14 @@ import { FinalizarExperimentoComponent } from './components/home/proyectos/detal
 import { GrupoExperimentalComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/grupo-experimental.component';
 import { NuevaHerramientaComponent } from './components/home/stock/stock-detalle/nueva-herramienta/nueva-herramienta.component';
 import { DividirGrupoComponent } from './components/home/proyectos/detalle-experimentos/grupo-experimental/dividir-grupo/dividir-grupo.component';
+import { PerfilComponent } from './components/home/perfil/perfil.component';
 
 const routes: Routes = [
   { path: 'home',
     component: HomeComponent,
     children: [
       {path: 'dashboard', component: DashboardComponent},
+      {path: 'perfil', component: PerfilComponent},
       {path: 'proyectos', component: ProyectosComponent},
       {path: 'proyectos/nuevo-proyecto', component: NuevoProyectoComponent},
       {path: 'proyectos/editar-proyecto/:id', component: NuevoProyectoComponent},

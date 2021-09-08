@@ -97,7 +97,6 @@ export class DividirGrupoComponent implements OnInit {
     }
       this.nuevosGrupos.push(NuevoGrupo)
       const fuentesSeleccionadas = this.formGrupo.value.fuentes
-      const posiciones = []
       console.log(this.nuevosGrupos)
       this.itemList = this.itemList.filter( fuente => { return !fuentesSeleccionadas.includes(fuente) })
       console.log(this.itemList)

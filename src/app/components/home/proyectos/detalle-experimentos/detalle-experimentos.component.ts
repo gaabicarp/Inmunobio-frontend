@@ -19,6 +19,7 @@ export class DetalleExperimentosComponent implements OnInit {
   experimento: any;
   gruposExperimentales = [];
   formGrupoExperimental: FormGroup;
+  formAsociarMuestra: FormGroup;
   agregarGrupo: boolean;
   detalleBlog: string;
   fechaHoy: any;
@@ -26,14 +27,18 @@ export class DetalleExperimentosComponent implements OnInit {
   fechaHasta: any;
   blogs = [];
   filterPost:string;
+  filterPostMuestra:string;
   filterPostActive: number;
-
+  muestrasDisponibles:any;
   fecHoy=new Date(Date.now());
   fecDesde:any;
   fecHasta:any;
   disabledForm: boolean;
   cargando:boolean;
 
+  itemList: any = [];
+  selectedItems = [];
+  settings:any;
   constructor(
     private activatedRouter: ActivatedRoute,
     private getService: GetService,
@@ -45,6 +50,7 @@ export class DetalleExperimentosComponent implements OnInit {
   ngOnInit(): void {
     this.cargando = true;
     this.filterPost = '';
+    this.filterPostMuestra = '';
     this.filterPostActive = -1;
     this.agregarGrupo = false;
     this.formGrupoExperimental = new FormGroup({
@@ -52,6 +58,10 @@ export class DetalleExperimentosComponent implements OnInit {
       codigo: new FormControl('', Validators.required),
       descripcion: new FormControl(''),
     });
+    this.formAsociarMuestra = new FormGroup({
+      muestras: new FormControl('0', Validators.required)
+    });
+    
     this.idProyecto = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.idExperimento = parseInt(this.activatedRouter.snapshot.paramMap.get('idExperimento'), 10);
     this.getService.obtenerProyectos().subscribe(res => {
@@ -69,8 +79,9 @@ export class DetalleExperimentosComponent implements OnInit {
         this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
         this.cargando = false;
       }
-      // console.log(res);
+      console.log(res);
     });
+    
     this.getService.obtenerGruposExperimentalesPorExperimento(this.idExperimento).subscribe(res => {
       // console.log(res);
       if (res){
@@ -104,6 +115,27 @@ export class DetalleExperimentosComponent implements OnInit {
       console.log(res);
       
     });
+    this.getService.obtenerMuestrasxProyecto(this.idProyecto).subscribe(res =>{
+      console.log(res)
+      if(res){
+        const muestrasAsociadas = this.experimento.muestrasExternas.map(a => a.id_muestra)
+        this.itemList = res.filter( b => { return !muestrasAsociadas.includes(b.id_muestra)})
+      } else {
+        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
+        this.cargando = false;
+      }
+    })
+    this.settings = {
+      text: 'Seleccione muestras a asociar',
+      selectAllText: 'Seleccione Todos',
+      unSelectAllText: 'Quitar Todos',
+      classes: 'myclass custom-class',
+      primaryKey: 'id_muestra',
+      labelKey: 'codigo',
+      enableSearchFilter: true,
+      searchBy: ['codigo'],
+      disabled: false,
+    };
   }
 
   crearGrupoExperimental(): void {
@@ -127,8 +159,8 @@ export class DetalleExperimentosComponent implements OnInit {
     });
   }
 
-  open(content): void {
-    this.modalService.open(content, { centered: true, size: 'lg' });
+  open(content,centered): void {
+    this.modalService.open(content, { centered: centered, size: 'lg' });
   }
 
   crearBlog(): void{
@@ -178,6 +210,44 @@ export class DetalleExperimentosComponent implements OnInit {
     this.postService.obtenerBlogExperimento(blog).subscribe( res =>{
       this.blogs = res;
       console.log(res)
+    })
+  }
+  asociarMuestraExperimento(){
+    this.disabledForm = true;
+    this.settings = {
+      text: 'Seleccione muestras a asociar',
+      selectAllText: 'Seleccione Todos',
+      unSelectAllText: 'Quitar Todos',
+      classes: 'myclass custom-class',
+      primaryKey: 'id_muestra',
+      labelKey: 'codigo',
+      enableSearchFilter: true,
+      searchBy: ['codigo'],
+      disabled: true,
+    };
+    const fuentesSeleccionadas = this.formAsociarMuestra.value.muestras
+    const muestrasAsociadas = this.experimento.muestrasExternas
+    const todasLasMuestras = muestrasAsociadas.concat(fuentesSeleccionadas)
+    const datosMuestra:any={
+      id_proyecto: this.idProyecto,
+      id_experimento: this.idExperimento,
+      muestrasExternas: todasLasMuestras
+    }
+    console.log(datosMuestra)
+    this.postService.agregarMuestraExternaExperimento(datosMuestra).subscribe(res =>{
+      if (res.Status === 'Se agregaron las muestras al experimento.'){
+        this.toastService.show('Muestras Asociadas', { classname: 'bg-success text-light', delay: 2000 });
+          setTimeout(() => {
+            this.toastService.removeAll()
+            this.modalService.dismissAll()
+            this.disabledForm = false;
+            this.selectedItems = [];
+            this.ngOnInit()
+          }, 2000);
+      }
+    }, err => {
+      console.log(err)
+      this.toastService.show('Problema al asociar las muestras', { classname: 'bg-danger text-light', delay: 2000 });
     })
   }
 

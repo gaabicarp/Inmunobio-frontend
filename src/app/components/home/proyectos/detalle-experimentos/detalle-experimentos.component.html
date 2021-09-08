@@ -7,13 +7,13 @@
       <h2 class="">Experimento - {{experimento?.codigo}}</h2>
       <div class="editar-finalizar" *ngIf='!experimento?.finalizado'>
         <button class="btn btn-outline-primary" style="cursor: pointer" routerLink='../../editar-experimento/{{idExperimento}}'><i class="bi bi-pencil text-primary"></i> Editar</button>
-        <button class="btn btn-outline-danger finalizar" (click)="open(finalizarExperimento)">Finalizar Experimento</button>
+        <button class="btn btn-outline-danger finalizar" (click)="open(finalizarExperimento,true)">Finalizar Experimento</button>
       </div>
     </div>
     <span class="text-danger" *ngIf='experimento?.finalizado'>Experimento cerrado</span>
   </div>
 
-    <ul ngbNav #nav="ngbNav" class="nav-tabs mx-4">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs">
         <li [ngbNavItem]="1">
             <a ngbNavLink>Detalles</a>
             <ng-template ngbNavContent>
@@ -52,7 +52,7 @@
                 <div class="d-flex align-items-center mb-3 mt-3">
                   <h4 class="text-secondary text-staatliches mb-0">Grupos Experimentales</h4>
                   <div class="ml-4">
-                    <button class="btn btn-outline-primary" style="cursor: pointer" (click)="open(GrupoExperimental)">+Nuevo</button>
+                    <button class="btn btn-outline-primary" style="cursor: pointer" (click)="open(GrupoExperimental,true)">+Nuevo</button>
                   </div>
                 </div>
                 <div class="grupo-filtro-container" *ngIf='gruposExperimentales.length != 0'>
@@ -98,11 +98,50 @@
             </ng-template>
         </li>
         <li [ngbNavItem]="2">
+          <a ngbNavLink>Muestras Externas</a>
+          <ng-template ngbNavContent>
+            <div class="search_container_muestras">
+              <div class="input-group">
+                  <span class="input-group-text">
+                      <i class="bi bi-search"></i>
+                  </span>
+                  <input type="text" class="form-control " id="usuario" name='filterPostMuestra' placeholder="Buscar por codigo de muestra" [(ngModel)]='filterPostMuestra'>
+              </div>
+              <div>
+                <button class="btn btn-outline-primary btn-asociar_muestra " (click)='open(AsociarMuestra,false)'>Asociar Muestra</button>
+              </div>
+            </div>
+            <div class="muestras-container">
+              <div *ngFor="let muestra of experimento.muestrasExternas | filterCodigos: filterPostMuestra" class="card card-grupo shadow rounded list-group-item-action">
+                <div class="">
+                  <div class="card-body">
+                      <h5 class="card-title text-center">{{muestra.codigo}} - {{muestra.tipo}}</h5>
+                      <hr class="my-3 bg-{{experimento?.habilitado? 'danger' : 'success'}}">
+                      <p class="card-text text-center">{{muestra.descripcion}}</p>
+                      <div class="d-flex flex-row justify-content-between">
+                        <h6><i>Experimento</i></h6>
+                        <h6><i>Contenedor</i></h6>
+                      </div>
+                      <div class="d-flex flex-row justify-content-between">
+                        <p class="mb-0 ml-4">{{muestra.id_experimento}}</p>
+                        <p class="mb-0 mr-4">{{muestra.id_contenedor}}</p>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf='experimento.muestrasExternas.length === 0' class="text-center" style='color: darkred;'>
+              <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+              <h5 style='color: darkred;'>No hay muestras externas asociadas</h5>
+          </div>
+          </ng-template>
+      </li>
+        <li [ngbNavItem]="3">
             <a ngbNavLink>Blog</a>
             <ng-template ngbNavContent>
               <div class="busqueda">
                 <div class="form-group my-2">
-                  <button class="btn btn-outline-success boton" (click)="open(blog)">Nueva Entrada</button>
+                  <button class="btn btn-outline-success boton" (click)="open(blog,true)">Nueva Entrada</button>
                 </div>
                 <div class="barra-blogs m-2" ></div>
                   <div class="search-container-blog">
@@ -202,6 +241,38 @@
   </div>
   <div class="modal-footer">
       <button class="btn btn-primary btn-lg mr-3 boton-grande" (click)='crearGrupoExperimental()' *ngIf='!disabledForm'>Crear</button>
+      <button class="btn btn-primary btn-lg boton-grande" type="button" disabled *ngIf='disabledForm'>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Cargando...
+      </button>
+  </div>
+</ng-template>
+
+<ng-template #AsociarMuestra let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Asociar Muestra</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="">
+      <form [formGroup]='formAsociarMuestra' class="d-flex">
+          <div class="w-100">
+            <label for="muestras" class="form-label">Muestras Disponibles</label>
+                    <angular2-multiselect [data]="itemList" 
+                                [(ngModel)]="selectedItems" 
+                                [settings]="settings"                 
+                                formControlName="muestras"
+                                [attr.disabled]='disabledForm ? true : null'
+                                style="height: 10em;">
+                    </angular2-multiselect>
+          </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+      <button class="btn btn-primary btn-lg mr-3 boton-grande" (click)='asociarMuestraExperimento()' *ngIf='!disabledForm'>Asociar muestra</button>
       <button class="btn btn-primary btn-lg boton-grande" type="button" disabled *ngIf='disabledForm'>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Cargando...

@@ -24,7 +24,6 @@ export class ProyectosComponent implements OnInit {
     this.getService.obtenerProyectoPorUsuario(usuario.id).subscribe(res => {
       console.log(res);
       if (res){
-        // console.log(res);
         this.proyectos = res;
         this.cargando = false;
       } else {

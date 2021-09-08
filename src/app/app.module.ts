@@ -49,6 +49,7 @@ import { DividirGrupoComponent } from './components/home/proyectos/detalle-exper
 import { FilterTipoPipe } from './pipe/filter-tipo.pipe';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FilterFechavencimientoPipe } from './pipe/filter-fechavencimiento.pipe';
+import { PerfilComponent } from './components/home/perfil/perfil.component';
 
 
 
@@ -95,7 +96,8 @@ import { FilterFechavencimientoPipe } from './pipe/filter-fechavencimiento.pipe'
     NuevaHerramientaComponent,
     DividirGrupoComponent,
     FilterTipoPipe,
-    FilterFechavencimientoPipe
+    FilterFechavencimientoPipe,
+    PerfilComponent
 
   ],
   imports: [

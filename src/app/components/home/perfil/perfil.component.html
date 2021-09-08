@@ -1,0 +1,38 @@
+<h2 class="text-center title">Perfil</h2>
+<div class="container card shadow">
+    <div class="container_bloque">
+        <div class="container_bloque_parte1">
+            <div class="container_bloque_parte1_datos">
+                <div class="item">
+                    <h4 class="text-secondary text-staatliches mb-0">Nombre</h4>
+                    <p class="ml-2">{{usuario.nombre}}</p>
+                </div>
+                <div class="item">
+                    <h4 class="text-secondary text-staatliches mb-0">Email</h4>
+                    <p class="ml-2">{{usuario.email}}</p>
+                </div>
+            </div>
+            <div class="container_bloque_parte1_datos">
+                <div class="item">
+                    <h4 class="text-secondary text-staatliches mb-0">Teléfono</h4>
+                    <p class="ml-2">{{usuario.telefono}}</p>
+                </div>
+                <div class="item">
+                    <h4 class="text-secondary text-staatliches mb-0">Dirección</h4>
+                    <p class="ml-2">{{usuario.direccion}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="container_bloque_imagen">
+            <i class="bi bi-person-square" style="font-size: 8em;"></i>
+        </div>
+    </div>
+    <div class="container_bloque_permisos">
+        <div>
+            <h4 class="text-secondary text-staatliches mb-0">Permisos</h4>
+            <div class="d-flex">
+            <p class="ml-2" *ngFor='let permiso of usuario.permisos'>{{permiso.descripcion}}</p>
+            </div>
+        </div>
+    </div>
+</div>

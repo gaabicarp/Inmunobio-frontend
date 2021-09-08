@@ -1,0 +1,38 @@
+.title{
+    margin: 2em;
+}
+.container{
+    width: 70%;
+    height: 50%;
+    justify-content:center;
+    align-items: center;
+    padding: 1em 2em;
+}
+.container_bloque_parte1_datos{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin: 1em 0;
+}
+.container_bloque_parte1{
+  width: 100%;
+  height: auto;
+}
+.container_bloque_permisos{
+    display: flex;
+    justify-content:space-between;
+    width: 100%;
+    margin: 1em 0;
+}
+.container_bloque{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.item{
+    width: 50%;
+    padding:0px;
+}
+.permisos{
+    display: flex;
+}
