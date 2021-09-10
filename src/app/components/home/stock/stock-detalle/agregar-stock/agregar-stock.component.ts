@@ -19,10 +19,11 @@ import { ToastServiceService } from 'src/app/services/toast-service.service';
 
 export class AgregarStockComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
-
+  usuario:any;
   productos: Producto[] = [];
   contenedores: Contenedor[] = [];
   contenedoresEspecificos: Contenedor[]=[];
+  
   
   formStock!: FormGroup;
 
@@ -50,12 +51,16 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.cargando = true;
+    this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    console.log(this.usuario)
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     this.idProd = parseInt(this.activatedRouter.snapshot.paramMap.get('idProducto'), 10);
     this.idProdEnStock = parseInt(this.activatedRouter.snapshot.paramMap.get('idProductoEnStock'), 10);
     this.idUbicacion = parseInt(this.activatedRouter.snapshot.paramMap.get('idUbicacion'), 10);
     console.log(this.idProd)
     console.log(this.idUbicacion)
+    const idGrupoTrabajo = this.usuario.id_grupoDeTrabajo
+    console.log(idGrupoTrabajo)
     this.formStock = new FormGroup({
       producto: new FormControl('0', [Validators.required, Validators.maxLength(30)]),
       lote: new FormControl('', [Validators.maxLength(50)]),
@@ -66,7 +71,7 @@ export class AgregarStockComponent implements OnInit, OnDestroy {
       seguimiento: new FormControl('',[Validators.required])
     });
     if (!isNaN(this.idProd)){
-      this.getService.obtenerStock(this.idEspacioFisico).subscribe(res =>{
+      this.getService.obtenerStock(this.idEspacioFisico,idGrupoTrabajo).subscribe(res =>{
         if(res){
           this.stocks = res;
           this.cargando = false;

@@ -37,7 +37,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   fecHasta:any;
   blogs: BlogsJaula[];
   detalleBlog: string;
-
+  usuario:any;
   cargando: boolean;
   disabledForm: boolean;
   constructor(
@@ -52,6 +52,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cargando = true;
     this.detalleBlog ='';
+    this.usuario = JSON.parse(localStorage.getItem('usuario'));
     this.idJaula = parseInt(this.activatedRouter.snapshot.paramMap.get('id'), 10);
     this.subscription.add(this.getService.obtenerJaulasPorId(this.idJaula).subscribe(res => {
       if(res){
@@ -209,7 +210,7 @@ export class JaulaDetalleComponent implements OnInit, OnDestroy {
   crearBlog(): void{
     this.disabledForm = true;
     const Blog: Blogs={
-      id_usuario: 1,
+      id_usuario:this.usuario.id,
       detalle: this.detalleBlog,
       tipo: 'Jaula'
     }

@@ -68,6 +68,7 @@
     flex-direction: row;
     width: 95%;
     justify-content: space-around;
+    margin-left: 0.5em;
 }
 .nueva-entrada, .filtro-blogs{
     width: 6.5em;

@@ -50,8 +50,8 @@ import { FilterTipoPipe } from './pipe/filter-tipo.pipe';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FilterFechavencimientoPipe } from './pipe/filter-fechavencimiento.pipe';
 import { PerfilComponent } from './components/home/perfil/perfil.component';
-
-
+import { HerramientaComponent } from './components/home/stock/stock-detalle/herramienta/herramienta.component';
+import { BlogEspacioHerramientaComponent } from './components/home/stock/stock-detalle/blog-espacio-herramienta/blog-espacio-herramienta.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +97,9 @@ import { PerfilComponent } from './components/home/perfil/perfil.component';
     DividirGrupoComponent,
     FilterTipoPipe,
     FilterFechavencimientoPipe,
-    PerfilComponent
+    PerfilComponent,
+    HerramientaComponent,
+    BlogEspacioHerramientaComponent
 
   ],
   imports: [

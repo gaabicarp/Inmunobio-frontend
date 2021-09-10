@@ -1,0 +1,98 @@
+
+    <div class="">
+      <div class="m-3">
+        <div class="d-flex">
+        <h4 for="cantidad" class="form-label">Detalle</h4>
+      </div>
+        <label>{{herramienta.detalle}}</label>
+      </div>
+      <div class="m-3">
+        <h4 for="cantidad" class="form-label">Blogs</h4>
+
+        <div class="busqueda">
+          <div class="form-group ">
+            <button class="btn btn-outline-success nueva-entrada" (click)="open(blogHerramienta,'lg')">Nuevo Blog</button>
+          </div>
+            <div class="filtro-fecha-blogs">
+              <div class="filtro-fecha-blogs__item herramientas">
+                  <input class="form-control" placeholder="Fecha Desde" id="fecDesde" 
+                         name="dp" [(ngModel)]="fecDesde" ngbDatepicker #d="ngbDatepicker">
+                  <div class="">
+                    <button class="btn btn-outline-secondary " (click)="d.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                  </div>
+              </div>
+              <div class="filtro-fecha-blogs__item herramientas">
+                  <input class="form-control" placeholder="Fecha Hasta" id="fecHasta" 
+                         name="dp2" [(ngModel)]="fecHasta" ngbDatepicker #d2="ngbDatepicker">
+                  <div class="">
+                    <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="bi bi-calendar"></i></button>
+                  </div>
+              </div>
+            </div>
+            <button class="btn btn-outline-secondary filtro-blogs"  (click)=BuscarBlogH() >Filtrar</button>
+        </div>
+        <div class="" >
+          <ng-container *ngFor='let a of blogsH;let i = index'  >
+              <ng-container *ngIf = 'i%2==0'>
+                <div class="card-blog shadow rounded">
+                  <div class="fecha">
+                    <i class="bi bi-journals m-2"></i>
+                    <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                  </div>
+                  <div class="blog" >
+                    <h5 class="card-title card-header"> Blog N° {{a.id_blog}} - Herramienta</h5>
+                    <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                    <p>{{a.detalle}}</p>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf = 'i%2!=0'>
+                <div class="card-blog shadow rounded">
+                  <div class="blog" >
+                    <h5 class="card-title card-header"> Blog N° {{a.id_blog}} - Herramienta</h5>
+                    <p class="mb-1"><i>  usuario :{{a.id_usuario}}</i></p>
+                    <p>{{a.detalle}}</p>
+                  </div>
+                  <div class="fecha">
+                    <i class="bi bi-journals m-2"></i>
+                    <h6 class="card-title text-center">{{a.fecha | date: 'dd/MM/yy'}}</h6>
+                  </div>
+                </div>
+              </ng-container>
+          </ng-container>
+      </div>
+      </div>
+    <div *ngIf='blogsH?.length === 0' class="text-center" style='color: darkred;'>
+      <i class="bi bi-shield-exclamation" style="font-size: 3em"></i>
+      <h5 style='color: darkred;'>No hay blogs existentes</h5>
+    </div>
+    </div>
+
+  <ng-template #blogHerramienta let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Crear Publicacion - Herramienta</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body ">
+      <div class="modal-body-blogHerr">
+        <div class="">
+          <label for="tipo" class="form-label">Escriba una publicacion</label>
+          <textarea class="form-control" id='descripcion' aria-label="With textarea" rows="6" placeholder="Escriba el detalle del Blog" [attr.disabled]='disabledForm ? true : null' [(ngModel)]='detalleBlog'></textarea>
+        </div>
+        <div class=" col d-flex justify-content-center align-items-center">
+          <i class="bi bi-file-earmark-text" style="font-size: 8em;"></i>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-lg" (click)='crearBlogHerramienta()' *ngIf='!disabledForm'>Crear Blog</button>
+        <button class="btn btn-primary btn-lg" type="button" disabled *ngIf='disabledForm'>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Cargando...
+        </button>
+    </div>
+  </ng-template>
+
+ 

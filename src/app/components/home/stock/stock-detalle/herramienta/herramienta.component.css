@@ -1,0 +1,101 @@
+.busqueda{
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    justify-content: space-around;
+}
+.nueva-entrada, .filtro-blogs{
+    width: 6.5em;
+    height: 2.5em;
+    padding: 0;
+}
+.filtro-fecha-blogs{
+    justify-content: space-around;
+    display: flex;
+    width: 80%;
+}
+.filtro-fecha-blogs__item{
+    display: flex;
+    width: 23%;
+    height: auto;
+}
+.herramientas{
+    width: 40%;
+}
+.card-blog{
+    width: 95%;
+    margin: 1em;
+    vertical-align: auto;
+    align-items: center;
+    background-color: rgba(93, 155, 209, 0.082);
+    display: flex;
+}
+.blog{
+    width: 100%;
+    margin-left: 5px;
+}
+.fecha{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding:0.7em;
+}
+.modal-body-blogHerr{
+    display: flex;
+}
+.modal-body-eliminarHerramienta{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+textarea{
+    width: 30em;
+}
+@media screen and (max-width: 360px){
+    .filtro-fecha-blogs, .fechas{
+        width: 100%;
+        height: auto;
+        display: block;
+        align-items: center;
+    }
+    button,.nueva-entrada, .filtro-blogs, .nuevo-blog, .button-filtrarBlogHerramienta{
+        width: 95%;
+        height: 2.3em;
+        margin-left: 0px;
+        margin-top:0px;
+    }
+    .button-nuevaHerramienta{
+        width: 95%;
+        margin: 0.5em;
+    }
+    .input-group{
+        margin: 0.5em;
+        width: 95%;
+    }
+    .filtro-fecha-blogs__item{
+        width: 95%;
+        margin: 0.5em 0;
+    }
+    .close{
+        margin:3px;
+        padding:0px;
+        width: 50px;
+    }
+    .busqueda{
+        display: block;
+        margin-left: 1em;
+    }
+    label,input{
+        width: 100%;
+    }
+    textarea{
+        width: 300px;
+    }
+    .imagenModal{
+        display: none;
+    }
+    .card-blog{
+        margin-left: 7px;
+    }
+}

@@ -4,11 +4,12 @@ export class Usuario {
     esJefeDe?: any;
     habilitado: boolean;
     id_grupoDeTrabajo?: any;
-    id_usuario: number;
+    id: number;
     nombre: string;
     password: string;
     permisos: Permiso[];
     telefono: string;
+    exp?:number;
   }
 
 interface Permiso {

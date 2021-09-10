@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EspacioFisico } from 'src/app/models/EspacioFisico.model';
 import { Herramienta } from 'src/app/models/herramientas.model';
 import { ToastServiceService } from 'src/app/services/toast-service.service';
+import { Usuario } from 'src/app/models/usuarios.model';
 
 @Component({
   selector: 'app-stock-detalle',
@@ -18,34 +19,30 @@ import { ToastServiceService } from 'src/app/services/toast-service.service';
 })
 export class StockDetalleComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
+  usuario:Usuario;
   stocks: Stock[] =[];
   productos: Producto[]=[];
-  idEspacioFisico:number;
   espacioFisico:EspacioFisico;
-  herramientas : Herramienta[] =[];
   herramientasFiltradas: Herramienta[] =[];
-  filtroFechaVenc:any;
+  idEspacioFisico:number;
   
   fecDesde:any;
   fecHasta:any;
-  fecHoy=new Date(Date.now());
   blogs : BlogBuscados[] =[];
-  blogsH:any;
-  detalleBlog:any;
 
-  filterPost: string;
-  filterPost2: string;
-  cargando:boolean;
-  a:any;
-  j:any;
+  idProductoStock:any;
+  idProducto:any;
+  herramienta:Herramienta;
   prodEspecifico:ProductoStock;
   cantidad:number;
   idHerramienta_eliminar:number;
-  content:any;
   tipo = 'opc1';
-  tipoBlog= 'espacioFisico';
   herramientaSeleccionada:number ;
-  herramientaSeleccionadaBlog:any;
+
+  filtroFechaVenc:any;
+  filterPost: string;
+  filterPost2: string;
+  cargando:boolean;
   disabledForm: boolean;
   
   constructor(
@@ -61,10 +58,13 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     this.filterPost ='';
     this.filterPost2 ='';
     this.filtroFechaVenc = '-1';
+    this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    console.log(this.usuario)
+    const idGrupoTrabajo = this.usuario.id_grupoDeTrabajo
     this.idEspacioFisico = parseInt(this.activatedRouter.snapshot.paramMap.get('idEspacio'), 10);
     console.log(this.idEspacioFisico);
     //STOCK
-    this.subscription.add( this.getService.obtenerStock(this.idEspacioFisico).subscribe(res => {
+    this.subscription.add( this.getService.obtenerStock(this.idEspacioFisico,idGrupoTrabajo).subscribe(res => {
       console.log(res)
       if(res){
         this.stocks = res;
@@ -99,8 +99,9 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
        })
     );
     //BLOGS 
-    const dia = (this.fecHoy).getDate() + 1;
-    this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)
+    const hoy = new Date(Date.now());
+    const dia = (hoy).getDate() + 1;
+    this.fecHasta = new Date(hoy.getFullYear(),hoy.getMonth(), dia)
     this.fecHasta = this.fecHasta.toDateString();
     const blog : BlogsBuscadosEspFisico = {
           id_espacioFisico: this.idEspacioFisico,
@@ -123,19 +124,16 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
     //HERRAMIENTAS 
     this.subscription.add( this.getService.obtenerHerramientas().subscribe(res => {
       if(res){
-        this.herramientas = res;
+        this.herramientasFiltradas =  res.filter(herramienta => {
+          return herramienta.id_espacioFisico == this.idEspacioFisico;
+        });
         this.cargando = false;
       } else{
-        this.herramientas = [];
+        this.herramientasFiltradas = [];
         this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
         this.cargando = false;
       }
       console.log(res)
-      const id = this.idEspacioFisico
-      this.herramientasFiltradas =  this.herramientas.filter(herramienta => {
-        return herramienta.id_espacioFisico == id;
-      });
-      console.log(this.herramientasFiltradas)
        })
     );
   }
@@ -189,17 +187,17 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       );
     }
   }
-  eliminarP(a,j,content){
+  eliminarP(id_ProductoEnStock,id_Producto,content){
     this.open(content,'lg');
-    this.a = a.id_productoEnStock;
-    this.j=a.producto[j].id_productos;
+    this.idProductoStock = id_ProductoEnStock.id_productoEnStock; // TODO PROD-STOCK
+    this.idProducto = id_ProductoEnStock.producto[id_Producto].id_productos; // TODO ID PROD
   }
 
   eliminarStockModal(){
     this.disabledForm = true;
-    const id_productoEnStock= this.a
-    const id_productos = this.j
-    this.subscription.add( this.postService.eliminarStock(id_productoEnStock, id_productos).subscribe(res =>{
+    const id_productoEnStock= this.idProductoStock  // TODO PROD-STOCK
+    const id_productos =  this.idProducto // TODO ID PROD
+    this.subscription.add( this.postService.eliminarStock(this.idProductoStock, this.idProducto).subscribe(res =>{
       if (res.Status === 'Se borró el producto en stock.'){
         this.toastService.show('Stock eliminado', { classname: 'bg-success text-light', delay: 2000 });
         setTimeout(() => {
@@ -220,91 +218,40 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       }, 4000);
     }));
   }
-  Herramienta(a,content){
+
+  VerHerramienta(datosHerramienta,content){
     this.open(content,'xl');
-    this.content = content;
-    this.a = a;
-    const dia = (this.fecHoy).getDate() + 1;
-    this.fecHasta = new Date(this.fecHoy.getFullYear(),this.fecHoy.getMonth(), dia)
-    this.fecHasta = this.fecHasta.toDateString();
-    const blog : BlogsBuscadosHerr = {
-      id_herramienta: this.a.id_herramienta,
-      fechaDesde: 'Mon May 31 2021',
-      fechaHasta: this.fecHasta
-    } 
-  console.log(blog)
-  this.subscription.add(this.postService.obtenerBlogHerramientas(blog).subscribe(res =>{
-    if(res){
-      this.blogsH = res;
-      this.cargando = false;
-    } else{
-      this.blogsH = [];
-      this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
-      this.cargando = false;
-    }
-    console.log(res);
-   })
-  );
+    this.herramienta = datosHerramienta; // TODO HERRAMIENTA
   }
-  BuscarBlogH(){
-    this.fecDesde =  new Date(this.fecDesde.year,(this.fecDesde.month -1)  ,this.fecDesde.day)
-    const fechaHasta = new Date(this.fecHasta.year,(this.fecHasta.month -1) ,this.fecHasta.day)
-    console.log(this.fecDesde, fechaHasta)
-    const diaMas1 = (fechaHasta).getDate() + 2;
-    this.fecHasta = new Date(fechaHasta.getFullYear(),fechaHasta.getMonth(), diaMas1)
-    this.fecDesde = this.fecDesde.toDateString();
-    this.fecHasta = this.fecHasta.toDateString();
-    const blog : BlogsBuscadosHerr = {
-      id_herramienta: this.a.id_herramienta,
-      fechaDesde: this.fecDesde,
-      fechaHasta: this.fecHasta
-    }
-    console.log(blog)
-    this.subscription.add(this.postService.obtenerBlogHerramientas(blog).subscribe(res =>{
-      if(res){
-        this.blogsH = res;
-        this.cargando = false;
-      } else{
-        this.blogsH = [];
-        this.toastService.show('Hubo un error',{ classname: 'bg-danger text-light', delay: 2000 });
-        this.cargando = false;
-      }
-      console.log(res);
-    })
-    );
-  }
-  consumirP(a,j,content){
+  consumirP(id_ProductoStock,id_Producto,content){
     this.open(content,'lg');
-    this.a= a;
-    this.j = j;
+    this.idProductoStock= id_ProductoStock; //TODO PROD-STOCK
+    this.idProducto = id_Producto; //TODO ID PROD
     setTimeout(() => {
-      const producto = this.stocks.find(stock => (stock.id_producto == a.id_producto) && (stock.id_productoEnStock == a.id_productoEnStock))
+      const producto = this.stocks.find(stock => (stock.id_producto == this.idProductoStock.id_producto) && (stock.id_productoEnStock == this.idProductoStock.id_productoEnStock))
       console.log(producto)
-      this.prodEspecifico = producto.producto[j]
+      this.prodEspecifico = producto.producto[this.idProducto]
       console.log(this.prodEspecifico)
     }, 500);
-    
   }
   consumirStockModal(){
     this.disabledForm = true;
-    const idProdEnStock = this.a.id_productoEnStock;
-    setTimeout(() => {
-      const consumir : Consumir ={
-        unidad: this.cantidad,
-        id_productoEnStock : idProdEnStock,
-        id_productos: this.prodEspecifico.id_productos
+    const consumir : Consumir ={
+      unidad: this.cantidad,
+      id_productoEnStock : this.idProductoStock.id_productoEnStock, //TODO PROD-STOCK
+      id_productos: this.prodEspecifico.id_productos
+    }
+    this.subscription.add(this.postService.consumirStock(consumir).subscribe(res =>{
+      if (res.Status === 'Se modificaron las unidades del producto en stock.'){
+        this.toastService.show('Stock consumido', { classname: 'bg-success text-light', delay: 2000 });
+        setTimeout(() => {
+          this.toastService.removeAll()
+          this.modalService.dismissAll()
+          this.disabledForm = false;
+          this.cantidad = 0;
+          this.ngOnInit()
+        }, 2000);
       }
-      this.subscription.add(this.postService.consumirStock(consumir).subscribe(res =>{
-        if (res.Status === 'Se modificaron las unidades del producto en stock.'){
-          this.toastService.show('Stock consumido', { classname: 'bg-success text-light', delay: 2000 });
-          setTimeout(() => {
-            this.toastService.removeAll()
-            this.modalService.dismissAll()
-            this.disabledForm = false;
-            this.cantidad = 0;
-            this.ngOnInit()
-          }, 2000);
-        }
         console.log(res)
       }, err => {
         this.toastService.show( 'La cantidad solicitada no se encuentra en stock', { classname: 'bg-danger text-light', delay: 2000 });
@@ -314,8 +261,8 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
           this.disabledForm = false;
         }, 3000);
       }));
-    }, 500);
   }
+
   eliminarHModal(id,content){
     this.open(content,'lg');
     this.idHerramienta_eliminar = id;
@@ -343,105 +290,6 @@ export class StockDetalleComponent implements OnInit, OnDestroy {
       }, 3000);
 
     }));
-  }
-  crearBlogHerramienta(){
-    this.disabledForm = true;
-    const blog: Blogs ={
-      id_usuario: 1,
-      detalle: this.detalleBlog,
-      tipo :'herramienta'
-    }
-    const nuevoBlog : BlogHerramienta ={
-      id_herramienta: this.a.id_herramienta,
-      blogs: blog
-    }
-    console.log(nuevoBlog)
-    this.subscription.add(this.postService.crearBlogHerramienta(nuevoBlog).subscribe(res => {
-      if (res.Status === 'Se creo el blog de herramienta'){
-        this.toastService.show('Blog creado', { classname: 'bg-success text-light', delay: 2000 });
-        setTimeout(() => {
-          this.detalleBlog = ''
-          this.toastService.removeAll()
-          this.modalService.dismissAll()
-          this.disabledForm = false;
-          this.ngOnInit()
-          setTimeout(() => {
-            this.Herramienta(this.a,this.content)
-          }, 1000);
-        }, 2000);
-      }
-      console.log(res)
-    }, err => {
-      this.toastService.show( 'Problema al crear el blog '+err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
-      console.log(err)
-      setTimeout(() => {
-        this.toastService.removeAll()
-        this.disabledForm = false;
-      }, 3000);
-
-    }));
-  }
-  crearBlog(){
-    this.disabledForm = true;
-    if(this.tipoBlog === 'herramienta'){
-      const blog: Blogs ={
-        id_usuario: 1,
-        detalle: this.detalleBlog,
-        tipo :'herramienta'
-      }
-      const nuevoBlog : BlogHerramienta ={
-        id_herramienta: this.herramientaSeleccionadaBlog,
-        blogs: blog
-      }
-      console.log(nuevoBlog)
-      this.subscription.add( this.postService.crearBlogHerramienta(nuevoBlog).subscribe(res => {
-        if (res.Status === 'Se creo el blog de herramienta'){
-          this.toastService.show('Blog creado', { classname: 'bg-success text-light', delay: 2000 });
-          setTimeout(() => {
-            this.detalleBlog = '';
-            this.toastService.removeAll()
-            this.modalService.dismissAll()
-            this.disabledForm = false;
-            this.ngOnInit()
-          }, 2000);
-        }
-        console.log(res)
-      }, err => {
-        this.toastService.show( 'Problema al crear el blog '+err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
-        console.log(err)
-        this.disabledForm = false;
-      }));
-    } else{
-    const blog: Blogs ={
-      id_usuario: 1,
-      detalle: this.detalleBlog,
-      tipo :'espacioFisico'
-    }
-    const nuevoBlog : BlogEspacio ={
-      id_espacioFisico: this.idEspacioFisico,
-      blogs: blog
-    }
-    this.subscription.add( this.postService.crearBlogEspacio(nuevoBlog).subscribe(res => {
-      if (res.Status === 'Se creó blog de espacio físico.'){
-        this.toastService.show('Blog creado', { classname: 'bg-success text-light', delay: 2000 });
-        setTimeout(() => {
-          this.detalleBlog = '';
-          this.toastService.removeAll()
-          this.modalService.dismissAll()
-          this.disabledForm = false;
-          this.ngOnInit()
-        }, 2000);
-      }
-      console.log(res)
-    }, err => {
-      this.toastService.show( 'Problema al crear el blog '+err.error.Error, { classname: 'bg-danger text-light', delay: 2000 });
-      console.log(err)
-      setTimeout(() => {
-        this.toastService.removeAll()
-        this.disabledForm = false;
-      }, 3000);
-    }));
-    }
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

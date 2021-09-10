@@ -1,0 +1,21 @@
+.fechas,.tipo-blog{
+    width: 40%;
+}
+textarea{
+    width: 500px;
+}
+.imagenModal{
+    margin-left: 4em;
+}
+@media screen and (max-width: 360px){
+    label,input{
+        width: 100%;
+    }
+    textarea{
+        width: 300px;
+    }
+    .imagenModal{
+        display: none;
+    }
+
+}
