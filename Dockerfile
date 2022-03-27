@@ -1,9 +1,9 @@
 FROM node:alpine as builder 
 WORKDIR /app
 COPY package.json package-lock.json  ./
-RUN npm install && mv ./node_modules ./
+RUN npm install 
 COPY . ./
-RUN npm run build 
+RUN npm run build --prod
 
 FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
