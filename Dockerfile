@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package.json package-lock.json  ./
 RUN npm install && mv ./node_modules ./
 COPY . ./
-RUN npm run build --prod
+RUN npm run build 
 
 FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
