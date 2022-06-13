@@ -33,6 +33,9 @@ export class PostService {
     return this.http.delete<any>(this.API_URL + 'usuario/' + id );
   }
 
+  obtenerUsuariosPorCredenciales(userCred:any): Observable<any>{
+    return this.http.post<any>(this.API_URL + "login",userCred );
+  }
   crearGrupoTrabajo(grupoTrabajo: any): Observable<any>{
     return this.http.post<any>(this.API_URL + 'grupoDeTrabajo', grupoTrabajo);
   }

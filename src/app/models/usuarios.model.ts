@@ -25,3 +25,10 @@ export class postUsuario {
     telefono: string;
     permisos: Permiso[];
 }
+
+
+export class UsuarioLogin {
+    password: string;
+    email: string;
+  
+}

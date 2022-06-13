@@ -101,7 +101,6 @@ export class NuevoProyectoComponent implements OnInit {
           this.selectedItems = usuarios.filter( usuario => res.participantes.indexOf(usuario.id_usuario) > -1);
           this.cargando = false;
         });
-        // console.log('asdasd')
         this.itemList = this.usuariosDisponibles.filter(usuario => usuario.id_usuario != this.formProyecto.value.idDirectorProyecto);
     });
    }
