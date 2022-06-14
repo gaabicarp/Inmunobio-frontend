@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Distribuidora } from '../models/distribuidora.model';
 import { Producto } from '../models/producto.model';
 import { Consumir, Stock, StockEdicion } from '../models/stock.model';
-import { postUsuario, Usuario } from '../models/usuarios.model';
+import { postUsuario, UsuarioLogin } from '../models/usuarios.model';
 import { BlogBuscadoProyecto, BlogEspacio, BlogHerramienta,BlogProyecto,BlogsBuscados, BlogsBuscadosHerr} from '../models/blogs.model';
 import { Herramienta } from '../models/herramientas.model';
 import { Contenedor } from '../models/contenedores.model';
@@ -18,6 +18,11 @@ export class PostService {
   private API_URL = 'http://localhost:8080/api/v1/';
 
   constructor(private http: HttpClient) { }
+
+  obtenerUsuario(user: UsuarioLogin): Observable<any>{
+    const header = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
+    return this.http.post<any>(this.API_URL + 'usuarioEmail', user, {headers: header});
+  }
 
   crearUsuario(nuevoUsuario: postUsuario): Observable<any>{
     const header = new HttpHeaders({'Access-Control-Allow-Origin': '*'});
@@ -228,5 +233,7 @@ export class PostService {
   crearBlogProyecto(blog: any): Observable<any>{
     return this.http.post<any>(this.API_URL + 'crearblogProyecto', blog)
   }
+
+
 
 }
