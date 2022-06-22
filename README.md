@@ -1,4 +1,16 @@
-# Inmunobio
+# Inmunobio 
+
+## Pasos para instalacion de software
+
+
+
+
+
+
+
+
+
+--- 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.3.
 
